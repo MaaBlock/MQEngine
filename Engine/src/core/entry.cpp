@@ -4,7 +4,9 @@
 * @note The entrypoint has been replace to main in FCT.
 */
 int main() {
-    fout << "MQEngine Start" << std::endl;
+    MQEngine::EngineScope engineScope();
+    MQEngine::Engine& engine = MQEngine::getEngine();
+    engine.loop();
     return 0;
 }
 

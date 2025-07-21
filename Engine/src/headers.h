@@ -1,7 +1,7 @@
-//
-// Created by Administrator on 2025/7/21.
-//
-
+/**
+ *@file headers.h
+ *@brief include all headers in this file for one who wants to use the engine
+ */
 #ifndef ENGINE_HEADERS_H
 #define ENGINE_HEADERS_H
 #ifdef _WIN32
@@ -16,4 +16,5 @@
 #include "thirdparty/thirdparty.h"
 #include "core/engine.h"
 #include "core/entry.h"
+#include "core/systemmanager.h"
 #endif //HEADERS_H

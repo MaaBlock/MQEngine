@@ -9,14 +9,14 @@ add_library(Engine SHARED
 )
 
 target_link_fct_libraries(Engine)
-
+target_link_fct_node_libraries(Engine)
 
 function(target_link_engine target_name)
     if(NOT TARGET ${target_name})
         message(FATAL_ERROR "Target ${target_name} does not exist")
     endif()
 
-    target_link_libraries(${target_name} PRIVATE Engine)
+    target_link_libraries(${target_name} Engine)
     add_dependencies(${target_name} Engine)
 
     if(WIN32)
