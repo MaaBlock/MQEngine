@@ -1,0 +1,9 @@
+[submodule "FCT_IMGUI"]
+	path = FCT_IMGUI
+	url = https://github.com/MaaBlock/FCT_IMGUI
+[submodule "FCT"]
+	path = FCT
+	url = https://github.com/MaaBlock/FCT
+[submodule "FCT_Node"]
+	path = FCT_Node
+	url = https://github.com/MaaBlock/FCT_Node

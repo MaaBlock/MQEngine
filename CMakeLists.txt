@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.22.1)
+include(Config/config_vcpkg.cmake)
+set(CMAKE_CXX_STANDARD 20)
+
+project("MQEngine")
+add_subdirectory(FCT)
+add_subdirectory(FCT_IMGUI)
+add_subdirectory(FCT_Node)
+add_subdirectory(Engine)
+add_subdirectory(Editor)
+add_subdirectory(Game)

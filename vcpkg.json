@@ -1,0 +1,43 @@
+{
+  "name": "mqengine",
+  "version": "0.0.1",
+  "dependencies": [
+    "freetype",
+    "boost",
+    "assimp",
+    "spirv-cross",
+    "shaderc",
+    {
+      "name": "physx",
+      "platform": "windows"
+    },
+    {
+      "name": "physx",
+      "platform": "linux"
+    },
+    {
+      "name": "vulkan",
+      "platform": "windows"
+    },
+    {
+      "name": "vulkan",
+      "platform": "linux"
+    },
+    {
+      "name": "glfw3",
+      "platform": "windows"
+    },
+    {
+      "name": "glfw3",
+      "platform": "linux"
+    },
+    {
+      "name": "freeimage",
+      "platform": "windows"
+    },
+    {
+    "name": "freeimage",
+    "platform": "linux"
+    }
+  ]
+}
