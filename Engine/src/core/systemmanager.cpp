@@ -1,5 +1,6 @@
 /**
 * @file systemmanager.cpp
+* @brief class source for start and stop system
 */
 #include "../engineapi.h"
 

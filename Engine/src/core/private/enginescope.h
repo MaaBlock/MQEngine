@@ -1,7 +1,7 @@
-//
-// Created by Administrator on 2025/7/21.
-//
-
+/**
+ * @file enginescope.h
+ * @brief Engine scope for managing the engine instance
+ */
 #ifndef ENGINESCOPE_H
 #define ENGINESCOPE_H
 #include "../engine.h"

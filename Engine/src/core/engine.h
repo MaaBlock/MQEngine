@@ -1,6 +1,6 @@
-//
-// Created by Administrator on 2025/7/21.
-//
+/*
+ *@file engine.h
+ */
 
 #ifndef ENGINE_H
 #define ENGINE_H
@@ -24,6 +24,8 @@ namespace MQEngine {
         static Engine* s_instance;
         FCT::Runtime m_rt;
         SystemManager m_systemManager;
+        FCT::Window* m_wnd;
+        FCT::Context* m_ctx;
     };
     /**
      * @return engine version

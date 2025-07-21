@@ -1,6 +1,6 @@
 /**
- *@file: engineapi.h
- *@brief: include all the headers for the engine inner
+ *@file engineapi.h
+ *@brief include all the headers for the engine inner
  */
 #ifndef ENGINEAPI_H
 #define ENGINEAPI_H
