@@ -20,7 +20,26 @@ namespace MQEngine
         m_ctx = m_rt.createContext();
         m_ctx->create();
         m_wnd->bind(m_ctx);
-        m_ctx->compilePasses();
+        auto tickerGraph = m_ctx->submitTickers();
+        tickerGraph.removeNode(RenderGraphSubmitTickerName);
+        tickerGraph.removeNode(RenderGraphExcutePassSubmitTickerName);
+        tickerGraph["test0"] = {
+            []()
+            {
+
+            },
+            {},
+            {}
+        };
+        tickerGraph["test1"] = {
+            []()
+            {
+
+            },
+            {"test0"},
+            {SwapBufferSubmitTicker}
+        };
+        tickerGraph.update();
     }
 
     void Engine::loop()
