@@ -16,30 +16,27 @@ namespace MQEngine
     void Engine::init()
     {
         m_systemManager.init();
+
         m_wnd = m_rt.createWindow(800,600,"MQ Engine");
         m_ctx = m_rt.createContext();
-        m_ctx->create();
-        m_wnd->bind(m_ctx);
-        auto tickerGraph = m_ctx->submitTickers();
+        auto& tickerGraph = m_ctx->submitTickers();
         tickerGraph.removeNode(RenderGraphSubmitTickerName);
         tickerGraph.removeNode(RenderGraphExcutePassSubmitTickerName);
-        tickerGraph["test0"] = {
-            []()
+        tickerGraph["executeCmd"] = {
+            [this]()
             {
-
+                auto cmdBuf = m_ctx->getCmdBuf(m_wnd, 0);
+                cmdBuf->reset();
+                cmdBuf->begin();
+                cmdBuf->end();
+                cmdBuf->submit();
             },
             {},
-            {}
-        };
-        tickerGraph["test1"] = {
-            []()
-            {
-
-            },
-            {"test0"},
             {SwapBufferSubmitTicker}
         };
         tickerGraph.update();
+        m_ctx->create();
+        m_wnd->bind(m_ctx);
     }
 
     void Engine::loop()
