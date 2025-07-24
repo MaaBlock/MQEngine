@@ -19,6 +19,21 @@ namespace MQEngine
 
         m_wnd = m_rt.createWindow(800,600,"MQ Engine");
         m_ctx = m_rt.createContext();
+        m_ctx->create();
+        m_wnd->bind(m_ctx);
+
+        m_imguiPass = m_ctx->createPass();
+        m_imguiPass->enableClear(ClearType::color | ClearType::depthStencil,
+            Vec4(1,1,1,1));
+        m_imguiPass->bindTarget(0,m_wnd->getCurrentTarget()->targetImage());
+        m_defaultPassGroup = m_ctx->createPassGroup();
+        m_defaultPassGroup->addPass(m_imguiPass);
+        m_defaultPassGroup->create();
+
+        m_imguiCtx = m_imguiModule.createContext(m_wnd,m_ctx);
+        m_imguiCtx->create(m_imguiPass);
+
+        //setting up ticker graph
         auto& tickerGraph = m_ctx->submitTickers();
         tickerGraph.removeNode(RenderGraphSubmitTickerName);
         tickerGraph.removeNode(RenderGraphExcutePassSubmitTickerName);
@@ -28,6 +43,11 @@ namespace MQEngine
                 auto cmdBuf = m_ctx->getCmdBuf(m_wnd, 0);
                 cmdBuf->reset();
                 cmdBuf->begin();
+                m_defaultPassGroup->beginSubmit(cmdBuf);
+                m_imguiPass->beginSubmit(cmdBuf);
+                m_imguiCtx->submit(cmdBuf);
+                m_imguiPass->endSubmit();
+                m_defaultPassGroup->endSubmit(cmdBuf);
                 cmdBuf->end();
                 cmdBuf->submit();
             },
@@ -35,14 +55,31 @@ namespace MQEngine
             {SwapBufferSubmitTicker}
         };
         tickerGraph.update();
-        m_ctx->create();
-        m_wnd->bind(m_ctx);
+
+        auto &syncGraph = m_ctx->syncTickers();
+        syncGraph.removeNode(RenderGraphSyncTicker_SwapJobQueueName);
+        syncGraph["syncImgui"] = {
+            [this]()
+            {
+                m_imguiCtx->swapBuffer();
+            },
+            {},
+            {}
+        };
+        syncGraph.update();
+
     }
 
     void Engine::loop()
     {
         while (m_wnd->isRunning())
         {
+            m_imguiCtx->push([]()
+            {
+                ImGui::Begin("MQ Engine");
+                ImGui::Text("Version: %s", getEngineVersion());
+                ImGui::End();
+            });
             m_ctx->flush();
         }
     }

@@ -10,6 +10,7 @@ add_library(Engine SHARED
 
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
+target_link_fct_imgui_libraries(Engine)
 
 function(target_link_engine target_name)
     if(NOT TARGET ${target_name})

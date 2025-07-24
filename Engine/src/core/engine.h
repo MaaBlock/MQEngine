@@ -8,7 +8,8 @@
 
 namespace MQEngine {
     class EngineScope;
-    ENGINE_API class Engine
+    ENGINE_API class
+    Engine
     {
     public:
         Engine(const Engine&) = delete;
@@ -26,6 +27,10 @@ namespace MQEngine {
         SystemManager m_systemManager;
         FCT::Window* m_wnd;
         FCT::Context* m_ctx;
+        FCT::ImguiContext* m_imguiCtx;
+        FCT::ImguiModule m_imguiModule;
+        FCT::RHI::PassGroup* m_defaultPassGroup;
+        FCT::RHI::Pass* m_imguiPass;
     };
     /**
      * @return engine version

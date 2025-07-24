@@ -7,4 +7,5 @@
 #define ENGINE_THIRDPARTY_H
 #include <FCT_Node.h>
 #include <FCT.h>
+#include <FCT_IMGUI.h>
 #endif //THIRDPARTY_H
