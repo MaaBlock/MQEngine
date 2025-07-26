@@ -32,12 +32,12 @@ namespace MQEngine
         });
 
         //setting up pass
-        m_imguiPass = m_ctx->createPass();
+        m_imguiPass = m_ctx->createResource<RHI::Pass>();
         m_imguiPass->enableClear(ClearType::color | ClearType::depthStencil,
             Vec4(0,0,0,1));
         m_imguiPass->bindTarget(0,m_wnd->getCurrentTarget()->targetImage());
         m_imguiPass->depthStencil(m_wnd->getCurrentTarget()->depthStencilBuffer());
-        m_defaultPassGroup = m_ctx->createPassGroup();
+        m_defaultPassGroup = m_ctx->createResource<RHI::PassGroup>();
         m_defaultPassGroup->addPass(m_imguiPass);
         m_defaultPassGroup->create();
 
@@ -45,7 +45,7 @@ namespace MQEngine
         m_imguiCtx->create(m_imguiPass);
 
         //settting up shader
-        m_vs = m_ctx->createVertexShader();
+        m_vs = m_ctx->createResource<VertexShader>();
         m_vs->addLayout(0,vertexLayout);
         m_vs->pixelLayout(pixelLayout);
         m_vs->addUniform(constLayout);
@@ -61,7 +61,7 @@ ShaderOut main(ShaderIn sIn) {
 }
 )");
         m_vs->create();
-        m_ps = m_ctx->createPixelShader();
+        m_ps = m_ctx->createResource<PixelShader>();
         m_ps->pixelLayout(pixelLayout);
         m_ps->addUniform(constLayout);
         m_ps->code(R"(
@@ -103,13 +103,13 @@ ShaderOut main(ShaderIn sIn) {
         m_uniform->setValue("mvp", mvpMatrix);
         m_lightPos = Vec4(40,0,0,1);
         m_uniform->setValue("lightPos", m_lightPos);
-        m_constBuffer = m_ctx->createConstBuffer();
+        m_constBuffer = m_ctx->createResource<RHI::ConstBuffer>();
         m_constBuffer->buffer(m_uniform);
         m_constBuffer->layout(constLayout);
         m_constBuffer->create();
         m_constBuffer->mapData();
 
-        m_resource = m_ctx->createPassResource();
+        m_resource = m_ctx->createResource<PassResource>();
         m_resource->addConstBuffer(m_constBuffer);
         m_resource->bind(m_wnd);
         m_resource->create();
