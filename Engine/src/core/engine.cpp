@@ -2,6 +2,7 @@
 // Created by Administrator on 2025/7/21.
 //
 #include "../engineapi.h"
+
 namespace MQEngine
 {
     Engine* Engine::s_instance = nullptr;
@@ -45,7 +46,7 @@ namespace MQEngine
         m_imguiCtx->create(m_imguiPass);
 
         //settting up shader
-        m_vs = m_ctx->createResource<VertexShader>();
+        m_vs = m_ctx->createResource<ContextResource::VertexShader>();
         m_vs->addLayout(0,vertexLayout);
         m_vs->pixelLayout(pixelLayout);
         m_vs->addUniform(constLayout);
