@@ -49,6 +49,17 @@ namespace MQEngine {
             "base",
             FCT::ConstElement{FCT::ConstType::MVPMatrix,"mvp"},
             FCT::ConstElement{FCT::ConstType::Vec4,"lightPos"},
+            FCT::ConstElement{FCT::ConstType::Vec4,"viewPos"},
+            FCT::ConstElement{FCT::ConstType::Vec4,"lightDirection"},
+            FCT::ConstElement{FCT::ConstType::Int,"lightType"},
+            FCT::ConstElement{FCT::ConstType::Vec3,"ambientColor"},
+            FCT::ConstElement{FCT::ConstType::Vec3,"diffuseColor"},
+            FCT::ConstElement{FCT::ConstType::Vec3,"specularColor"},
+            FCT::ConstElement{FCT::ConstType::Float,"shininess"},
+            FCT::ConstElement{FCT::ConstType::Float,"constant"},
+            FCT::ConstElement{FCT::ConstType::Float,"linearAttenuation"},
+            FCT::ConstElement{FCT::ConstType::Float,"quadratic"}
+
         };
         FCT::VertexShader* m_vs;
         FCT::PixelShader* m_ps;
@@ -59,6 +70,7 @@ namespace MQEngine {
         FCT::Vec4 m_lightPos;
         FCT::AutoViewport m_autoViewport;
         FCT::MutilBufferImage* m_mutilBufferImage;
+        int m_lightType = 0;
     };
     /**
      * @return engine version

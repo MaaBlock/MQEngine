@@ -1,7 +1,8 @@
-//
+﻿//
 // Created by Administrator on 2025/7/21.
 //
 #include "../engineapi.h"
+#define TEXT(str) (const char*)u8##str
 
 namespace MQEngine
 {
@@ -44,6 +45,7 @@ namespace MQEngine
 
         m_imguiCtx = m_imguiModule.createContext(m_wnd,m_ctx);
         m_imguiCtx->create(m_imguiPass);
+        m_imguiCtx->enableChinese();
 
         //settting up shader
         m_vs = m_ctx->createResource<ContextResource::VertexShader>();
@@ -68,12 +70,29 @@ ShaderOut main(ShaderIn sIn) {
         m_ps->code(R"(
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
-    float4 lightDir = normalize(lightPos - sIn.srcpos);
-    float diff = max(dot(sIn.normal, lightDir), 0.0);
-    float4 viewPos = float4(40.0,40.0,-40.0,1.0);
+    float4 lightDir;
+    float attenuation = 1.0;
+    switch(lightType) {
+    case 0:
+        float distance = length(sIn.srcpos - lightPos);
+        lightDir = normalize(lightPos - sIn.srcpos);
+        attenuation = 1.0 / (constant + linearAttenuation * distance +
+                quadratic * (distance * distance));
+        break;
+    case 1:
+        lightDir = -lightDirection;
+        break;
+    case 2:
+        lightDir = -lightDirection;
+        break;
+    }
     float4 viewDir = normalize(viewPos - sIn.srcpos);
-    float spec = pow(max(dot(sIn.normal, normalize(lightDir.xyz + viewDir.xyz)), 0.0), 32);
-    sOut.target0 = float4(sIn.color.xyz * (diff + spec * 0.25 + 0.1) , 1.0);
+    float3 halfDir = normalize(viewDir + lightDir).xyz;
+    float3 diff = max(dot(sIn.normal, lightDir), 0.0) * diffuseColor;
+    float3 spec = pow(max(dot(sIn.normal, halfDir), 0.0), shininess) * specularColor;
+    float3 ambi = ambientColor;
+    float3 finalColor = (sIn.color.xyz * (ambi + (spec  + diff) * attenuation));
+    sOut.target0 = float4(finalColor, 1.0);
     return sOut;
 }
 )");
@@ -103,7 +122,23 @@ ShaderOut main(ShaderIn sIn) {
         Mat4 mvpMatrix =  view * proj * modelMatrix;
         m_uniform->setValue("mvp", mvpMatrix);
         m_lightPos = Vec4(40,0,0,1);
-        m_uniform->setValue("lightPos", m_lightPos);
+        m_uniform->setValue("viewPos", Vec4(40.0,40.0,-40.0,1.0));
+        m_uniform->setValue("ambientColor",Vec3(0.2f, 0.2f, 0.2f));
+        m_uniform->setValue("diffuseColor",Vec3(0.5f, 0.5f, 0.5f));
+        m_uniform->setValue("specularColor",Vec3(1.0f, 1.0f, 1.0f));
+        m_uniform->setValue("shininess", 32.0f);
+        m_uniform->setValue("constant",  1.0f);
+        m_uniform->setValue("linearAttenuation",    0.09f);
+        m_uniform->setValue("quadratic", 0.032f);
+        const void* data = m_uniform->getData();
+        for (int i = 0; i < m_uniform->getSize() / 4;i++)
+        {
+            if (i % 4 == 0)
+                fout << "[" << i * 4 << "]" << ": ";
+            fout << std::setw(8) << *((const float*)((const char*)data + i * 4)) << " ";
+            if (i % 4 == 3)
+                fout << std::endl;
+        }
         m_constBuffer = m_ctx->createResource<RHI::ConstBuffer>();
         m_constBuffer->buffer(m_uniform);
         m_constBuffer->layout(constLayout);
@@ -159,7 +194,6 @@ ShaderOut main(ShaderIn sIn) {
             {}
         };
         syncGraph.update();
-
     }
 
     void Engine::loop()
@@ -174,11 +208,20 @@ ShaderOut main(ShaderIn sIn) {
             mat.rotateY(deltaTime * 90);
             m_lightPos = mat * m_lightPos;
             m_uniform->setValue("lightPos", m_lightPos);
+            m_uniform->setValue("lightDirection", (-m_lightPos).normalize());
+            m_uniform->setValue("lightType",m_lightType);
             m_constBuffer->updataData();
-            m_imguiCtx->push([]()
+            m_imguiCtx->push([this]()
             {
                 ImGui::Begin("MQ Engine");
                 ImGui::Text("Version: %s", getEngineVersion());
+                ImGui::Text(TEXT("灯光类型:"));
+                const char* lightTypes[] = {
+                    TEXT("点"),
+                    TEXT("方向"),
+                    TEXT("聚光灯")
+                };
+                ImGui::Combo("##LightType", &m_lightType, lightTypes, 3);
                 ImGui::End();
             });
             m_ctx->flush();
