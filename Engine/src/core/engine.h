@@ -58,8 +58,8 @@ namespace MQEngine {
             FCT::ConstElement{FCT::ConstType::Float,"shininess"},
             FCT::ConstElement{FCT::ConstType::Float,"constant"},
             FCT::ConstElement{FCT::ConstType::Float,"linearAttenuation"},
-            FCT::ConstElement{FCT::ConstType::Float,"quadratic"}
-
+            FCT::ConstElement{FCT::ConstType::Float,"quadratic"},
+            FCT::ConstElement{FCT::ConstType::Float,"cutOff"}
         };
         FCT::VertexShader* m_vs;
         FCT::PixelShader* m_ps;

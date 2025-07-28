@@ -83,7 +83,10 @@ ShaderOut main(ShaderIn sIn) {
         lightDir = -lightDirection;
         break;
     case 2:
-        lightDir = -lightDirection;
+        lightDir = normalize(lightPos - sIn.srcpos);
+        if (dot(-lightDir, lightDirection) < cutOff) {
+            attenuation = 0;
+        }
         break;
     }
     float4 viewDir = normalize(viewPos - sIn.srcpos);
@@ -130,6 +133,7 @@ ShaderOut main(ShaderIn sIn) {
         m_uniform->setValue("constant",  1.0f);
         m_uniform->setValue("linearAttenuation",    0.09f);
         m_uniform->setValue("quadratic", 0.032f);
+        m_uniform->setValue("cutOff",cos(3.1415926535 / 4));
         const void* data = m_uniform->getData();
         for (int i = 0; i < m_uniform->getSize() / 4;i++)
         {
@@ -222,6 +226,90 @@ ShaderOut main(ShaderIn sIn) {
                     TEXT("聚光灯")
                 };
                 ImGui::Combo("##LightType", &m_lightType, lightTypes, 3);
+                ImGui::Separator();
+                if (m_lightType == 0 || m_lightType == 2) {
+                    ImGui::Text(TEXT("光源距离:"));
+                    static float lightDistance = 40.0f;
+                    if (ImGui::SliderFloat("##LightDistance", &lightDistance, 10.0f, 100.0f)) {
+                        Vec3 currentDir = Vec3(m_lightPos.x, m_lightPos.y, m_lightPos.z).normalize();
+                        m_lightPos = Vec4(currentDir * lightDistance, 1.0f);
+                        m_uniform->setValue("lightPos", m_lightPos);
+                        m_uniform->setValue("lightDirection", (-m_lightPos).normalize());
+                    }
+
+                    ImGui::Text(TEXT("当前位置: (%.1f, %.1f, %.1f)"), m_lightPos.x, m_lightPos.y, m_lightPos.z);
+                }
+                ImGui::Text(TEXT("环境光颜色:"));
+                static float ambientColor[3] = { 0.2f, 0.2f, 0.2f };
+                if (ImGui::ColorEdit3("##AmbientColor", ambientColor)) {
+                    m_uniform->setValue("ambientColor", Vec3(ambientColor[0], ambientColor[1], ambientColor[2]));
+                }
+
+                ImGui::Text(TEXT("漫反射颜色:"));
+                static float diffuseColor[3] = { 0.5f, 0.5f, 0.5f };
+                if (ImGui::ColorEdit3("##DiffuseColor", diffuseColor)) {
+                    m_uniform->setValue("diffuseColor", Vec3(diffuseColor[0], diffuseColor[1], diffuseColor[2]));
+                }
+
+                ImGui::Text(TEXT("镜面反射颜色:"));
+                static float specularColor[3] = { 1.0f, 1.0f, 1.0f };
+                if (ImGui::ColorEdit3("##SpecularColor", specularColor)) {
+                    m_uniform->setValue("specularColor", Vec3(specularColor[0], specularColor[1], specularColor[2]));
+                }
+
+                ImGui::Text(TEXT("光泽度:"));
+                static float shininess = 32.0f;
+                if (ImGui::SliderFloat("##Shininess", &shininess, 1.0f, 256.0f)) {
+                    m_uniform->setValue("shininess", shininess);
+                }
+                if (m_lightType == 0) {
+                    ImGui::Separator();
+                    ImGui::Text(TEXT("点光源衰减参数:"));
+
+                    static float constant = 1.0f;
+                    if (ImGui::SliderFloat(TEXT("常数项"), &constant, 0.1f, 2.0f)) {
+                        m_uniform->setValue("constant", constant);
+                    }
+
+                    static float linearAttenuation = 0.09f;
+                    if (ImGui::SliderFloat(TEXT("线性项"), &linearAttenuation, 0.01f, 0.5f)) {
+                        m_uniform->setValue("linearAttenuation", linearAttenuation);
+                    }
+
+                    static float quadratic = 0.032f;
+                    if (ImGui::SliderFloat(TEXT("二次项"), &quadratic, 0.001f, 0.1f)) {
+                        m_uniform->setValue("quadratic", quadratic);
+                    }
+                }
+
+                if (m_lightType == 2)
+                {
+                    ImGui::Separator();
+                    ImGui::Text(TEXT("聚光灯参数:"));
+
+                    static float cutOffAngle = 45.0f;
+                    if (ImGui::SliderFloat(TEXT("切光角度"), &cutOffAngle, 10.0f, 90.0f)) {
+                        float cutOffRad = cutOffAngle * 3.1415926535f / 180.0f; // 转换为弧度
+                        m_uniform->setValue("cutOff", cos(cutOffRad));
+                    }
+                }
+                ImGui::Separator();
+                if (ImGui::Button(TEXT("重置为默认值"))) {
+                    ambientColor[0] = ambientColor[1] = ambientColor[2] = 0.2f;
+                    diffuseColor[0] = diffuseColor[1] = diffuseColor[2] = 0.5f;
+                    specularColor[0] = specularColor[1] = specularColor[2] = 1.0f;
+                    shininess = 32.0f;
+
+                    m_uniform->setValue("ambientColor", Vec3(0.2f, 0.2f, 0.2f));
+                    m_uniform->setValue("diffuseColor", Vec3(0.5f, 0.5f, 0.5f));
+                    m_uniform->setValue("specularColor", Vec3(1.0f, 1.0f, 1.0f));
+                    m_uniform->setValue("shininess", 32.0f);
+                    m_uniform->setValue("constant", 1.0f);
+                    m_uniform->setValue("linearAttenuation", 0.09f);
+                    m_uniform->setValue("quadratic", 0.032f);
+                    m_uniform->setValue("cutOff", cos(3.1415926535f / 4));
+                }
+
                 ImGui::End();
             });
             m_ctx->flush();
