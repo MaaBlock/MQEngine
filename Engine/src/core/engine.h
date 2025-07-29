@@ -61,6 +61,9 @@ namespace MQEngine {
             FCT::ConstElement{FCT::ConstType::Float,"quadratic"},
             FCT::ConstElement{FCT::ConstType::Float,"cutOff"}
         };
+        FCT::ResourceLayout m_resourceLayout = {
+            FCT::TextureElement{"lightDepthImage"}
+        };
         FCT::VertexShader* m_vs;
         FCT::PixelShader* m_ps;
         FCT::RHI::RasterizationPipeline* m_pipeline;
@@ -70,6 +73,8 @@ namespace MQEngine {
         FCT::Vec4 m_lightPos;
         FCT::AutoViewport m_autoViewport;
         FCT::MutilBufferImage* m_mutilBufferImage;
+        FCT::Image* m_lightDepthImage;
+        FCT::RHI::Pass* m_lightDepthPass;
         int m_lightType = 0;
     };
     /**
