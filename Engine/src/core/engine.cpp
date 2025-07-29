@@ -22,9 +22,11 @@ namespace MQEngine
         m_wnd = m_rt.createWindow(800,600,"MQ Engine");
         m_ctx = m_rt.createContext();
         m_ctx->create();
+        m_ctx->addModule<ResourceManager>();
         m_wnd->enableDepthBuffer(Format::D32_SFLOAT_S8_UINT);
         m_wnd->bind(m_ctx);
         m_ctx->maxFrameInFlight(5);
+
 
         m_autoViewport = AutoViewport({800,600},{800,600});
         m_autoViewport.ctx(m_ctx);
@@ -33,14 +35,31 @@ namespace MQEngine
             m_autoViewport.resize(width,height);
         });
 
+
+        //setting up depth buffer
+        auto resourceManager = m_ctx->getModule<ResourceManager>();
+        m_lightDepthImage = resourceManager->allocateImage("lightDepthBuffer",m_wnd,{
+            Format::D32_SFLOAT,
+            Flags(ImageUsage::Texture) | ImageUsage::DepthStencil
+        });
+        //setting up depth pass
+        m_lightDepthPass = m_ctx->createResource<RHI::Pass>();
+        m_lightDepthPass->enableClear(ClearType::depthStencil,
+          Vec4(0,0,0,1));
+        m_lightDepthPass->depthStencil(m_lightDepthImage)
+        ;
+
         //setting up pass
         m_imguiPass = m_ctx->createResource<RHI::Pass>();
         m_imguiPass->enableClear(ClearType::color | ClearType::depthStencil,
             Vec4(0,0,0,1));
         m_imguiPass->bindTarget(0,m_wnd->getCurrentTarget()->targetImage());
         m_imguiPass->depthStencil(m_wnd->getCurrentTarget()->depthStencilBuffer());
+        m_imguiPass->bindTexture(0,m_lightDepthImage);
+        //setting up pass group
         m_defaultPassGroup = m_ctx->createResource<RHI::PassGroup>();
         m_defaultPassGroup->addPass(m_imguiPass);
+        m_defaultPassGroup->addPass(m_lightDepthPass);
         m_defaultPassGroup->create();
 
         m_imguiCtx = m_imguiModule.createContext(m_wnd,m_ctx);
@@ -67,6 +86,7 @@ ShaderOut main(ShaderIn sIn) {
         m_ps = m_ctx->createResource<PixelShader>();
         m_ps->pixelLayout(pixelLayout);
         m_ps->addUniform(constLayout);
+        m_ps->resourceLayout(m_resourceLayout);
         m_ps->code(R"(
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
@@ -151,10 +171,9 @@ ShaderOut main(ShaderIn sIn) {
 
         m_resource = m_ctx->createResource<PassResource>();
         m_resource->addConstBuffer(m_constBuffer);
+        m_resource->addTexture(m_lightDepthImage,m_resourceLayout.findTexture("lightDepthImage"));
         m_resource->bind(m_wnd);
         m_resource->create();
-
-        //setting up stencil buffer
 
         //setting up ticker graph
         auto& tickerGraph = m_ctx->submitTickers();
@@ -221,8 +240,8 @@ ShaderOut main(ShaderIn sIn) {
                 ImGui::Text("Version: %s", getEngineVersion());
                 ImGui::Text(TEXT("灯光类型:"));
                 const char* lightTypes[] = {
-                    TEXT("点"),
-                    TEXT("方向"),
+                    TEXT("点光源"),
+                    TEXT("方向光"),
                     TEXT("聚光灯")
                 };
                 ImGui::Combo("##LightType", &m_lightType, lightTypes, 3);
