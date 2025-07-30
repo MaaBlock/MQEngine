@@ -27,7 +27,6 @@ namespace MQEngine
         m_wnd->bind(m_ctx);
         m_ctx->maxFrameInFlight(5);
 
-
         m_autoViewport = AutoViewport({800,600},{800,600});
         m_autoViewport.ctx(m_ctx);
         m_wnd->getCallBack()->addResizeCallback([this](Window* w,int width,int height)
