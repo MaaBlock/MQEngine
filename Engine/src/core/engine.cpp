@@ -48,22 +48,22 @@ ShaderOut main(ShaderIn sIn) {
         m_ps->code(R"(
 float calculateShadow(float4 shadowPos, float3 normal, float3 lightDir) {
     float3 projCoords = shadowPos.xyz / shadowPos.w;
-    projCoords = projCoords * 0.5 + 0.5;
+    //projCoords = projCoords * 0.5 + 0.5;
+    projCoords.x = projCoords.x * 0.5 + 0.5;
+    projCoords.y = projCoords.y * 0.5 + 0.5;
     projCoords.y = 1.0 - projCoords.y;
     if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-        return 1.0;
+        return 0.0;
 
     float currentDepth = projCoords.z;
 
-    // 基于法线的动态偏移
     float cosTheta = dot(normalize(normal), normalize(lightDir));
     cosTheta = clamp(cosTheta, 0.0, 1.0);
-    float bias = 0.005 + 0.01 * (1.0 - cosTheta);
-    bias = clamp(bias, 0.001, 0.02);
 
-    // PCF - 采样周围多个点
+    float bias = max(0.025 * (1.0 - dot(normal, lightDir)), 0.0005);
+
     float shadow = 0.0;
-    float2 texelSize = 1.0 / float2(2048.0, 2048.0);  // 阴影贴图尺寸
+    float2 texelSize = 1.0 / float2(2048.0, 2048.0);
 
     for(int x = -1; x <= 1; ++x) {
         for(int y = -1; y <= 1; ++y) {
@@ -107,7 +107,10 @@ ShaderOut main(ShaderIn sIn) {
     float3 finalColor = (sIn.color.xyz * (ambi +  shadow * (spec  + diff) * attenuation));
     sOut.target0 = float4(finalColor, 1.0);
     float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
-    projCoords = projCoords * 0.5 + 0.5;
+
+    projCoords.x = projCoords.x * 0.5 + 0.5;
+    projCoords.y = projCoords.y * 0.5 + 0.5;
+    projCoords.y = 1.0 - projCoords.y;
 
     sOut.target1 = float4(projCoords.x,projCoords.y,projCoords.z,1);
 
