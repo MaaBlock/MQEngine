@@ -47,6 +47,7 @@ namespace MQEngine {
         FCT::ImguiModule m_imguiModule;
         FCT::RHI::PassGroup* m_defaultPassGroup;
         FCT::RHI::PassGroup* m_shadowPassGroup;
+        FCT::RHI::Pass* m_objectPass;
         FCT::RHI::Pass* m_imguiPass;
         FCT::StaticMesh<uint32_t>* m_mesh;
         FCT::StaticMesh<uint32_t>* m_floor;
@@ -79,7 +80,9 @@ namespace MQEngine {
         };
         FCT::ResourceLayout m_resourceLayout = {
             FCT::TextureElement{"lightDepthImage"},
-            FCT::SamplerElement{"shadowSampler"}
+            FCT::SamplerElement{"shadowSampler"},
+            FCT::TextureElement{"shadowPos"},
+            FCT::TextureElement{"shadowDepth"},
         };
         FCT::Sampler* m_shadowSampler;
         FCT::VertexShader* m_vs;
@@ -87,7 +90,7 @@ namespace MQEngine {
         FCT::VertexShader* m_vsShadow;
         FCT::PixelShader* m_psShadow;
         FCT::ConstLayout m_shadowConstLayout = {
-            "shadow",
+            "ShadowUniform",
             FCT::ConstElement{FCT::ConstType::MVPMatrix,"lightMvp"},
         };
         FCT::RHI::RasterizationPipeline* m_pipeline;
@@ -99,6 +102,8 @@ namespace MQEngine {
         FCT::AutoViewport m_autoViewport;
         FCT::MutilBufferImage* m_mutilBufferImage;
         FCT::Image* m_lightDepthImage;
+        FCT::Image* m_shadowPosTarget;
+        FCT::Image* m_shadowRetTarget;
         FCT::RHI::Pass* m_lightDepthPass;
         FCT::RHI::RasterizationPipeline* m_shadowPipeline;
         int m_lightType = 0;
