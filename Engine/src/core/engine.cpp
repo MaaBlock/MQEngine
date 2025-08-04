@@ -53,7 +53,7 @@ float calculateShadow(float4 shadowPos, float3 normal, float3 lightDir) {
     projCoords.y = projCoords.y * 0.5 + 0.5;
     projCoords.y = 1.0 - projCoords.y;
     if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-        return 0.0;
+        return 1.0;
 
     float currentDepth = projCoords.z;
 
@@ -423,18 +423,14 @@ ShaderOut main(ShaderIn sIn) {
         cmdBuf->reset();
         cmdBuf->begin();
         m_shadowPassGroup->beginSubmit(cmdBuf);
-        m_lightDepthPass->beginSubmit(cmdBuf);
         m_shadowPipeline->bind(cmdBuf);
         m_shadowResource->bind(cmdBuf,m_shadowPipeline);
-        //m_autoViewport.submit(cmdBuf);
-
         cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
         cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
         m_mesh->bind(cmdBuf);
         m_mesh->draw(cmdBuf);
         m_floor->bind(cmdBuf);
         m_floor->draw(cmdBuf);
-        m_lightDepthPass->endSubmit();
         m_shadowPassGroup->endSubmit(cmdBuf);
 
         cmdBuf->barrier(
@@ -449,7 +445,6 @@ ShaderOut main(ShaderIn sIn) {
         );
 
         m_defaultPassGroup->beginSubmit(cmdBuf);
-        m_objectPass->beginSubmit(cmdBuf);
         m_pipeline->bind(cmdBuf);
         m_resource->bind(cmdBuf,m_pipeline);
         m_autoViewport.submit(cmdBuf);
@@ -457,11 +452,8 @@ ShaderOut main(ShaderIn sIn) {
         m_mesh->draw(cmdBuf);
         m_floor->bind(cmdBuf);
         m_floor->draw(cmdBuf);
-        m_objectPass->endSubmit();
-        cmdBuf->nextPass();
-        m_imguiPass->beginSubmit(cmdBuf);
+        m_defaultPassGroup->nextPass(cmdBuf);
         m_imguiCtx->submit(cmdBuf);
-        m_imguiPass->endSubmit();
         m_defaultPassGroup->endSubmit(cmdBuf);
         cmdBuf->end();
         cmdBuf->submit();
