@@ -6,8 +6,10 @@ namespace MQEngine
 {
     void Engine::settingUpImgui()
     {
+        auto graph = m_ctx->getModule<RenderGraph>();
+
         m_imguiCtx = m_imguiModule.createContext(m_wnd,m_ctx);
-        m_imguiCtx->create(m_imguiPass);
+        m_imguiCtx->create(graph->getPass("ImguiPass"));
         m_imguiCtx->enableChinese();
         m_imguiCtx->addTexture("shadowPos",m_shadowPosTarget);
         m_imguiCtx->addTexture("shadowDepth",m_shadowRetTarget);
