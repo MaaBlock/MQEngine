@@ -45,10 +45,12 @@ namespace MQEngine {
         FCT::Context* m_ctx;
         FCT::ImguiContext* m_imguiCtx;
         FCT::ImguiModule m_imguiModule;
+        /*
         FCT::RHI::PassGroup* m_defaultPassGroup;
         FCT::RHI::PassGroup* m_shadowPassGroup;
         FCT::RHI::Pass* m_objectPass;
         FCT::RHI::Pass* m_imguiPass;
+        */
         FCT::StaticMesh<uint32_t>* m_mesh;
         FCT::StaticMesh<uint32_t>* m_floor;
         FCT::VertexLayout vertexLayout = {
@@ -104,7 +106,9 @@ namespace MQEngine {
         FCT::Image* m_lightDepthImage;
         FCT::Image* m_shadowPosTarget;
         FCT::Image* m_shadowRetTarget;
+/*
         FCT::RHI::Pass* m_lightDepthPass;
+*/
         FCT::RHI::RasterizationPipeline* m_shadowPipeline;
         int m_lightType = 0;
         Uniform* m_shadowUniform;
