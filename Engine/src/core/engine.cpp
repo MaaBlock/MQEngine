@@ -157,6 +157,7 @@ ShaderOut main(ShaderIn sIn) {
         m_ctx = m_rt.createContext();
         m_ctx->create();
         m_ctx->addModule<ResourceManager>();
+        m_ctx->addModule<RenderGraph>();
         m_wnd->enableDepthBuffer(Format::D32_SFLOAT_S8_UINT);
         m_wnd->bind(m_ctx);
         m_ctx->maxFrameInFlight(5);
@@ -182,16 +183,45 @@ ShaderOut main(ShaderIn sIn) {
         });
         m_shadowPosTarget = resourceManager->allocateImage("shadowPosTarget",m_wnd,{
             Format::R8G8B8A8_UNORM,
+            Samples::sample_1,
             ImageUsage::RenderTarget | ImageUsage::Texture
         });
         m_shadowRetTarget = resourceManager->allocateImage("shadowDepthTarget",m_wnd,{
             Format::R8G8B8A8_UNORM,
+            Samples::sample_1,
             ImageUsage::RenderTarget | ImageUsage::Texture
         });
     }
 
     void Engine::settingUpPass()
     {
+        auto graph = m_ctx->getModule<RenderGraph>();
+        graph->addPass(
+            "ShadowMapPass",
+            EnablePassClear(ClearType::depth,1.0f),
+            DepthStencil("DepthFromLigth0Image",
+                2048,2048,
+                Format::D32_SFLOAT,
+                Samples::sample_1
+                ));
+        graph->addPass(
+            "ObjectPass",
+            Texture("DepthFromLigth0Image"),
+            EnablePassClear(ClearType::color | ClearType::depthStencil,
+                Vec4(0,0,0,1)),
+            Target("mainWindowColor",m_wnd),
+            Target("PosTarget"),
+            Target("RetTarget"),
+            DepthStencil("mainWindowDS",m_wnd)
+            );
+        graph->addPass(
+            "ImguiPass",
+            Target("mainWindowColor",m_wnd),
+            Texture("PosTarget"),
+            Texture("RetTarget"),
+            DepthStencil("mainWindowDS",m_wnd)
+            );
+        graph->compile();
         //setting up depth pass
         m_lightDepthPass = m_ctx->createResource<RHI::Pass>();
         m_lightDepthPass->enableClear(ClearType::depth,
