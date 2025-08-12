@@ -7,7 +7,7 @@ namespace MQEngine
     Vec3 calculateUpVector(const Vec3& lightPos) {
         Vec3 forward = (Vec3(0,0,0) - lightPos).normalize();
 
-        Vec3 worldUp = Vec3(0, 0, 1);
+        Vec3 worldUp = Vec3(0, 1, 0);
 
         if (abs(forward.dot(worldUp)) > 0.99f) {
             worldUp = Vec3(0, 1, 0);
@@ -20,7 +20,6 @@ namespace MQEngine
     }
     void Engine::settingUpShaders()
     {
-
         //settting up shder
         m_vs = m_ctx->createResource<ContextResource::VertexShader>();
         m_vs->addLayout(0,vertexLayout);
@@ -170,30 +169,6 @@ ShaderOut main(ShaderIn sIn) {
         });
     }
 
-    void Engine::settingUpImage()
-    {
-        //setting up depth buffer
-        /*
-        auto resourceManager = m_ctx->getModule<ResourceManager>();
-        m_lightDepthImage = resourceManager->allocateTarget("lightDepthBuffer",{
-            2048,
-            2048,
-            Samples::sample_1,
-            Format::D32_SFLOAT,
-            Flags(ImageUsage::Texture) | ImageUsage::DepthStencil
-        });
-        m_shadowPosTarget = resourceManager->allocateImage("shadowPosTarget",m_wnd,{
-            Format::R8G8B8A8_UNORM,
-            Samples::sample_1,
-            ImageUsage::RenderTarget | ImageUsage::Texture
-        });
-        m_shadowRetTarget = resourceManager->allocateImage("shadowDepthTarget",m_wnd,{
-            Format::R8G8B8A8_UNORM,
-            Samples::sample_1,
-            ImageUsage::RenderTarget | ImageUsage::Texture
-        });
-        */
-    }
 
     void Engine::settingUpPass()
     {
@@ -224,86 +199,9 @@ ShaderOut main(ShaderIn sIn) {
             DepthStencil("mainWindowDS",m_wnd)
             );
         graph->compile();
-
         m_lightDepthImage = graph->getImage("DepthFromLigth0Image");
         m_shadowPosTarget = graph->getImage("PosTarget");
         m_shadowRetTarget = graph->getImage("RetTarget");
-        /*
-        //setting up depth pass
-        m_lightDepthPass = m_ctx->createResource<RHI::Pass>();
-        m_lightDepthPass->enableClear(ClearType::depth,
-          Vec4(0,0,0,1),1.0);
-        m_lightDepthPass->depthStencil(m_lightDepthImage);
-
-        //setting up pass
-        m_objectPass = m_ctx->createResource<RHI::Pass>();
-        m_objectPass->enableClear(ClearType::color | ClearType::depthStencil,
-            Vec4(0,0,0,1));
-        m_objectPass->bindTarget(0,m_wnd->getCurrentTarget()->targetImage());
-        m_objectPass->bindTarget(1,m_shadowPosTarget);
-        m_objectPass->bindTarget(2,m_shadowRetTarget);
-        m_objectPass->depthStencil(m_wnd->getCurrentTarget()->depthStencilBuffer());
-        m_objectPass->bindTexture(0,m_lightDepthImage);
-        //setting up imgui pass
-        m_imguiPass = m_ctx->createResource<RHI::Pass>();
-        m_imguiPass->bindTarget(0,m_wnd->getCurrentTarget()->targetImage());
-        m_imguiPass->depthStencil(m_wnd->getCurrentTarget()->depthStencilBuffer());
-        m_imguiPass->bindTexture(1,m_shadowPosTarget);
-        m_imguiPass->bindTexture(2,m_shadowRetTarget);
-        //setting up pass group
-        m_defaultPassGroup = m_ctx->createResource<RHI::PassGroup>();
-        m_defaultPassGroup->addPass(
-            {
-                m_objectPass,
-                {
-                    {
-                        RHI::Pass::external,
-                        PipelineStage::lateFragmentTests,
-                        AccessFlag::depthStencilAttachmentWrite,
-                        PipelineStage::fragmentShader,
-                        AccessFlag::shaderRead
-                    }
-                },
-                {
-                }
-            }
-        );
-        m_defaultPassGroup->addPass(
-            {
-                m_imguiPass,
-                {
-                    {
-                        m_objectPass,
-                        PipelineStage::colorAttachmentOutput,
-                        AccessFlag::colorAttachmentWrite,
-                        PipelineStage::fragmentShader,
-                        AccessFlag::shaderRead
-                    }
-                },
-                {
-                    RHI::Pass::present
-                }
-            });
-        m_defaultPassGroup->create();
-        m_shadowPassGroup =  m_ctx->createResource<RHI::PassGroup>();
-        m_shadowPassGroup->addPass(
-            {
-                m_lightDepthPass,
-                {
-                    RHI::Pass::begin
-                },
-                {
-                    {
-                        RHI::Pass::external,
-                        PipelineStage::fragmentShader,
-                        AccessFlag::shaderRead,
-                        PipelineStage::lateFragmentTests,
-                        AccessFlag::depthStencilAttachmentWrite
-                    }
-                }
-            }
-        );
-        m_shadowPassGroup->create();*/
     }
 
 
@@ -312,6 +210,7 @@ ShaderOut main(ShaderIn sIn) {
         auto graph = m_ctx->getModule<RenderGraph>();
         //RasterizationState* state = m_ctx->create;
         //setting up pipeline
+
         BlendState* blendState = m_ctx->createResource<BlendState>();
         //blendState->blendEnable(false);
         blendState->create();
@@ -373,7 +272,6 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::settingUpSync()
     {
         auto &syncGraph = m_ctx->syncTickers();
-        syncGraph.removeNode(RenderGraphSyncTicker_SwapJobQueueName);
         syncGraph["syncImgui"] = {
             [this]()
             {
@@ -421,39 +319,7 @@ ShaderOut main(ShaderIn sIn) {
             auto cmdBuf = env.cmdBuf;
             m_imguiCtx->submit(cmdBuf);
         });
-        /*
-        m_shadowPassGroup->endSubmit(cmdBuf);
-
-        cmdBuf->barrier(
-            m_lightDepthImage,
-            ImageLayout::depthAttachmentOptimal,
-            ImageLayout::shaderReadOnlyOptimal,
-            PipelineStage::lateFragmentTests,
-            PipelineStage::fragmentShader,
-            AccessFlag::depthStencilAttachmentWrite,
-            AccessFlag::shaderRead,
-            ImageAspect::depth
-        );
-
-        m_defaultPassGroup->beginSubmit(cmdBuf);
-
-        m_defaultPassGroup->nextPass(cmdBuf);
-        m_imguiCtx->submit(cmdBuf);
-        m_defaultPassGroup->endSubmit(cmdBuf);
-        */
-        //setting up ticker graph
         auto& tickerGraph = m_ctx->submitTickers();
-        tickerGraph.removeNode(RenderGraphSubmitTickerName);
-        tickerGraph.removeNode(RenderGraphExcutePassSubmitTickerName);
-        tickerGraph["executeCmd"] = {
-            [this]()
-            {
-                submitTick();
-            },
-            {},
-            {SwapBufferSubmitTicker}
-        };
-        tickerGraph.update();
     }
 
     void Engine::initUniformValue()
@@ -499,58 +365,6 @@ ShaderOut main(ShaderIn sIn) {
         m_shadowUniform->update();
     }
 
-    void Engine::submitTick()
-    {
-        m_shadowUniform->setValue("lightMvp",
-            Mat4::LookAt(m_lightPos.xyz(),
-                Vec3(0,0,0),
-                m_lightPos.xyz().cross(Vec3(0,0,-1))) *
-                Mat4::Ortho(-5.0f,5.0f,
-                    -5.0f, 5.0f,
-                    1.0f, 7.5f));
-        m_shadowUniform->update();
-        auto cmdBuf = m_ctx->getCmdBuf(m_wnd, 0);
-        cmdBuf->reset();
-        cmdBuf->begin();
-        /*
-        m_shadowPassGroup->beginSubmit(cmdBuf);
-        m_shadowPipeline->bind(cmdBuf);
-        m_shadowResource->bind(cmdBuf,m_shadowPipeline);
-        cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-        cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-        m_mesh->bind(cmdBuf);
-        m_mesh->draw(cmdBuf);
-        m_floor->bind(cmdBuf);
-        m_floor->draw(cmdBuf);
-        m_shadowPassGroup->endSubmit(cmdBuf);
-
-        cmdBuf->barrier(
-            m_lightDepthImage,
-            ImageLayout::depthAttachmentOptimal,
-            ImageLayout::shaderReadOnlyOptimal,
-            PipelineStage::lateFragmentTests,
-            PipelineStage::fragmentShader,
-            AccessFlag::depthStencilAttachmentWrite,
-            AccessFlag::shaderRead,
-            ImageAspect::depth
-        );
-
-        m_defaultPassGroup->beginSubmit(cmdBuf);
-        m_pipeline->bind(cmdBuf);
-        m_resource->bind(cmdBuf,m_pipeline);
-        m_autoViewport.submit(cmdBuf);
-        m_mesh->bind(cmdBuf);
-        m_mesh->draw(cmdBuf);
-        m_floor->bind(cmdBuf);
-        m_floor->draw(cmdBuf);
-        m_defaultPassGroup->nextPass(cmdBuf);
-        m_imguiCtx->submit(cmdBuf);
-        m_defaultPassGroup->endSubmit(cmdBuf);*/
-        auto graph = m_ctx->getModule<RenderGraph>();
-        graph->executeAllPassGroups(cmdBuf);
-        cmdBuf->end();
-        cmdBuf->submit();
-    }
 
     void Engine::logicTick()
     {
@@ -565,6 +379,14 @@ ShaderOut main(ShaderIn sIn) {
         m_baseUniform->setValue("lightDirection", (-m_lightPos).normalize());
         m_baseUniform->setValue("lightType",m_lightType);
         m_baseUniform->update();
+        m_shadowUniform->setValue("lightMvp",
+            Mat4::LookAt(m_lightPos.xyz(),
+                Vec3(0,0,0),
+                m_lightPos.xyz().cross(Vec3(0,0,-1))) *
+                Mat4::Ortho(-5.0f,5.0f,
+                    -5.0f, 5.0f,
+                    1.0f, 7.5f));
+        m_shadowUniform->update();
         imguiLogicTick();
         m_ctx->flush();
     }
@@ -572,7 +394,6 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::init()
     {
         settingUpEnv();
-        settingUpImage();
         settingUpShaders();
         settingUpPass();
         settingUpImgui();
