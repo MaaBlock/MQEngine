@@ -23,7 +23,6 @@ namespace MQEngine {
         void term();
         void settingUpShaders();
         void settingUpEnv();
-        void settingUpImage();
         void settingUpPass();
         void settingUpImgui();
         void settingUpPipeline();
