@@ -100,7 +100,7 @@ namespace MQEngine {
         FCT::PassResource* m_resource;
         FCT::PassResource* m_shadowResource;
         FCT::Vec4 m_lightPos;
-        FCT::AutoViewport m_autoViewport;
+        FCT::AutoViewport* m_autoViewport;
         FCT::MutilBufferImage* m_mutilBufferImage;
         FCT::Image* m_lightDepthImage;
         FCT::Image* m_shadowPosTarget;

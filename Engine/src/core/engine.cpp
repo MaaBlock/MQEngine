@@ -4,20 +4,6 @@
 
 namespace MQEngine
 {
-    Vec3 calculateUpVector(const Vec3& lightPos) {
-        Vec3 forward = (Vec3(0,0,0) - lightPos).normalize();
-
-        Vec3 worldUp = Vec3(0, 1, 0);
-
-        if (abs(forward.dot(worldUp)) > 0.99f) {
-            worldUp = Vec3(0, 1, 0);
-        }
-
-        Vec3 right = forward.cross(worldUp).normalize();
-        Vec3 up = right.cross(forward).normalize();
-
-        return up;
-    }
     void Engine::settingUpShaders()
     {
         //settting up shder
@@ -151,22 +137,11 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
-
         m_wnd = m_rt.createWindow(800,600,"MQ Engine");
         m_ctx = m_rt.createContext();
         m_ctx->create();
-        m_ctx->addModule<ResourceManager>();
-        m_ctx->addModule<RenderGraph>();
-        m_wnd->enableDepthBuffer(Format::D32_SFLOAT_S8_UINT);
         m_wnd->bind(m_ctx);
-        m_ctx->maxFrameInFlight(5);
-
-        m_autoViewport = AutoViewport({800,600},{800,600});
-        m_autoViewport.ctx(m_ctx);
-        m_wnd->getCallBack()->addResizeCallback([this](Window* w,int width,int height)
-        {
-            m_autoViewport.resize(width,height);
-        });
+        m_autoViewport = m_wnd->getModule<WindowModule::AutoViewport>();
     }
 
 
@@ -308,7 +283,7 @@ ShaderOut main(ShaderIn sIn) {
             auto cmdBuf = env.cmdBuf;
             m_pipeline->bind(cmdBuf);
             m_resource->bind(cmdBuf,m_pipeline);
-            m_autoViewport.submit(cmdBuf);
+            m_autoViewport->submit(cmdBuf);
             m_mesh->bind(cmdBuf);
             m_mesh->draw(cmdBuf);
             m_floor->bind(cmdBuf);
