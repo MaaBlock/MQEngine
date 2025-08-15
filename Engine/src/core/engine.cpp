@@ -236,11 +236,9 @@ ShaderOut main(ShaderIn sIn) {
         m_resource->addTexture(m_shadowPosTarget,m_resourceLayout.findTexture("shadowPos"));
         m_resource->addTexture(m_shadowRetTarget,m_resourceLayout.findTexture("shadowDepth"));
         m_resource->addSampler(m_shadowSampler, m_resourceLayout.findSampler("shadowSampler"));
-        m_resource->bind(m_wnd);
         m_resource->create();
         m_shadowResource = m_ctx->createResource<PassResource>();
         m_shadowResource->addConstBuffer(*m_shadowUniform);
-        m_shadowResource->bind(m_wnd);
         m_shadowResource->create();
     }
 
@@ -294,7 +292,6 @@ ShaderOut main(ShaderIn sIn) {
             auto cmdBuf = env.cmdBuf;
             m_imguiCtx->submit(cmdBuf);
         });
-        auto& tickerGraph = m_ctx->submitTickers();
     }
 
     void Engine::initUniformValue()
