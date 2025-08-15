@@ -15,10 +15,12 @@ namespace MQEngine
         m_imguiCtx->addTexture("shadowPos",m_shadowPosTarget);
         m_imguiCtx->addTexture("shadowDepth",m_shadowRetTarget);
         m_imguiCtx->addTexture("lightWorld",m_lightDepthImage);
+        m_imguiCtx->addTexture("SceneView",m_sceneColorTarget);
         m_wnd->swapchain()->subscribe<SwapchainEvent::Recreate>([this](SwapchainEvent::Recreate)
         {
             m_imguiCtx->updateTexture("shadowPos");
             m_imguiCtx->updateTexture("shadowDepth");
+            m_imguiCtx->updateTexture("SceneView");
         });
     }
     void Engine::imguiLogicTick()
@@ -26,6 +28,44 @@ namespace MQEngine
 
         m_imguiCtx->push([this]()
         {
+            ImguiContext::createMainDockSpace("MQEngine");
+            ImGui::Begin(TEXT("场景视口"));
+
+            auto sceneTextureId = m_imguiCtx->getTexture("SceneView");
+            if (sceneTextureId) {
+          ImVec2 windowSize = ImGui::GetContentRegionAvail();
+
+          // 保持场景的宽高比（假设是800x600）
+          float aspectRatio = 800.0f / 600.0f;
+          float imageWidth = windowSize.x;
+          float imageHeight = imageWidth / aspectRatio;
+
+          // 如果高度超出窗口，则按高度缩放
+          if (imageHeight > windowSize.y) {
+              imageHeight = windowSize.y;
+              imageWidth = imageHeight * aspectRatio;
+          }
+
+          // 居中显示
+          float offsetX = (windowSize.x - imageWidth) * 0.5f;
+          float offsetY = (windowSize.y - imageHeight) * 0.5f;
+
+          if (offsetX > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
+          if (offsetY > 0) ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offsetY);
+
+          ImGui::Image(sceneTextureId, ImVec2(imageWidth, imageHeight));
+
+          // 显示一些场景信息
+          ImGui::Separator();
+          ImGui::Text(TEXT("场景分辨率: %.0fx%.0f"), imageWidth, imageHeight);
+          ImGui::Text(TEXT("窗口大小: %.0fx%.0f"), windowSize.x, windowSize.y);
+      } else {
+          ImGui::Text(TEXT("场景纹理未找到"));
+          ImGui::Text(TEXT("请检查SceneView纹理是否正确创建"));
+      }
+
+      ImGui::End();
+
             ImGui::Begin("MQ Engine");
             ImGui::Text("Version: %s", getEngineVersion());
             ImGui::Text(TEXT("灯光类型:"));

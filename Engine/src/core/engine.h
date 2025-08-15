@@ -1,16 +1,16 @@
-/*
+﻿/*
  *@file engine.h
  */
 
 #ifndef ENGINE_H
 #define ENGINE_H
+#include "application.h"
 #include "systemmanager.h"
 
 namespace MQEngine {
     struct Uniform;
     class EngineScope;
-    ENGINE_API class
-    Engine
+    class ENGINE_API Engine
     {
     public:
         Engine(const Engine&) = delete;
@@ -19,7 +19,7 @@ namespace MQEngine {
         static Engine& getInstance();
         friend class EngineScope;
     private:
-        void init();
+        void init(Application* application);
         void term();
         void settingUpShaders();
         void settingUpEnv();
@@ -38,6 +38,7 @@ namespace MQEngine {
         Engine() = default;
         ~Engine() = default;
         static Engine* s_instance;
+        Application* m_application;
         FCT::Runtime m_rt;
         SystemManager m_systemManager;
         FCT::Window* m_wnd;
@@ -105,6 +106,7 @@ namespace MQEngine {
         FCT::Image* m_lightDepthImage;
         FCT::Image* m_shadowPosTarget;
         FCT::Image* m_shadowRetTarget;
+        FCT::Image* m_sceneColorTarget;
 /*
         FCT::RHI::Pass* m_lightDepthPass;
 */
