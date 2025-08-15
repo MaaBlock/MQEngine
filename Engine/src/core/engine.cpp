@@ -137,7 +137,7 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
-        m_wnd = m_rt.createWindow(800,600,"MQ Engine");
+        m_wnd = m_rt.createWindow(800,600,m_application->renderConfig().windowTitle);
         m_ctx = m_rt.createContext();
         m_ctx->create();
         m_wnd->bind(m_ctx);
@@ -161,14 +161,17 @@ ShaderOut main(ShaderIn sIn) {
             Texture("DepthFromLigth0Image"),
             EnablePassClear(ClearType::color | ClearType::depthStencil,
                 Vec4(0,0,0,1)),
-            Target("mainWindowColor",m_wnd),
+            Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_UNORM),
             Target("PosTarget"),
             Target("RetTarget"),
-            DepthStencil("mainWindowDS",m_wnd)
+            DepthStencil("SceneDepthTarget",Format::D32_SFLOAT)
             );
         graph->addPass(
             "ImguiPass",
+            EnablePassClear(ClearType::color | ClearType::depthStencil,
+                Vec4(0,0,0,1)),
             Target("mainWindowColor",m_wnd),
+            Texture("SceneColorTarget"),
             Texture("PosTarget"),
             Texture("RetTarget"),
             DepthStencil("mainWindowDS",m_wnd)
@@ -177,6 +180,7 @@ ShaderOut main(ShaderIn sIn) {
         m_lightDepthImage = graph->getImage("DepthFromLigth0Image");
         m_shadowPosTarget = graph->getImage("PosTarget");
         m_shadowRetTarget = graph->getImage("RetTarget");
+        m_sceneColorTarget = graph->getImage("SceneColorTarget");
     }
 
 
@@ -281,7 +285,9 @@ ShaderOut main(ShaderIn sIn) {
             auto cmdBuf = env.cmdBuf;
             m_pipeline->bind(cmdBuf);
             m_resource->bind(cmdBuf,m_pipeline);
-            m_autoViewport->submit(cmdBuf);
+            cmdBuf->viewport({0,0},{1024,768});
+            cmdBuf->scissor({0,0},{1024,768});
+            //m_autoViewport->submit(cmdBuf);
             m_mesh->bind(cmdBuf);
             m_mesh->draw(cmdBuf);
             m_floor->bind(cmdBuf);
@@ -363,8 +369,9 @@ ShaderOut main(ShaderIn sIn) {
         m_ctx->flush();
     }
 
-    void Engine::init()
+    void Engine::init(Application* application)
     {
+        m_application = application;
         settingUpEnv();
         settingUpShaders();
         settingUpPass();

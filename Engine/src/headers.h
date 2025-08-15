@@ -17,4 +17,5 @@
 #include "core/engine.h"
 #include "core/entry.h"
 #include "core/systemmanager.h"
+#include "core/enginescope.h"
 #endif //HEADERS_H

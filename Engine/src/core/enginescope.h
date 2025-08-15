@@ -4,13 +4,13 @@
  */
 #ifndef ENGINESCOPE_H
 #define ENGINESCOPE_H
-#include "../engine.h"
+#include "./engine.h"
 namespace MQEngine {
     class EngineScope {
     public:
-        EngineScope(){
+        EngineScope(Application* application){
             Engine::s_instance = &m_engine;
-            m_engine.init();
+            m_engine.init(application);
         }
         ~EngineScope(){
             m_engine.term();
