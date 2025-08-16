@@ -76,7 +76,9 @@ namespace MQEngine {
             FCT::ConstElement{FCT::ConstType::Float,"constant"},
             FCT::ConstElement{FCT::ConstType::Float,"linearAttenuation"},
             FCT::ConstElement{FCT::ConstType::Float,"quadratic"},
-            FCT::ConstElement{FCT::ConstType::Float,"cutOff"}
+            FCT::ConstElement{FCT::ConstType::Float,"cutOff"},
+            FCT::ConstElement{FCT::ConstType::Float,"paddingTest"},
+            FCT::ConstElement{FCT::ConstType::Float,"ArrayTest",3}
         };
         FCT::ResourceLayout m_resourceLayout = {
             FCT::TextureElement{"lightDepthImage"},
