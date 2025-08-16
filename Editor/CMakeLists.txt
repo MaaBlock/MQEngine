@@ -7,7 +7,6 @@ file(GLOB CORE_MODULE_SOURCES
 
 add_executable(Editor
     ${CORE_MODULE_SOURCES}
-    src/test.cpp
 )
 target_link_libraries(Editor
     FCT_IMGUI
