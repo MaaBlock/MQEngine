@@ -1,5 +1,6 @@
-﻿# include "EditorApplication.h"
+﻿#include "EditorApplication.h"
 using namespace MQEngine;
+
 
 int main() {
     EditorApplication application;

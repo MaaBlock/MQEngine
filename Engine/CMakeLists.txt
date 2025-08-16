@@ -12,13 +12,22 @@ file(GLOB CORE_MODULE_HEADERS
         "./src/core/*.hpp"
 )
 
+file(GLOB THIRDPARTY_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/thirdparty/*.h"
+)
+
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
     ${CORE_MODULE_HEADERS}
+    ${THIRDPARTY_MODULE_HEADERS}
 )
 
 set(ALL_HEADERS
-    ${CORE_MODULE_HEADERS}
+        ${CORE_MODULE_HEADERS}
+        ${THIRDPARTY_MODULE_HEADERS}
+        "./src/headers.h"
 )
 
 add_copy_target_headers(Engine "${ALL_HEADERS}")
@@ -27,13 +36,18 @@ target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
 target_link_fct_imgui_libraries(Engine)
 
+target_include_directories(Engine PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
 function(target_link_engine target_name)
     if(NOT TARGET ${target_name})
         message(FATAL_ERROR "Target ${target_name} does not exist")
     endif()
 
     target_link_libraries(${target_name} Engine)
-    target_include_copied_headers(${target_name} Engine)
+
     add_dependencies(${target_name} Engine)
 
     if(WIN32)

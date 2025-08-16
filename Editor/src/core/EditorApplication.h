@@ -5,12 +5,16 @@
 #ifndef EDITORAPPLICATION_H
 #define EDITORAPPLICATION_H
 #include "../thirdparty/thirdparty.h"
-#include "../../../Engine/src/headers.h"
+#include <Engine/headers.h>
 namespace MQEngine
 {
     class EditorApplication : public Application
     {
     public:
+        EditorApplication()
+        {
+            initRenderCallBack();
+        }
         RenderConfig renderConfig() const override
         {
             return RenderConfig{
@@ -18,6 +22,7 @@ namespace MQEngine
                 .windowTitle = "MQEngine Editor",
             };
         }
+        void initRenderCallBack();
     private:
 
     };
