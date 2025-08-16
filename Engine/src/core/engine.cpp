@@ -1,6 +1,5 @@
 ﻿#include "../engineapi.h"
 #include "./Uniform.h"
-#define TEXT(str) (const char*)u8##str
 
 namespace MQEngine
 {
@@ -142,7 +141,22 @@ ShaderOut main(ShaderIn sIn) {
         m_ctx->create();
         m_wnd->bind(m_ctx);
         m_autoViewport = m_wnd->getModule<WindowModule::AutoViewport>();
+        m_application->global.wnd = m_wnd;
+        m_application->global.ctx = m_ctx;
     }
+
+    void Engine::keepImage()
+    {
+        auto graph = m_ctx->getModule<RenderGraph>();
+        m_lightDepthImage = graph->getImage("DepthFromLigth0Image");
+        m_shadowPosTarget = graph->getImage("PosTarget");
+        m_shadowRetTarget = graph->getImage("RetTarget");
+        m_sceneColorTarget = graph->getImage("SceneColorTarget");
+        RenderCallBack::KeepImage callback;
+        callback.graph = graph;
+        m_application->renderCallBackDispatcher.trigger(callback);
+    }
+
 
 
     void Engine::settingUpPass()
@@ -166,21 +180,10 @@ ShaderOut main(ShaderIn sIn) {
             Target("RetTarget"),
             DepthStencil("SceneDepthTarget",Format::D32_SFLOAT)
             );
-        graph->addPass(
-            "ImguiPass",
-            EnablePassClear(ClearType::color | ClearType::depthStencil,
-                Vec4(0,0,0,1)),
-            Target("mainWindowColor",m_wnd),
-            Texture("SceneColorTarget"),
-            Texture("PosTarget"),
-            Texture("RetTarget"),
-            DepthStencil("mainWindowDS",m_wnd)
-            );
+        RenderCallBack::SettingUpPass callback;
+        callback.graph = graph;
+        m_application->renderCallBackDispatcher.trigger(callback);
         graph->compile();
-        m_lightDepthImage = graph->getImage("DepthFromLigth0Image");
-        m_shadowPosTarget = graph->getImage("PosTarget");
-        m_shadowRetTarget = graph->getImage("RetTarget");
-        m_sceneColorTarget = graph->getImage("SceneColorTarget");
     }
 
 
@@ -249,14 +252,10 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::settingUpSync()
     {
         auto &syncGraph = m_ctx->syncTickers();
-        syncGraph["syncImgui"] = {
-            [this]()
-            {
-                m_imguiCtx->swapBuffer();
-            },
-            {},
-            {}
+        RenderCallBack::SettingSync callback{
+            .graph = syncGraph
         };
+        m_application->renderCallBackDispatcher.trigger(callback);
         syncGraph.update();
         m_wnd->swapchain()->subscribe<SwapchainEvent::Recreate>([this](SwapchainEvent::Recreate)
         {
@@ -293,11 +292,10 @@ ShaderOut main(ShaderIn sIn) {
             m_floor->bind(cmdBuf);
             m_floor->draw(cmdBuf);
         });
-        graph->subscribe("ImguiPass",[this](PassSubmitEvent env)
-        {
-            auto cmdBuf = env.cmdBuf;
-            m_imguiCtx->submit(cmdBuf);
-        });
+        RenderCallBack::SubscribePass callback;
+        callback.graph = graph;
+        m_application->renderCallBackDispatcher.trigger(callback);
+
     }
 
     void Engine::initUniformValue()
@@ -365,7 +363,7 @@ ShaderOut main(ShaderIn sIn) {
                     -5.0f, 5.0f,
                     1.0f, 7.5f));
         m_shadowUniform->update();
-        imguiLogicTick();
+        m_application->logicTicker();
         m_ctx->flush();
     }
 
@@ -375,7 +373,7 @@ ShaderOut main(ShaderIn sIn) {
         settingUpEnv();
         settingUpShaders();
         settingUpPass();
-        settingUpImgui();
+        keepImage();
         settingUpShaders();
         settingUpPipeline();
         settingUpMesh();

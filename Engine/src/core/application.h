@@ -10,10 +10,35 @@ namespace MQEngine {
         RenderTarget target = RenderTarget::Window;
         const char* windowTitle;
     };
+    namespace RenderCallBack
+    {
+        struct SettingUpPass
+        {
+            FCT::RenderGraph* graph;
+        };
+        struct SubscribePass
+        {
+            FCT::RenderGraph* graph;
+        };
+        struct SettingSync
+        {
+            FCT::TokenGraph<std::string, FCT::SyncTicker>& graph;
+        };
+        struct KeepImage
+        {
+            FCT::RenderGraph* graph;
+        };
+    }
 
     class Application {
     public:
+        struct Global
+        {
+            FCT::Context* ctx;
+            FCT::Window* wnd;
+        } global;
         virtual RenderConfig renderConfig() const = 0;
+        virtual void logicTicker() = 0;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> renderCallBackDispatcher;
     };
 }
