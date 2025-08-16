@@ -61,18 +61,3 @@ endfunction()
 function(add_copy_target_headers target_name headers_list)
     add_copy_target_headers_custom_src(${target_name} "${headers_list}" "${CMAKE_CURRENT_SOURCE_DIR}/src")
 endfunction()
-
-function(target_include_copied_headers target_name library_name)
-    if(NOT TARGET ${target_name})
-        message(FATAL_ERROR "Target ${target_name} does not exist")
-    endif()
-
-    target_include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-    set(copy_target_name "${library_name}_copy_headers")
-    if(TARGET ${copy_target_name})
-        add_dependencies(${target_name} ${copy_target_name})
-    endif()
-
-    message(STATUS "Added copied headers include for target: ${target_name}")
-endfunction()
