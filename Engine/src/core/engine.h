@@ -23,8 +23,8 @@ namespace MQEngine {
         void term();
         void settingUpShaders();
         void settingUpEnv();
+        void keepImage();
         void settingUpPass();
-        void settingUpImgui();
         void settingUpPipeline();
         void settingUpMesh();
         void settingUpUniforms();
@@ -43,8 +43,6 @@ namespace MQEngine {
         SystemManager m_systemManager;
         FCT::Window* m_wnd;
         FCT::Context* m_ctx;
-        FCT::ImguiContext* m_imguiCtx;
-        FCT::ImguiModule m_imguiModule;
         /*
         FCT::RHI::PassGroup* m_defaultPassGroup;
         FCT::RHI::PassGroup* m_shadowPassGroup;

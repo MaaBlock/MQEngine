@@ -1,7 +1,5 @@
 ﻿#include "EditorApplication.h"
 using namespace MQEngine;
-
-
 int main() {
     EditorApplication application;
     EngineScope engineScope(&application);

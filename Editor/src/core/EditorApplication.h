@@ -13,7 +13,7 @@ namespace MQEngine
     public:
         EditorApplication()
         {
-            initRenderCallBack();
+            settingRenderCallBack();
         }
         RenderConfig renderConfig() const override
         {
@@ -22,9 +22,14 @@ namespace MQEngine
                 .windowTitle = "MQEngine Editor",
             };
         }
-        void initRenderCallBack();
-    private:
+        void settingRenderCallBack();
+        void logicTicker() override;
+        void settingUpImgui();
+        void imguiLogicTick();
 
+    private:
+        FCT::ImguiContext* m_imguiCtx;
+        FCT::ImguiModule imguiModule;
     };
 }
 
