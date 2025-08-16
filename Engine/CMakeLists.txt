@@ -1,12 +1,27 @@
+include("../Config/copy_headers.cmake")
+
 file(GLOB CORE_MODULE_SOURCES
         LIST_DIRECTORIES false
         CONFIGURE_DEPENDS
         "./src/core/*.cpp"
 )
+file(GLOB CORE_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/core/*.h"
+        "./src/core/*.hpp"
+)
 
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
+    ${CORE_MODULE_HEADERS}
 )
+
+set(ALL_HEADERS
+    ${CORE_MODULE_HEADERS}
+)
+
+add_copy_target_headers(Engine "${ALL_HEADERS}")
 
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
@@ -18,6 +33,7 @@ function(target_link_engine target_name)
     endif()
 
     target_link_libraries(${target_name} Engine)
+    target_include_copied_headers(${target_name} Engine)
     add_dependencies(${target_name} Engine)
 
     if(WIN32)

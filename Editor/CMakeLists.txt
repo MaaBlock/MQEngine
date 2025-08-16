@@ -1,5 +1,12 @@
 
+file(GLOB CORE_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/core/*.cpp"
+)
+
 add_executable(Editor
+    ${CORE_MODULE_SOURCES}
     src/test.cpp
 )
 target_link_libraries(Editor
