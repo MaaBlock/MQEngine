@@ -24,6 +24,7 @@ namespace MQEngine {
         void settingUpShaders();
         void settingUpEnv();
         void keepImage();
+        void settingUpLayout();
         void settingUpPass();
         void settingUpPipeline();
         void settingUpMesh();
@@ -110,8 +111,9 @@ namespace MQEngine {
 */
         FCT::RHI::RasterizationPipeline* m_shadowPipeline;
         int m_lightType = 0;
-        Uniform* m_shadowUniform;
-        Uniform* m_baseUniform;
+        Uniform m_shadowUniform;
+        Uniform m_baseUniform;
+        Layout* m_layout;
 
         float m_lightDistance = 40.0f;
         float m_ambientColor[3] = { 0.2f, 0.2f, 0.2f };

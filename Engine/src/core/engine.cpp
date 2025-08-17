@@ -5,106 +5,6 @@ namespace MQEngine
 {
     void Engine::settingUpShaders()
     {
-        //settting up shder
-        m_vs = m_ctx->createResource<ContextResource::VertexShader>();
-        m_vs->addLayout(0,vertexLayout);
-        m_vs->pixelLayout(pixelLayout);
-        m_vs->addUniform(constLayout);
-        m_vs->addUniform(m_shadowConstLayout);
-        m_vs->code(R"(
-ShaderOut main(ShaderIn sIn) {
-    ShaderOut sOut;
-    sOut.color = sIn.color;
-    sOut.position = mul(mvp,sIn.position);
-    sOut.texCoord = sIn.texCoord;
-    sOut.normal = sIn.normal;
-    sOut.srcpos = sIn.position;
-    sOut.shadowPos = mul(lightMvp, sIn.position);
-    return sOut;
-}
-)");
-        m_vs->create();
-        m_ps = m_ctx->createResource<PixelShader>();
-        m_ps->pixelLayout(pixelLayout);
-        m_ps->addUniform(constLayout);
-        m_ps->addUniform(m_shadowConstLayout);
-        m_ps->resourceLayout(m_resourceLayout);
-        m_ps->code(R"(
-float calculateShadow(float4 shadowPos, float3 normal, float3 lightDir) {
-    float3 projCoords = shadowPos.xyz / shadowPos.w;
-    //projCoords = projCoords * 0.5 + 0.5;
-    projCoords.x = projCoords.x * 0.5 + 0.5;
-    projCoords.y = projCoords.y * 0.5 + 0.5;
-    projCoords.y = 1.0 - projCoords.y;
-    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-        return 1.0;
-
-    float currentDepth = projCoords.z;
-
-    float cosTheta = dot(normalize(normal), normalize(lightDir));
-    cosTheta = clamp(cosTheta, 0.0, 1.0);
-
-    float bias = max(0.025 * (1.0 - dot(normal, lightDir)), 0.0005);
-
-    float shadow = 0.0;
-    float2 texelSize = 1.0 / float2(2048.0, 2048.0);
-
-    for(int x = -1; x <= 1; ++x) {
-        for(int y = -1; y <= 1; ++y) {
-            float2 offset = float2(x, y) * texelSize;
-            float closestDepth = lightDepthImage.Sample(shadowSampler, projCoords.xy + offset).r;
-            shadow += (currentDepth - bias) <= closestDepth ? 1.0 : 0.0;
-        }
-    }
-    shadow /= 9.0;  // 9个采样点的平均值
-
-    return shadow;
-}
-
-ShaderOut main(ShaderIn sIn) {
-    ShaderOut sOut;
-    float4 lightDir;
-    float attenuation = 1.0;
-    switch(lightType) {
-    case 0:
-        float distance = length(sIn.srcpos - lightPos);
-        lightDir = normalize(lightPos - sIn.srcpos);
-        attenuation = 1.0 / (constant + linearAttenuation * distance +
-                quadratic * (distance * distance));
-        break;
-    case 1:
-        lightDir = -lightDirection;
-        break;
-    case 2:
-        lightDir = normalize(lightPos - sIn.srcpos);
-        if (dot(-lightDir, lightDirection) < cutOff) {
-            attenuation = 0;
-        }
-        break;
-    }
-    float4 viewDir = normalize(viewPos - sIn.srcpos);
-    float3 halfDir = normalize(viewDir + lightDir).xyz;
-    float3 diff = max(dot(sIn.normal.xyz, lightDir.xyz), 0.0) * diffuseColor;
-    float3 spec = pow(max(dot(sIn.normal, halfDir), 0.0), shininess) * specularColor;
-    float3 ambi = ambientColor;
-    float shadow = calculateShadow(mul(lightMvp,sIn.srcpos), sIn.normal.xyz, lightDir.xyz);
-    float3 finalColor = (sIn.color.xyz * (ambi +  shadow * (spec  + diff) * attenuation));
-    sOut.target0 = float4(finalColor, 1.0);
-    float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
-
-    projCoords.x = projCoords.x * 0.5 + 0.5;
-    projCoords.y = projCoords.y * 0.5 + 0.5;
-    projCoords.y = 1.0 - projCoords.y;
-
-    sOut.target1 = float4(projCoords.x,projCoords.y,projCoords.z,1);
-
-    float closestDepth = lightDepthImage.Sample(shadowSampler, projCoords.xy).r;
-    float currentDepth = projCoords.z;
-    sOut.target2 = float4(closestDepth, currentDepth, abs(currentDepth - closestDepth) * 10.0, 1.0);
-    return sOut;
-}
-)");
-        m_ps->create();
         //setting up shader vs
         m_vsShadow = m_ctx->createResource<ContextResource::VertexShader>();
         m_vsShadow->addLayout(0,vertexLayout);
@@ -157,7 +57,120 @@ ShaderOut main(ShaderIn sIn) {
         m_application->renderCallBackDispatcher.trigger(callback);
     }
 
+    void Engine::settingUpLayout()
+    {
+        m_layout = new Layout(
+            m_ctx,
+            vertexLayout,
+            pixelLayout,
+            UniformSlot(
+                "base",
+                UniformVar{UniformType::MVPMatrix,"mvp"},
+                UniformVar{UniformType::Vec4,"lightPos"},
+                UniformVar{UniformType::Vec4,"viewPos"},
+                UniformVar{UniformType::Vec4,"lightDirection"},
+                UniformVar{UniformType::Int,"lightType"},
+                UniformVar{UniformType::Vec3,"ambientColor"},
+                UniformVar{UniformType::Vec3,"diffuseColor"},
+                UniformVar{UniformType::Vec3,"specularColor"},
+                UniformVar{UniformType::Float,"shininess"},
+                UniformVar{UniformType::Float,"constant"},
+                UniformVar{UniformType::Float,"linearAttenuation"},
+                UniformVar{UniformType::Float,"quadratic"},
+                UniformVar{UniformType::Float,"cutOff"}
+            ),
+            m_shadowConstLayout,
+            PassName("ObjectPass"),
+            FCT::SamplerElement{"shadowSampler"}
+        );
+        m_ps = m_layout->allocatePixelShader(
+            R"(
+float calculateShadow(float4 shadowPos, float3 normal, float3 lightDir) {
+    float3 projCoords = shadowPos.xyz / shadowPos.w;
+    //projCoords = projCoords * 0.5 + 0.5;
+    projCoords.x = projCoords.x * 0.5 + 0.5;
+    projCoords.y = projCoords.y * 0.5 + 0.5;
+    projCoords.y = 1.0 - projCoords.y;
+    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
+        return 1.0;
 
+    float currentDepth = projCoords.z;
+
+    float cosTheta = dot(normalize(normal), normalize(lightDir));
+    cosTheta = clamp(cosTheta, 0.0, 1.0);
+
+    float bias = max(0.025 * (1.0 - dot(normal, lightDir)), 0.0005);
+
+    float shadow = 0.0;
+    float2 texelSize = 1.0 / float2(2048.0, 2048.0);
+
+    for(int x = -1; x <= 1; ++x) {
+        for(int y = -1; y <= 1; ++y) {
+            float2 offset = float2(x, y) * texelSize;
+            float closestDepth = DepthFromLigth0Image.Sample(shadowSampler, projCoords.xy + offset).r;
+            shadow += (currentDepth - bias) <= closestDepth ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;  // 9个采样点的平均值
+
+    return shadow;
+}
+
+ShaderOut main(ShaderIn sIn) {
+    ShaderOut sOut;
+    float4 lightDir;
+    float attenuation = 1.0;
+    switch(lightType) {
+    case 0:
+        float distance = length(sIn.srcpos - lightPos);
+        lightDir = normalize(lightPos - sIn.srcpos);
+        attenuation = 1.0 / (constant + linearAttenuation * distance +
+                quadratic * (distance * distance));
+        break;
+    case 1:
+        lightDir = -lightDirection;
+        break;
+    case 2:
+        lightDir = normalize(lightPos - sIn.srcpos);
+        if (dot(-lightDir, lightDirection) < cutOff) {
+            attenuation = 0;
+        }
+        break;
+    }
+    float4 viewDir = normalize(viewPos - sIn.srcpos);
+    float3 halfDir = normalize(viewDir + lightDir).xyz;
+    float3 diff = max(dot(sIn.normal.xyz, lightDir.xyz), 0.0) * diffuseColor;
+    float3 spec = pow(max(dot(sIn.normal, halfDir), 0.0), shininess) * specularColor;
+    float3 ambi = ambientColor;
+    float shadow = calculateShadow(mul(lightMvp,sIn.srcpos), sIn.normal.xyz, lightDir.xyz);
+    float3 finalColor = (sIn.color.xyz * (ambi +  shadow * (spec  + diff) * attenuation));
+    sOut.target0 = float4(finalColor, 1.0);
+    float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
+
+    projCoords.x = projCoords.x * 0.5 + 0.5;
+    projCoords.y = projCoords.y * 0.5 + 0.5;
+    projCoords.y = 1.0 - projCoords.y;
+
+    sOut.target1 = float4(projCoords.x,projCoords.y,projCoords.z,1);
+
+    float closestDepth = DepthFromLigth0Image.Sample(shadowSampler, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+    sOut.target2 = float4(closestDepth, currentDepth, abs(currentDepth - closestDepth) * 10.0, 1.0);
+    return sOut;
+})");
+        m_vs = m_layout->allocateVertexShader((R"(
+ShaderOut main(ShaderIn sIn) {
+    ShaderOut sOut;
+    sOut.color = sIn.color;
+    sOut.position = mul(mvp,sIn.position);
+    sOut.texCoord = sIn.texCoord;
+    sOut.normal = sIn.normal;
+    sOut.srcpos = sIn.position;
+    sOut.shadowPos = mul(lightMvp, sIn.position);
+    return sOut;
+}
+)"));
+    }
 
     void Engine::settingUpPass()
     {
@@ -195,6 +208,7 @@ ShaderOut main(ShaderIn sIn) {
 
         BlendState* blendState = m_ctx->createResource<BlendState>();
         //blendState->blendEnable(false);
+        /*
         blendState->create();
         m_pipeline = m_ctx->createTraditionPipeline();
         m_pipeline->vertexLayout(vertexLayout);
@@ -205,6 +219,7 @@ ShaderOut main(ShaderIn sIn) {
         //m_pipeline->bindPass(m_objectPass);
         m_pipeline->bindPass(graph->getPass("ObjectPass"));
         m_pipeline->create();
+        */
         m_shadowPipeline = m_ctx->createTraditionPipeline();
         m_shadowPipeline->vertexLayout(vertexLayout);
         m_shadowPipeline->pixelLayout(pixelLayout);
@@ -230,22 +245,24 @@ ShaderOut main(ShaderIn sIn) {
 
     void Engine::settingUpUniforms()
     {
-        m_baseUniform =  new Uniform(m_ctx,constLayout);
-        m_shadowUniform = new Uniform(m_ctx,m_shadowConstLayout);
+        m_baseUniform = m_layout->allocateUniform("base");
+        m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
     }
 
     void Engine::settingPassResources()
     {
+        /*
         m_resource = m_ctx->createResource<PassResource>();
-        m_resource->addConstBuffer(*m_baseUniform);
-        m_resource->addConstBuffer(*m_shadowUniform);
+        m_resource->addConstBuffer(m_baseUniform);
+        m_resource->addConstBuffer(m_shadowUniform);
         m_resource->addTexture(m_lightDepthImage,m_resourceLayout.findTexture("lightDepthImage"));
         m_resource->addTexture(m_shadowPosTarget,m_resourceLayout.findTexture("shadowPos"));
         m_resource->addTexture(m_shadowRetTarget,m_resourceLayout.findTexture("shadowDepth"));
         m_resource->addSampler(m_shadowSampler, m_resourceLayout.findSampler("shadowSampler"));
         m_resource->create();
+        */
         m_shadowResource = m_ctx->createResource<PassResource>();
-        m_shadowResource->addConstBuffer(*m_shadowUniform);
+        m_shadowResource->addConstBuffer(m_shadowUniform);
         m_shadowResource->create();
     }
 
@@ -259,7 +276,7 @@ ShaderOut main(ShaderIn sIn) {
         syncGraph.update();
         m_wnd->swapchain()->subscribe<SwapchainEvent::Recreate>([this](SwapchainEvent::Recreate)
         {
-            m_resource->markAllDescriptorSetsNeedRecreate();
+            //m_resource->markAllDescriptorSetsNeedRecreate();
         });
     }
 
@@ -282,15 +299,27 @@ ShaderOut main(ShaderIn sIn) {
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
+            m_layout->begin();
+            m_layout->bindSampler("shadowSampler",m_shadowSampler);
+            m_layout->bindUniform(m_baseUniform);
+            m_layout->bindUniform(m_shadowUniform);
+            m_layout->bindVertexShader(m_vs);
+            m_layout->bindPixelShader(m_ps);
+            /*
             m_pipeline->bind(cmdBuf);
             m_resource->bind(cmdBuf,m_pipeline);
+            */
             cmdBuf->viewport({0,0},{1024,768});
             cmdBuf->scissor({0,0},{1024,768});
+            m_layout->drawMesh(cmdBuf, m_mesh);
+            m_layout->drawMesh(cmdBuf, m_floor);
+            m_layout->end();
             //m_autoViewport->submit(cmdBuf);
-            m_mesh->bind(cmdBuf);
+            /*m_mesh->bind(cmdBuf);
             m_mesh->draw(cmdBuf);
             m_floor->bind(cmdBuf);
             m_floor->draw(cmdBuf);
+            */
         });
         RenderCallBack::SubscribePass callback;
         callback.graph = graph;
@@ -317,28 +346,28 @@ ShaderOut main(ShaderIn sIn) {
         m_quadratic = 0.032f;
         m_cutOffAngle = 45.0f;
 
-        m_baseUniform->setValue("mvp", mvpMatrix);
-        m_baseUniform->setValue("viewPos", Vec4(40.0,40.0,-40.0,1.0));
-        m_baseUniform->setValue("ambientColor", m_ambientColor);
-        m_baseUniform->setValue("diffuseColor", m_diffuseColor);
-        m_baseUniform->setValue("specularColor", m_specularColor);
-        m_baseUniform->setValue("shininess", m_shininess);
-        m_baseUniform->setValue("constant", m_constant);
-        m_baseUniform->setValue("linearAttenuation", m_linearAttenuation);
-        m_baseUniform->setValue("quadratic", m_quadratic);
-        m_baseUniform->setValue("cutOff", cos(m_cutOffAngle * 3.1415926535f / 180.0f));
+        m_baseUniform.setValue("mvp", mvpMatrix);
+        m_baseUniform.setValue("viewPos", Vec4(40.0,40.0,-40.0,1.0));
+        m_baseUniform.setValue("ambientColor", m_ambientColor);
+        m_baseUniform.setValue("diffuseColor", m_diffuseColor);
+        m_baseUniform.setValue("specularColor", m_specularColor);
+        m_baseUniform.setValue("shininess", m_shininess);
+        m_baseUniform.setValue("constant", m_constant);
+        m_baseUniform.setValue("linearAttenuation", m_linearAttenuation);
+        m_baseUniform.setValue("quadratic", m_quadratic);
+        m_baseUniform.setValue("cutOff", cos(m_cutOffAngle * 3.1415926535f / 180.0f));
 
-        m_baseUniform->update();
+        m_baseUniform.update();
 
         //init shadow uniform value
-        m_shadowUniform->setValue("lightMvp",
+        m_shadowUniform.setValue("lightMvp",
             Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
                 m_lightPos.xyz().cross(Vec3(0,0,-1))) *
                 Mat4::Ortho(-5.0f,5.0f,
                     -5.0f, 5.0f,
                     1.0f, 7.5f));
-        m_shadowUniform->update();
+        m_shadowUniform.update();
     }
 
 
@@ -351,18 +380,18 @@ ShaderOut main(ShaderIn sIn) {
         Mat4 mat;
         mat.rotateZ(deltaTime * 90);
         m_lightPos = mat * m_lightPos;
-        m_baseUniform->setValue("lightPos", m_lightPos);
-        m_baseUniform->setValue("lightDirection", (-m_lightPos).normalize());
-        m_baseUniform->setValue("lightType",m_lightType);
-        m_baseUniform->update();
-        m_shadowUniform->setValue("lightMvp",
+        m_baseUniform.setValue("lightPos", m_lightPos);
+        m_baseUniform.setValue("lightDirection", (-m_lightPos).normalize());
+        m_baseUniform.setValue("lightType",m_lightType);
+        m_baseUniform.update();
+        m_shadowUniform.setValue("lightMvp",
             Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
                 m_lightPos.xyz().cross(Vec3(0,0,-1))) *
                 Mat4::Ortho(-5.0f,5.0f,
                     -5.0f, 5.0f,
                     1.0f, 7.5f));
-        m_shadowUniform->update();
+        m_shadowUniform.update();
         m_application->logicTicker();
         m_ctx->flush();
     }
@@ -374,6 +403,7 @@ ShaderOut main(ShaderIn sIn) {
         settingUpShaders();
         settingUpPass();
         keepImage();
+        settingUpLayout();
         settingUpShaders();
         settingUpPipeline();
         settingUpMesh();
