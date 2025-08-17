@@ -119,6 +119,7 @@ namespace MQEngine {
         FCT::Uniform m_shadowUniform;
         FCT::Uniform m_baseUniform;
         FCT::Layout* m_layout;
+        FCT::Layout* m_shadowLayout;
 
         float m_lightDistance = 40.0f;
         float m_ambientColor[3] = { 0.2f, 0.2f, 0.2f };
