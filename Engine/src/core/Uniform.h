@@ -3,11 +3,10 @@
 
 namespace MQEngine
 {
-
     struct Uniform
     {
     public:
-        Uniform(Context* ctx,ConstLayout layout)
+        Uniform(FCT::Context* ctx,FCT::ConstLayout layout)
         {
             m_uniformBuffer = new FCT::UniformBuffer(layout);
             m_constBuffer = ctx->createResource<FCT::RHI::ConstBuffer>();

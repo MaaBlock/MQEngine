@@ -34,7 +34,7 @@ function(add_copy_target_headers_custom_src target_name headers_list src_dir)
 
     set(main_header_file "${src_dir}/${target_name}.h")
     if(EXISTS ${main_header_file})
-        set(main_output_file "${CMAKE_CURRENT_SOURCE_DIR}/include/${target_name}.h")
+        set(main_output_file "${CMAKE_-CURRENT_SOURCE_DIR}/include/${target_name}.h")
         add_custom_command(
                 OUTPUT ${main_output_file}
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different

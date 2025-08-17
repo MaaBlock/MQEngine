@@ -327,7 +327,7 @@ ShaderOut main(ShaderIn sIn) {
         m_baseUniform->setValue("linearAttenuation", m_linearAttenuation);
         m_baseUniform->setValue("quadratic", m_quadratic);
         m_baseUniform->setValue("cutOff", cos(m_cutOffAngle * 3.1415926535f / 180.0f));
-        m_baseUniform->setValue("ArrayTest",std::array<float,2>({1,2}));
+
         m_baseUniform->update();
 
         //init shadow uniform value
