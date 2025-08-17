@@ -40,7 +40,7 @@ namespace MQEngine
             ),
             m_shadowConstLayout,
             PassName("ObjectPass"),
-            FCT::SamplerElement{"shadowSampler"}
+            SamplerSlot{"shadowSampler"}
         );
         m_ps = m_layout->allocatePixelShader(
             R"(
@@ -181,8 +181,6 @@ ShaderOut main(ShaderIn sIn) {
         }
     }
 
-
-
     void Engine::settingUpResources()
     {
         m_shadowSampler = m_ctx->createResource<Sampler>();
@@ -216,11 +214,11 @@ ShaderOut main(ShaderIn sIn) {
         graph->subscribe("ShadowMapPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
+            cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
+            cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
             m_shadowLayout->begin();
             m_shadowLayout->bindUniform(m_shadowUniform);
             m_shadowLayout->bindVertexShader(m_vsShadow);
-            cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-            cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
             m_shadowLayout->drawMesh(cmdBuf, m_mesh);
             m_shadowLayout->drawMesh(cmdBuf, m_floor);
             m_shadowLayout->end();
@@ -228,14 +226,14 @@ ShaderOut main(ShaderIn sIn) {
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
+            cmdBuf->viewport({0,0},{1024,768});
+            cmdBuf->scissor({0,0},{1024,768});
             m_layout->begin();
             m_layout->bindSampler("shadowSampler",m_shadowSampler);
             m_layout->bindUniform(m_baseUniform);
             m_layout->bindUniform(m_shadowUniform);
             m_layout->bindVertexShader(m_vs);
             m_layout->bindPixelShader(m_ps);
-            cmdBuf->viewport({0,0},{1024,768});
-            cmdBuf->scissor({0,0},{1024,768});
             m_layout->drawMesh(cmdBuf, m_mesh);
             m_layout->drawMesh(cmdBuf, m_floor);
             m_layout->end();
