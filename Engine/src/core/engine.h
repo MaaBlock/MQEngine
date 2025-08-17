@@ -7,8 +7,13 @@
 #include "application.h"
 #include "systemmanager.h"
 #include "layout.h"
+
+namespace FCT
+{
+    class Layout;
+}
+
 namespace MQEngine {
-    struct Uniform;
     class EngineScope;
     class ENGINE_API Engine
     {
@@ -111,9 +116,9 @@ namespace MQEngine {
 */
         FCT::RHI::RasterizationPipeline* m_shadowPipeline;
         int m_lightType = 0;
-        Uniform m_shadowUniform;
-        Uniform m_baseUniform;
-        Layout* m_layout;
+        FCT::Uniform m_shadowUniform;
+        FCT::Uniform m_baseUniform;
+        FCT::Layout* m_layout;
 
         float m_lightDistance = 40.0f;
         float m_ambientColor[3] = { 0.2f, 0.2f, 0.2f };
