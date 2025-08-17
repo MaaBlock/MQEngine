@@ -5,32 +5,7 @@ namespace MQEngine
 {
     void Engine::settingUpShaders()
     {
-        //setting up shader vs
-        m_vsShadow = m_ctx->createResource<ContextResource::VertexShader>();
-        m_vsShadow->addLayout(0,vertexLayout);
-        m_vsShadow->pixelLayout(pixelLayout);
-        m_vsShadow->addUniform(m_shadowConstLayout);
-        m_vsShadow->code(R"(
-ShaderOut main(ShaderIn sIn) {
-    ShaderOut sOut;
-    sOut.color = sIn.color;
-    sOut.position = mul(lightMvp,sIn.position);
-    sOut.texCoord = sIn.texCoord;
-    sOut.normal = sIn.normal;
-    sOut.srcpos = sIn.position;
-    return sOut;
-}
-)");
-        m_vsShadow->create();
-        m_psShadow = m_ctx->createResource<PixelShader>();
-        m_psShadow->pixelLayout(pixelLayout);
-        m_psShadow->code(R"(
-ShaderOut main(ShaderIn sIn) {
-    ShaderOut sOut;
-    return sOut;
-}
-)");
-        m_psShadow->create();
+
     }
 
     void Engine::settingUpEnv()
@@ -170,6 +145,22 @@ ShaderOut main(ShaderIn sIn) {
     return sOut;
 }
 )"));
+        m_shadowLayout = new Layout(
+            m_ctx,
+            vertexLayout,
+            m_shadowConstLayout,
+            PassName("ShadowMapPass")
+            );
+        m_vsShadow = m_shadowLayout->allocateVertexShader(R"(
+ShaderOut main(ShaderIn sIn) {
+    ShaderOut sOut;
+    sOut.color = sIn.color;
+    sOut.position = mul(lightMvp,sIn.position);
+    sOut.texCoord = sIn.texCoord;
+    sOut.normal = sIn.normal;
+    return sOut;
+}
+)");
     }
 
     void Engine::settingUpPass()
@@ -202,33 +193,6 @@ ShaderOut main(ShaderIn sIn) {
 
     void Engine::settingUpPipeline()
     {
-        auto graph = m_ctx->getModule<RenderGraph>();
-        //RasterizationState* state = m_ctx->create;
-        //setting up pipeline
-
-        BlendState* blendState = m_ctx->createResource<BlendState>();
-        //blendState->blendEnable(false);
-        /*
-        blendState->create();
-        m_pipeline = m_ctx->createTraditionPipeline();
-        m_pipeline->vertexLayout(vertexLayout);
-        m_pipeline->pixelLayout(pixelLayout);
-        m_pipeline->addResources(m_vs);
-        m_pipeline->addResources(m_ps);
-        //m_pipeline->addResources(blendState);
-        //m_pipeline->bindPass(m_objectPass);
-        m_pipeline->bindPass(graph->getPass("ObjectPass"));
-        m_pipeline->create();
-        */
-        m_shadowPipeline = m_ctx->createTraditionPipeline();
-        m_shadowPipeline->vertexLayout(vertexLayout);
-        m_shadowPipeline->pixelLayout(pixelLayout);
-        m_shadowPipeline->addResources(m_vsShadow);
-        m_shadowPipeline->addResources(m_psShadow);
-        //m_shadowPipeline->addResources(blendState);
-        //m_shadowPipeline->bindPass(m_lightDepthPass);
-        m_shadowPipeline->bindPass(graph->getPass("ShadowMapPass"));
-        m_shadowPipeline->create();
         m_shadowSampler = m_ctx->createResource<Sampler>();
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
@@ -251,19 +215,7 @@ ShaderOut main(ShaderIn sIn) {
 
     void Engine::settingPassResources()
     {
-        /*
-        m_resource = m_ctx->createResource<PassResource>();
-        m_resource->addConstBuffer(m_baseUniform);
-        m_resource->addConstBuffer(m_shadowUniform);
-        m_resource->addTexture(m_lightDepthImage,m_resourceLayout.findTexture("lightDepthImage"));
-        m_resource->addTexture(m_shadowPosTarget,m_resourceLayout.findTexture("shadowPos"));
-        m_resource->addTexture(m_shadowRetTarget,m_resourceLayout.findTexture("shadowDepth"));
-        m_resource->addSampler(m_shadowSampler, m_resourceLayout.findSampler("shadowSampler"));
-        m_resource->create();
-        */
-        m_shadowResource = m_ctx->createResource<PassResource>();
-        m_shadowResource->addConstBuffer(m_shadowUniform);
-        m_shadowResource->create();
+
     }
 
     void Engine::settingUpSync()
@@ -287,14 +239,14 @@ ShaderOut main(ShaderIn sIn) {
         graph->subscribe("ShadowMapPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
-            m_shadowPipeline->bind(cmdBuf);
-            m_shadowResource->bind(cmdBuf,m_shadowPipeline);
+            m_shadowLayout->begin();
+            m_shadowLayout->bindUniform(m_shadowUniform);
+            m_shadowLayout->bindVertexShader(m_vsShadow);
             cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
             cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-            m_mesh->bind(cmdBuf);
-            m_mesh->draw(cmdBuf);
-            m_floor->bind(cmdBuf);
-            m_floor->draw(cmdBuf);
+            m_shadowLayout->drawMesh(cmdBuf, m_mesh);
+            m_shadowLayout->drawMesh(cmdBuf, m_floor);
+            m_shadowLayout->end();
         });
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
         {
