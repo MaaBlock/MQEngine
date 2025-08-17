@@ -3,11 +3,6 @@
 
 namespace MQEngine
 {
-    void Engine::settingUpShaders()
-    {
-
-    }
-
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
@@ -20,17 +15,6 @@ namespace MQEngine
         m_application->global.ctx = m_ctx;
     }
 
-    void Engine::keepImage()
-    {
-        auto graph = m_ctx->getModule<RenderGraph>();
-        m_lightDepthImage = graph->getImage("DepthFromLigth0Image");
-        m_shadowPosTarget = graph->getImage("PosTarget");
-        m_shadowRetTarget = graph->getImage("RetTarget");
-        m_sceneColorTarget = graph->getImage("SceneColorTarget");
-        RenderCallBack::KeepImage callback;
-        callback.graph = graph;
-        m_application->renderCallBackDispatcher.trigger(callback);
-    }
 
     void Engine::settingUpLayout()
     {
@@ -184,39 +168,37 @@ ShaderOut main(ShaderIn sIn) {
             Target("RetTarget"),
             DepthStencil("SceneDepthTarget",Format::D32_SFLOAT)
             );
-        RenderCallBack::SettingUpPass callback;
-        callback.graph = graph;
-        m_application->renderCallBackDispatcher.trigger(callback);
+        {
+            RenderCallBack::SettingUpPass callback;
+            callback.graph = graph;
+            m_application->renderCallBackDispatcher.trigger(callback);
+        }
         graph->compile();
+        {
+            RenderCallBack::KeepImage callback;
+            callback.graph = graph;
+            m_application->renderCallBackDispatcher.trigger(callback);
+        }
     }
 
 
-    void Engine::settingUpPipeline()
+
+    void Engine::settingUpResources()
     {
         m_shadowSampler = m_ctx->createResource<Sampler>();
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
-    }
 
-    void Engine::settingUpMesh()
-    {
         //setting up mesh
         m_mesh = m_ctx->loadMesh(
             "ball.obj","ball",vertexLayout);
         m_floor = m_ctx->loadMesh(
             "ball.obj","floor",vertexLayout);
-    }
 
-    void Engine::settingUpUniforms()
-    {
         m_baseUniform = m_layout->allocateUniform("base");
         m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
     }
 
-    void Engine::settingPassResources()
-    {
-
-    }
 
     void Engine::settingUpSync()
     {
@@ -226,15 +208,10 @@ ShaderOut main(ShaderIn sIn) {
         };
         m_application->renderCallBackDispatcher.trigger(callback);
         syncGraph.update();
-        m_wnd->swapchain()->subscribe<SwapchainEvent::Recreate>([this](SwapchainEvent::Recreate)
-        {
-            //m_resource->markAllDescriptorSetsNeedRecreate();
-        });
     }
 
     void Engine::settingUpSubmitTicker()
     {
-
         auto graph = m_ctx->getModule<RenderGraph>();
         graph->subscribe("ShadowMapPass",[this](PassSubmitEvent env)
         {
@@ -257,21 +234,11 @@ ShaderOut main(ShaderIn sIn) {
             m_layout->bindUniform(m_shadowUniform);
             m_layout->bindVertexShader(m_vs);
             m_layout->bindPixelShader(m_ps);
-            /*
-            m_pipeline->bind(cmdBuf);
-            m_resource->bind(cmdBuf,m_pipeline);
-            */
             cmdBuf->viewport({0,0},{1024,768});
             cmdBuf->scissor({0,0},{1024,768});
             m_layout->drawMesh(cmdBuf, m_mesh);
             m_layout->drawMesh(cmdBuf, m_floor);
             m_layout->end();
-            //m_autoViewport->submit(cmdBuf);
-            /*m_mesh->bind(cmdBuf);
-            m_mesh->draw(cmdBuf);
-            m_floor->bind(cmdBuf);
-            m_floor->draw(cmdBuf);
-            */
         });
         RenderCallBack::SubscribePass callback;
         callback.graph = graph;
@@ -352,16 +319,10 @@ ShaderOut main(ShaderIn sIn) {
     {
         m_application = application;
         settingUpEnv();
-        settingUpShaders();
         settingUpPass();
-        keepImage();
         settingUpLayout();
-        settingUpShaders();
-        settingUpPipeline();
-        settingUpMesh();
-        settingUpUniforms();
+        settingUpResources();
         initUniformValue();
-        settingPassResources();
         settingUpSubmitTicker();
         settingUpSync();
     }
