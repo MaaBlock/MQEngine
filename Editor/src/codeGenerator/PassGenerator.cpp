@@ -3,6 +3,7 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#define NOMINMAX
 #include <Windows.h>
 #define TEXT(str) (const char*)u8##str
 
@@ -160,6 +161,7 @@ namespace MQEngine {
         }
     }
 
+
     void PassGenerator::render()
     {
         ImGui::Begin(TEXT("Pass代码生成器"));
@@ -223,6 +225,36 @@ namespace MQEngine {
         bool isEdtorHover = ImNodes::IsEditorHovered();
         ImNodes::MiniMap();
         ImNodes::EndNodeEditor();
+
+        ImGui::Separator();
+
+        // 代码生成按钮
+        if (ImGui::Button(TEXT("生成代码")))
+        {
+            m_generatedCode = generatorCode();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(TEXT("清空代码")))
+        {
+            m_generatedCode.clear();
+        }
+
+        // 代码展示区域
+        if (!m_generatedCode.empty())
+        {
+            ImGui::SameLine();
+            if (ImGui::Button(TEXT("复制到剪贴板")))
+            {
+                ImGui::SetClipboardText(m_generatedCode.c_str());
+            }
+
+            ImGui::Text(TEXT("生成的代码:"));
+
+            ImGui::BeginChild("CodeDisplay", ImVec2(0, 400), true, ImGuiWindowFlags_HorizontalScrollbar);
+            ImGui::TextUnformatted(m_generatedCode.c_str());
+            ImGui::EndChild();
+        }
+
         int startAttr, endAttr;
         if (ImNodes::IsLinkCreated(&startAttr, &endAttr))
         {
@@ -360,9 +392,10 @@ namespace MQEngine {
         PassNode newPass;
         newPass.id = getNextNodeId();
         newPass.name = name + " " + std::to_string(newPass.id);
-        newPass.enableClear = true;
-        newPass.clearTarget = true;
-        newPass.clearDepthStencil = true;
+        newPass.enableClear = false;
+        newPass.enableClearDepth = false;
+        newPass.enableClearStencil = true;
+        newPass.enableClearTarget = true;
 
         m_passes[newPass.id] = newPass;
         newTexturePin(m_passes[newPass.id]);
@@ -423,15 +456,181 @@ namespace MQEngine {
             std::cout << "保存失败: " << e.what() << std::endl;
         }
     }
+    std::string PassGenerator::generatePassCode(const PassNode& pass)
+    {
+        std::string code;
 
-void PassGenerator::loadFromFile(const std::string& filename)
+        code += "graph->addPass(\n";
+        code += "    \"" + pass.name + "\",\n";
+        for (int texturePin : pass.texturePins)
+        {
+            if (m_passInputLinks.count(texturePin))
+            {
+                auto linkInfo = m_passInputLinks.at(texturePin);
+                auto startPinInfo = m_pinInfoMap.at(linkInfo.startPinId);
+
+                if (m_images.count(startPinInfo.nodeId))
+                {
+                    auto& sourceImage = m_images.at(startPinInfo.nodeId);
+                    code += "    Texture(\"" + sourceImage.name + "\"),\n";
+                }
+            }
+        }
+        if (pass.enableClear && (pass.enableClearDepth || pass.enableClearStencil || pass.enableClearTarget))
+        {
+            std::string clearType;
+            std::vector<std::string> clearTypes;
+
+            if (pass.enableClearTarget)
+            {
+                clearTypes.push_back("ClearType::color");
+            }
+            if (pass.enableClearDepth)
+            {
+                clearTypes.push_back("ClearType::depth");
+            }
+            if (pass.enableClearStencil)
+            {
+                clearTypes.push_back("ClearType::stencil");
+            }
+
+            if (clearTypes.size() == 1)
+            {
+                clearType = clearTypes[0];
+            }
+            else if (clearTypes.size() > 1)
+            {
+                clearType = clearTypes[0];
+                for (size_t i = 1; i < clearTypes.size(); ++i)
+                {
+                    clearType += " | " + clearTypes[i];
+                }
+            }
+            code += "    EnablePassClear(" + clearType;
+
+            bool needColorParam = pass.enableClearTarget &&
+                !(pass.clearColor[0] == 0.0f && pass.clearColor[1] == 0.0f &&
+                  pass.clearColor[2] == 0.0f && pass.clearColor[3] == 1.0f);
+
+            bool needDepthParam = pass.enableClearDepth && (pass.clearDepth != 1.0f);
+
+            bool needStencilParam = pass.enableClearStencil && (pass.clearStencil != 0);
+
+            if (needColorParam)
+            {
+                code += ",\n        Vec4(" + std::to_string(pass.clearColor[0]) + ","
+                        + std::to_string(pass.clearColor[1]) + ","
+                        + std::to_string(pass.clearColor[2]) + ","
+                        + std::to_string(pass.clearColor[3]) + ")";
+            }
+
+            if (needDepthParam)
+            {
+                code += needColorParam ? "," : ",";
+                code += std::to_string(pass.clearDepth) + "f";
+            }
+
+            if (needStencilParam)
+            {
+                code += (needColorParam || needDepthParam) ? "," : ",";
+                code += std::to_string(pass.clearStencil);
+            }
+
+            code += "),\n";
+        }
+        for (int i = 0; i < 9; ++i)
+        {
+            uint32_t targetPinId = generatePinId(pass.id, "target", i);
+            if (m_passOutputlinks.count(targetPinId))
+            {
+                auto linkInfo = m_passOutputlinks.at(targetPinId);
+                auto endPinInfo = m_pinInfoMap.at(linkInfo.endPinId);
+
+                if (m_images.count(endPinInfo.nodeId))
+                {
+                    auto& targetImage = m_images.at(endPinInfo.nodeId);
+                    const auto& targetConfig = pass.targetDesc[i];
+
+                    code += "    Target(\"" + targetImage.name + "\"";
+
+                    if (targetConfig.enabled)
+                    {
+                        if (targetConfig.useCustomSize)
+                        {
+                            code += "," + std::to_string(targetConfig.customWidth)
+                                    + ", " + std::to_string(targetConfig.customHeight);
+                        }
+
+                        if (targetConfig.useCustomFormat)
+                        {
+                            code += ", Format::" + targetConfig.format;
+                        }
+                    }
+
+                    code += "),\n";
+                }
+            }
+        }
+
+        uint32_t depthPinId = generatePinId(pass.id, "depth");
+        if (m_passOutputlinks.count(depthPinId))
+        {
+            auto linkInfo = m_passOutputlinks.at(depthPinId);
+            auto endPinInfo = m_pinInfoMap.at(linkInfo.endPinId);
+
+            if (m_images.count(endPinInfo.nodeId))
+            {
+                auto& depthImage = m_images.at(endPinInfo.nodeId);
+                const auto& depthConfig = pass.depthStencilDesc;
+
+                code += "    DepthStencil(\"" + depthImage.name + "\"";
+
+                if (depthConfig.enabled)
+                {
+                    if (depthConfig.useCustomSize)
+                    {
+                        code += "," + std::to_string(depthConfig.customWidth)
+                                + "," + std::to_string(depthConfig.customHeight);
+                    }
+
+                    if (depthConfig.useCustomFormat)
+                    {
+                        code += ",\n        Format::" + depthConfig.format;
+                    }
+                }
+                code += " )\n";
+            }
+        }
+
+        if (code.back() == '\n' && code[code.length()-2] == ',')
+        {
+            code = code.substr(0, code.length()-2) + "\n";
+        }
+
+        code += "    );\n\n";
+
+        return code;
+    }
+    std::string PassGenerator::generatorCode()
+    {
+        std::string code;
+
+        for (const auto& [passId, pass] : m_passes)
+        {
+            code += generatePassCode(pass);
+        }
+
+        return code;
+    }
+
+    void PassGenerator::loadFromFile(const std::string& filename)
     {
         try
         {
             std::ifstream ifs(filename);
             if (!ifs.is_open())
             {
-                std::cout << "❌ 无法打开文件: " << filename << std::endl;
+                std::cout << "无法打开文件: " << filename << std::endl;
                 return;
             }
 
@@ -476,16 +675,23 @@ void PassGenerator::loadFromFile(const std::string& filename)
 
         ImNodes::BeginNode(pass.id);
 
-        ImGui::PushItemWidth(150);
-        // 节点标题
         ImNodes::BeginNodeTitleBar();
         char nameBuffer[256];
         strcpy_s(nameBuffer, pass.name.c_str());
+
+        float currentTextWidth = ImGui::CalcTextSize(nameBuffer).x;
+        float inputWidth = std::max(currentTextWidth + 30.0f, 120.0f); // 最小120px
+
+        ImGui::SetNextItemWidth(inputWidth);
         if (ImGui::InputText("##PassName", nameBuffer, sizeof(nameBuffer)))
         {
             pass.name = nameBuffer;
         }
         ImNodes::EndNodeTitleBar();
+
+        float contentWidth = std::max(inputWidth, 150.0f);
+
+        ImGui::PushItemWidth(contentWidth);
         for (auto texturePin : pass.texturePins)
         {
             ImNodes::BeginInputAttribute(texturePin);
@@ -497,16 +703,20 @@ void PassGenerator::loadFromFile(const std::string& filename)
         ImGui::Checkbox(TEXT("开启Clear"), &pass.enableClear);
         if (pass.enableClear)
         {
-            ImGui::Checkbox("Clear Target", &pass.clearTarget);
-            if (pass.clearTarget)
+            ImGui::Checkbox("Clear Target", &pass.enableClearTarget);
+            if (pass.enableClearTarget)
             {
                 ImGui::ColorEdit4(TEXT("颜色"), pass.clearColor);
             }
 
-            ImGui::Checkbox("Clear Depth/Stencil", &pass.clearDepthStencil);
-            if (pass.clearDepthStencil)
+            ImGui::Checkbox("Clear Depth", &pass.enableClearDepth);
+            if (pass.enableClearDepth)
             {
                 ImGui::SliderFloat(TEXT("深度值"), &pass.clearDepth, 0.0f, 1.0f);
+            }
+            ImGui::Checkbox("Clear Stencil", &pass.enableClearStencil);
+            if (pass.enableClearStencil)
+            {
                 ImGui::SliderInt(TEXT("模板值"), &pass.clearStencil, 0, 255);
             }
         }
@@ -652,16 +862,23 @@ void PassGenerator::loadFromFile(const std::string& filename)
 
         ImNodes::BeginNode(image.id);
 
-        ImGui::PushItemWidth(80);
-        // 节点标题
         ImNodes::BeginNodeTitleBar();
         char nameBuffer[256];
         strcpy_s(nameBuffer, image.name.c_str());
+
+        // 计算标题宽度
+        float titleWidth = ImGui::CalcTextSize(nameBuffer).x + 30.0f;
+        float minWidth = std::max(titleWidth, 100.0f);
+
+        ImGui::SetNextItemWidth(minWidth);
         if (ImGui::InputText("##ImageName", nameBuffer, sizeof(nameBuffer)))
         {
             image.name = nameBuffer;
         }
         ImNodes::EndNodeTitleBar();
+
+        // 调整内容宽度
+        ImGui::PushItemWidth(std::max(minWidth - 20.0f, 80.0f));
 
         // 输入pins
         uint32_t targetInputPinId = generatePinId(image.id, "target", 0);
