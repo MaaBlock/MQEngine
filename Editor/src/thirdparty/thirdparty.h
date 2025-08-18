@@ -8,4 +8,5 @@
 #include <FCT_Node.h>
 #include <FCT.h>
 #include <FCT_IMGUI.h>
+#include <imnodes.h>
 #endif //THIRDPARTY_H

@@ -13,6 +13,7 @@ namespace MQEngine
         m_autoViewport = m_wnd->getModule<WindowModule::AutoViewport>();
         m_application->global.wnd = m_wnd;
         m_application->global.ctx = m_ctx;
+        m_application->init();
     }
 
 
@@ -155,8 +156,8 @@ ShaderOut main(ShaderIn sIn) {
             EnablePassClear(ClearType::depth,1.0f),
             DepthStencil("DepthFromLigth0Image",
                 2048,2048,
-                Format::D32_SFLOAT,
-                Samples::sample_1
+                Format::D32_SFLOAT
+                //Samples::sample_1
                 ));
         graph->addPass(
             "ObjectPass",
@@ -247,7 +248,7 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::initUniformValue()
     {
         //init base uniform value
-        Mat4 view = Mat4::LookAt(Vec3(40,40,-40), Vec3(0,0,0), Vec3(0,-1,0));
+        Mat4 view = Mat4::LookAt(Vec3(40,40,-40), Vec3(0,0,0), Vec3(0,1,0));
         Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0);;
         Mat4 modelMatrix = Mat4();
         Mat4 mvpMatrix =  view * proj * modelMatrix;
@@ -309,7 +310,7 @@ ShaderOut main(ShaderIn sIn) {
                     -5.0f, 5.0f,
                     1.0f, 7.5f));
         m_shadowUniform.update();
-        m_application->logicTicker();
+        m_application->logicTick();
         m_ctx->flush();
     }
 
