@@ -126,7 +126,7 @@ ShaderOut main(ShaderIn sIn) {
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     sOut.srcpos = sIn.position;
-    sOut.shadowPos = mul(lightMvp, sIn.position);
+    sOut.shadowPos = sIn.position * lightMvp;
     return sOut;
 }
 )"));
@@ -140,7 +140,7 @@ ShaderOut main(ShaderIn sIn) {
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
-    sOut.position = mul(lightMvp,sIn.position);
+    sOut.position = sIn.position * lightMvp ;
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     return sOut;
@@ -279,12 +279,11 @@ ShaderOut main(ShaderIn sIn) {
 
         //init shadow uniform value
         m_shadowUniform.setValue("lightMvp",
-            Mat4::LookAt(m_lightPos.xyz(),
+            Mat4::Ortho(-5.0f,5.0f,
+                -5.0f, 5.0f,
+                1.0f, 7.5f) * Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
-                m_lightPos.xyz().cross(Vec3(0,0,-1))) *
-                Mat4::Ortho(-5.0f,5.0f,
-                    -5.0f, 5.0f,
-                    1.0f, 7.5f));
+                m_lightPos.xyz().cross(Vec3(0,0,-1))));
         m_shadowUniform.update();
     }
 
