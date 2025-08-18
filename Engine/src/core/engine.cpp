@@ -122,11 +122,11 @@ ShaderOut main(ShaderIn sIn) {
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
-    sOut.position = sIn.position * mvp;
+    sOut.position = mvp * sIn.position;
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     sOut.srcpos = sIn.position;
-    sOut.shadowPos = sIn.position * lightMvp;
+    sOut.shadowPos = lightMvp * sIn.position;
     return sOut;
 }
 )"));
@@ -140,7 +140,7 @@ ShaderOut main(ShaderIn sIn) {
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
-    sOut.position = sIn.position * lightMvp ;
+    sOut.position = lightMvp * sIn.position ;
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     return sOut;
