@@ -122,7 +122,7 @@ ShaderOut main(ShaderIn sIn) {
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
-    sOut.position = mul(mvp,sIn.position);
+    sOut.position = sIn.position * mvp;
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     sOut.srcpos = sIn.position;
@@ -251,7 +251,7 @@ ShaderOut main(ShaderIn sIn) {
         Mat4 view = Mat4::LookAt(Vec3(40,40,-40), Vec3(0,0,0), Vec3(0,1,0));
         Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0);;
         Mat4 modelMatrix = Mat4();
-        Mat4 mvpMatrix =  view * proj * modelMatrix;
+        Mat4 mvpMatrix = proj *  view  * modelMatrix;
         m_lightPos = Vec4(40,0,0,1);
 
         m_lightDistance = 40.0f;

@@ -42,7 +42,7 @@ namespace MQEngine {
     {
         bool enabled = false;
         bool useCustomFormat = false;
-        std::string format = "D24S8";
+        std::string format = "D32_SFLOAT";
         bool useCustomSize = false;
         int customWidth = 1920;
         int customHeight = 1080;
@@ -62,8 +62,9 @@ namespace MQEngine {
         DepthStencilDesc depthStencilDesc;
         std::map<uint32_t, TextureDesc> texturesDesc;
         bool enableClear = false;
-        bool clearTarget = false;
-        bool clearDepthStencil = false;
+        bool enableClearTarget = false;
+        bool enableClearDepth = false;
+        bool enableClearStencil = false;
         float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
         float clearDepth = 1.0f;
         int clearStencil = 0;
@@ -80,7 +81,7 @@ namespace MQEngine {
         void serialize(Archive & ar, const unsigned int version)
         {
             ar & id & name & hasLinkTarget & hasLinkDepthStencil & targetDesc & depthStencilDesc;
-            ar & texturesDesc & enableClear & clearTarget & clearDepthStencil;
+            ar & texturesDesc & enableClear & enableClearTarget & enableClearDepth & enableClearStencil;
             ar & clearColor & clearDepth & clearStencil & texturePins & texturePinIndex;
         }
 
@@ -132,6 +133,8 @@ namespace MQEngine {
         void removeTexturePin();
         void addImageNode(const std::string& name = "Image");
         void saveToFile(const std::string& filename);
+        std::string generatePassCode(const PassNode& pass);
+        std::string generatorCode();
 
     private:
         size_t m_nextNodeId = 0;
@@ -158,6 +161,7 @@ namespace MQEngine {
             ar & m_passes & m_images & m_pinInfoMap;
         }
         friend class boost::serialization::access;
+        std::string m_generatedCode;
     };
 
 }
