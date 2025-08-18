@@ -37,8 +37,20 @@ namespace MQEngine {
             FCT::Context* ctx;
             FCT::Window* wnd;
         } global;
+
+        /**
+         * @brief 获取RenderConfig，创建窗口前调用
+         * @return
+         */
         virtual RenderConfig renderConfig() const = 0;
-        virtual void logicTicker() = 0;
+        /**
+         * @brief 创建完窗口和Context后 调用
+         */
+        virtual void init() = 0;
+        /*
+         * @brief 逻辑 tick
+         */
+        virtual void logicTick() = 0;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> renderCallBackDispatcher;
     };
 }

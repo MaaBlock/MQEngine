@@ -6,14 +6,16 @@
 #define EDITORAPPLICATION_H
 #include "../thirdparty/thirdparty.h"
 #include <Engine/headers.h>
+#include "../imgui/UiManager.h"
+#include "./Global.h"
 namespace MQEngine
 {
+
     class EditorApplication : public Application
     {
     public:
         EditorApplication()
         {
-            settingRenderCallBack();
         }
         RenderConfig renderConfig() const override
         {
@@ -22,14 +24,16 @@ namespace MQEngine
                 .windowTitle = "MQEngine Editor",
             };
         }
+        void init() override;
         void settingRenderCallBack();
-        void logicTicker() override;
+        void logicTick() override;
         void settingUpImgui();
         void imguiLogicTick();
 
     private:
         FCT::ImguiContext* m_imguiCtx;
         FCT::ImguiModule imguiModule;
+        UiManager uiManager;
     };
 }
 
