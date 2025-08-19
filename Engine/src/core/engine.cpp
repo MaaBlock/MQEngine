@@ -102,7 +102,7 @@ ShaderOut main(ShaderIn sIn) {
     float3 diff = max(dot(sIn.normal.xyz, lightDir.xyz), 0.0) * diffuseColor;
     float3 spec = pow(max(dot(sIn.normal, halfDir), 0.0), shininess) * specularColor;
     float3 ambi = ambientColor;
-    float shadow = calculateShadow(mul(lightMvp,sIn.srcpos), sIn.normal.xyz, lightDir.xyz);
+    float shadow = calculateShadow(lightMvp * sIn.srcpos, sIn.normal.xyz, lightDir.xyz);
     float3 finalColor = (sIn.color.xyz * (ambi +  shadow * (spec  + diff) * attenuation));
     sOut.target0 = float4(finalColor, 1.0);
     float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
@@ -248,11 +248,11 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::initUniformValue()
     {
         //init base uniform value
-        Mat4 view = Mat4::LookAt(Vec3(40,40,-40), Vec3(0,0,0), Vec3(0,1,0));
+        Mat4 view = Mat4::LookAt(Vec3(40,40,40), Vec3(0,0,0), Vec3(0,1,0));
         Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0);;
         Mat4 modelMatrix = Mat4();
         Mat4 mvpMatrix = proj *  view  * modelMatrix;
-        m_lightPos = Vec4(40,0,0,1);
+        m_lightPos = Vec4(200,0,0,1);
 
         m_lightDistance = 40.0f;
         m_ambientColor[0] = m_ambientColor[1] = m_ambientColor[2] = 0.2f;
@@ -265,7 +265,7 @@ ShaderOut main(ShaderIn sIn) {
         m_cutOffAngle = 45.0f;
 
         m_baseUniform.setValue("mvp", mvpMatrix);
-        m_baseUniform.setValue("viewPos", Vec4(40.0,40.0,-40.0,1.0));
+        m_baseUniform.setValue("viewPos", Vec4(40.0,40.0,40.0,1.0));
         m_baseUniform.setValue("ambientColor", m_ambientColor);
         m_baseUniform.setValue("diffuseColor", m_diffuseColor);
         m_baseUniform.setValue("specularColor", m_specularColor);
@@ -279,9 +279,9 @@ ShaderOut main(ShaderIn sIn) {
 
         //init shadow uniform value
         m_shadowUniform.setValue("lightMvp",
-            Mat4::Ortho(-5.0f,5.0f,
-                -5.0f, 5.0f,
-                1.0f, 7.5f) * Mat4::LookAt(m_lightPos.xyz(),
+            Mat4::Ortho(-25.0f,25.0f,
+                -25.0f, 25.0f,
+                1.0f, 25.0f) * Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
                 m_lightPos.xyz().cross(Vec3(0,0,-1))));
         m_shadowUniform.update();
@@ -302,12 +302,13 @@ ShaderOut main(ShaderIn sIn) {
         m_baseUniform.setValue("lightType",m_lightType);
         m_baseUniform.update();
         m_shadowUniform.setValue("lightMvp",
-            Mat4::LookAt(m_lightPos.xyz(),
+        Mat4::Ortho(-75.0f,75.0f,
+            -75.0f, 75.0f,
+            1.0f, 300.0f) * Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
-                m_lightPos.xyz().cross(Vec3(0,0,-1))) *
-                Mat4::Ortho(-5.0f,5.0f,
-                    -5.0f, 5.0f,
-                    1.0f, 7.5f));
+                //m_lightPos.xyz().cross(Vec3(0,0,-1))
+                Vec3(0,1,0)
+                ));
         m_shadowUniform.update();
         m_application->logicTick();
         m_ctx->flush();
