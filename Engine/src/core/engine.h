@@ -68,7 +68,7 @@ namespace MQEngine {
         FCT::RHI::ConstBuffer* m_constBuffer;
         FCT::Vec4 m_lightPos;
         FCT::AutoViewport* m_autoViewport;
-        int m_lightType = 0;
+        int m_lightType = 1;
         FCT::Uniform m_shadowUniform;
         FCT::Uniform m_baseUniform;
         FCT::Layout* m_layout;
