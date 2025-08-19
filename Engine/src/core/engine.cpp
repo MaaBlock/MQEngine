@@ -249,7 +249,7 @@ ShaderOut main(ShaderIn sIn) {
     {
         //init base uniform value
         Mat4 view = Mat4::LookAt(Vec3(40,40,40), Vec3(0,0,0), Vec3(0,1,0));
-        Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0);;
+        Mat4 proj = Mat4::Perspective(90, 800.0f / 600.0f, 0.1f, 250.0);;
         Mat4 modelMatrix = Mat4();
         Mat4 mvpMatrix = proj *  view  * modelMatrix;
         m_lightPos = Vec4(200,0,0,1);
@@ -306,8 +306,8 @@ ShaderOut main(ShaderIn sIn) {
             -75.0f, 75.0f,
             1.0f, 300.0f) * Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
-                //m_lightPos.xyz().cross(Vec3(0,0,-1))
-                Vec3(0,1,0)
+                m_lightPos.xyz().cross(Vec3(0,0,-1))
+                //Vec3(0,1,0)
                 ));
         m_shadowUniform.update();
         m_application->logicTick();
