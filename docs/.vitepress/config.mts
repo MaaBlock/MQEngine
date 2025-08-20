@@ -7,6 +7,7 @@ import mermaid from "mermaid";
 export default defineConfig({
   title: "MQEngine",
   description: "Document for MQEngine",
+    ignoreDeadLinks: true,
     base: '/MQEngine/',
     markdown: {
       config(md) {
