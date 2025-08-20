@@ -28,6 +28,7 @@ export default defineConfig({
     nav: [
       { text: '主页', link: '/' },
       { text: '文档', link: '/document/index.md'},
+      { text: 'api', link: '/api/html/index.html',target: '_blank' },
     ],
 
     sidebar: [
