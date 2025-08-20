@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/core/engine.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('core_2engine_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">engine.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="core_2engine_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> *@file engine.h</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ENGINE_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ENGINE_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="application_8h.html">application.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="systemmanager_8h.html">systemmanager.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="layout_8h.html">layout.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="namespace_f_c_t.html">   11</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_f_c_t.html">FCT</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">class </span>Layout;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
+</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">class </span>EngineScope;</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_engine.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_define" href="headers_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">   21</a></span>        <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04">   22</a></span>        <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>&amp; <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#a8961b721f7d07296d06aaf5b4d44b51f">loop</a>();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keyword">static</span> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>&amp; <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ab179cb6100ba6c6517016976348f10f1">getInstance</a>();</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_engine.html#a656eae89cf2da0fa32509b893f88ab78">   25</a></span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="class_m_q_engine_1_1_engine.html#a656eae89cf2da0fa32509b893f88ab78">EngineScope</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">void</span> init(<a class="code hl_class" href="class_m_q_engine_1_1_application.html">Application</a>* application);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">void</span> term();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">void</span> settingUpEnv();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">void</span> settingUpLayout();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">void</span> settingUpPass();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordtype">void</span> settingUpResources();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordtype">void</span> settingUpSync();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> settingUpSubmitTicker();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordtype">void</span> initUniformValue();</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordtype">void</span> logicTick();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">~Engine</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">static</span> <a class="code hl_function" href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">Engine</a>* s_instance;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_class" href="class_m_q_engine_1_1_application.html">Application</a>* m_application;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        FCT::Runtime m_rt;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_class" href="class_m_q_engine_1_1_system_manager.html">SystemManager</a> m_systemManager;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        FCT::Window* m_wnd;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        FCT::Context* m_ctx;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        FCT::StaticMesh&lt;uint32_t&gt;* m_mesh;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        FCT::StaticMesh&lt;uint32_t&gt;* m_floor;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        FCT::VertexLayout vertexLayout = {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            FCT::VertexElement{FCT::VtxType::Color4f,<span class="stringliteral">&quot;color&quot;</span>},</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            FCT::VertexElement{FCT::VtxType::Position4f,<span class="stringliteral">&quot;position&quot;</span>},</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            FCT::VertexElement{FCT::VtxType::TexCoord2f,<span class="stringliteral">&quot;texCoord&quot;</span>},</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            FCT::VertexElement{FCT::VtxType::Normal3f,<span class="stringliteral">&quot;normal&quot;</span>},</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        };</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        FCT::PixelLayout pixelLayout = {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            FCT::VertexElement{FCT::VtxType::Custom,<span class="stringliteral">&quot;srcpos&quot;</span>,FCT::Format::R32G32B32A32_SFLOAT},</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            FCT::VertexElement{FCT::VtxType::Custom,<span class="stringliteral">&quot;shadowPos&quot;</span>,FCT::Format::R32G32B32A32_SFLOAT},</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            vertexLayout</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        };</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        FCT::Sampler* m_shadowSampler;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        FCT::VertexShader* m_vs;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        FCT::PixelShader* m_ps;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        FCT::VertexShader* m_vsShadow;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        FCT::ConstLayout m_shadowConstLayout = {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="stringliteral">&quot;ShadowUniform&quot;</span>,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            FCT::ConstElement{FCT::ConstType::MVPMatrix,<span class="stringliteral">&quot;lightMvp&quot;</span>},</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        };</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        FCT::RHI::RasterizationPipeline* m_pipeline;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        FCT::UniformBuffer* m_uniform;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        FCT::RHI::ConstBuffer* m_constBuffer;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        FCT::Vec4 m_lightPos;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        FCT::AutoViewport* m_autoViewport;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordtype">int</span> m_lightType = 1;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        FCT::Uniform m_shadowUniform;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        FCT::Uniform m_baseUniform;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        FCT::Layout* m_layout;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        FCT::Layout* m_shadowLayout;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">float</span> m_lightDistance = 40.0f;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordtype">float</span> m_ambientColor[3] = { 0.2f, 0.2f, 0.2f };</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordtype">float</span> m_diffuseColor[3] = { 0.5f, 0.5f, 0.5f };</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordtype">float</span> m_specularColor[3] = { 1.0f, 1.0f, 1.0f };</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordtype">float</span> m_shininess = 32.0f;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordtype">float</span> m_constant = 1.0f;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordtype">float</span> m_linearAttenuation = 0.09f;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordtype">float</span> m_quadratic = 0.032f;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordtype">float</span> m_cutOffAngle = 45.0f;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    };</div>
+</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <a class="code hl_define" href="headers_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="namespace_m_q_engine.html#a0752eea352d82764b9bac2428acaeafc">getEngineVersion</a>();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_define" href="headers_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_class" href="class_m_q_engine_1_1_engine.html">Engine</a>&amp; <a class="code hl_function" href="namespace_m_q_engine.html#a93d141837772959f4af928aca48c25bb">getEngine</a>();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif </span><span class="comment">//ENGINE_H</span></div>
+<div class="ttc" id="aapplication_8h_html"><div class="ttname"><a href="application_8h.html">application.h</a></div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_application_html"><div class="ttname"><a href="class_m_q_engine_1_1_application.html">MQEngine::Application</a></div><div class="ttdef"><b>定义</b> application.h:33</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html">MQEngine::Engine</a></div><div class="ttdef"><b>定义</b> engine.h:19</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html_a656eae89cf2da0fa32509b893f88ab78"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html#a656eae89cf2da0fa32509b893f88ab78">MQEngine::Engine::EngineScope</a></div><div class="ttdeci">friend class EngineScope</div><div class="ttdef"><b>定义</b> engine.h:25</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html_a6913b83232fc8242cc385a3dd770fd04"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04">MQEngine::Engine::operator=</a></div><div class="ttdeci">Engine &amp; operator=(const Engine &amp;)=delete</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html_a8961b721f7d07296d06aaf5b4d44b51f"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html#a8961b721f7d07296d06aaf5b4d44b51f">MQEngine::Engine::loop</a></div><div class="ttdeci">void loop()</div><div class="ttdef"><b>定义</b> engine.cpp:236</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html_ab179cb6100ba6c6517016976348f10f1"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html#ab179cb6100ba6c6517016976348f10f1">MQEngine::Engine::getInstance</a></div><div class="ttdeci">static Engine &amp; getInstance()</div><div class="ttdef"><b>定义</b> engine.cpp:251</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_engine_html_ac4520874e5daaa883cc355e9a7f8e665"><div class="ttname"><a href="class_m_q_engine_1_1_engine.html#ac4520874e5daaa883cc355e9a7f8e665">MQEngine::Engine::Engine</a></div><div class="ttdeci">Engine(const Engine &amp;)=delete</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_system_manager_html"><div class="ttname"><a href="class_m_q_engine_1_1_system_manager.html">MQEngine::SystemManager</a></div><div class="ttdef"><b>定义</b> systemmanager.h:8</div></div>
+<div class="ttc" id="aheaders_8h_html_a0697ee40f69dc5dab56d13131f4c4835"><div class="ttname"><a href="headers_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a></div><div class="ttdeci">#define ENGINE_API</div><div class="ttdef"><b>定义</b> headers.h:14</div></div>
+<div class="ttc" id="alayout_8h_html"><div class="ttname"><a href="layout_8h.html">layout.h</a></div></div>
+<div class="ttc" id="anamespace_f_c_t_html"><div class="ttname"><a href="namespace_f_c_t.html">FCT</a></div><div class="ttdef"><b>定义</b> engine.h:12</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:3</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a0752eea352d82764b9bac2428acaeafc"><div class="ttname"><a href="namespace_m_q_engine.html#a0752eea352d82764b9bac2428acaeafc">MQEngine::getEngineVersion</a></div><div class="ttdeci">ENGINE_API const char * getEngineVersion()</div><div class="ttdef"><b>定义</b> Tutorial.cpp:8</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a93d141837772959f4af928aca48c25bb"><div class="ttname"><a href="namespace_m_q_engine.html#a93d141837772959f4af928aca48c25bb">MQEngine::getEngine</a></div><div class="ttdeci">ENGINE_API Engine &amp; getEngine()</div><div class="ttdef"><b>定义</b> Tutorial.cpp:12</div></div>
+<div class="ttc" id="asystemmanager_8h_html"><div class="ttname"><a href="systemmanager_8h.html">systemmanager.h</a></div><div class="ttdoc">class header for start and stop system</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_5951f2f33309dc55205e4c070fcb7660.html">core</a></li><li class="navelem"><a href="core_2engine_8h.html">engine.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>
