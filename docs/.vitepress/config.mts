@@ -1,22 +1,58 @@
 import { defineConfig } from 'vitepress'
+import { MermaidMarkdown,MermaidPlugin } from "vitepress-plugin-mermaid";
+import mermaid from "mermaid";
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "MQEngine",
   description: "Document for MQEngine",
     base: '/MQEngine/',
+    markdown: {
+      config(md) {
+          md.use(MermaidMarkdown);
+      }
+    },
+    vite : {
+      plugins: [MermaidPlugin()],
+      optimizeDeps: {
+          include: 'mermaid',
+      },
+      ssr: {
+          noExternal: ['mermaid'],
+      },
+    },
     themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },
-      { text: '教程', link: '/markdown-examples'}
+      { text: '文档', link: '/document/index.md'},
     ],
 
     sidebar: [
       {
-        text: '教程',
+        text: '文档',
+        link: '/document/index.md',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
+            {
+                text: '贡献指南',
+                link: '/document/contributing/index.md',
+                items: [
+                    {
+                        text: '引擎开发',
+                        link: '/document/contributing/development/index.md',
+                        items: [
+                            {
+                                text: '引擎架构',
+                                link: '/document/contributing/development/engine-architecture.md',
+                                items: [
+
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
       }
     ],

@@ -8,10 +8,10 @@ hero:
   tagline: 
   actions:
     - theme: brand
-      text: 教程及示例
-      link: /markdown-examples
+      text: 文档
+      link: /document/index.md
     - theme: alt
-      text: API 文档
+      text: API
       link: /api/html/index.html
       target: _blank
 
