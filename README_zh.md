@@ -1,4 +1,6 @@
-﻿# MQEngine
+﻿[英文](README.md) | [文档](https://maablock.github.io/MQEngine/)
+
+# MQEngine
 MQEngine
 ## 构建教程
 1. **克隆项目（包含子模块）**
