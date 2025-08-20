@@ -35,7 +35,28 @@ export default defineConfig({
         link: '/document/index.md',
         items: [
             {
-                text: '贡献指南',
+                text: '关于',
+                link: '/document/about/index.md',
+                items: []
+            },
+            {
+                text: '入门',
+                link: '/document/getting_started/index.md',
+                items: [
+                    {
+
+                    }]
+            },
+            {
+                text: '手册',
+                link: '/document/tutorials/index.md',
+                items: [
+                    {
+
+                    }]
+            },
+            {
+                text: '贡献',
                 link: '/document/contributing/index.md',
                 items: [
                     {
