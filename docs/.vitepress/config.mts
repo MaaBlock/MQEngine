@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "MQEngine",
   description: "Document for MQEngine",
-    base: '/MQEngineDocs/',
+    base: '/MQEngine/',
     themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
