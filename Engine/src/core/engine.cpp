@@ -16,7 +16,6 @@ namespace MQEngine
         m_application->init();
     }
 
-
     void Engine::settingUpLayout()
     {
         m_layout = new Layout(
