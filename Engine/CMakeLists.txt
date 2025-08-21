@@ -11,6 +11,17 @@ file(GLOB CORE_MODULE_HEADERS
         "./src/core/*.h"
         "./src/core/*.hpp"
 )
+file(GLOB DATA_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/data/*.cpp"
+)
+file(GLOB DATA_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/data/*.h"
+        "./src/data/*.hpp"
+)
 
 file(GLOB THIRDPARTY_MODULE_HEADERS
         LIST_DIRECTORIES false
@@ -21,6 +32,8 @@ file(GLOB THIRDPARTY_MODULE_HEADERS
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
     ${CORE_MODULE_HEADERS}
+    ${DATA_MODULE_SOURCES}
+    ${DATA_MODULE_HEADERS}
     ${THIRDPARTY_MODULE_HEADERS}
 )
 
