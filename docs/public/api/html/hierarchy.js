@@ -3,6 +3,7 @@ var hierarchy =
     [ "MQEngine::Application", "class_m_q_engine_1_1_application.html", [
       [ "MQEngine::EditorApplication", "class_m_q_engine_1_1_editor_application.html", null ]
     ] ],
+    [ "MQEngine::DataManager", "class_m_q_engine_1_1_data_manager.html", null ],
     [ "MQEngine::DepthStencilDesc", "struct_m_q_engine_1_1_depth_stencil_desc.html", null ],
     [ "MQEngine::Engine", "class_m_q_engine_1_1_engine.html", null ],
     [ "MQEngine::EngineScope", "class_m_q_engine_1_1_engine_scope.html", null ],

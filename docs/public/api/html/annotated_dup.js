@@ -8,6 +8,7 @@ var annotated_dup =
         [ "SubscribePass", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass" ]
       ] ],
       [ "Application", "class_m_q_engine_1_1_application.html", "class_m_q_engine_1_1_application" ],
+      [ "DataManager", "class_m_q_engine_1_1_data_manager.html", null ],
       [ "DepthStencilDesc", "struct_m_q_engine_1_1_depth_stencil_desc.html", "struct_m_q_engine_1_1_depth_stencil_desc" ],
       [ "EditorApplication", "class_m_q_engine_1_1_editor_application.html", "class_m_q_engine_1_1_editor_application" ],
       [ "Engine", "class_m_q_engine_1_1_engine.html", "class_m_q_engine_1_1_engine" ],

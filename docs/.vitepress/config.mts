@@ -71,6 +71,17 @@ export default defineConfig({
                                 items: [
 
                                 ]
+                            },
+                            {
+                                text: "依赖库",
+                                link: '/document/contributing/development/dependencies.md',
+                                items: [
+                                    {
+                                        text: "FCT",
+                                        link: 'https://maablock.github.io/FCT/',
+                                        target: '_blank'
+                                    }
+                                ]
                             }
                         ]
                     }

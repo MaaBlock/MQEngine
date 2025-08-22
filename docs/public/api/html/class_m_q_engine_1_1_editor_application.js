@@ -6,5 +6,8 @@ var class_m_q_engine_1_1_editor_application =
     [ "logicTick", "class_m_q_engine_1_1_editor_application.html#a1e2b00482d83610693c8e74768bf9aa1", null ],
     [ "renderConfig", "class_m_q_engine_1_1_editor_application.html#a4fb077eadabeee6b1d3ba154194f97e9", null ],
     [ "settingRenderCallBack", "class_m_q_engine_1_1_editor_application.html#ae366b0673c3dd7eb39af23fd39f94195", null ],
-    [ "settingUpImgui", "class_m_q_engine_1_1_editor_application.html#ac5365eaac6350cb7259a621ae3a4f932", null ]
+    [ "settingUpImgui", "class_m_q_engine_1_1_editor_application.html#ac5365eaac6350cb7259a621ae3a4f932", null ],
+    [ "imguiModule", "class_m_q_engine_1_1_editor_application.html#a22b17511d2b4f55d396f90e86282f983", null ],
+    [ "m_imguiCtx", "class_m_q_engine_1_1_editor_application.html#ac63d8180c62347402ae183fe906e758c", null ],
+    [ "uiManager", "class_m_q_engine_1_1_editor_application.html#aecfed241e34c8868803710df700253d4", null ]
 ];
