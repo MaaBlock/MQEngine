@@ -1,0 +1,13 @@
+<map id="MQEngine::EditorApplication" name="MQEngine::EditorApplication">
+<area shape="rect" id="Node000001" title=" " alt="" coords="88,209,299,233"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_application.html" title=" " alt="" coords="17,114,186,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,148,184,207,180,210,122,152"/>
+<area shape="rect" id="Node000003" href="$struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="96,59,103,114,98,114,91,60"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_ui_manager.html" title=" " alt="" coords="222,114,376,139"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="276,151,208,210,205,206,272,147"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_graph_view_insight.html" title=" " alt="" coords="197,12,400,37"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="302,52,302,114,296,114,296,52"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_pass_generator.html" title=" " alt="" coords="425,12,607,37"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="483,47,391,92,332,116,330,111,388,88,481,42"/>
+</map>

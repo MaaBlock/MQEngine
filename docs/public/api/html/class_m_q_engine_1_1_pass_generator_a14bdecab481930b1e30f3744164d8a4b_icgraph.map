@@ -1,0 +1,5 @@
+<map id="MQEngine::PassGenerator::addLink" name="MQEngine::PassGenerator::addLink">
+<area shape="rect" id="Node000001" title="添加一个 链接，从指定的pin hash 到指定的 pin hash" alt="" coords="236,5,418,44"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_pass_generator.html#ab6eef4ad82eb6432c18569e65a417211" title=" " alt="" coords="5,5,188,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,27,188,27,188,22,220,22"/>
+</map>

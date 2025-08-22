@@ -1,0 +1,9 @@
+<map id="MQEngine::PassGenerator::addPassNode" name="MQEngine::PassGenerator::addPassNode">
+<area shape="rect" id="Node000001" title="创建一下新的Pass 节点" alt="" coords="5,37,188,76"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_pass_generator.html#ad19bd5b09c09c55ccf5e19bee225e8c4" title=" " alt="" coords="236,5,418,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,41,220,37,220,42,188,47"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_pass_generator.html#a5b9b6eb1d37e4f84ad226b0cfddce7dd" title=" " alt="" coords="236,68,418,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,66,220,70,220,76,187,71"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_pass_generator.html#a132f31d861b4eb7790abe5cba9f495f5" title=" " alt="" coords="466,68,648,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="418,85,450,85,450,90,418,90"/>
+</map>

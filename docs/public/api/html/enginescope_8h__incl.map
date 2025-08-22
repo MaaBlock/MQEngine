@@ -1,0 +1,13 @@
+<map id="MQEngine/Engine/src/core/enginescope.h" name="MQEngine/Engine/src/core/enginescope.h">
+<area shape="rect" id="Node000001" title="Engine scope for managing the engine instance" alt="" coords="128,5,283,44"/>
+<area shape="rect" id="Node000002" href="$core_2engine_8h.html" title=" " alt="" coords="160,92,251,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,45,208,76,203,76,203,45"/>
+<area shape="rect" id="Node000003" href="$application_8h.html" title=" " alt="" coords="5,165,118,189"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,120,100,160,98,155,181,115"/>
+<area shape="rect" id="Node000004" href="$systemmanager_8h.html" title="class header for start and stop system" alt="" coords="142,165,269,189"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="208,117,208,149,203,149,203,117"/>
+<area shape="rect" id="Node000005" href="$layout_8h.html" title=" " alt="" coords="292,165,370,189"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="227,115,298,154,296,159,225,120"/>
+<area shape="rect" id="Node000006" href="$_uniform_8h.html" title=" " alt="" coords="289,237,373,262"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="334,190,334,222,328,222,328,190"/>
+</map>
