@@ -23,64 +23,47 @@ namespace MQEngine
 
     void GraphViewInsight::render()
     {
-        ImGui::Begin(TEXT("阴影位置贴图"));
-        auto shadowPosTextureId = m_imguiCtx->getTexture("PosTarget");
-        if (shadowPosTextureId) {
-            ImVec2 windowSize = ImGui::GetContentRegionAvail();
-            float aspectRatio = 800.0f / 600.0f;
-            float imageWidth = windowSize.x;
-            float imageHeight = imageWidth / aspectRatio;
+        auto textures = m_imguiCtx->getTexturesFromPass();
+        for (const auto& [textureName, imagePtr] : textures) {
+            std::string windowTitle = std::string(TEXT("贴图: ")) + textureName;
 
-            if (imageHeight > windowSize.y) {
-                imageHeight = windowSize.y;
-                imageWidth = imageHeight * aspectRatio;
+            ImGui::Begin(windowTitle.c_str());
+
+            if (imagePtr) {
+                auto textureId = m_imguiCtx->getTexture(textureName);
+
+                if (textureId) {
+                    ImVec2 windowSize = ImGui::GetContentRegionAvail();
+
+                    float imageWidth = static_cast<float>(imagePtr->width());
+                    float imageHeight = static_cast<float>(imagePtr->height());
+                    float aspectRatio = imageWidth / imageHeight;
+
+                    ImGui::Text(TEXT("贴图名称: %s"), textureName.c_str());
+                    ImGui::Text(TEXT("分辨率: %.0fx%.0f"), imageWidth, imageHeight);
+                    ImGui::Separator();
+
+                    float displayWidth = windowSize.x;
+                    float displayHeight = displayWidth / aspectRatio;
+
+                    if (displayHeight > windowSize.y - 80) {
+                        displayHeight = windowSize.y - 80;
+                        displayWidth = displayHeight * aspectRatio;
+                    }
+
+                    ImGui::Image(textureId, ImVec2(displayWidth, displayHeight));
+
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip(TEXT("贴图: %s\n分辨率: %.0fx%.0f"), textureName.c_str(), imageWidth, imageHeight);
+                    }
+                } else {
+                    ImGui::Text(TEXT("无法获取贴图 '%s' 的纹理ID"), textureName.c_str());
+                }
+            } else {
+                ImGui::Text(TEXT("贴图 '%s' 的Image指针为空"), textureName.c_str());
             }
 
-            ImGui::Image(shadowPosTextureId, ImVec2(imageWidth, imageHeight));
-        } else {
-            ImGui::Text(TEXT("阴影位置贴图未找到"));
+            ImGui::End();
         }
-        ImGui::End();
-
-        ImGui::Begin(TEXT("阴影深度贴图"));
-        auto shadowDepthTextureId = m_imguiCtx->getTexture("RetTarget");
-        if (shadowDepthTextureId) {
-            ImVec2 windowSize = ImGui::GetContentRegionAvail();
-            float aspectRatio = 800.0f / 600.0f;
-            float imageWidth = windowSize.x;
-            float imageHeight = imageWidth / aspectRatio;
-
-            if (imageHeight > windowSize.y) {
-                imageHeight = windowSize.y;
-                imageWidth = imageHeight * aspectRatio;
-            }
-
-            ImGui::Image(shadowDepthTextureId, ImVec2(imageWidth, imageHeight));
-        } else {
-            ImGui::Text(TEXT("阴影深度贴图未找到"));
-        }
-        ImGui::End();
-        ImGui::Begin(TEXT("光源深度贴图"));
-        auto lightDepthTextureId = m_imguiCtx->getTexture("DepthFromLigth0Image");
-        if (lightDepthTextureId) {
-            ImVec2 windowSize = ImGui::GetContentRegionAvail();
-            float imageSize = std::min(windowSize.x, windowSize.y);
-
-            ImGui::Text(TEXT("从光源视角看到的深度图"));
-            ImGui::Text(TEXT("分辨率: 2048x2048"));
-            ImGui::Separator();
-
-            ImGui::Image(lightDepthTextureId, ImVec2(imageSize, imageSize));
-
-            ImGui::Separator();
-
-            if (ImGui::IsItemHovered()) {
-                ImGui::SetTooltip(TEXT("这是从光源视角渲染的深度图\n用于阴影映射计算"));
-            }
-        } else {
-            ImGui::Text(TEXT("光源深度贴图未找到"));
-            ImGui::Text(TEXT("请检查纹理是否正确创建和绑定"));
-        }
-        ImGui::End();
     }
 }
