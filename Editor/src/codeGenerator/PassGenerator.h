@@ -15,6 +15,11 @@
 #include <map>
 #include <set>
 
+namespace FCT
+{
+    class Context;
+}
+
 namespace MQEngine {
 
     struct PassTargetDesc
@@ -121,25 +126,62 @@ namespace MQEngine {
 
     class PassGenerator {
     public:
+        PassGenerator(FCT::Context* ctx);
         void removePassPin(int pinHash);
-        void deletePass(int contextMenuNodeId);
         void removeImagePin(int pinHash);
-        void deleteImage(int contextMenuNodeId);
-        void deleteNode(int contextMenuNodeId);
         void render();
-        void printPinkInfo(int hash);
-        void addPassNode(const std::string& name = "Pass");
+        /**
+         * 创建一个新的pin节点
+         * @param pass
+         */
         void newTexturePin(PassNode& pass);
-        void removeTexturePin();
-        void addImageNode(const std::string& name = "Image");
+        /**
+         * 保存图表到文件中
+         * @param filename
+         */
         void saveToFile(const std::string& filename);
-        std::string generatePassCode(const PassNode& pass);
+        /**
+         * 生成所有pass的代码
+         * @return
+         */
         std::string generatorCode();
-
+        /**
+         * @brief 生成指定pass的代码
+         * @param pass
+         * @return
+         */
+        std::string generatePassCode(const PassNode& pass);
     private:
+        /**
+         * @brief 添加一个 链接，从指定的pin hash 到指定的 pin  hash
+         * @param startHash
+         * @param endHash
+         */
+        void addLink(int startHash,int endHash);
+        void addPassNode(const PassNode& passNode);
+        /**
+         * @brief 创建一下新的Pass 节点
+         * @param name
+         */
+        void newPassNode(const std::string& name = "Pass");
+        /**
+         * @brief 创建一个新的Image节点
+         * @param name
+         */
+        void newImageNode(const std::string& name = "Image");
+        /**
+         * @brief 将图表保存到文件中
+         * @param filename
+         */
+        /**
+         * 删除右键菜单指向的 节点
+         * @param contextMenuNodeId
+         */
+        void deleteNode(int contextMenuNodeId);
+        void deletePass(int contextMenuNodeId);
+        void deleteImage(int contextMenuNodeId);
         size_t m_nextNodeId = 0;
         size_t m_linkId = 0;
-        void addLink(int startHash,int endHash);
 
         std::map<int,LinkInfo> m_passOutputlinks;
         std::map<int,LinkInfo> m_passInputLinks;
@@ -162,6 +204,7 @@ namespace MQEngine {
         }
         friend class boost::serialization::access;
         std::string m_generatedCode;
+        FCT::Context* m_ctx;
     };
 
 }

@@ -1,12 +1,13 @@
 ﻿#include "PassGenerator.h"
-
+#include "../Thirdparty/thirdparty.h"
 #include <fstream>
 #include <functional>
 #include <iostream>
 #define NOMINMAX
 #include <Windows.h>
-#define TEXT(str) (const char*)u8##str
 
+#define TEXT(str) (const char*)u8##str
+using namespace FCT;
 namespace MQEngine {
 
     /**
@@ -67,6 +68,12 @@ namespace MQEngine {
         return filename;
 #endif
     }
+
+    PassGenerator::PassGenerator(FCT::Context* ctx)
+    {
+        m_ctx = ctx;
+    }
+
     /**
      *  @brief 不会从pass里删除自己
      * @param pinHash
@@ -147,7 +154,6 @@ namespace MQEngine {
         removeImagePin(texturePinId);
 
         m_images.erase(contextMenuNodeId);
-        std::cout << "Deleted Image node: " << contextMenuNodeId << std::endl;
     }
     void PassGenerator::deleteNode(int contextMenuNodeId)
     {
@@ -194,6 +200,17 @@ namespace MQEngine {
             m_linkId = 0;
             std::cout << "已清空图表" << std::endl;
         }
+        ImGui::SameLine();
+        if (ImGui::Button(TEXT("读取图表从当前")))
+        {
+
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(TEXT("编译图表到当前")))
+        {
+            auto rg = m_ctx->getModule<FCT::RenderGraph>();
+            rg->recompile();
+        }
 
         ImGui::Text(TEXT("节点数: Pass(%zu) Image(%zu) 连接数: %zu"),
                     m_passes.size(), m_images.size(),
@@ -212,8 +229,6 @@ namespace MQEngine {
         }
 
         // 处理右键菜单添加节点
-
-
         for (auto link : m_passOutputlinks)
         {
             ImNodes::Link(link.second.id,link.second.startPinId, link.second.endPinId);
@@ -259,9 +274,6 @@ namespace MQEngine {
         if (ImNodes::IsLinkCreated(&startAttr, &endAttr))
         {
             addLink(startAttr,endAttr);
-            std::cout << "Created link between attributes: " << startAttr << " and " << endAttr << std::endl;
-            printPinkInfo(startAttr);
-            printPinkInfo(endAttr);
         }
         int droppedLinkAttr;
         if (ImNodes::IsLinkDropped(&droppedLinkAttr, /*including_detached_links=*/true))
@@ -307,11 +319,11 @@ namespace MQEngine {
         {
             if (ImGui::MenuItem(TEXT("添加Pass节点")))
             {
-                addPassNode();
+                newPassNode();
             }
             if (ImGui::MenuItem(TEXT("添加Image节点")))
             {
-                addImageNode();
+                newImageNode();
             }
             ImGui::EndPopup();
         }
@@ -370,24 +382,29 @@ namespace MQEngine {
 
         }
     }
-    void PassGenerator::printPinkInfo(int hash)
+    void PassGenerator::addPassNode(const PassNode& passNode)
     {
-        auto info = m_pinInfoMap[hash];
-        if (m_passes.count(info.nodeId))
-        {
-            std::cout << "Pink info for pass " << info.nodeId << ": " << info.pinType << std::endl;
-        }
-        else if (m_images.count(info.nodeId))
-        {
-            std::cout << "Pink info for image " << info.nodeId << ": " << info.pinType << std::endl;
-        }
-        else
-        {
+        PassNode newPass;
+        newPass.id = getNextNodeId();
+        newPass.name = passNode.name;
+        newPass.enableClear = passNode.enableClear;
+        newPass.enableClearDepth = passNode.enableClearDepth;
+        newPass.enableClearStencil = passNode.enableClearStencil;
+        newPass.enableClearTarget = passNode.enableClearTarget;
+        newPass.clearColor[0] = passNode.clearColor[0];
+        newPass.clearColor[1] = passNode.clearColor[1];
+        newPass.clearColor[2] = passNode.clearColor[2];
+        newPass.clearColor[3] = passNode.clearColor[3];
+        newPass.clearDepth = passNode.clearDepth;
+        newPass.clearStencil = passNode.clearStencil;
+        newPass.texturesDesc = passNode.texturesDesc;
 
-        }
+
+        m_passes[newPass.id] = newPass;
+        newTexturePin(m_passes[newPass.id]);
     }
 
-    void PassGenerator::addPassNode(const std::string& name)
+    void PassGenerator::newPassNode(const std::string& name)
     {
         PassNode newPass;
         newPass.id = getNextNodeId();
@@ -405,11 +422,7 @@ namespace MQEngine {
         int id = generatePinId(pass.id,"texture",++pass.texturePinIndex);
         pass.texturePins.push_back(id);
     }
-    void PassGenerator::removeTexturePin()
-    {
-
-    }
-    void PassGenerator::addImageNode(const std::string& name)
+    void PassGenerator::newImageNode(const std::string& name)
     {
         ImageNode newImage;
         newImage.id = getNextNodeId();
