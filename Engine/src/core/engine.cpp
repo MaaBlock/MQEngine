@@ -42,7 +42,7 @@ namespace MQEngine
             PassName("ObjectPass"),
             SamplerSlot{"shadowSampler"}
         );
-        m_ps = m_layout->allocatePixelShader(
+        m_ps = m_layout->cachePixelShader(
             R"(
 float calculateShadow(float4 shadowPos, float3 normal, float3 lightDir) {
     float3 projCoords = shadowPos.xyz / shadowPos.w;
@@ -117,7 +117,7 @@ ShaderOut main(ShaderIn sIn) {
     sOut.target2 = float4(closestDepth, currentDepth, abs(currentDepth - closestDepth) * 10.0, 1.0);
     return sOut;
 })");
-        m_vs = m_layout->allocateVertexShader((R"(
+        m_vs = m_layout->cacheVertexShader((R"(
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
@@ -135,7 +135,7 @@ ShaderOut main(ShaderIn sIn) {
             m_shadowConstLayout,
             PassName("ShadowMapPass")
             );
-        m_vsShadow = m_shadowLayout->allocateVertexShader(R"(
+        m_vsShadow = m_shadowLayout->cacheVertexShader(R"(
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;

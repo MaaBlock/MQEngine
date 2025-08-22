@@ -13,6 +13,8 @@ namespace MQEngine
     {
         ImNodes::CreateContext();
         m_imguiCtx = g_global.imguiModule->createContext(g_global.wnd,g_global.ctx);
+        m_imguiCtx->attachPass("ImguiPass");
+        m_imguiCtx->create(ImguiContextCreateFlag::Docking);
         m_graphView = new GraphViewInsight(m_imguiCtx);
         m_passGenerator = new PassGenerator();
     }
@@ -46,10 +48,8 @@ namespace MQEngine
             {
                 auto graph = event.graph;
 
-                m_imguiCtx->pass(graph->getPass("ImguiPass"));
-                m_imguiCtx->create(ImguiContextCreateFlag::Docking);
                 m_imguiCtx->enableChinese();
-                m_imguiCtx->addTexture("SceneView",graph->getImage("SceneColorTarget"));
+                //m_imguiCtx->addTexture("SceneView",graph->getImage("SceneColorTarget"));
                 m_graphView->keepImage(graph);
             }
         );
@@ -94,7 +94,7 @@ namespace MQEngine
 
         ImGui::Begin(TEXT("场景视口"));
 
-        auto sceneTextureId = m_imguiCtx->getTexture("SceneView");
+        auto sceneTextureId = m_imguiCtx->getTexture("SceneColorTarget");
         if (sceneTextureId) {
             ImVec2 windowSize = ImGui::GetContentRegionAvail();
 
@@ -125,7 +125,7 @@ namespace MQEngine
         } else
         {
             ImGui::Text(TEXT("场景纹理未找到"));
-            ImGui::Text(TEXT("请检查SceneView纹理是否正确创建"));
+            ImGui::Text(TEXT("请检查SceneColorTarget纹理是否正确创建"));
         }
         ImGui::End();
     }
