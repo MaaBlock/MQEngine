@@ -56,9 +56,9 @@ namespace MQEngine {
             vertexLayout
         };
         FCT::Sampler* m_shadowSampler;
-        FCT::VertexShader* m_vs;
-        FCT::PixelShader* m_ps;
-        FCT::VertexShader* m_vsShadow;
+        FCT::ShaderRef m_vs;
+        FCT::ShaderRef m_ps;
+        FCT::ShaderRef m_vsShadow;
         FCT::ConstLayout m_shadowConstLayout = {
             "ShadowUniform",
             FCT::ConstElement{FCT::ConstType::MVPMatrix,"lightMvp"},

@@ -14,15 +14,17 @@ namespace MQEngine
 
     void GraphViewInsight::keepImage(FCT::RenderGraph* graph)
     {
+        /*
         m_imguiCtx->addTexture("shadowPos",graph->getImage("PosTarget"));
         m_imguiCtx->addTexture("shadowDepth",graph->getImage("RetTarget"));
         m_imguiCtx->addTexture("lightWorld",graph->getImage("DepthFromLigth0Image"));
-    }
+*/
+        }
 
     void GraphViewInsight::render()
     {
         ImGui::Begin(TEXT("阴影位置贴图"));
-        auto shadowPosTextureId = m_imguiCtx->getTexture("shadowPos");
+        auto shadowPosTextureId = m_imguiCtx->getTexture("PosTarget");
         if (shadowPosTextureId) {
             ImVec2 windowSize = ImGui::GetContentRegionAvail();
             float aspectRatio = 800.0f / 600.0f;
@@ -41,7 +43,7 @@ namespace MQEngine
         ImGui::End();
 
         ImGui::Begin(TEXT("阴影深度贴图"));
-        auto shadowDepthTextureId = m_imguiCtx->getTexture("shadowDepth");
+        auto shadowDepthTextureId = m_imguiCtx->getTexture("RetTarget");
         if (shadowDepthTextureId) {
             ImVec2 windowSize = ImGui::GetContentRegionAvail();
             float aspectRatio = 800.0f / 600.0f;
@@ -59,7 +61,7 @@ namespace MQEngine
         }
         ImGui::End();
         ImGui::Begin(TEXT("光源深度贴图"));
-        auto lightDepthTextureId = m_imguiCtx->getTexture("lightWorld");
+        auto lightDepthTextureId = m_imguiCtx->getTexture("DepthFromLigth0Image");
         if (lightDepthTextureId) {
             ImVec2 windowSize = ImGui::GetContentRegionAvail();
             float imageSize = std::min(windowSize.x, windowSize.y);
