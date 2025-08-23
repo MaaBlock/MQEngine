@@ -7,7 +7,7 @@
 #include <Engine/headers.h>
 #include "GraphViewInsight.h"
 #include "../core/Global.h"
-#include "../RenderGraphView/PassGenerator.h"
+#include "../RenderGraphView/RenderGraphViewer.h"
 namespace MQEngine {
     class UiManager {
     public:
@@ -19,7 +19,7 @@ namespace MQEngine {
     private:
         FCT::ImguiContext* m_imguiCtx;
         GraphViewInsight* m_graphView;
-        PassGenerator* m_passGenerator;
+        RenderGraphViewer* m_passGenerator;
     };
 }
 

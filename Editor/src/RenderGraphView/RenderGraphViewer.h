@@ -138,7 +138,7 @@ namespace MQEngine {
         }
     };
 
-    class PassGenerator {
+    class RenderGraphViewer {
     public:
         /**
           * @name 模拟界面操作
@@ -178,7 +178,7 @@ namespace MQEngine {
         int findPassNode(const std::string& name);
         /** @} */
     public:
-        PassGenerator(FCT::Context* ctx);
+        RenderGraphViewer(FCT::Context* ctx);
         void removePassPin(int pinHash);
         void removeImagePin(int pinHash);
         void render();
@@ -204,6 +204,8 @@ namespace MQEngine {
          */
         std::string generatePassCode(const PassNode& pass);
     private:
+        void autoLayoutGraph();
+
         /**
          * @brief 添加一个 链接，从指定的pin hash 到指定的 pin  hash
          * @param startHash

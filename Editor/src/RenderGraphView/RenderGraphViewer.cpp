@@ -1,4 +1,4 @@
-﻿#include "PassGenerator.h"
+﻿#include "RenderGraphViewer.h"
 #include "../Thirdparty/thirdparty.h"
 #include <fstream>
 #include <functional>
@@ -8,8 +8,8 @@
 
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
-namespace MQEngine {
-
+namespace MQEngine
+{
     /**
      * 临时代码
      * @param save
@@ -69,7 +69,7 @@ namespace MQEngine {
 #endif
     }
 
-    PassGenerator::PassGenerator(FCT::Context* ctx)
+    RenderGraphViewer::RenderGraphViewer(FCT::Context* ctx)
     {
         m_ctx = ctx;
     }
@@ -78,7 +78,7 @@ namespace MQEngine {
      *  @brief 不会从pass里删除自己
      * @param pinHash
      */
-    void PassGenerator::removePassPin(int pinHash)
+    void RenderGraphViewer::removePassPin(int pinHash)
     {
         if (m_passOutputlinks.count(pinHash))
         {
@@ -90,7 +90,7 @@ namespace MQEngine {
         }
         m_pinInfoMap.erase(pinHash);
     }
-    void PassGenerator::deletePass(int contextMenuNodeId)
+    void RenderGraphViewer::deletePass(int contextMenuNodeId)
     {
         for (int i = 0; i < 9; ++i)
         {
@@ -106,7 +106,7 @@ namespace MQEngine {
         }
         m_passes.erase(contextMenuNodeId);
     }
-    void PassGenerator::removeImagePin(int pinHash)
+    void RenderGraphViewer::removeImagePin(int pinHash)
     {
         std::vector<int> m_needRemovePassOutputLinks;
         for (auto& outputIt : m_passOutputlinks) {
@@ -142,7 +142,7 @@ namespace MQEngine {
             m_pinInfoMap.erase(pinHash);
         }
     }
-    void PassGenerator::deleteImage(int contextMenuNodeId)
+    void RenderGraphViewer::deleteImage(int contextMenuNodeId)
     {
         uint32_t targetInputPinId = generatePinId(contextMenuNodeId, "target", 0);
         removeImagePin(targetInputPinId);
@@ -155,7 +155,7 @@ namespace MQEngine {
 
         m_images.erase(contextMenuNodeId);
     }
-    void PassGenerator::deleteNode(int contextMenuNodeId)
+    void RenderGraphViewer::deleteNode(int contextMenuNodeId)
     {
         if (m_passes.count(contextMenuNodeId))
         {
@@ -168,7 +168,7 @@ namespace MQEngine {
     }
 
 
-    void PassGenerator::render()
+    void RenderGraphViewer::render()
     {
         ImGui::Begin(TEXT("Pass代码生成器"));
 
@@ -199,6 +199,11 @@ namespace MQEngine {
             m_nextNodeId = 0;
             m_linkId = 0;
             std::cout << "已清空图表" << std::endl;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(TEXT("整理图表")))
+        {
+            autoLayoutGraph();
         }
         ImGui::SameLine();
         if (ImGui::Button(TEXT("读取图表从当前")))
@@ -376,7 +381,7 @@ namespace MQEngine {
 
         ImGui::End();
     }
-    void PassGenerator::addLink(int startHash, int endHash)
+    void RenderGraphViewer::addLink(int startHash, int endHash)
     {
         auto startPin = m_pinInfoMap[startHash];
         auto endPin = m_pinInfoMap[endHash];
@@ -408,7 +413,7 @@ namespace MQEngine {
         }
     }
 
-    int PassGenerator::newPassNode(const std::string& name)
+    int RenderGraphViewer::newPassNode(const std::string& name)
     {
         PassNode newPass;
         newPass.id = getNextNodeId();
@@ -427,13 +432,13 @@ namespace MQEngine {
         generatePinId(newPass.id, "depth", 0);
         return newPass.id;
     }
-    void PassGenerator::newTexturePin(PassNode& pass)
+    void RenderGraphViewer::newTexturePin(PassNode& pass)
     {
         int id = generatePinId(pass.id,"texture",++pass.texturePinIndex);
         pass.texturePins.push_back(id);
     }
 
-    int PassGenerator::newImageNode(const std::string& name)
+    int RenderGraphViewer::newImageNode(const std::string& name)
     {
         ImageNode newImage;
         newImage.id = getNextNodeId();
@@ -447,7 +452,7 @@ namespace MQEngine {
         return newImage.id;
     }
 
-    int PassGenerator::findImageNode(const std::string& name)
+    int RenderGraphViewer::findImageNode(const std::string& name)
     {
         for (const auto& [id, image] : m_images)
         {
@@ -457,7 +462,7 @@ namespace MQEngine {
         return -1;
     }
 
-    int PassGenerator::findPassNode(const std::string& name)
+    int RenderGraphViewer::findPassNode(const std::string& name)
     {
         for (const auto& [id, pass] : m_passes)
             if (pass.name == name)
@@ -466,7 +471,7 @@ namespace MQEngine {
     }
 
 
-    void PassGenerator::addTextureLink(int imageId, int passId)
+    void RenderGraphViewer::addTextureLink(int imageId, int passId)
     {
         if (m_images.count(imageId) && m_passes.count(passId))
         {
@@ -476,7 +481,7 @@ namespace MQEngine {
         }
     }
 
-    void PassGenerator::addTargetLink(int passId, int index, int imageId)
+    void RenderGraphViewer::addTargetLink(int passId, int index, int imageId)
     {
         if (m_passes.count(passId) && m_images.count(imageId))
         {
@@ -486,7 +491,7 @@ namespace MQEngine {
         }
     }
 
-    void PassGenerator::addDepthStencilLink(int passId, int imageId)
+    void RenderGraphViewer::addDepthStencilLink(int passId, int imageId)
     {
         if (m_passes.count(passId) && m_images.count(imageId))
         {
@@ -494,7 +499,7 @@ namespace MQEngine {
         }
     }
 
-    void PassGenerator::createGraphFromPassDescs(const std::vector<FCT::PassDesc>& passDescs)
+    void RenderGraphViewer::createGraphFromPassDescs(const std::vector<FCT::PassDesc>& passDescs)
     {
         m_passes.clear();
         m_images.clear();
@@ -653,10 +658,11 @@ namespace MQEngine {
         std::cout << "  Images: " << m_images.size() << std::endl;
         std::cout << "  OutputLinks: " << m_passOutputlinks.size() << std::endl;
         std::cout << "  InputLinks: " << m_passInputLinks.size() << std::endl;
+        autoLayoutGraph();
     }
 
 
-    void PassGenerator::saveToFile(const std::string& filename)
+    void RenderGraphViewer::saveToFile(const std::string& filename)
     {
         try
         {
@@ -695,7 +701,7 @@ namespace MQEngine {
             std::cout << "保存失败: " << e.what() << std::endl;
         }
     }
-    std::string PassGenerator::generatePassCode(const PassNode& pass)
+    std::string RenderGraphViewer::generatePassCode(const PassNode& pass)
     {
         std::string code;
 
@@ -850,7 +856,7 @@ namespace MQEngine {
 
         return code;
     }
-    std::string PassGenerator::generatorCode()
+    std::string RenderGraphViewer::generatorCode()
     {
         std::string code;
 
@@ -862,7 +868,7 @@ namespace MQEngine {
         return code;
     }
 
-    void PassGenerator::loadFromFile(const std::string& filename)
+    void RenderGraphViewer::loadFromFile(const std::string& filename)
     {
         try
         {
@@ -906,7 +912,7 @@ namespace MQEngine {
         }
     }
 
-    void PassGenerator::renderPassNode(PassNode& pass)
+    void RenderGraphViewer::renderPassNode(PassNode& pass)
     {
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 2));
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 2));
@@ -963,94 +969,94 @@ namespace MQEngine {
         ImGui::Separator();
 
         // 输出pins - Color Targets
-          for (int i = 0; i < 9; ++i)
-          {
-              auto& targetConfig = pass.targetDesc[i];
-              uint32_t pinId = generatePinId(pass.id, "target", i);
-              ImNodes::BeginOutputAttribute(pinId);
-              ImGui::Dummy(ImVec2(80, 0));
-              ImGui::SameLine();
-              ImGui::Text("Target %d", i);
-              ImNodes::EndOutputAttribute();
+        for (int i = 0; i < 9; ++i)
+        {
+            auto& targetConfig = pass.targetDesc[i];
+            uint32_t pinId = generatePinId(pass.id, "target", i);
+            ImNodes::BeginOutputAttribute(pinId);
+            ImGui::Dummy(ImVec2(80, 0));
+            ImGui::SameLine();
+            ImGui::Text("Target %d", i);
+            ImNodes::EndOutputAttribute();
 
-              ImGui::PushID(i);
-              ImGui::Checkbox(TEXT("为target指定属性"), &targetConfig.enabled);
+            ImGui::PushID(i);
+            ImGui::Checkbox(TEXT("为target指定属性"), &targetConfig.enabled);
 
-              if (targetConfig.enabled)
-              {
-                  ImGui::Checkbox(TEXT("窗口"), &targetConfig.isWindow);
+            if (targetConfig.enabled)
+            {
+                ImGui::Checkbox(TEXT("窗口"), &targetConfig.isWindow);
 
-                  if (targetConfig.isWindow)
-                  {
-                      targetConfig.useCustomFormat = false;
-                      targetConfig.useCustomSize = false;
+                if (targetConfig.isWindow)
+                {
+                    targetConfig.useCustomFormat = false;
+                    targetConfig.useCustomSize = false;
 
-                      ImGui::BeginDisabled();
-                      bool tempFormat = false;
-                      ImGui::Checkbox(TEXT("自定义格式"), &tempFormat);
-                      ImGui::EndDisabled();
+                    ImGui::BeginDisabled();
+                    bool tempFormat = false;
+                    ImGui::Checkbox(TEXT("自定义格式"), &tempFormat);
+                    ImGui::EndDisabled();
 
-                      ImGui::BeginDisabled();
-                      bool tempSize = false;
-                      ImGui::Checkbox(TEXT("自定义尺寸"), &tempSize);
-                      ImGui::EndDisabled();
-                  }
-                  else
-                  {
-                      ImGui::Checkbox(TEXT("自定义格式"), &targetConfig.useCustomFormat);
+                    ImGui::BeginDisabled();
+                    bool tempSize = false;
+                    ImGui::Checkbox(TEXT("自定义尺寸"), &tempSize);
+                    ImGui::EndDisabled();
+                }
+                else
+                {
+                    ImGui::Checkbox(TEXT("自定义格式"), &targetConfig.useCustomFormat);
 
-                      if (targetConfig.useCustomFormat)
-                      {
-                          ImGui::PushItemWidth(150);
+                    if (targetConfig.useCustomFormat)
+                    {
+                        ImGui::PushItemWidth(150);
 
-                          const char* colorFormats[] = {
-                              "R8G8B8A8_UNORM",
-                              "R8G8B8A8_SRGB",
-                              "B8G8R8A8_UNORM",
-                              "B8G8R8A8_SRGB",
-                              "R16G16B16A16_SFLOAT",
-                              "R32G32B32A32_SFLOAT",
-                              "R16G16_SFLOAT",
-                              "R32G32_SFLOAT",
-                              "R16_SFLOAT",
-                              "R32_SFLOAT",
-                              "R8_UNORM",
-                              "R16_UNORM",
-                              "R8G8_UNORM",
-                              "R16G16_UNORM"
-                          };
+                        const char* colorFormats[] = {
+                            "R8G8B8A8_UNORM",
+                            "R8G8B8A8_SRGB",
+                            "B8G8R8A8_UNORM",
+                            "B8G8R8A8_SRGB",
+                            "R16G16B16A16_SFLOAT",
+                            "R32G32B32A32_SFLOAT",
+                            "R16G16_SFLOAT",
+                            "R32G32_SFLOAT",
+                            "R16_SFLOAT",
+                            "R32_SFLOAT",
+                            "R8_UNORM",
+                            "R16_UNORM",
+                            "R8G8_UNORM",
+                            "R16G16_UNORM"
+                        };
 
-                          int currentFormatIndex = 0;
-                          for (int j = 0; j < IM_ARRAYSIZE(colorFormats); j++)
-                          {
-                              if (targetConfig.format == colorFormats[j])
-                              {
-                                  currentFormatIndex = j;
-                                  break;
-                              }
-                          }
+                        int currentFormatIndex = 0;
+                        for (int j = 0; j < IM_ARRAYSIZE(colorFormats); j++)
+                        {
+                            if (targetConfig.format == colorFormats[j])
+                            {
+                                currentFormatIndex = j;
+                                break;
+                            }
+                        }
 
-                          if (ImGui::Combo("##format", &currentFormatIndex, colorFormats, IM_ARRAYSIZE(colorFormats)))
-                          {
-                              targetConfig.format = colorFormats[currentFormatIndex];
-                          }
-                          ImGui::PopItemWidth();
-                      }
+                        if (ImGui::Combo("##format", &currentFormatIndex, colorFormats, IM_ARRAYSIZE(colorFormats)))
+                        {
+                            targetConfig.format = colorFormats[currentFormatIndex];
+                        }
+                        ImGui::PopItemWidth();
+                    }
 
-                      ImGui::Checkbox(TEXT("自定义尺寸"), &targetConfig.useCustomSize);
+                    ImGui::Checkbox(TEXT("自定义尺寸"), &targetConfig.useCustomSize);
 
-                      if (targetConfig.useCustomSize)
-                      {
-                          ImGui::PushItemWidth(100);
-                          ImGui::InputInt("W##width", &targetConfig.customWidth);
-                          ImGui::InputInt("H##height", &targetConfig.customHeight);
-                          ImGui::PopItemWidth();
-                      }
-                  }
-              }
-              ImGui::PopID();
-              if (i < 8) ImGui::Separator();
-          }
+                    if (targetConfig.useCustomSize)
+                    {
+                        ImGui::PushItemWidth(100);
+                        ImGui::InputInt("W##width", &targetConfig.customWidth);
+                        ImGui::InputInt("H##height", &targetConfig.customHeight);
+                        ImGui::PopItemWidth();
+                    }
+                }
+            }
+            ImGui::PopID();
+            if (i < 8) ImGui::Separator();
+        }
 
         uint32_t depthPinId = generatePinId(pass.id, "depth");
         ImNodes::BeginOutputAttribute(depthPinId);
@@ -1131,7 +1137,7 @@ namespace MQEngine {
         ImGui::PopStyleVar(3);
     }
 
-    void PassGenerator::renderImageNode(ImageNode& image)
+    void RenderGraphViewer::renderImageNode(ImageNode& image)
     {
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 2));
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 2));
@@ -1183,7 +1189,7 @@ namespace MQEngine {
         ImGui::PopStyleVar(3);
     }
 
-    int PassGenerator::generatePinId(int nodeId, const std::string& pinType, int index)
+    int RenderGraphViewer::generatePinId(int nodeId, const std::string& pinType, int index)
     {
         std::hash<std::string> hasher;
         std::string pinString = std::to_string(nodeId) + "_" + pinType + "_" + std::to_string(index);
@@ -1197,5 +1203,155 @@ namespace MQEngine {
         m_pinInfoMap[pinId] = info;
 
         return pinId;
+    }
+
+
+    void RenderGraphViewer::autoLayoutGraph()
+    {
+        if (m_passes.empty() && m_images.empty())
+        {
+            std::cout << "图表为空，无需整理" << std::endl;
+            return;
+        }
+
+        std::cout << "开始自动整理图表布局..." << std::endl;
+
+        const float NODE_WIDTH = 250.0f;
+        const float NODE_HEIGHT = 200.0f;
+        const float HORIZONTAL_SPACING = 350.0f;
+        const float VERTICAL_SPACING = 250.0f;
+
+        std::map<int, std::set<int>> dependencies;
+        std::map<int, int> nodeLevels;
+
+        for (const auto& [passId, pass] : m_passes)
+        {
+            dependencies[passId] = std::set<int>();
+        }
+        for (const auto& [imageId, image] : m_images)
+        {
+            dependencies[imageId] = std::set<int>();
+        }
+
+        for (const auto& [pinId, linkInfo] : m_passOutputlinks)
+        {
+            auto startPinInfo = m_pinInfoMap[linkInfo.startPinId];
+            auto endPinInfo = m_pinInfoMap[linkInfo.endPinId];
+
+            if (m_passes.count(startPinInfo.nodeId) && m_images.count(endPinInfo.nodeId))
+            {
+                dependencies[endPinInfo.nodeId].insert(startPinInfo.nodeId);
+                std::cout << "依赖关系: Image[" << m_images[endPinInfo.nodeId].name
+                          << "] 依赖于 Pass[" << m_passes[startPinInfo.nodeId].name << "]" << std::endl;
+            }
+        }
+
+        for (const auto& [pinId, linkInfo] : m_passInputLinks)
+        {
+            auto endPinInfo = m_pinInfoMap[pinId];
+            auto startPinInfo = m_pinInfoMap[linkInfo.startPinId];
+
+            if (m_images.count(startPinInfo.nodeId) && m_passes.count(endPinInfo.nodeId))
+            {
+                dependencies[endPinInfo.nodeId].insert(startPinInfo.nodeId);
+                std::cout << "依赖关系: Pass[" << m_passes[endPinInfo.nodeId].name
+                          << "] 依赖于 Image[" << m_images[startPinInfo.nodeId].name << "]" << std::endl;
+            }
+        }
+
+        std::function<int(int)> calculateLevel = [&](int nodeId) -> int {
+            if (nodeLevels.count(nodeId))
+                return nodeLevels[nodeId];
+
+            int maxDepLevel = 0;
+            for (int depNodeId : dependencies[nodeId])
+            {
+                maxDepLevel = std::max(maxDepLevel, calculateLevel(depNodeId) + 1);
+            }
+
+            nodeLevels[nodeId] = maxDepLevel;
+            return maxDepLevel;
+        };
+
+        for (const auto& [passId, pass] : m_passes)
+        {
+            calculateLevel(passId);
+        }
+        for (const auto& [imageId, image] : m_images)
+        {
+            calculateLevel(imageId);
+        }
+
+        std::map<int, std::vector<std::pair<int, std::string>>> levelGroups; // level -> [(nodeId, type)]
+
+        for (const auto& [passId, level] : nodeLevels)
+        {
+            if (m_passes.count(passId))
+            {
+                levelGroups[level].push_back({passId, "pass"});
+            }
+        }
+        for (const auto& [imageId, level] : nodeLevels)
+        {
+            if (m_images.count(imageId))
+            {
+                levelGroups[level].push_back({imageId, "image"});
+            }
+        }
+
+        float currentX = 0.0f;
+        for (const auto& [level, nodes] : levelGroups)
+        {
+            std::cout << "层级 " << level << " 包含 " << nodes.size() << " 个节点" << std::endl;
+
+            float totalHeight = nodes.size() * NODE_HEIGHT + (nodes.size() - 1) * VERTICAL_SPACING;
+            float startY = -totalHeight / 2.0f;
+
+            std::vector<std::pair<int, std::string>> sortedNodes = nodes;
+            std::sort(sortedNodes.begin(), sortedNodes.end(),
+                      [this](const auto& a, const auto& b) {
+                          if (a.second != b.second)
+                          {
+                              return a.second == "pass";
+                          }
+                          if (a.second == "pass")
+                          {
+                              return m_passes[a.first].name < m_passes[b.first].name;
+                          }
+                          else
+                          {
+                              return m_images[a.first].name < m_images[b.first].name;
+                          }
+                      });
+
+            for (size_t i = 0; i < sortedNodes.size(); ++i)
+            {
+                int nodeId = sortedNodes[i].first;
+                std::string nodeType = sortedNodes[i].second;
+                float posX = currentX;
+                float posY = startY + i * (NODE_HEIGHT + VERTICAL_SPACING);
+
+                ImNodes::SetNodeGridSpacePos(nodeId, ImVec2(posX, posY));
+
+                if (nodeType == "pass")
+                {
+                    std::cout << "设置Pass节点 " << m_passes[nodeId].name
+                              << " 位置: (" << posX << ", " << posY << ") 层级: " << level << std::endl;
+                }
+                else
+                {
+                    std::cout << "设置Image节点 " << m_images[nodeId].name
+                              << " 位置: (" << posX << ", " << posY << ") 层级: " << level << std::endl;
+                }
+            }
+
+            currentX += HORIZONTAL_SPACING;
+        }
+
+        std::cout << "图表布局整理完成！" << std::endl;
+        std::cout << "  处理了 " << m_passes.size() << " 个Pass节点" << std::endl;
+        std::cout << "  处理了 " << m_images.size() << " 个Image节点" << std::endl;
+        std::cout << "  分为 " << levelGroups.size() << " 个渲染层级" << std::endl;
+        std::cout << "  X轴跨度: " << (levelGroups.size() - 1) * HORIZONTAL_SPACING << "px" << std::endl;
     }
 }
