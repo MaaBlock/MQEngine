@@ -178,7 +178,7 @@ namespace MQEngine {
         int findPassNode(const std::string& name);
         /** @} */
     public:
-        RenderGraphViewer(FCT::Context* ctx);
+        RenderGraphViewer(FCT::Context* ctx,FCT::Window* wnd);
         void removePassPin(int pinHash);
         void removeImagePin(int pinHash);
         void render();
@@ -249,6 +249,7 @@ namespace MQEngine {
         friend class boost::serialization::access;
         std::string m_generatedCode;
         FCT::Context* m_ctx;
+        FCT::Window* m_wnd;
     };
 
 }

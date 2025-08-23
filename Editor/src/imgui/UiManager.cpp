@@ -16,7 +16,7 @@ namespace MQEngine
         m_imguiCtx->attachPass("ImguiPass");
         m_imguiCtx->create(ImguiContextCreateFlag::Docking);
         m_graphView = new GraphViewInsight(m_imguiCtx);
-        m_passGenerator = new RenderGraphViewer(g_global.ctx);
+        m_passGenerator = new RenderGraphViewer(g_global.ctx,g_global.wnd);
     }
 
     void UiManager::term()

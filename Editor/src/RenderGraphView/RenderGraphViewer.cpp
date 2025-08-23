@@ -69,11 +69,6 @@ namespace MQEngine
 #endif
     }
 
-    RenderGraphViewer::RenderGraphViewer(FCT::Context* ctx)
-    {
-        m_ctx = ctx;
-    }
-
     /**
      *  @brief 不会从pass里删除自己
      * @param pinHash
@@ -468,6 +463,12 @@ namespace MQEngine
             if (pass.name == name)
                 return id;
         return -1;
+    }
+
+    RenderGraphViewer::RenderGraphViewer(FCT::Context* ctx, FCT::Window* wnd)
+    {
+        m_ctx = ctx;
+        m_wnd = wnd;
     }
 
 
