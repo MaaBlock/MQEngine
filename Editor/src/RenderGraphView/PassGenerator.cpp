@@ -382,29 +382,8 @@ namespace MQEngine {
 
         }
     }
-    void PassGenerator::addPassNode(const PassNode& passNode)
-    {
-        PassNode newPass;
-        newPass.id = getNextNodeId();
-        newPass.name = passNode.name;
-        newPass.enableClear = passNode.enableClear;
-        newPass.enableClearDepth = passNode.enableClearDepth;
-        newPass.enableClearStencil = passNode.enableClearStencil;
-        newPass.enableClearTarget = passNode.enableClearTarget;
-        newPass.clearColor[0] = passNode.clearColor[0];
-        newPass.clearColor[1] = passNode.clearColor[1];
-        newPass.clearColor[2] = passNode.clearColor[2];
-        newPass.clearColor[3] = passNode.clearColor[3];
-        newPass.clearDepth = passNode.clearDepth;
-        newPass.clearStencil = passNode.clearStencil;
-        newPass.texturesDesc = passNode.texturesDesc;
 
-
-        m_passes[newPass.id] = newPass;
-        newTexturePin(m_passes[newPass.id]);
-    }
-
-    void PassGenerator::newPassNode(const std::string& name)
+    int PassGenerator::newPassNode(const std::string& name)
     {
         PassNode newPass;
         newPass.id = getNextNodeId();
@@ -416,20 +395,63 @@ namespace MQEngine {
 
         m_passes[newPass.id] = newPass;
         newTexturePin(m_passes[newPass.id]);
+        return newPass.id;
     }
     void PassGenerator::newTexturePin(PassNode& pass)
     {
         int id = generatePinId(pass.id,"texture",++pass.texturePinIndex);
         pass.texturePins.push_back(id);
     }
-    void PassGenerator::newImageNode(const std::string& name)
+
+    int PassGenerator::newImageNode(const std::string& name)
     {
         ImageNode newImage;
         newImage.id = getNextNodeId();
         newImage.name = name.empty() ? "Image " + std::to_string(newImage.id) : name + " " + std::to_string(newImage.id);
 
         m_images[newImage.id] = newImage;
+        return newImage.id;
     }
+
+    int PassGenerator::findIamgeNode(const std::string& name)
+    {
+        for (const auto& [id, image] : m_images)
+        {
+            if (image.name == name)
+                return id;
+        }
+        return -1;
+    }
+
+    void PassGenerator::addTextureLink(int imageId, int passId)
+    {
+        if (m_images.count(imageId) && m_passes.count(passId))
+        {
+            auto passes = m_passes[passId];
+            auto image = m_images[imageId];
+            addLink(image.texturePinId(), passes.lastTexturePinId());
+        }
+    }
+
+    void PassGenerator::addTargetLink(int passId, int index, int imageId)
+    {
+        if (m_passes.count(passId) && m_images.count(imageId))
+        {
+            auto pass = m_passes[passId];
+            auto image = m_images[imageId];
+            addLink(pass.targetPinId(index), image.targetPinId());
+        }
+    }
+
+    void PassGenerator::addDepthStencilLink(int passId, int imageId)
+    {
+        if (m_passes.count(passId) && m_images.count(imageId))
+        {
+            addLink(m_passes[passId].depthStencilPinId(), m_images[imageId].depthStencilPinId());
+        }
+        }
+
+
     void PassGenerator::saveToFile(const std::string& filename)
     {
         try
@@ -752,54 +774,74 @@ namespace MQEngine {
 
               if (targetConfig.enabled)
               {
-                  ImGui::Checkbox(TEXT("自定义格式"), &targetConfig.useCustomFormat);
+                  ImGui::Checkbox(TEXT("窗口"), &targetConfig.isWindow);
 
-                  if (targetConfig.useCustomFormat)
+                  if (targetConfig.isWindow)
                   {
-                      ImGui::PushItemWidth(150);
+                      targetConfig.useCustomFormat = false;
+                      targetConfig.useCustomSize = false;
 
-                      const char* colorFormats[] = {
-                          "R8G8B8A8_UNORM",
-                          "R8G8B8A8_SRGB",
-                          "B8G8R8A8_UNORM",
-                          "B8G8R8A8_SRGB",
-                          "R16G16B16A16_SFLOAT",
-                          "R32G32B32A32_SFLOAT",
-                          "R16G16_SFLOAT",
-                          "R32G32_SFLOAT",
-                          "R16_SFLOAT",
-                          "R32_SFLOAT",
-                          "R8_UNORM",
-                          "R16_UNORM",
-                          "R8G8_UNORM",
-                          "R16G16_UNORM"
-                      };
+                      ImGui::BeginDisabled();
+                      bool tempFormat = false;
+                      ImGui::Checkbox(TEXT("自定义格式"), &tempFormat);
+                      ImGui::EndDisabled();
 
-                      int currentFormatIndex = 0;
-                      for (int j = 0; j < IM_ARRAYSIZE(colorFormats); j++)
-                      {
-                          if (targetConfig.format == colorFormats[j])
-                          {
-                              currentFormatIndex = j;
-                              break;
-                          }
-                      }
-
-                      if (ImGui::Combo("##format", &currentFormatIndex, colorFormats, IM_ARRAYSIZE(colorFormats)))
-                      {
-                          targetConfig.format = colorFormats[currentFormatIndex];
-                      }
-                      ImGui::PopItemWidth();
+                      ImGui::BeginDisabled();
+                      bool tempSize = false;
+                      ImGui::Checkbox(TEXT("自定义尺寸"), &tempSize);
+                      ImGui::EndDisabled();
                   }
-
-                  ImGui::Checkbox(TEXT("自定义尺寸"), &targetConfig.useCustomSize);
-
-                  if (targetConfig.useCustomSize)
+                  else
                   {
-                      ImGui::PushItemWidth(100);
-                      ImGui::InputInt("W##width", &targetConfig.customWidth);
-                      ImGui::InputInt("H##height", &targetConfig.customHeight);
-                      ImGui::PopItemWidth();
+                      ImGui::Checkbox(TEXT("自定义格式"), &targetConfig.useCustomFormat);
+
+                      if (targetConfig.useCustomFormat)
+                      {
+                          ImGui::PushItemWidth(150);
+
+                          const char* colorFormats[] = {
+                              "R8G8B8A8_UNORM",
+                              "R8G8B8A8_SRGB",
+                              "B8G8R8A8_UNORM",
+                              "B8G8R8A8_SRGB",
+                              "R16G16B16A16_SFLOAT",
+                              "R32G32B32A32_SFLOAT",
+                              "R16G16_SFLOAT",
+                              "R32G32_SFLOAT",
+                              "R16_SFLOAT",
+                              "R32_SFLOAT",
+                              "R8_UNORM",
+                              "R16_UNORM",
+                              "R8G8_UNORM",
+                              "R16G16_UNORM"
+                          };
+
+                          int currentFormatIndex = 0;
+                          for (int j = 0; j < IM_ARRAYSIZE(colorFormats); j++)
+                          {
+                              if (targetConfig.format == colorFormats[j])
+                              {
+                                  currentFormatIndex = j;
+                                  break;
+                              }
+                          }
+
+                          if (ImGui::Combo("##format", &currentFormatIndex, colorFormats, IM_ARRAYSIZE(colorFormats)))
+                          {
+                              targetConfig.format = colorFormats[currentFormatIndex];
+                          }
+                          ImGui::PopItemWidth();
+                      }
+
+                      ImGui::Checkbox(TEXT("自定义尺寸"), &targetConfig.useCustomSize);
+
+                      if (targetConfig.useCustomSize)
+                      {
+                          ImGui::PushItemWidth(100);
+                          ImGui::InputInt("W##width", &targetConfig.customWidth);
+                          ImGui::InputInt("H##height", &targetConfig.customHeight);
+                          ImGui::PopItemWidth();
+                      }
                   }
               }
               ImGui::PopID();
@@ -818,45 +860,63 @@ namespace MQEngine {
 
         if (depthConfig.enabled)
         {
-            ImGui::Checkbox(TEXT("自定义格式##depth"), &depthConfig.useCustomFormat);
-
-            if (depthConfig.useCustomFormat)
+            ImGui::Checkbox(TEXT("窗口##depth"), &depthConfig.isWindow);
+            if (depthConfig.isWindow)
             {
-                ImGui::PushItemWidth(150);
+                depthConfig.useCustomFormat = false;
+                depthConfig.useCustomSize = false;
 
-                const char* depthFormats[] = {
-                    "D32_SFLOAT",
-                    "D32_SFLOAT_S8_UINT",
-                    "D24_UNORM_S8_UINT",
-                    "D16_UNORM",
-                    "D16_UNORM_S8_UINT"
-                };
+                ImGui::BeginDisabled();
+                bool tempFormat = false;
+                ImGui::Checkbox(TEXT("自定义格式##depth"), &tempFormat);
+                ImGui::EndDisabled();
 
-                int currentDepthFormatIndex = 0;
-                for (int j = 0; j < IM_ARRAYSIZE(depthFormats); j++)
+                ImGui::BeginDisabled();
+                bool tempSize = false;
+                ImGui::Checkbox(TEXT("自定义尺寸##depth"), &tempSize);
+                ImGui::EndDisabled();
+            } else
+            {
+                ImGui::Checkbox(TEXT("自定义格式##depth"), &depthConfig.useCustomFormat);
+
+                if (depthConfig.useCustomFormat)
                 {
-                    if (depthConfig.format == depthFormats[j])
+                    ImGui::PushItemWidth(150);
+
+                    const char* depthFormats[] = {
+                        "D32_SFLOAT",
+                        "D32_SFLOAT_S8_UINT",
+                        "D24_UNORM_S8_UINT",
+                        "D16_UNORM",
+                        "D16_UNORM_S8_UINT"
+                    };
+
+                    int currentDepthFormatIndex = 0;
+                    for (int j = 0; j < IM_ARRAYSIZE(depthFormats); j++)
                     {
-                        currentDepthFormatIndex = j;
-                        break;
+                        if (depthConfig.format == depthFormats[j])
+                        {
+                            currentDepthFormatIndex = j;
+                            break;
+                        }
                     }
+
+                    if (ImGui::Combo("##depthformat", &currentDepthFormatIndex, depthFormats, IM_ARRAYSIZE(depthFormats)))
+                    {
+                        depthConfig.format = depthFormats[currentDepthFormatIndex];
+                    }
+                    ImGui::PopItemWidth();
                 }
 
-                if (ImGui::Combo("##depthformat", &currentDepthFormatIndex, depthFormats, IM_ARRAYSIZE(depthFormats)))
+                ImGui::Checkbox(TEXT("自定义尺寸##depth"), &depthConfig.useCustomSize);
+
+                if (depthConfig.useCustomSize)
                 {
-                    depthConfig.format = depthFormats[currentDepthFormatIndex];
+                    ImGui::PushItemWidth(100);
+                    ImGui::InputInt("W##depthwidth", &depthConfig.customWidth);
+                    ImGui::InputInt("H##depthheight", &depthConfig.customHeight);
+                    ImGui::PopItemWidth();
                 }
-                ImGui::PopItemWidth();
-            }
-
-            ImGui::Checkbox(TEXT("自定义尺寸##depth"), &depthConfig.useCustomSize);
-
-            if (depthConfig.useCustomSize)
-            {
-                ImGui::PushItemWidth(100);
-                ImGui::InputInt("W##depthwidth", &depthConfig.customWidth);
-                ImGui::InputInt("H##depthheight", &depthConfig.customHeight);
-                ImGui::PopItemWidth();
             }
         }
 

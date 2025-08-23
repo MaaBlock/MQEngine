@@ -21,10 +21,10 @@ namespace FCT
 }
 
 namespace MQEngine {
-
     struct PassTargetDesc
     {
         bool enabled = false;
+        bool isWindow = false;
         bool useCustomFormat = false;
         std::string format = "RGBA8";
         bool useCustomSize = false;
@@ -46,13 +46,14 @@ namespace MQEngine {
     struct DepthStencilDesc
     {
         bool enabled = false;
+        bool isWindow = false;
         bool useCustomFormat = false;
         std::string format = "D32_SFLOAT";
         bool useCustomSize = false;
         int customWidth = 1920;
         int customHeight = 1080;
         template<class Archive>
-   void serialize(Archive & ar, const unsigned int version)
+        void serialize(Archive & ar, const unsigned int version)
         {
             ar & enabled & useCustomFormat & format & useCustomSize & customWidth & customHeight;
         }
@@ -89,8 +90,14 @@ namespace MQEngine {
             ar & texturesDesc & enableClear & enableClearTarget & enableClearDepth & enableClearStencil;
             ar & clearColor & clearDepth & clearStencil & texturePins & texturePinIndex;
         }
-
+        int lastTexturePinId() const
+        {
+            return texturePins.back();
+        }
+        int targetPinId(int index) const;
+        int depthStencilPinId();
     };
+
     struct ImageNode
     {
         uint32_t id;
@@ -100,6 +107,9 @@ namespace MQEngine {
         {
             ar & id & name;
         }
+        int texturePinId();
+        int targetPinId();
+        int depthStencilPinId();
     };
     struct PinInfo
     {
@@ -125,6 +135,38 @@ namespace MQEngine {
     };
 
     class PassGenerator {
+    public:
+        /**
+          * @name 模拟界面操作
+          * @{
+          */
+        void addTextureLink(int imageId, int passId);
+        void addTargetLink(int passId, int index,int imageId);
+        void addDepthStencilLink(int passId,int imageId);
+        /**
+         * @brief 创建一个新的Pass
+         * @param name 没用的参数
+         * @return Pass id
+         */
+        int newPassNode(const std::string& name = "Pass");
+        /**
+         * @brief 创建一个新的Image节点
+         * @param name
+         * @return Image id
+         */
+        int newImageNode(const std::string& name = "Image");
+        /** @} */
+        /**
+          * @name 辅助函数
+          * @{
+        */
+        /**
+         * @brief 找一个Image节点
+         * @param name  Image节点名字
+         * @return id，找不到返回-1
+         */
+        int findIamgeNode(const std::string& name);
+        /** @} */
     public:
         PassGenerator(FCT::Context* ctx);
         void removePassPin(int pinHash);
@@ -159,16 +201,6 @@ namespace MQEngine {
          */
         void addLink(int startHash,int endHash);
         void addPassNode(const PassNode& passNode);
-        /**
-         * @brief 创建一下新的Pass 节点
-         * @param name
-         */
-        void newPassNode(const std::string& name = "Pass");
-        /**
-         * @brief 创建一个新的Image节点
-         * @param name
-         */
-        void newImageNode(const std::string& name = "Image");
         /**
          * @brief 将图表保存到文件中
          * @param filename
