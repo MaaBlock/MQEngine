@@ -1,5 +1,7 @@
 ﻿#ifndef APPLICATION_H
 #define APPLICATION_H
+#include "../data/DataManager.h"
+
 namespace MQEngine {
     enum class RenderTarget {
         Window,     // 渲染到窗口
@@ -36,6 +38,7 @@ namespace MQEngine {
         {
             FCT::Context* ctx;
             FCT::Window* wnd;
+            DataManager* dataManager;
         } global;
 
         /**

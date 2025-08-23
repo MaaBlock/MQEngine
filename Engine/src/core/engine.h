@@ -7,6 +7,7 @@
 #include "application.h"
 #include "systemmanager.h"
 #include "layout.h"
+#include "../data/DataManager.h"
 
 namespace FCT
 {
@@ -82,6 +83,7 @@ namespace MQEngine {
         float m_linearAttenuation = 0.09f;
         float m_quadratic = 0.032f;
         float m_cutOffAngle = 45.0f;
+        DataManager* m_dataManager;
     };
     /**
      * @return engine version

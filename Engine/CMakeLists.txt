@@ -29,19 +29,27 @@ file(GLOB THIRDPARTY_MODULE_HEADERS
         "./src/thirdparty/*.h"
 )
 
+set(ENGINE_HEADERS
+        ${CORE_MODULE_HEADERS}
+        ${DATA_MODULE_HEADERS}
+        ${THIRDPARTY_MODULE_HEADERS}
+)
+set(ENGINE_OTHERS_HEADERS
+        "./src/headers.h"
+        "./src/EnginePCH.h"
+)
+
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
-    ${CORE_MODULE_HEADERS}
     ${DATA_MODULE_SOURCES}
-    ${DATA_MODULE_HEADERS}
-    ${THIRDPARTY_MODULE_HEADERS}
+    ${ENGINE_HEADERS}
+    ${ENGINE_OTHERS_HEADERS}
 )
 target_compile_definitions(Engine PRIVATE BUILD_ENGINE)
 
 set(ALL_HEADERS
-        ${CORE_MODULE_HEADERS}
-        ${THIRDPARTY_MODULE_HEADERS}
-        "./src/headers.h"
+        ${ENGINE_HEADERS}
+        ${ENGINE_OTHERS_HEADERS}
 )
 
 add_copy_target_headers(Engine "${ALL_HEADERS}")
