@@ -4,12 +4,15 @@
 
 #ifndef GLOBAL_H
 #define GLOBAL_H
+#include "../Thirdparty/thirdparty.h"
+
 namespace MQEngine{
     struct Global
     {
         FCT::Window* wnd;
         FCT::Context* ctx;
         FCT::ImguiModule* imguiModule;
+        DataManager* dataManager;
     };
     extern Global g_global;
 }

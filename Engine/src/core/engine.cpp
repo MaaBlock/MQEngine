@@ -10,9 +10,11 @@ namespace MQEngine
         m_ctx = m_rt.createContext();
         m_ctx->create();
         m_wnd->bind(m_ctx);
+        m_dataManager->loadRes();
         m_autoViewport = m_wnd->getModule<WindowModule::AutoViewport>();
         m_application->global.wnd = m_wnd;
         m_application->global.ctx = m_ctx;
+        m_application->global.dataManager = m_dataManager;
         m_application->init();
     }
 
@@ -315,6 +317,7 @@ ShaderOut main(ShaderIn sIn) {
 
     void Engine::init(Application* application)
     {
+        m_dataManager = new DataManager();
         m_application = application;
         settingUpEnv();
         settingUpPass();

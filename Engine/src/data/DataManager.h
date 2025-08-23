@@ -14,11 +14,20 @@
 #include <memory>
 #include <functional>
 #include "./DataLoader.h"
-
+#include "./FileDataLoader.h"
 namespace MQEngine {
 
     class ENGINE_API DataManager {
     public:
+        DataManager()
+        {
+            m_dataLoader = std::make_unique<FileDataLoader>();
+        }
+        std::vector<std::string> getModelList()
+        {
+            loadModelList();
+            return m_modelList;
+        }
         void loadRes()
         {
             m_dataLoader->ensureDirectory("./res");

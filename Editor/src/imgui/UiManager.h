@@ -6,6 +6,7 @@
 #define UIMANAGER_H
 #include <Engine/headers.h>
 #include "GraphViewInsight.h"
+#include "../AssetsManager/ModelManager.h"
 #include "../core/Global.h"
 #include "../RenderGraphView/RenderGraphViewer.h"
 namespace MQEngine {
@@ -20,6 +21,7 @@ namespace MQEngine {
         FCT::ImguiContext* m_imguiCtx;
         GraphViewInsight* m_graphView;
         RenderGraphViewer* m_passGenerator;
+        ModelManager* m_modelManager;
     };
 }
 

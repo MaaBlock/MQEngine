@@ -6,6 +6,7 @@ namespace MQEngine {
     {
         g_global.wnd = global.wnd;
         g_global.ctx = global.ctx;
+        g_global.dataManager = global.dataManager;
         uiManager.init();
         settingRenderCallBack();
     }
