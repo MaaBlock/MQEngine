@@ -14,9 +14,10 @@
 #include <functional>
 #include <map>
 #include <set>
-
+#include "../Thirdparty/thirdparty.h"
 namespace FCT
 {
+    struct PassDesc;
     class Context;
 }
 
@@ -34,6 +35,7 @@ namespace MQEngine {
         void serialize(Archive & ar, const unsigned int version)
         {
             ar & enabled & useCustomFormat & format & useCustomSize & customWidth & customHeight;
+            ar & isWindow;
         }
     };
     struct TextureDesc
@@ -56,6 +58,7 @@ namespace MQEngine {
         void serialize(Archive & ar, const unsigned int version)
         {
             ar & enabled & useCustomFormat & format & useCustomSize & customWidth & customHeight;
+            ar & isWindow;
         }
     };
     struct PassNode
@@ -89,6 +92,7 @@ namespace MQEngine {
             ar & id & name & hasLinkTarget & hasLinkDepthStencil & targetDesc & depthStencilDesc;
             ar & texturesDesc & enableClear & enableClearTarget & enableClearDepth & enableClearStencil;
             ar & clearColor & clearDepth & clearStencil & texturePins & texturePinIndex;
+
         }
         int lastTexturePinId() const
         {
@@ -155,6 +159,11 @@ namespace MQEngine {
          * @return Image id
          */
         int newImageNode(const std::string& name = "Image");
+        /**
+         * @brief 从PassDesc创建图表
+         * @param passDescs Pass描述数组
+         */
+        void createGraphFromPassDescs(const std::vector<FCT::PassDesc>& passDescs);
         /** @} */
         /**
           * @name 辅助函数
@@ -165,7 +174,8 @@ namespace MQEngine {
          * @param name  Image节点名字
          * @return id，找不到返回-1
          */
-        int findIamgeNode(const std::string& name);
+        int findImageNode(const std::string& name);
+        int findPassNode(const std::string& name);
         /** @} */
     public:
         PassGenerator(FCT::Context* ctx);

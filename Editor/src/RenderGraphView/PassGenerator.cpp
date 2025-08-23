@@ -203,7 +203,32 @@ namespace MQEngine {
         ImGui::SameLine();
         if (ImGui::Button(TEXT("读取图表从当前")))
         {
-
+            auto rg = m_ctx->getModule<FCT::RenderGraph>();
+            if (rg)
+            {
+                try
+                {
+                    // 从当前渲染图表获取PassDesc
+                    std::vector<FCT::PassDesc> passDescs = rg->getOriginalPasses();
+                    if (!passDescs.empty())
+                    {
+                        createGraphFromPassDescs(passDescs);
+                        std::cout << "成功从当前渲染图表读取了 " << passDescs.size() << " 个Pass" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "当前渲染图表中没有Pass" << std::endl;
+                    }
+                }
+                catch (const std::exception& e)
+                {
+                    std::cout << "读取当前图表失败: " << e.what() << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "无法获取RenderGraph模块" << std::endl;
+            }
         }
         ImGui::SameLine();
         if (ImGui::Button(TEXT("编译图表到当前")))
@@ -387,7 +412,7 @@ namespace MQEngine {
     {
         PassNode newPass;
         newPass.id = getNextNodeId();
-        newPass.name = name + " " + std::to_string(newPass.id);
+        newPass.name = findPassNode(name) == -1 ? name : name + " " + std::to_string(newPass.id);
         newPass.enableClear = false;
         newPass.enableClearDepth = false;
         newPass.enableClearStencil = true;
@@ -395,6 +420,11 @@ namespace MQEngine {
 
         m_passes[newPass.id] = newPass;
         newTexturePin(m_passes[newPass.id]);
+        for (int i = 0; i < 9; ++i)
+        {
+            generatePinId(newPass.id, "target", i);
+        }
+        generatePinId(newPass.id, "depth", 0);
         return newPass.id;
     }
     void PassGenerator::newTexturePin(PassNode& pass)
@@ -407,13 +437,17 @@ namespace MQEngine {
     {
         ImageNode newImage;
         newImage.id = getNextNodeId();
-        newImage.name = name.empty() ? "Image " + std::to_string(newImage.id) : name + " " + std::to_string(newImage.id);
+
+        newImage.name = findImageNode(name) == -1 ? name : name + " " + std::to_string(newImage.id);
 
         m_images[newImage.id] = newImage;
+        generatePinId(newImage.id, "texture", 0);
+        generatePinId(newImage.id, "target", 0);
+        generatePinId(newImage.id, "depth", 0);
         return newImage.id;
     }
 
-    int PassGenerator::findIamgeNode(const std::string& name)
+    int PassGenerator::findImageNode(const std::string& name)
     {
         for (const auto& [id, image] : m_images)
         {
@@ -422,6 +456,15 @@ namespace MQEngine {
         }
         return -1;
     }
+
+    int PassGenerator::findPassNode(const std::string& name)
+    {
+        for (const auto& [id, pass] : m_passes)
+            if (pass.name == name)
+                return id;
+        return -1;
+    }
+
 
     void PassGenerator::addTextureLink(int imageId, int passId)
     {
@@ -449,7 +492,168 @@ namespace MQEngine {
         {
             addLink(m_passes[passId].depthStencilPinId(), m_images[imageId].depthStencilPinId());
         }
+    }
+
+    void PassGenerator::createGraphFromPassDescs(const std::vector<FCT::PassDesc>& passDescs)
+    {
+        m_passes.clear();
+        m_images.clear();
+        m_pinInfoMap.clear();
+        m_passOutputlinks.clear();
+        m_passInputLinks.clear();
+        m_nextNodeId = 0;
+        m_linkId = 0;
+
+        std::cout << "开始从PassDesc创建图表，共 " << passDescs.size() << " 个Pass" << std::endl;
+
+        std::map<std::string, int> imageNameToId;
+        
+        for (const auto& passDesc : passDescs)
+        {
+            for (const auto& texture : passDesc.textures)
+            {
+                if (imageNameToId.find(texture.name) == imageNameToId.end())
+                {
+                    int imageId = newImageNode(texture.name);
+                    imageNameToId[texture.name] = imageId;
+                    std::cout << "创建Image节点: " << texture.name << " (ID: " << imageId << ")" << std::endl;
+                }
+            }
+
+            for (const auto& target : passDesc.targets)
+            {
+                if (imageNameToId.find(target.name) == imageNameToId.end())
+                {
+                    int imageId = newImageNode(target.name);
+                    imageNameToId[target.name] = imageId;
+                    std::cout << "创建Image节点: " << target.name << " (ID: " << imageId << ")" << std::endl;
+                }
+            }
+
+            for (const auto& depthStencil : passDesc.depthStencils)
+            {
+                if (imageNameToId.find(depthStencil.name) == imageNameToId.end())
+                {
+                    int imageId = newImageNode(depthStencil.name);
+                    imageNameToId[depthStencil.name] = imageId;
+                    std::cout << "创建Image节点: " << depthStencil.name << " (ID: " << imageId << ")" << std::endl;
+                }
+            }
         }
+
+        for (const auto& passDesc : passDescs)
+        {
+            int passId = newPassNode(passDesc.name);
+            std::cout << "创建Pass节点: " << passDesc.name << " (ID: " << passId << ")" << std::endl;
+
+            auto& pass = m_passes[passId];
+            if (passDesc.clear.types != 0)
+            {
+                pass.enableClear = true;
+                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::color))
+                {
+                    pass.enableClearTarget = true;
+                    pass.clearColor[0] = passDesc.clear.color.x;
+                    pass.clearColor[1] = passDesc.clear.color.y;
+                    pass.clearColor[2] = passDesc.clear.color.z;
+                    pass.clearColor[3] = passDesc.clear.color.w;
+                }
+                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::depth))
+                {
+                    pass.enableClearDepth = true;
+                    pass.clearDepth = passDesc.clear.depth;
+                }
+                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::stencil))
+                {
+                    pass.enableClearStencil = true;
+                    pass.clearStencil = passDesc.clear.stencil;
+                }
+            }
+
+            for (size_t i = 0; i < passDesc.targets.size() && i < 9; ++i)
+            {
+                const auto& target = passDesc.targets[i];
+                auto& targetConfig = pass.targetDesc[i];
+
+                targetConfig.enabled = true;
+
+                targetConfig.isWindow = target.isWindow;
+
+                if (target.hasFixedSize)
+                {
+                    targetConfig.useCustomSize = true;
+                    targetConfig.customWidth = target.width;
+                    targetConfig.customHeight = target.height;
+                }
+
+                if (target.format != FCT::Format::UNDEFINED)
+                {
+                    targetConfig.useCustomFormat = true;
+                    targetConfig.format = FormatToString(target.format);
+                }
+            }
+
+            if (!passDesc.depthStencils.empty())
+            {
+                const auto& depthStencil = passDesc.depthStencils[0];
+                auto& depthConfig = pass.depthStencilDesc;
+
+                depthConfig.enabled = true;
+
+                depthConfig.isWindow = depthStencil.isWindow;
+
+                if (depthStencil.hasFixedSize)
+                {
+                    depthConfig.useCustomSize = true;
+                    depthConfig.customWidth = depthStencil.width;
+                    depthConfig.customHeight = depthStencil.height;
+                }
+
+                if (depthStencil.format != FCT::Format::UNDEFINED)
+                {
+                    depthConfig.useCustomFormat = true;
+                    depthConfig.format = FormatToString(depthStencil.format);
+                }
+            }
+
+            for (const auto& texture : passDesc.textures)
+            {
+                if (imageNameToId.count(texture.name) > 0)
+                {
+                    int imageId = imageNameToId[texture.name];
+                    addTextureLink(imageId, passId);
+                    std::cout << "建立texture连接: " << texture.name << " -> " << passDesc.name << std::endl;
+                }
+            }
+
+            for (size_t i = 0; i < passDesc.targets.size(); ++i)
+            {
+                const auto& target = passDesc.targets[i];
+                if (imageNameToId.count(target.name) > 0)
+                {
+                    int imageId = imageNameToId[target.name];
+                    addTargetLink(passId, i, imageId);
+                    std::cout << "建立target连接: " << passDesc.name << "[" << i << "] -> " << target.name << std::endl;
+                }
+            }
+
+            for (const auto& depthStencil : passDesc.depthStencils)
+            {
+                if (imageNameToId.count(depthStencil.name) > 0)
+                {
+                    int imageId = imageNameToId[depthStencil.name];
+                    addDepthStencilLink(passId, imageId);
+                    std::cout << "建立depthStencil连接: " << passDesc.name << " -> " << depthStencil.name << std::endl;
+                }
+            }
+        }
+
+        std::cout << "图表创建完成！" << std::endl;
+        std::cout << "  Passes: " << m_passes.size() << std::endl;
+        std::cout << "  Images: " << m_images.size() << std::endl;
+        std::cout << "  OutputLinks: " << m_passOutputlinks.size() << std::endl;
+        std::cout << "  InputLinks: " << m_passInputLinks.size() << std::endl;
+    }
 
 
     void PassGenerator::saveToFile(const std::string& filename)
