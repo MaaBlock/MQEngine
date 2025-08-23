@@ -36,6 +36,7 @@ add_library(Engine SHARED
     ${DATA_MODULE_HEADERS}
     ${THIRDPARTY_MODULE_HEADERS}
 )
+target_compile_definitions(Engine PRIVATE BUILD_ENGINE)
 
 set(ALL_HEADERS
         ${CORE_MODULE_HEADERS}
