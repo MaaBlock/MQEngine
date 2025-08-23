@@ -7,7 +7,7 @@
 #include <Engine/headers.h>
 #include "GraphViewInsight.h"
 #include "../core/Global.h"
-#include "../codeGenerator/PassGenerator.h"
+#include "../RenderGraphView/PassGenerator.h"
 namespace MQEngine {
     class UiManager {
     public:
