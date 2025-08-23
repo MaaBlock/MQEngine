@@ -11,7 +11,7 @@ using namespace FCT;
 namespace MQEngine
 {
     /**
-     * 临时代码
+     * 临时代码c
      * @param save
      * @return
      */
@@ -234,7 +234,36 @@ namespace MQEngine
         if (ImGui::Button(TEXT("编译图表到当前")))
         {
             auto rg = m_ctx->getModule<FCT::RenderGraph>();
-            rg->recompile();
+            if (rg)
+            {
+                // 将当前图表转换为PassDesc
+                std::vector<FCT::PassDesc> passDescs = convertCurrentGraphToPassDescs();
+                
+                if (!passDescs.empty())
+                {
+                    // 清除原有的Pass
+                    rg->clearOriginalPasses();
+                    
+                    // 添加新的Pass
+                    for (const auto& passDesc : passDescs)
+                    {
+                        rg->addPassDesc(passDesc);
+                    }
+                    
+                    // 重新编译
+                    rg->recompile();
+                    
+                    std::cout << "成功编译图表到当前，共 " << passDescs.size() << " 个Pass" << std::endl;
+                }
+                else
+                {
+                    std::cout << "当前图表为空，无法编译" << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "无法获取RenderGraph模块" << std::endl;
+            }
         }
 
         ImGui::Text(TEXT("节点数: Pass(%zu) Image(%zu) 连接数: %zu"),
@@ -556,7 +585,7 @@ namespace MQEngine
             if (passDesc.clear.types != 0)
             {
                 pass.enableClear = true;
-                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::color))
+                if (passDesc.clear.types & FCT::ClearType::color)
                 {
                     pass.enableClearTarget = true;
                     pass.clearColor[0] = passDesc.clear.color.x;
@@ -564,12 +593,12 @@ namespace MQEngine
                     pass.clearColor[2] = passDesc.clear.color.z;
                     pass.clearColor[3] = passDesc.clear.color.w;
                 }
-                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::depth))
+                if (passDesc.clear.types & FCT::ClearType::depth)
                 {
                     pass.enableClearDepth = true;
                     pass.clearDepth = passDesc.clear.depth;
                 }
-                if (passDesc.clear.types & static_cast<uint32_t>(FCT::ClearType::stencil))
+                if (passDesc.clear.types & FCT::ClearType::stencil)
                 {
                     pass.enableClearStencil = true;
                     pass.clearStencil = passDesc.clear.stencil;
@@ -1354,5 +1383,139 @@ namespace MQEngine
         std::cout << "  处理了 " << m_images.size() << " 个Image节点" << std::endl;
         std::cout << "  分为 " << levelGroups.size() << " 个渲染层级" << std::endl;
         std::cout << "  X轴跨度: " << (levelGroups.size() - 1) * HORIZONTAL_SPACING << "px" << std::endl;
+    }
+
+    std::vector<FCT::PassDesc> RenderGraphViewer::convertCurrentGraphToPassDescs()
+    {
+        std::vector<FCT::PassDesc> passDescs;
+
+        std::map<std::string, ImageNode> imageNameMap;
+        for (const auto& [id, image] : m_images)
+        {
+            imageNameMap[image.name] = image;
+        }
+
+        for (const auto& [id, pass] : m_passes)
+        {
+            FCT::PassDesc passDesc(pass.name);
+
+             if (pass.enableClear)
+             {
+                 FCT::ClearTypes clearTypes(0);
+                 if (pass.enableClearTarget)
+                 {
+                     clearTypes |= FCT::ClearType::color;
+                 }
+                 if (pass.enableClearDepth)
+                 {
+                     clearTypes |= FCT::ClearType::depth;
+                 }
+                 if (pass.enableClearStencil)
+                 {
+                     clearTypes |= FCT::ClearType::stencil;
+                 }
+                 
+                 passDesc.clear = FCT::EnablePassClear(
+                     clearTypes,
+                     FCT::Vec4(pass.clearColor[0], pass.clearColor[1], pass.clearColor[2], pass.clearColor[3]),
+                     pass.clearDepth,
+                     static_cast<uint8_t>(pass.clearStencil)
+                 );
+             }
+
+             for (int texturePinId : pass.texturePins)
+             {
+                 if (m_passInputLinks.count(texturePinId))
+                 {
+                     auto& linkInfo = m_passInputLinks[texturePinId];
+                     if (m_pinInfoMap.count(linkInfo.startPinId))
+                     {
+                         auto& pinInfo = m_pinInfoMap[linkInfo.startPinId];
+                         if (m_images.count(pinInfo.nodeId))
+                         {
+                             auto& image = m_images[pinInfo.nodeId];
+                             FCT::Texture texture(image.name);
+                             passDesc.textures.push_back(texture);
+                         }
+                     }
+                 }
+             }
+
+             for (size_t i = 0; i < 9; ++i)
+             {
+                 uint32_t targetPinId = generatePinId(pass.id, "target", i);
+                 if (m_passOutputlinks.count(targetPinId))
+                 {
+                     auto& linkInfo = m_passOutputlinks[targetPinId];
+                     // 通过pinInfo找到对应的Image node
+                     if (m_pinInfoMap.count(linkInfo.endPinId))
+                     {
+                         auto& pinInfo = m_pinInfoMap[linkInfo.endPinId];
+                         if (m_images.count(pinInfo.nodeId))
+                         {
+                             auto& image = m_images[pinInfo.nodeId];
+                             FCT::Target target(image.name);
+
+                             if (pass.targetDesc[i].useCustomFormat)
+                             {
+                                 target.format = StringToFormat(pass.targetDesc[i].format.c_str());
+                             }
+
+                             if (pass.targetDesc[i].useCustomSize)
+                             {
+                                 target.processArgs(pass.targetDesc[i].customWidth, pass.targetDesc[i].customHeight);
+                             }
+
+                             if (pass.targetDesc[i].isWindow)
+                             {
+                                 target.processArgs(m_wnd);
+                             }
+
+                             passDesc.targets.push_back(target);
+                         }
+                     }
+                 }
+             }
+            
+                                                                                                       // 添加depthStencil输出
+               uint32_t depthPinId = generatePinId(pass.id, "depth");
+               if (m_passOutputlinks.count(depthPinId))
+               {
+                   auto& linkInfo = m_passOutputlinks[depthPinId];
+                   if (m_pinInfoMap.count(linkInfo.endPinId))
+                   {
+                       auto& pinInfo = m_pinInfoMap[linkInfo.endPinId];
+                       if (m_images.count(pinInfo.nodeId))
+                       {
+                           auto& image = m_images[pinInfo.nodeId];
+                           FCT::DepthStencil depthStencil(image.name);
+
+                           if (pass.depthStencilDesc.enabled)
+                           {
+                               if (pass.depthStencilDesc.useCustomFormat)
+                               {
+                                   depthStencil.format = StringToFormat(pass.depthStencilDesc.format.c_str());
+                               }
+                               
+                               if (pass.depthStencilDesc.useCustomSize)
+                               {
+                                   depthStencil.processArgs(pass.depthStencilDesc.customWidth, pass.depthStencilDesc.customHeight);
+                               }
+                               
+                               if (pass.depthStencilDesc.isWindow)
+                               {
+                                   depthStencil.processArgs(m_wnd);
+                               }
+                           }
+                           
+                           passDesc.depthStencils.push_back(depthStencil);
+                       }
+                   }
+               }
+            
+            passDescs.push_back(passDesc);
+        }
+        
+        return passDescs;
     }
 }
