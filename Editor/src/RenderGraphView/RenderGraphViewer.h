@@ -164,6 +164,13 @@ namespace MQEngine {
          * @param passDescs Pass描述数组
          */
         void createGraphFromPassDescs(const std::vector<FCT::PassDesc>& passDescs);
+        
+        /**
+         * @brief 将当前图表转换为PassDesc数组
+         * @return PassDesc数组
+         */
+        std::vector<FCT::PassDesc> convertCurrentGraphToPassDescs();
+        
         /** @} */
         /**
           * @name 辅助函数
