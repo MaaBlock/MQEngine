@@ -25,6 +25,7 @@ namespace MQEngine {
     private:
         std::vector<std::string> m_sceneTrunk;
         std::map<std::string,SceneTrunk*> m_loadedSceneTrunks;
+        entt::registry m_registry;
     };
     
 } // namespace MQEngine

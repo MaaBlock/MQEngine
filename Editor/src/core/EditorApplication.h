@@ -34,6 +34,7 @@ namespace MQEngine
         FCT::ImguiContext* m_imguiCtx;
         FCT::ImguiModule imguiModule;
         UiManager uiManager;
+        entt::registry registry;
     };
 }
 

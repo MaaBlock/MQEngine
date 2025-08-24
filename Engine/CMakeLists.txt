@@ -29,10 +29,24 @@ file(GLOB THIRDPARTY_MODULE_HEADERS
         "./src/thirdparty/*.h"
 )
 
+
+file(GLOB SYSTEM_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/system/*.cpp"
+)
+file(GLOB SYSTEM_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/system/*.h"
+        "./src/system/*.hpp"
+)
+
 set(ENGINE_HEADERS
         ${CORE_MODULE_HEADERS}
         ${DATA_MODULE_HEADERS}
         ${THIRDPARTY_MODULE_HEADERS}
+        ${SYSTEM_MODULE_HEADERS}
 )
 set(ENGINE_OTHERS_HEADERS
         "./src/headers.h"
@@ -44,6 +58,7 @@ add_library(Engine SHARED
     ${DATA_MODULE_SOURCES}
     ${ENGINE_HEADERS}
     ${ENGINE_OTHERS_HEADERS}
+    ${SYSTEM_MODULE_SOURCES}
 )
 target_compile_definitions(Engine PRIVATE BUILD_ENGINE)
 

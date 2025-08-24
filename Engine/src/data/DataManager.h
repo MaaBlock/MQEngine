@@ -15,6 +15,8 @@
 #include <functional>
 #include "./DataLoader.h"
 #include "./FileDataLoader.h"
+#include "./Camera.h"
+
 namespace MQEngine {
 
     class ENGINE_API DataManager {
@@ -48,7 +50,20 @@ namespace MQEngine {
             m_dataLoader->ensureDirectory("./res/models");
             m_modelList = m_dataLoader->getSubDirectories("./res/models");
         }
+        std::vector<entt::registry*> currentRegistries() const
+        {
+            return m_currentRegistries;
+        }
+        void appendRegistry(entt::registry* registry)
+        {
+            m_currentRegistries.push_back(registry);
+        }
+        void removeRegistry(entt::registry* registry)
+        {
+            m_currentRegistries.erase(std::remove(m_currentRegistries.begin(), m_currentRegistries.end(), registry), m_currentRegistries.end());
+        }
     private:
+        std::vector<entt::registry*> m_currentRegistries;
         std::vector<std::string> m_sceneList;
         std::vector<std::string> m_modelList;
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;

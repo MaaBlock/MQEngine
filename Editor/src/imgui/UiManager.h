@@ -9,6 +9,7 @@
 #include "../AssetsManager/ModelManager.h"
 #include "../core/Global.h"
 #include "../RenderGraphView/RenderGraphViewer.h"
+#include "./EditorCameraManager.h"
 namespace MQEngine {
     class UiManager {
     public:
@@ -22,6 +23,7 @@ namespace MQEngine {
         GraphViewInsight* m_graphView;
         RenderGraphViewer* m_passGenerator;
         ModelManager* m_modelManager;
+        EditorCameraManager* m_editorCameraManager;
     };
 }
 

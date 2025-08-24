@@ -18,6 +18,7 @@ namespace MQEngine
         m_graphView = new GraphViewInsight(m_imguiCtx);
         m_passGenerator = new RenderGraphViewer(g_global.ctx,g_global.wnd);
         m_modelManager = new ModelManager(g_global.dataManager);
+        m_editorCameraManager = new EditorCameraManager();
     }
 
     void UiManager::term()
