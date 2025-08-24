@@ -20,6 +20,8 @@ namespace MQEngine
         m_passGenerator = new RenderGraphViewer(g_global.ctx,g_global.wnd);
         m_modelManager = new ModelManager(g_global.dataManager);
         m_editorCameraManager = new EditorCameraManager();
+        m_sceneManager = new SceneManager();
+        m_sceneEntityViewer = new SceneEntityViewer();
     }
 
     void UiManager::term()
@@ -90,6 +92,8 @@ namespace MQEngine
             m_graphView->render();
             m_passGenerator->render();
             m_modelManager->render();
+            m_sceneManager->render();
+            m_sceneEntityViewer->render();
         });
     }
 

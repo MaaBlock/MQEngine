@@ -163,7 +163,7 @@ namespace MQEngine
     void ModelManager::render()
     {
         ImGui::Begin(TEXT("模型资产管理"));
-        auto model = m_dataManager->getModelList();
+        auto modelPaths = m_dataManager->getModelList();
 
         ImGui::Columns(2, "ModelManagerColumns");
         ImGui::SetColumnWidth(0, 350);

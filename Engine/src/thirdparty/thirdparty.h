@@ -19,5 +19,5 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/archive/binary_iarchive.hpp>
-
+#include <boost/archive/binary_oarchive.hpp>
 #endif //THIRDPARTY_H

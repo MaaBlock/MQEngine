@@ -11,17 +11,33 @@
 #include <fstream>
 #include <filesystem>
 
+namespace MQEngine
+{
+    class Scene;
+}
+
 namespace MQEngine {
     
     class ENGINE_API SceneTrunk
     {
     public:
-
+        SceneTrunk(std::string name,Scene* scene);
+        void init();
+        void save();
+        void load();
     private:
-        entt::registry m_registry;
+        friend class boost::serialization::access;
 
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int version)
+        {
+            ar & m_name;
+        }
+        entt::registry m_registry;
+        std::string m_name;
+        Scene* m_scene;
     };
-    
+
 } // namespace MQEngine
 
 #endif //SCENETRUNK_H
