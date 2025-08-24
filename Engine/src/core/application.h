@@ -39,6 +39,7 @@ namespace MQEngine {
             FCT::Context* ctx;
             FCT::Window* wnd;
             DataManager* dataManager;
+            FCT::Runtime* runtime;
         } global;
 
         /**

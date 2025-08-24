@@ -8,11 +8,13 @@
 #include "systemmanager.h"
 #include "layout.h"
 #include "../data/DataManager.h"
-
+#include "../system/CameraSystem.h"
 namespace FCT
 {
     class Layout;
 }
+
+
 
 namespace MQEngine {
     class EngineScope;
@@ -84,6 +86,7 @@ namespace MQEngine {
         float m_quadratic = 0.032f;
         float m_cutOffAngle = 45.0f;
         DataManager* m_dataManager;
+        CameraSystem* m_cameraSystem;
     };
     /**
      * @return engine version

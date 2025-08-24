@@ -15,7 +15,9 @@ namespace MQEngine
         m_application->global.wnd = m_wnd;
         m_application->global.ctx = m_ctx;
         m_application->global.dataManager = m_dataManager;
+        m_application->global.runtime = &m_rt;
         m_application->init();
+        m_cameraSystem = new CameraSystem(m_ctx,m_dataManager);
     }
 
     void Engine::settingUpLayout()
@@ -40,6 +42,7 @@ namespace MQEngine
                 UniformVar{UniformType::Float,"quadratic"},
                 UniformVar{UniformType::Float,"cutOff"}
             ),
+            CameraUniformSlot,
             m_shadowConstLayout,
             PassName("ObjectPass"),
             SamplerSlot{"shadowSampler"}
@@ -123,7 +126,7 @@ ShaderOut main(ShaderIn sIn) {
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
-    sOut.position = mvp * sIn.position;
+    sOut.position = projectionMatrix * viewMatrix * sIn.position;
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     sOut.srcpos = sIn.position;
@@ -232,6 +235,7 @@ ShaderOut main(ShaderIn sIn) {
             cmdBuf->scissor({0,0},{1024,768});
             m_layout->begin();
             m_layout->bindSampler("shadowSampler",m_shadowSampler);
+            m_cameraSystem->bind(m_layout);
             m_layout->bindUniform(m_baseUniform);
             m_layout->bindUniform(m_shadowUniform);
             m_layout->bindVertexShader(m_vs);
@@ -312,6 +316,7 @@ ShaderOut main(ShaderIn sIn) {
                 ));
         m_shadowUniform.update();
         m_application->logicTick();
+        m_cameraSystem->update();
         m_ctx->flush();
     }
 

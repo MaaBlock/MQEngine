@@ -7,6 +7,9 @@ namespace MQEngine {
         g_global.wnd = global.wnd;
         g_global.ctx = global.ctx;
         g_global.dataManager = global.dataManager;
+        g_global.rt = global.runtime;
+        g_global.editorRegistry = &registry;
+        g_global.dataManager->appendRegistry(&registry);
         uiManager.init();
         settingRenderCallBack();
     }
