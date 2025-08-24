@@ -19,7 +19,7 @@ namespace MQEngine
         m_imguiCtx->addTexture("shadowDepth",graph->getImage("RetTarget"));
         m_imguiCtx->addTexture("lightWorld",graph->getImage("DepthFromLigth0Image"));
 */
-        }
+    }
 
     void GraphViewInsight::render()
     {

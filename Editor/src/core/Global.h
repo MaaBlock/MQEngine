@@ -15,7 +15,7 @@ namespace MQEngine{
         DataManager* dataManager;
         FCT::Runtime* rt;
         entt::registry* editorRegistry;
-
+        FCT::ImguiContext* imguiContext;
     };
     extern Global g_global;
 }

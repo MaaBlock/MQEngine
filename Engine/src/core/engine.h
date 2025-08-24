@@ -9,6 +9,7 @@
 #include "layout.h"
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
+
 namespace FCT
 {
     class Layout;

@@ -23,6 +23,14 @@ namespace MQEngine
                 }
             }
         });
+        m_ctx = g_global.ctx;
+        m_meshIcon = m_ctx->loadTexture("./icons/mesh.png");
+        m_textureIcon = m_ctx->loadTexture("./icons/texture.png");
+        m_materialIcon = m_ctx->loadTexture("./icons/material.png");
+        g_global.imguiContext->addTexture("ModelManager_Icon_Mesh", m_meshIcon);
+        g_global.imguiContext->addTexture("ModelManager_Icon_Texture", m_textureIcon);
+        g_global.imguiContext->addTexture("ModelManager_Icon_Material", m_materialIcon);
+
     }
 
     void ModelManager::importModel(const std::string& modelPath)
@@ -60,6 +68,7 @@ namespace MQEngine
         }
         saveModelIndex(targetDir, modelBaseName, modelPath);
         saveModelTimestamp(targetDir, modelPath);
+
     }
 
     void ModelManager::saveModelIndex(const std::filesystem::path& targetDir, const std::string& modelBaseName, const std::string& originalPath)
@@ -86,8 +95,47 @@ namespace MQEngine
         } else {
             fout << "无法创建索引文件: " << indexFile << std::endl;
         }
+        generateUuidFile(targetDir, originalPath);
     }
 
+    void ModelManager::generateUuidFile(const std::filesystem::path& targetDir, const std::string& originalPath)
+    {
+        try {
+            static boost::uuids::random_generator uuidGen;
+            boost::uuids::uuid modelUuid = uuidGen();
+            std::string uuidString = boost::uuids::to_string(modelUuid);
+
+            std::filesystem::path originalFilePath(originalPath);
+            std::string originalFileName = originalFilePath.filename().string();
+
+            std::string modelRelativePath = "source/" + originalFileName;
+
+            MQEngine::ModelUuidFile modelUuidFile;
+            modelUuidFile.uuid = uuidString;
+            modelUuidFile.modelRelativePath = modelRelativePath;
+
+            std::filesystem::path uuidFile = targetDir / "model.uuid";
+            std::ofstream uuidOut(uuidFile, std::ios::binary);
+
+            if (uuidOut.is_open()) {
+                boost::archive::binary_oarchive archive(uuidOut);
+                archive << modelUuidFile;
+
+                fout << "模型 UUID 文件保存成功: " << uuidFile << std::endl;
+                fout << "模型 UUID: " << uuidString << std::endl;
+                fout << "模型相对路径: " << modelRelativePath << std::endl;
+
+                std::string modelDirName = targetDir.filename().string();
+                std::string dataManagerPath = "models/" + modelDirName;
+
+            } else {
+                fout << "无法创建 UUID 文件: " << uuidFile << std::endl;
+            }
+
+        } catch (const std::exception& e) {
+            fout << "生成 UUID 文件失败: " << e.what() << std::endl;
+        }
+    }
     void ModelManager::saveModelTimestamp(const std::filesystem::path& targetDir, const std::string& modelPath)
     {
         std::filesystem::path timestampFile = targetDir / "timestamp.dat";
@@ -165,6 +213,9 @@ namespace MQEngine
 
         ImGui::NextColumn();
 
+
+        // 在render()函数中的模型详情部分，替换整个详情显示逻辑：
+
         ImGui::BeginChild(TEXT("模型详情"), ImVec2(0, 0), true);
         {
             if (!m_selectedModel.empty()) {
@@ -173,60 +224,186 @@ namespace MQEngine
 
                 if (!m_selectedModelInfo.name.empty() || !m_selectedModelInfo.meshInfos.empty()) {
                     ImGui::Text(TEXT("场景名称: %s"), m_selectedModelInfo.name.c_str());
+                    ImGui::Separator();
 
-                    if (ImGui::CollapsingHeader(TEXT("网格 (%zu)"), m_selectedModelInfo.meshInfos.size())) {
+                    // 获取图标
+                    ImTextureID meshIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Mesh");
+                    ImTextureID textureIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Texture");
+                    ImTextureID materialIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Material");
+
+                    const float iconSize = 64.0f;
+                    const float iconSpacing = 10.0f;
+                    const float itemWidth = iconSize + iconSpacing;
+
+                    // 计算每行可以放多少个图标
+                    float windowWidth = ImGui::GetContentRegionAvail().x;
+                    int itemsPerRow = std::max(1, (int)(windowWidth / itemWidth));
+
+                    // 网格部分
+                    if (!m_selectedModelInfo.meshInfos.empty()) {
+                        ImGui::Text(TEXT("网格 (%zu)"), m_selectedModelInfo.meshInfos.size());
+                        ImGui::Separator();
+
                         for (size_t i = 0; i < m_selectedModelInfo.meshInfos.size(); i++) {
                             const auto& meshInfo = m_selectedModelInfo.meshInfos[i];
-                            if (ImGui::TreeNode((TEXT("网格 ") + std::to_string(i) + ": " + meshInfo.name).c_str())) {
-                                ImGui::Text(TEXT("顶点数: %u"), meshInfo.vertexCount);
-                                ImGui::Text(TEXT("索引数: %u"), meshInfo.indexCount);
-                                ImGui::Text(TEXT("三角形数: %u"), meshInfo.triangleCount);
-                                ImGui::Text(TEXT("包围盒: (%.2f,%.2f,%.2f) - (%.2f,%.2f,%.2f)"),
-                                    meshInfo.boundingBoxMin.x, meshInfo.boundingBoxMin.y, meshInfo.boundingBoxMin.z,
-                                    meshInfo.boundingBoxMax.x, meshInfo.boundingBoxMax.y, meshInfo.boundingBoxMax.z);
 
-                                if (ImGui::Button((TEXT("加载网格 ") + meshInfo.name).c_str())) {
-                                    // TODO: 加载这个网格到场景
-                                    fout << "加载网格: " << meshInfo.name << std::endl;
+                            // 计算当前项在行中的位置
+                            if (i > 0 && (i % itemsPerRow) != 0) {
+                                ImGui::SameLine();
+                            }
+
+                            ImGui::BeginGroup();
+                            {
+                                // 图标按钮，支持拖拽
+                                ImGui::PushID((int)i);
+                                if (ImGui::ImageButton(("mesh_" + std::to_string(i)).c_str(), meshIconID, ImVec2(iconSize, iconSize))) {
+                                    // 点击事件
+                                    fout << "选中网格: " << meshInfo.name << std::endl;
                                 }
-                                ImGui::TreePop();
+
+                                // 拖拽源
+                                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                                    std::string modelUuid = getModelUuid(m_selectedModel);
+                                    std::string dragData = modelUuid + "|" + meshInfo.name;
+                                    ImGui::SetDragDropPayload("ASSET_MESH_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
+
+                                    ImGui::Image(meshIconID, ImVec2(32, 32));
+                                    ImGui::SameLine();
+                                    ImGui::Text("%s", meshInfo.name.c_str());
+
+                                    ImGui::EndDragDropSource();
+                                }
+
+                                // 显示名称（截断过长的名称）
+                                std::string displayName = meshInfo.name;
+                                if (displayName.length() > 10) {
+                                    displayName = displayName.substr(0, 10) + "...";
+                                }
+
+                                // 居中显示文字
+                                float textWidth = ImGui::CalcTextSize(displayName.c_str()).x;
+                                float centerOffset = (iconSize - textWidth) * 0.5f;
+                                if (centerOffset > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + centerOffset);
+                                ImGui::Text("%s", displayName.c_str());
+
+                                ImGui::PopID();
+                            }
+                            ImGui::EndGroup();
+
+                            // 悬停提示
+                            if (ImGui::IsItemHovered()) {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(TEXT("网格: %s"), meshInfo.name.c_str());
+                                ImGui::Text(TEXT("顶点数: %u"), meshInfo.vertexCount);
+                                ImGui::Text(TEXT("三角形数: %u"), meshInfo.triangleCount);
+                                ImGui::EndTooltip();
                             }
                         }
+                        ImGui::Spacing();
+                        ImGui::Separator();
                     }
 
-                    if (ImGui::CollapsingHeader(TEXT("纹理 (%zu)"), m_selectedModelInfo.textureInfos.size())) {
+                    if (!m_selectedModelInfo.textureInfos.empty()) {
+                        ImGui::Text(TEXT("纹理 (%zu)"), m_selectedModelInfo.textureInfos.size());
+                        ImGui::Separator();
+
                         for (size_t i = 0; i < m_selectedModelInfo.textureInfos.size(); i++) {
                             const auto& textureInfo = m_selectedModelInfo.textureInfos[i];
-                            if (ImGui::TreeNode((TEXT("纹理 ") + std::to_string(i)).c_str())) {
-                                ImGui::Text(TEXT("路径: %s"), textureInfo.path.c_str());
+
+                            if (i > 0 && (i % itemsPerRow) != 0) {
+                                ImGui::SameLine();
+                            }
+
+                            ImGui::BeginGroup();
+                            {
+                                ImGui::PushID((int)(1000 + i));
+                                if (ImGui::ImageButton(("texture_" + std::to_string(i)).c_str(), textureIconID, ImVec2(iconSize, iconSize))) {
+                                    fout << "选中纹理: " << textureInfo.path << std::endl;
+                                }
+
+                                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                                    std::string modelUuid = getModelUuid(m_selectedModel);
+                                    std::string dragData = modelUuid + "|" + textureInfo.path;
+                                    ImGui::SetDragDropPayload("ASSET_TEXTURE_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
+
+                                    ImGui::Image(textureIconID, ImVec2(32, 32));
+                                    ImGui::SameLine();
+                                    ImGui::Text("%s", std::filesystem::path(textureInfo.path).filename().string().c_str());
+
+                                    ImGui::EndDragDropSource();
+                                }
+
+                                std::string fileName = std::filesystem::path(textureInfo.path).filename().string();
+                                if (fileName.length() > 10) {
+                                    fileName = fileName.substr(0, 10) + "...";
+                                }
+
+                                float textWidth = ImGui::CalcTextSize(fileName.c_str()).x;
+                                float centerOffset = (iconSize - textWidth) * 0.5f;
+                                if (centerOffset > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + centerOffset);
+                                ImGui::Text("%s", fileName.c_str());
+
+                                ImGui::PopID();
+                            }
+                            ImGui::EndGroup();
+
+                            if (ImGui::IsItemHovered()) {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(TEXT("纹理: %s"), textureInfo.path.c_str());
                                 ImGui::Text(TEXT("类型: %s"), textureInfo.isInner ? TEXT("内嵌") : TEXT("外部"));
-
-                                if (ImGui::Button((TEXT("加载纹理 ") + std::to_string(i)).c_str())) {
-                                    // TODO: 加载这个纹理
-                                    fout << "加载纹理: " << textureInfo.path << std::endl;
-                                }
-                                ImGui::TreePop();
+                                ImGui::EndTooltip();
                             }
                         }
+                        ImGui::Spacing();
+                        ImGui::Separator();
                     }
 
-                    if (ImGui::CollapsingHeader(TEXT("材质 (%zu)"), m_selectedModelInfo.materialInfos.size())) {
+                    // 材质部分
+                    if (!m_selectedModelInfo.materialInfos.empty()) {
+                        ImGui::Text(TEXT("材质 (%zu)"), m_selectedModelInfo.materialInfos.size());
+                        ImGui::Separator();
+
                         for (size_t i = 0; i < m_selectedModelInfo.materialInfos.size(); i++) {
-                            if (ImGui::TreeNode((TEXT("材质 ") + std::to_string(i)).c_str())) {
-                                // TODO: 显示材质详细信息
-                                if (ImGui::Button((TEXT("加载材质 ") + std::to_string(i)).c_str())) {
-                                    // TODO: 加载这个材质
-                                    fout << "加载材质: " << i << std::endl;
+                            if (i > 0 && (i % itemsPerRow) != 0) {
+                                ImGui::SameLine();
+                            }
+
+                            ImGui::BeginGroup();
+                            {
+                                ImGui::PushID((int)(2000 + i));
+                                if (ImGui::ImageButton(("material_" + std::to_string(i)).c_str(), materialIconID, ImVec2(iconSize, iconSize))) {
+                                    fout << "选中材质: " << i << std::endl;
                                 }
-                                ImGui::TreePop();
+
+                                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                                    std::string modelUuid = getModelUuid(m_selectedModel);
+                                    std::string dragData = modelUuid + "|" + std::to_string(i);
+                                    ImGui::SetDragDropPayload("ASSET_MATERIAL_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
+
+                                    ImGui::Image(materialIconID, ImVec2(32, 32));
+                                    ImGui::SameLine();
+                                    ImGui::Text(TEXT("材质 %zu"), i);
+
+                                    ImGui::EndDragDropSource();
+                                }
+
+                                std::string materialName = TEXT("材质 ") + std::to_string(i);
+                                float textWidth = ImGui::CalcTextSize(materialName.c_str()).x;
+                                float centerOffset = (iconSize - textWidth) * 0.5f;
+                                if (centerOffset > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + centerOffset);
+                                ImGui::Text("%s", materialName.c_str());
+
+                                ImGui::PopID();
+                            }
+                            ImGui::EndGroup();
+
+                            if (ImGui::IsItemHovered()) {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(TEXT("材质 %zu"), i);
+                                // TODO: 显示更多材质信息
+                                ImGui::EndTooltip();
                             }
                         }
-                    }
-
-                    ImGui::Separator();
-                    if (ImGui::Button(TEXT("加载整个模型"))) {
-                        // TODO: 加载整个模型到场景
-                        fout << "加载整个模型: " << m_selectedModel << std::endl;
                     }
                 } else {
                     ImGui::Text(TEXT("无法读取模型信息"));
@@ -239,6 +416,25 @@ namespace MQEngine
 
         ImGui::Columns(1);
         ImGui::End();
+    }
+    std::string ModelManager::getModelUuid(const std::string& modelName) {
+        std::filesystem::path modelDir = std::filesystem::path("./res/models") / modelName;
+        std::filesystem::path uuidFile = modelDir / "model.uuid";
+
+        if (std::filesystem::exists(uuidFile)) {
+            try {
+                std::ifstream uuidIn(uuidFile, std::ios::binary);
+                if (uuidIn.is_open()) {
+                    MQEngine::ModelUuidFile modelUuidFile;
+                    boost::archive::binary_iarchive archive(uuidIn);
+                    archive >> modelUuidFile;
+                    return modelUuidFile.uuid;
+                }
+            } catch (const std::exception& e) {
+                fout << "读取模型UUID失败: " << e.what() << std::endl;
+            }
+        }
+        return "";
     }
 
     void ModelManager::loadSelectedModelInfo(const std::filesystem::path& modelDir)

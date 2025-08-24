@@ -9,11 +9,15 @@
 #include <FCT.h>
 #include <FCT_IMGUI.h>
 
-// Boost序列化支持
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/unordered_map.hpp>
+#include <string>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 #endif //THIRDPARTY_H

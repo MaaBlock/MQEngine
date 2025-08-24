@@ -34,6 +34,8 @@ namespace MQEngine {
 
     class Application {
     public:
+        virtual ~Application() = default;
+
         struct Global
         {
             FCT::Context* ctx;
