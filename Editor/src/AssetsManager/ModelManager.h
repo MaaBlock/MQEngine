@@ -12,10 +12,12 @@ namespace MQEngine {
         ModelManager(DataManager* dataManager);
         ~ModelManager();
         void render();
+        std::string getModelUuid(const std::string& modelName);
         void loadSelectedModelInfo(const std::filesystem::path& modelDir);
         void importModel(const std::string& modelPath);
         void saveModelIndex(const std::filesystem::path& targetDir, const std::string& modelBaseName,
                             const std::string& originalPath);
+        void generateUuidFile(const std::filesystem::path& targetDir, const std::string& originalPath);
         void saveModelTimestamp(const std::filesystem::path& targetDir, const std::string& modelPath);
 
     private:
@@ -24,6 +26,10 @@ namespace MQEngine {
         std::set<std::string> m_supportedExtensions;
         std::string m_selectedModel;
         FCT::ModelInfo::SceneInfo m_selectedModelInfo;
+        FCT::Context* m_ctx;
+        FCT::Image* m_meshIcon;
+        FCT::Image* m_materialIcon;
+        FCT::Image* m_textureIcon;
     private:
         bool m_isWindowHovered = false;
         bool m_isWindowFocused = false;

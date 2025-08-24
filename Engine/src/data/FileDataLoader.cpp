@@ -66,4 +66,18 @@ namespace MQEngine {
             throw DataError("创建目录时发生错误: " + dir + " - " + ex.what());
         }
     }
+
+    bool FileDataLoader::fileExists(const std::string& filePath) const
+    {
+        return std::filesystem::exists(filePath);
+    }
+
+    std::unique_ptr<std::ifstream> FileDataLoader::openBinaryInputStream(const std::string& filePath) const
+    {
+        auto stream = std::make_unique<std::ifstream>(filePath, std::ios::binary);
+        if (!stream->is_open()) {
+            return nullptr;
+        }
+        return stream;
+    }
 } // MQEngine

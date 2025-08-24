@@ -13,13 +13,27 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
+
 #include "./DataLoader.h"
 #include "./FileDataLoader.h"
 #include "./Camera.h"
 
-namespace MQEngine {
+namespace MQEngine
+{
+    struct ModelUuidFile
+    {
+        std::string uuid;
+        std::string modelRelativePath;
 
-    class ENGINE_API DataManager {
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version) {
+            ar & uuid;
+            ar & modelRelativePath;
+        }
+    };
+
+    class ENGINE_API DataManager
+    {
     public:
         DataManager()
         {
@@ -49,6 +63,7 @@ namespace MQEngine {
         {
             m_dataLoader->ensureDirectory("./res/models");
             m_modelList = m_dataLoader->getSubDirectories("./res/models");
+            loadModelUuidMapping();
         }
         std::vector<entt::registry*> currentRegistries() const
         {
@@ -65,11 +80,43 @@ namespace MQEngine {
     private:
         std::vector<entt::registry*> m_currentRegistries;
         std::vector<std::string> m_sceneList;
+        std::unordered_map<std::string,std::string> m_uuidToModel;
         std::vector<std::string> m_modelList;
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;
         std::unique_ptr<DataLoader> m_dataLoader;
+        void loadModelUuidMapping() {
+            m_uuidToModel.clear();
+
+            m_dataLoader->ensureDirectory("./res/models");
+
+            try {
+                std::vector<std::string> modelDirs = m_dataLoader->getSubDirectories("./res/models");
+
+                for (const std::string& modelDir : modelDirs) {
+                    std::string uuidFilePath = "./res/models/" + modelDir + "/model.uuid";
+
+                    if (m_dataLoader->fileExists(uuidFilePath)) {
+                        try {
+                            auto inputStream = m_dataLoader->openBinaryInputStream(uuidFilePath);
+
+                            if (inputStream && inputStream->is_open()) {
+                                boost::archive::binary_iarchive archive(*inputStream);
+
+                                ModelUuidFile modelUuidFile;
+                                archive >> modelUuidFile;
+
+                                m_uuidToModel[modelUuidFile.uuid] = modelDir;
+                            }
+                        } catch (const std::exception& e) {
+
+                        }
+                    }
+                }
+            } catch (const std::exception& e) {
+
+            }
+        }
     };
-    
-} // namespace MQEngine
+}// namespace MQEngine
 
 #endif //DATAMANAGER_H
