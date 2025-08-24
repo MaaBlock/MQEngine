@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitepress'
 import { MermaidMarkdown,MermaidPlugin } from "vitepress-plugin-mermaid";
-import mermaid from "mermaid";
 
 
 // https://vitepress.dev/reference/site-config
@@ -69,7 +68,16 @@ export default defineConfig({
                                 text: '引擎架构',
                                 link: '/document/contributing/development/engine-architecture.md',
                                 items: [
-
+                                    {
+                                        text: '编辑器相关',
+                                        link: '/document/contributing/development/editor/index.md',
+                                        items: [
+                                            {
+                                                text: '打开一个全新的场景的协作图',
+                                                link: '/document/contributing/development/editor/open-new-scene.md',
+                                            }
+                                        ]
+                                    }
                                 ]
                             },
                             {
