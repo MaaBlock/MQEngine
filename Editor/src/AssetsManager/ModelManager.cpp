@@ -171,7 +171,7 @@ namespace MQEngine
                 ImGui::Text(TEXT("模型: %s"), m_selectedModel.c_str());
                 ImGui::Separator();
 
-                if (!m_selectedModelInfo.name.empty()) {
+                if (!m_selectedModelInfo.name.empty() || !m_selectedModelInfo.meshInfos.empty()) {
                     ImGui::Text(TEXT("场景名称: %s"), m_selectedModelInfo.name.c_str());
 
                     if (ImGui::CollapsingHeader(TEXT("网格 (%zu)"), m_selectedModelInfo.meshInfos.size())) {
