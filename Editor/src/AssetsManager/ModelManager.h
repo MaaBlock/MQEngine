@@ -19,7 +19,6 @@ namespace MQEngine {
                             const std::string& originalPath);
         void generateUuidFile(const std::filesystem::path& targetDir, const std::string& originalPath);
         void saveModelTimestamp(const std::filesystem::path& targetDir, const std::string& modelPath);
-
     private:
         DataManager* m_dataManager;
         FCT::ModelLoader* m_modelLoader;

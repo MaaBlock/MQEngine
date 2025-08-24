@@ -30,16 +30,34 @@ file(GLOB ASSETSMANAGER_MODULE_SOURCES
         CONFIGURE_DEPENDS
         "./src/AssetsManager/*.cpp"
 )
+file(GLOB SCENEVIEWER_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/SceneViewer/*.cpp"
+)
+file(GLOB SCENEVIEWER_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/SceneViewer/*.h"
+        "./src/SceneViewer/*.hpp"
+)
 
 set(MQENGINE_EDITOR_SOURCES
         ${CORE_MODULE_SOURCES}
         ${RENDERGRAPHVIEW_MODULE_SOURCES}
         ${UI_MODULE_SOURCES}
         ${ASSETSMANAGER_MODULE_SOURCES}
+        ${SCENEVIEWER_MODULE_SOURCES}
 )
 set(MQENGINE_EDITOR_HEADERS
         ${RENDERGRAPHVIEW_MODULE_HEADERS}
+        ${SCENEVIEWER_MODULE_HEADERS}
 )
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
+
 
 add_executable(Editor
         ${MQENGINE_EDITOR_SOURCES}

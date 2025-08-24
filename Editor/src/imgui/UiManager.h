@@ -10,6 +10,9 @@
 #include "../core/Global.h"
 #include "../RenderGraphView/RenderGraphViewer.h"
 #include "./EditorCameraManager.h"
+#include "../AssetsManager/SceneManager.h"
+#include "../SceneViewer/SceneEntityViewer.h"
+
 namespace MQEngine {
     class UiManager {
     public:
@@ -24,6 +27,8 @@ namespace MQEngine {
         RenderGraphViewer* m_passGenerator;
         ModelManager* m_modelManager;
         EditorCameraManager* m_editorCameraManager;
+        SceneManager* m_sceneManager;
+        SceneEntityViewer* m_sceneEntityViewer;
     };
 }
 
