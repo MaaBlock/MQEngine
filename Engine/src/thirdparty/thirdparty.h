@@ -20,4 +20,12 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+namespace MQEngine
+{
+    using Context = FCT::Context;
+    using Window = FCT::Window;
+    using Uniform = FCT::Uniform;
+    using ShaderRef = FCT::ShaderRef;
+    //using EventPipe = FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>;
+}
 #endif //THIRDPARTY_H

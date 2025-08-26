@@ -4,16 +4,19 @@
 
 #ifndef ENGINE_H
 #define ENGINE_H
+#include "../thirdparty/thirdparty.h"
 #include "application.h"
 #include "systemmanager.h"
 #include "layout.h"
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
+#include "./EngineGlobal.h"
 
 namespace FCT
 {
     class Layout;
 }
+
 
 
 

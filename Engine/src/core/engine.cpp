@@ -3,6 +3,7 @@
 
 namespace MQEngine
 {
+    EngineGlobal g_engineGlobal;
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
@@ -323,6 +324,7 @@ ShaderOut main(ShaderIn sIn) {
     void Engine::init(Application* application)
     {
         m_dataManager = new DataManager();
+        g_engineGlobal.dataManager = m_dataManager;
         m_application = application;
         settingUpEnv();
         settingUpPass();

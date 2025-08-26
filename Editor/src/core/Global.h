@@ -7,7 +7,7 @@
 #include "../Thirdparty/thirdparty.h"
 
 namespace MQEngine{
-    struct Global
+    struct EditorGlobal
     {
         FCT::Window* wnd;
         FCT::Context* ctx;
@@ -17,6 +17,6 @@ namespace MQEngine{
         entt::registry* editorRegistry;
         FCT::ImguiContext* imguiContext;
     };
-    extern Global g_global;
+    extern EditorGlobal g_editorGlobal;
 }
 #endif //GLOBAL_H

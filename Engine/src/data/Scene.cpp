@@ -1,5 +1,5 @@
 ﻿#include "Scene.h"
-
+#include "EnttArchiveWrapper.h"
 #include <boost/archive/binary_oarchive.hpp>
 
 #include "DataManager.h"
@@ -91,12 +91,11 @@ namespace MQEngine
             auto registryStream = m_dataManager->getDataLoader()->openBinaryOutputStream(registryDataPath);
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
-                //进行序列化 保存
-                /*
+                EnttOutputArchiveWrapper wrapper(archive);
+
                 entt::snapshot{m_registry}
-                .get<entt::entity>(archive)
-                .get<>(archive);
-                */
+                .get<entt::entity>(wrapper)
+                .get<NameTag>(wrapper);
 
             } else {
                 throw DataError("无法创建registry文件: " + registryDataPath);
@@ -145,7 +144,10 @@ namespace MQEngine
                 auto registryStream = m_dataManager->getDataLoader()->openBinaryInputStream(registryDataPath);
                 if (registryStream && registryStream->is_open()) {
                     boost::archive::binary_iarchive archive(*registryStream);
-                    //加载 registry
+                    EnttInputArchiveWrapper wrapper(archive);
+                    entt::snapshot_loader{m_registry}
+                    .get<entt::entity>(wrapper)
+                    .get<NameTag>(wrapper);
 
                 }
             }

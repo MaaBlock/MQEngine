@@ -11,9 +11,24 @@ namespace MQEngine {
     class SceneEntityViewer {
     public:
         SceneEntityViewer();
+        void renderGloabaEntityList(Scene* scene);
+        void renderTrunkEntityList(Scene* scene, std::string trunkName);
+        void renderSceneEntityList(Scene* scene);
         void render();
     private:
         DataManager* m_dataManager;
+
+        bool m_showCreateEntityDialog = false;
+        char m_newEntityName[256] = "entity";
+        std::string m_targetTrunkName;
+        bool m_createInGlobal = true;
+
+        bool m_showContextMenu = false;
+        std::string m_contextMenuTarget;
+
+        void renderCreateEntityDialog(Scene* scene);
+        void showCreateEntityDialog(const std::string& targetTrunk = "", bool isGlobal = true);
+        void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
     };
 
 } // MQEngine

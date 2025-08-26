@@ -8,6 +8,7 @@
 #include "../EnginePCH.h"
 #include "../Thirdparty/thirdparty.h"
 #include "DataError.h"
+#include "Component.h"
 #include <fstream>
 #include <filesystem>
 
@@ -25,6 +26,7 @@ namespace MQEngine {
         void init();
         void save();
         void load();
+        entt::registry& getRegistry() { return m_registry; }
     private:
         friend class boost::serialization::access;
 
@@ -41,3 +43,4 @@ namespace MQEngine {
 } // namespace MQEngine
 
 #endif //SCENETRUNK_H
+

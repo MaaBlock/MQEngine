@@ -25,3 +25,4 @@ namespace MQEngine {
 } // namespace MQEngine
 
 #endif //DATAERROR_H
+

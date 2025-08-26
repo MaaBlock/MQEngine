@@ -12,13 +12,13 @@ namespace MQEngine
     void UiManager::init()
     {
         ImNodes::CreateContext();
-        m_imguiCtx = g_global.imguiModule->createContext(g_global.wnd,g_global.ctx);
+        m_imguiCtx = g_editorGlobal.imguiModule->createContext(g_editorGlobal.wnd,g_editorGlobal.ctx);
         m_imguiCtx->attachPass("ImguiPass");
         m_imguiCtx->create(ImguiContextCreateFlag::Docking);
-        g_global.imguiContext = m_imguiCtx;
+        g_editorGlobal.imguiContext = m_imguiCtx;
         m_graphView = new GraphViewInsight(m_imguiCtx);
-        m_passGenerator = new RenderGraphViewer(g_global.ctx,g_global.wnd);
-        m_modelManager = new ModelManager(g_global.dataManager);
+        m_passGenerator = new RenderGraphViewer(g_editorGlobal.ctx,g_editorGlobal.wnd);
+        m_modelManager = new ModelManager(g_editorGlobal.dataManager);
         m_editorCameraManager = new EditorCameraManager();
         m_sceneManager = new SceneManager();
         m_sceneEntityViewer = new SceneEntityViewer();
@@ -41,11 +41,11 @@ namespace MQEngine
                  "ImguiPass",
                  EnablePassClear(ClearType::color | ClearType::depthStencil,
                      Vec4(0,0,0,1)),
-                 Target("mainWindowColor",g_global.wnd),
+                 Target("mainWindowColor",g_editorGlobal.wnd),
                  Texture("SceneColorTarget"),
                  Texture("PosTarget"),
                  Texture("RetTarget"),
-                 DepthStencil("mainWindowDS",g_global.wnd)
+                 DepthStencil("mainWindowDS",g_editorGlobal.wnd)
                  );
          });
         callback.subscribe<RenderCallBack::KeepImage>(

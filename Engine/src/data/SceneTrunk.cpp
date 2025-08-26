@@ -1,6 +1,7 @@
 ﻿#include "SceneTrunk.h"
 
 #include "DataManager.h"
+#include "EnttArchiveWrapper.h"
 #include "Scene.h"
 
 namespace MQEngine {
@@ -42,10 +43,11 @@ namespace MQEngine {
             auto registryStream = dataManager->getDataLoader()->openBinaryOutputStream(trunkRegistryPath);
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
-                // 序列化场景块的注册表
-                /*
-                 *
-                */
+                EnttOutputArchiveWrapper wrapper(archive);
+
+                entt::snapshot{m_registry}
+                .get<entt::entity>(wrapper)
+                .get<NameTag>(wrapper);
             } else {
                 throw DataError("无法创建场景块registry文件: " + trunkRegistryPath);
             }
@@ -86,12 +88,10 @@ namespace MQEngine {
                 auto registryStream = dataManager->getDataLoader()->openBinaryInputStream(trunkRegistryPath);
                 if (registryStream && registryStream->is_open()) {
                     boost::archive::binary_iarchive archive(*registryStream);
-                    // 反序列化场景块的注册表
-                    /*
+                    EnttInputArchiveWrapper wrapper(archive);
                     entt::snapshot_loader{m_registry}
-                    .get<entt::entity>(archive)
-                    .get<>(archive);
-                    */
+                    .get<entt::entity>(wrapper)
+                    .get<NameTag>(wrapper);
                 }
             }
 

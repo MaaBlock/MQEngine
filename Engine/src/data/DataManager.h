@@ -52,80 +52,18 @@ namespace MQEngine
         }
         std::vector<std::string> getModelList()
         {
-            loadModelPathList();
+            updateModelPathList();
             return m_modelPathList;
         }
-        void loadRes()
-        {
-            m_dataLoader->ensureDirectory("./res");
-            loadScenePathList();
-            loadModelPathList();
-        }
-        void loadScenePathList()
-        {
-            m_dataLoader->ensureDirectory("./res/scenes");
-            m_scenePathList = m_dataLoader->getSubDirectories("./res/scenes");
-            loadSceneUuidMapping();
-        }
-        void newScene(const std::string& sceneName)
-        {
-            m_dataLoader->createDirectory("./res/scenes/" + sceneName);
-        }
-        void loadModelPathList()
-        {
-            m_dataLoader->ensureDirectory("./res/models");
-            m_modelPathList = m_dataLoader->getSubDirectories("./res/models");
-            loadModelUuidMapping();
-        }
-        std::vector<entt::registry*> currentRegistries() const
-        {
-            return m_currentRegistries;
-        }
-        void appendRegistry(entt::registry* registry)
-        {
-            m_currentRegistries.push_back(registry);
-        }
-        void removeRegistry(entt::registry* registry)
-        {
-            m_currentRegistries.erase(std::remove(m_currentRegistries.begin(), m_currentRegistries.end(), registry), m_currentRegistries.end());
-        }
-
-        void openScene(const std::string& uuid) {
-            try {
-                if (m_currentScene == uuid) {
-                    return;
-                }
-
-                auto sceneIt = m_uuidToScenePath.find(uuid);
-                if (sceneIt == m_uuidToScenePath.end()) {
-                    throw DataError("场景UUID不存在: " + uuid);
-                }
-
-                if (m_loadScenes.find(uuid) == m_loadScenes.end()) {
-                    loadScene(uuid);
-                }
-
-                if (!m_currentScene.empty()) {
-                    closeScene(m_currentScene);
-                }
-
-                m_currentScene = uuid;
-
-                auto scenePtr = m_loadScenes[uuid];
-                if (scenePtr) {
-                    //scenePtr.onOpen();
-
-                }
-
-            } catch (const DataError& e) {
-                throw;
-            } catch (const std::exception& e) {
-                throw DataError("打开场景失败: " + std::string(e.what()));
-            }
-        }
-        void closeScene(const std::string& uuid) {
-            //scenePtr.onClose();
-        }
+        void loadRes();
+        void loadScenePathList();
+        void newScene(const std::string& sceneName);
+        void updateModelPathList();
+        std::vector<entt::registry*> currentRegistries() const;
+        void appendRegistry(entt::registry* registry);
+        void removeRegistry(entt::registry* registry);
+        void openScene(const std::string& uuid);
+        void closeScene(const std::string& uuid);
 
 
         void loadScene(const std::string& uuid)
