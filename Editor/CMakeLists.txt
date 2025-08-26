@@ -1,4 +1,4 @@
-
+include("../Config/set_utf8_compiler_encoding.cmake")
 file(GLOB CORE_MODULE_SOURCES
         LIST_DIRECTORIES false
         CONFIGURE_DEPENDS
@@ -78,10 +78,6 @@ set(MQENGINE_EDITOR_HEADERS
         ${SCENEVIEWER_MODULE_HEADERS}
         ${DATA_MODULE_HEADERS}
 )
-if(MSVC)
-    add_compile_options(/utf-8)
-endif()
-
 
 
 add_executable(Editor
@@ -94,3 +90,4 @@ target_link_libraries(Editor
 target_link_fct_libraries(Editor)
 target_link_fct_node_libraries(Editor)
 target_link_engine(Editor)
+set_utf8_for_target(Editor)

@@ -1,4 +1,5 @@
 include("../Config/copy_headers.cmake")
+include("../Config/set_utf8_compiler_encoding.cmake")
 
 file(GLOB CORE_MODULE_SOURCES
         LIST_DIRECTORIES false
@@ -60,10 +61,6 @@ set(ENGINE_OTHERS_HEADERS
         "./src/EnginePCH.h"
 )
 
-if(MSVC)
-    add_compile_options(/utf-8)
-endif()
-
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
     ${DATA_MODULE_SOURCES}
@@ -83,6 +80,7 @@ add_copy_target_headers(Engine "${ALL_HEADERS}")
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
 target_link_fct_imgui_libraries(Engine)
+set_utf8_for_target(Engine)
 
 target_include_directories(Engine PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
