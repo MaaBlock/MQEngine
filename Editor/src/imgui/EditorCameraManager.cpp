@@ -10,7 +10,7 @@ namespace MQEngine {
 
     EditorCameraManager::EditorCameraManager()
     {
-        m_editorRegistry = g_global.editorRegistry;
+        m_editorRegistry = g_editorGlobal.editorRegistry;
         createEditorCamera();
     }
 

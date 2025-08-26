@@ -10,9 +10,9 @@ namespace MQEngine
     ModelManager::ModelManager(DataManager* dataManager)
     {
         m_dataManager = dataManager;
-        m_modelLoader = g_global.rt->createModelLoader();
+        m_modelLoader = g_editorGlobal.rt->createModelLoader();
         m_supportedExtensions = m_modelLoader->getSupportedExtensions();
-        g_global.wnd->getCallBack()->addFileDropCallback([this](Window*,const std::vector<std::string>& files)
+        g_editorGlobal.wnd->getCallBack()->addFileDropCallback([this](Window*,const std::vector<std::string>& files)
         {
             for (const auto& file : files) {
                 std::string extension = std::filesystem::path(file).extension().string();
@@ -23,13 +23,13 @@ namespace MQEngine
                 }
             }
         });
-        m_ctx = g_global.ctx;
+        m_ctx = g_editorGlobal.ctx;
         m_meshIcon = m_ctx->loadTexture("./icons/mesh.png");
         m_textureIcon = m_ctx->loadTexture("./icons/texture.png");
         m_materialIcon = m_ctx->loadTexture("./icons/material.png");
-        g_global.imguiContext->addTexture("ModelManager_Icon_Mesh", m_meshIcon);
-        g_global.imguiContext->addTexture("ModelManager_Icon_Texture", m_textureIcon);
-        g_global.imguiContext->addTexture("ModelManager_Icon_Material", m_materialIcon);
+        g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Mesh", m_meshIcon);
+        g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Texture", m_textureIcon);
+        g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Material", m_materialIcon);
 
     }
 
@@ -227,9 +227,9 @@ namespace MQEngine
                     ImGui::Separator();
 
                     // 获取图标
-                    ImTextureID meshIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Mesh");
-                    ImTextureID textureIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Texture");
-                    ImTextureID materialIconID = g_global.imguiContext->getTexture("ModelManager_Icon_Material");
+                    ImTextureID meshIconID = g_editorGlobal.imguiContext->getTexture("ModelManager_Icon_Mesh");
+                    ImTextureID textureIconID = g_editorGlobal.imguiContext->getTexture("ModelManager_Icon_Texture");
+                    ImTextureID materialIconID = g_editorGlobal.imguiContext->getTexture("ModelManager_Icon_Material");
 
                     const float iconSize = 64.0f;
                     const float iconSpacing = 10.0f;

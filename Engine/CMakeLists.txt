@@ -41,12 +41,19 @@ file(GLOB SYSTEM_MODULE_HEADERS
         "./src/system/*.h"
         "./src/system/*.hpp"
 )
+file(GLOB EVENE_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/event/*.h"
+        "./src/event/*.hpp"
+)
 
 set(ENGINE_HEADERS
         ${CORE_MODULE_HEADERS}
         ${DATA_MODULE_HEADERS}
         ${THIRDPARTY_MODULE_HEADERS}
         ${SYSTEM_MODULE_HEADERS}
+        ${EVENE_MODULE_HEADERS}
 )
 set(ENGINE_OTHERS_HEADERS
         "./src/headers.h"

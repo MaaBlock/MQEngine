@@ -10,7 +10,7 @@ using namespace FCT;
 namespace MQEngine {
     SceneManager::SceneManager()
     {
-        m_dataManager = g_global.dataManager;
+        m_dataManager = g_editorGlobal.dataManager;
         refreshSceneList();
     }
     std::string SceneManager::getSceneUuid(const std::string& sceneName)

@@ -40,6 +40,25 @@ namespace MQEngine {
         std::string getName();
         void updateTrunkList();
         DataManager* getDataManager() { return m_dataManager; }
+        std::vector<std::string> getTrunkList()
+        {
+            updateTrunkList();
+            return m_sceneTrunk;
+        }
+        bool isLoad(std::string trunkName)
+        {
+            return m_loadedSceneTrunks.find(trunkName)!= m_loadedSceneTrunks.end();
+        }
+        entt::registry& getRegistry() { return m_registry; }
+        SceneTrunk* getLoadedTrunk(const std::string& trunkName)
+        {
+            auto it = m_loadedSceneTrunks.find(trunkName);
+            if (it!= m_loadedSceneTrunks.end())
+            {
+                return it->second.get();
+            }
+            return nullptr;
+        }
     private:
         friend class boost::serialization::access;
         template<class Archive>
@@ -57,3 +76,4 @@ namespace MQEngine {
 } // namespace MQEngine
 
 #endif //SCENE_H
+
