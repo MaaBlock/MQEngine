@@ -5,6 +5,7 @@
 #include "UiManager.h"
 #include <imnodes.h>
 
+
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
 namespace MQEngine
@@ -16,9 +17,9 @@ namespace MQEngine
         m_imguiCtx->attachPass("ImguiPass");
         m_imguiCtx->create(ImguiContextCreateFlag::Docking);
         g_editorGlobal.imguiContext = m_imguiCtx;
-        m_graphView = new GraphViewInsight(m_imguiCtx);
-        m_passGenerator = new RenderGraphViewer(g_editorGlobal.ctx,g_editorGlobal.wnd);
-        m_modelManager = new ModelManager(g_editorGlobal.dataManager);
+        m_graphView = FCT_NEW(GraphViewInsight,m_imguiCtx);
+        m_passGenerator = FCT_NEW(RenderGraphViewer,g_editorGlobal.ctx,g_editorGlobal.wnd);
+        m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager);
         m_editorCameraManager = new EditorCameraManager();
         m_sceneManager = new SceneManager();
         m_sceneEntityViewer = new SceneEntityViewer();
@@ -89,6 +90,33 @@ namespace MQEngine
         {
             ImguiContext::createMainDockSpace("MQEngine");
             renderScene();
+#ifdef FCT_DEBUG
+            ImGui::Begin("编辑器内存分析");
+            if (ImGui::Button("输出对象"))
+            {
+                _output_object(fout);
+                OutputDebugObject();
+            }
+            if (ImGui::Button("记录并输出距离上次记录新增"))
+            {
+                static std::map<std::string,int> objectCount;
+                std::map<std::string, int> currentCount;
+                auto list = GetDebugObject();
+                for (auto& obj : list)
+                {
+                    currentCount[obj->describe]++;
+                }
+                for (auto& pair : currentCount)
+                {
+                    if (pair.second > objectCount[pair.first])
+                    {
+                        fout << std::oct << "新增:" << pair.first << ", 新增数量:" << pair.second - objectCount[pair.first] << std::endl;
+                    }
+                }
+                objectCount = currentCount;
+            }
+            ImGui::End();
+#endif
             m_graphView->render();
             m_passGenerator->render();
             m_modelManager->render();
