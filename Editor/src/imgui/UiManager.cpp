@@ -128,7 +128,7 @@ namespace MQEngine
 
             // 显示一些场景信息
             ImGui::Separator();
-            ImGui::Text(TEXT("场景分辨率: %.0fx%.0f"), imageWidth, imageHeight);
+            ImGui::Text("场景分辨率: %.0fx%.0f", imageWidth, imageHeight);
             ImGui::Text(TEXT("窗口大小: %.0fx%.0f"), windowSize.x, windowSize.y);
         } else
         {
