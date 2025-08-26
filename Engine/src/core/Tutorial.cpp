@@ -12,4 +12,14 @@ namespace MQEngine
     Engine& getEngine() {
         return Engine::getInstance();
     }
+
+    void OutputDebugObject()
+    {
+        _output_object(fout);
+    }
+
+    std::vector<FCT::_fct_object_t*> GetDebugObject()
+    {
+        return fct_object_list;
+    }
 }
