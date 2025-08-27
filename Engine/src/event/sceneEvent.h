@@ -4,8 +4,11 @@
 
 #ifndef SCENEEVENT_H
 #define SCENEEVENT_H
+#include "../Thirdparty/thirdparty.h"
 namespace MQEngine
 {
+    class Scene;
+    class SceneTrunk;
     namespace SceneEvent
     {
         struct Load

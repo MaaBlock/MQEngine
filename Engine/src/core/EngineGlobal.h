@@ -1,6 +1,7 @@
 ﻿#ifndef ENGINEGLOBAL_H
 #define ENGINEGLOBAL_H
 #include "../Thirdparty/thirdparty.h"
+#include "../EnginePCH.h"
 #include "../event/sceneEvent.h"
 namespace MQEngine
 {
