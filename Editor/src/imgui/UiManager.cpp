@@ -5,7 +5,6 @@
 #include "UiManager.h"
 #include <imnodes.h>
 
-
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
 namespace MQEngine
@@ -86,6 +85,7 @@ namespace MQEngine
 
     void UiManager::logicTick()
     {
+
         m_imguiCtx->push([this]()
         {
             ImguiContext::createMainDockSpace("MQEngine");
@@ -99,6 +99,7 @@ namespace MQEngine
             }
             if (ImGui::Button("记录并输出距离上次记录新增"))
             {
+                fout << "输出距离上次记录新增:" << std::endl;
                 static std::map<std::string,int> objectCount;
                 std::map<std::string, int> currentCount;
                 auto list = GetDebugObject();
