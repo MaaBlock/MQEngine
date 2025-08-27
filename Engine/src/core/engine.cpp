@@ -1,6 +1,5 @@
-﻿#include "../engineapi.h"
-#include "./Uniform.h"
-
+﻿#include "./Uniform.h"
+#include "../engineapi.h"
 namespace MQEngine
 {
     EngineGlobal g_engineGlobal;
@@ -18,7 +17,7 @@ namespace MQEngine
         m_application->global.dataManager = m_dataManager;
         m_application->global.runtime = &m_rt;
         m_application->init();
-        m_cameraSystem =  makeUnique<CameraSystem>(m_ctx,m_dataManager);
+        m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
     }
 
     void Engine::settingUpLayout()
