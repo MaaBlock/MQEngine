@@ -11,6 +11,7 @@
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
 #include "./EngineGlobal.h"
+#include "Tech.h"
 
 namespace FCT
 {
@@ -34,7 +35,7 @@ namespace MQEngine {
         void init(Application* application);
         void term();
         void settingUpEnv();
-        void settingUpLayout();
+        void settingUpTechs();
         void settingUpPass();
         void settingUpResources();
         void settingUpSync();
@@ -91,6 +92,7 @@ namespace MQEngine {
         float m_cutOffAngle = 45.0f;
         DataManager* m_dataManager;
         FCT::UniquePtr<CameraSystem> m_cameraSystem;
+        FCT::UniquePtr<TechManager> m_techManager;
     };
     /**
      * @return engine version

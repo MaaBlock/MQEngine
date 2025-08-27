@@ -18,9 +18,10 @@ namespace MQEngine
         m_application->global.runtime = &m_rt;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
+        m_techManager = makeUnique<TechManager>();
     }
 
-    void Engine::settingUpLayout()
+    void Engine::settingUpTechs()
     {
         m_layout = new Layout(
             m_ctx,
@@ -327,7 +328,7 @@ ShaderOut main(ShaderIn sIn) {
         m_application = application;
         settingUpEnv();
         settingUpPass();
-        settingUpLayout();
+        settingUpTechs();
         settingUpResources();
         initUniformValue();
         settingUpSubmitTicker();
