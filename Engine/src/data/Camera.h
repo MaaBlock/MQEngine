@@ -7,7 +7,7 @@
 #include "../EnginePCH.h"
 #include "../Thirdparty/thirdparty.h"
 namespace MQEngine {
-    constexpr  FCT::UniformSlot CameraUniformSlot {
+    constexpr FCT::UniformSlot CameraUniformSlot {
         "CameraUniform",
         FCT::UniformVar{FCT::UniformType::ProjectionMatrix},
         FCT::UniformVar{FCT::UniformType::ViewMatrix}

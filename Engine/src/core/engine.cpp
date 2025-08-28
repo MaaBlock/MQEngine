@@ -1,5 +1,4 @@
-﻿#include "./Uniform.h"
-#include "../engineapi.h"
+﻿#include "../engineapi.h"
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
@@ -9,6 +8,26 @@ namespace FCT
     {
         return std::string(reinterpret_cast<const char*>(resource), size);
     }
+    constexpr UniformSlot LightUniformSlot {
+        "LightUniform",
+        UniformVar{UniformType::Vec4,"lightPos"},
+        UniformVar{UniformType::Vec4,"viewPos"},
+        UniformVar{UniformType::Vec4,"lightDirection"},
+        UniformVar{UniformType::Int,"lightType"},
+        UniformVar{UniformType::Vec3,"ambientColor"},
+        UniformVar{UniformType::Vec3,"diffuseColor"},
+        UniformVar{UniformType::Vec3,"specularColor"},
+        UniformVar{UniformType::Float,"shininess"},
+        UniformVar{UniformType::Float,"constant"},
+        UniformVar{UniformType::Float,"linearAttenuation"},
+        UniformVar{UniformType::Float,"quadratic"},
+        UniformVar{UniformType::Float,"cutOff"}
+    };
+
+    UniformSlot ShadowUniformSlot = {
+        "ShadowUniform",
+        UniformVar{UniformType::MVPMatrix,"lightMvp"},
+    };
 }
 namespace MQEngine
 {
@@ -26,6 +45,7 @@ namespace MQEngine
         m_application->global.ctx = m_ctx;
         m_application->global.dataManager = m_dataManager;
         m_application->global.runtime = &m_rt;
+        g_engineGlobal.ctx = m_ctx;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_techManager = makeUnique<TechManager>();
@@ -33,28 +53,43 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
+        m_techManager->addTech("ObjectPass", {
+            .name = "BasicTech",
+            .vs_source = LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize),
+            .ps_source = LoadStringFromStringResource(g_engineShaderObjectPixel,g_engineShaderObjectPixelSize),
+            .vertexLayouts = {
+                vertexLayout
+            },
+            .pixelLayout = pixelLayout,
+            .uniformSlots = {
+                LightUniformSlot,
+                CameraUniformSlot,
+                ShadowUniformSlot,
+            },
+            .samplerSlots = {
+                SamplerSlot{"shadowSampler"}
+            },
+        });
+        m_techManager->addTech("ShadowMapPass", {
+            .name = "ShadowTech",
+            .vs_source = LoadStringFromStringResource(
+                g_engineShaderShadowVertex, g_engineShaderShadowVertexSize),
+            .vertexLayouts = {
+                vertexLayout
+            },
+            .pixelLayout = vertexLayout,
+            .uniformSlots = {
+                ShadowUniformSlot
+            }
+        });
+        /*
         m_layout = new Layout(
             m_ctx,
             vertexLayout,
             pixelLayout,
-            UniformSlot(
-                "base",
-                UniformVar{UniformType::MVPMatrix,"mvp"},
-                UniformVar{UniformType::Vec4,"lightPos"},
-                UniformVar{UniformType::Vec4,"viewPos"},
-                UniformVar{UniformType::Vec4,"lightDirection"},
-                UniformVar{UniformType::Int,"lightType"},
-                UniformVar{UniformType::Vec3,"ambientColor"},
-                UniformVar{UniformType::Vec3,"diffuseColor"},
-                UniformVar{UniformType::Vec3,"specularColor"},
-                UniformVar{UniformType::Float,"shininess"},
-                UniformVar{UniformType::Float,"constant"},
-                UniformVar{UniformType::Float,"linearAttenuation"},
-                UniformVar{UniformType::Float,"quadratic"},
-                UniformVar{UniformType::Float,"cutOff"}
-            ),
+            LightUniformSlot,
             CameraUniformSlot,
-            m_shadowConstLayout,
+            ShadowUniformSlot,
             PassName("ObjectPass"),
             SamplerSlot{"shadowSampler"}
         );
@@ -67,12 +102,12 @@ namespace MQEngine
         m_shadowLayout = new Layout(
             m_ctx,
             vertexLayout,
-            m_shadowConstLayout,
+            ShadowUniformSlot,
             PassName("ShadowMapPass")
             );
         m_vsShadow = m_shadowLayout->cacheVertexShader(
             LoadStringFromStringResource(g_engineShaderShadowVertex,g_engineShaderShadowVertexSize)
-            );
+            );*/
     }
 
     void Engine::settingUpPass()
@@ -84,7 +119,6 @@ namespace MQEngine
             DepthStencil("DepthFromLigth0Image",
                 2048,2048,
                 Format::D32_SFLOAT
-                //Samples::sample_1
                 ));
         graph->addPass(
             "ObjectPass",
@@ -121,8 +155,10 @@ namespace MQEngine
         m_floor = m_ctx->loadMesh(
             "ball.obj","floor",vertexLayout);
 
-        m_baseUniform = m_layout->allocateUniform("base");
-        m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
+        m_baseUniform = Uniform(m_ctx,LightUniformSlot);
+        // m_layout->allocateUniform("LightUniform");
+        //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
+        m_shadowUniform = Uniform(m_ctx,ShadowUniformSlot);
     }
 
 
@@ -144,18 +180,32 @@ namespace MQEngine
             auto cmdBuf = env.cmdBuf;
             cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
             cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
+/*
             m_shadowLayout->begin();
             m_shadowLayout->bindUniform(m_shadowUniform);
             m_shadowLayout->bindVertexShader(m_vsShadow);
             m_shadowLayout->drawMesh(cmdBuf, m_mesh);
             m_shadowLayout->drawMesh(cmdBuf, m_floor);
             m_shadowLayout->end();
+            */
+            auto techs = m_techManager->getTechsForPass(env.passName);
+            for (auto tech : techs)
+            {
+                auto layout = m_techManager->getLayoutForTech(tech->name);
+                layout->begin();
+                layout->bindUniform(m_shadowUniform);
+                layout->bindVertexShader(tech->vs_ref);
+                layout->drawMesh(cmdBuf, m_mesh);
+                layout->drawMesh(cmdBuf, m_floor);
+                layout->end();
+            }
         });
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
             cmdBuf->viewport({0,0},{1024,768});
             cmdBuf->scissor({0,0},{1024,768});
+            /*
             m_layout->begin();
             m_layout->bindSampler("shadowSampler",m_shadowSampler);
             m_cameraSystem->bind(m_layout);
@@ -166,6 +216,22 @@ namespace MQEngine
             m_layout->drawMesh(cmdBuf, m_mesh);
             m_layout->drawMesh(cmdBuf, m_floor);
             m_layout->end();
+            */
+            auto techs = m_techManager->getTechsForPass(env.passName);
+            for (auto tech : techs)
+            {
+                auto layout = m_techManager->getLayoutForTech(tech->name);
+                layout->begin();
+                layout->bindSampler("shadowSampler",m_shadowSampler);
+                m_cameraSystem->bind(layout);
+                layout->bindUniform(m_baseUniform);
+                layout->bindUniform(m_shadowUniform);
+                layout->bindVertexShader(tech->vs_ref);
+                layout->bindPixelShader(tech->ps_ref);
+                layout->drawMesh(cmdBuf, m_mesh);
+                layout->drawMesh(cmdBuf, m_floor);
+                layout->end();
+            }
         });
         RenderCallBack::SubscribePass callback;
         callback.graph = graph;
@@ -176,10 +242,6 @@ namespace MQEngine
     void Engine::initUniformValue()
     {
         //init base uniform value
-        Mat4 view = Mat4::LookAt(Vec3(40,40,40), Vec3(0,0,0), Vec3(0,1,0));
-        Mat4 proj = Mat4::Perspective(90, 800.0f / 600.0f, 0.1f, 250.0);;
-        Mat4 modelMatrix = Mat4();
-        Mat4 mvpMatrix = proj *  view  * modelMatrix;
         m_lightPos = Vec4(200,0,0,1);
 
         m_lightDistance = 40.0f;
@@ -192,7 +254,6 @@ namespace MQEngine
         m_quadratic = 0.032f;
         m_cutOffAngle = 45.0f;
 
-        m_baseUniform.setValue("mvp", mvpMatrix);
         m_baseUniform.setValue("viewPos", Vec4(40.0,40.0,40.0,1.0));
         m_baseUniform.setValue("ambientColor", m_ambientColor);
         m_baseUniform.setValue("diffuseColor", m_diffuseColor);
