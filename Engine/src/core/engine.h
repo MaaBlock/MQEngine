@@ -67,10 +67,6 @@ namespace MQEngine {
         FCT::ShaderRef m_vs;
         FCT::ShaderRef m_ps;
         FCT::ShaderRef m_vsShadow;
-        FCT::ConstLayout m_shadowConstLayout = {
-            "ShadowUniform",
-            FCT::ConstElement{FCT::ConstType::MVPMatrix,"lightMvp"},
-        };
         FCT::RHI::RasterizationPipeline* m_pipeline;
         FCT::UniformBuffer* m_uniform;
         FCT::RHI::ConstBuffer* m_constBuffer;

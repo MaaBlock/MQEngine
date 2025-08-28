@@ -18,14 +18,15 @@ namespace MQEngine
         std::string vs_source;
         std::string ps_source;
 
-        ShaderRef vs_ref;
-        ShaderRef ps_ref;
-
         std::vector<FCT::VertexLayout> vertexLayouts;
         FCT::PixelLayout pixelLayout;
         std::vector<FCT::UniformSlot> uniformSlots;
         std::vector<FCT::SamplerSlot> samplerSlots;
         std::vector<FCT::TextureSlot> textureSlots;
+
+        ShaderRef vs_ref;
+        ShaderRef ps_ref;
+        std::string passName;
     };
 
 

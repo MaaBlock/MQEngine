@@ -16,6 +16,7 @@ namespace MQEngine
 
     void TechManager::addTech(const std::string& passName, Tech&& tech)
     {
+        tech.passName = passName;
         auto techName = tech.name;
         auto it = m_techs.find(techName);
         if (it == m_techs.end())
@@ -38,24 +39,19 @@ namespace MQEngine
 
     Layout* TechManager::getLayoutForTech(const std::string& techName)
     {
-        // 1. 检查是否已经为这个Tech准备好了Layout
         auto mapIt = m_techToLayoutMap.find(techName);
         if (mapIt != m_techToLayoutMap.end())
         {
             return mapIt->second;
         }
 
-        // 2. 如果没有，则查找Tech的定义
         auto techIt = m_techs.find(techName);
         if (techIt == m_techs.end())
         {
-            // 或者抛出异常，取决于你的错误处理策略
             return nullptr;
         }
         Tech& tech = techIt->second;
 
-        // 3. 计算Layout的唯一键 (Key)
-        // 使用 boost::hash_combine 组合所有vertexLayout的哈希值
         size_t vertexLayoutsHash = 0;
         for (const auto& vl : tech.vertexLayouts)
         {
@@ -64,18 +60,14 @@ namespace MQEngine
 
         LayoutKey key = { vertexLayoutsHash, tech.pixelLayout.getHash() };
 
-        // 4. 查找或创建共享的Layout对象
         auto layoutIt = m_layouts.find(key);
         if (layoutIt == m_layouts.end())
         {
-            // 如果Layout不存在，则创建一个新的
-            auto newLayout = std::make_unique<FCT::Layout>(m_ctx, tech.vertexLayouts, tech.pixelLayout);
+            auto newLayout = std::make_unique<FCT::Layout>(m_ctx,PassName(tech.passName), tech.vertexLayouts, tech.pixelLayout);
             layoutIt = m_layouts.emplace(key, std::move(newLayout)).first;
         }
         Layout* layout = layoutIt->second.get();
 
-        // 5. 动态地将此Tech所需的Slots和Shader添加到Layout中
-        // Layout内部应处理重复添加的情况，确保幂等性
         for (const auto& slot : tech.uniformSlots) { layout->addUniformSlot(slot); }
         for (const auto& slot : tech.samplerSlots) { layout->addSamplerSlot(slot); }
         for (const auto& slot : tech.textureSlots)
@@ -92,7 +84,6 @@ namespace MQEngine
             tech.ps_ref = layout->cachePixelShader(tech.ps_source);
         }
 
-        // 6. 缓存Tech到Layout的映射关系并返回
         m_techToLayoutMap[techName] = layout;
         return layout;
     }
