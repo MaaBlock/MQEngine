@@ -110,3 +110,19 @@ function(target_link_engine target_name)
 
     message(STATUS "Configured Engine for target: ${target_name}")
 endfunction()
+
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ObjectPixel.hlsl"
+        PREFIX "g_engineShader"
+)
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ObjectVertex.hlsl"
+        PREFIX "g_engineShader"
+)
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ShadowVertex.hlsl"
+        PREFIX "g_engineShader"
+)

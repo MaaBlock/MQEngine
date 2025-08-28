@@ -3,6 +3,9 @@
 //
 
 #include "ModelManager.h"
+#include "g_editorIconMesh.h"
+#include "g_editorIconMaterial.h"
+#include "g_editorIconTexture.h"
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
 namespace MQEngine
@@ -24,9 +27,9 @@ namespace MQEngine
             }
         });
         m_ctx = g_editorGlobal.ctx;
-        m_meshIcon = m_ctx->loadTexture("./icons/mesh.png");
-        m_textureIcon = m_ctx->loadTexture("./icons/texture.png");
-        m_materialIcon = m_ctx->loadTexture("./icons/material.png");
+        m_meshIcon = m_ctx->loadTexture(g_editorIconMesh,g_editorIconMeshSize);
+        m_textureIcon = m_ctx->loadTexture(g_editorIconTexture,g_editorIconTextureSize);
+        m_materialIcon = m_ctx->loadTexture(g_editorIconMaterial,g_editorIconMaterialSize);
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Mesh", m_meshIcon);
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Texture", m_textureIcon);
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Material", m_materialIcon);
