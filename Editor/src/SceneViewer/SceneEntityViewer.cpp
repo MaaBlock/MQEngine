@@ -26,26 +26,26 @@ namespace MQEngine {
         if (!m_showCreateEntityDialog) return;
 
         ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
-        if (ImGui::Begin(TEXT("创建实体"), &m_showCreateEntityDialog, ImGuiWindowFlags_Modal | ImGuiWindowFlags_NoResize)) {
+        if (ImGui::Begin("创建实体", &m_showCreateEntityDialog, ImGuiWindowFlags_Modal | ImGuiWindowFlags_NoResize)) {
 
             // 显示创建位置信息
-            ImGui::Text(TEXT("创建位置: %s"),
-                m_createInGlobal ? TEXT("场景全局") : m_targetTrunkName.c_str());
+            ImGui::Text("创建位置: %s",
+                m_createInGlobal ? "场景全局" : m_targetTrunkName.c_str());
             ImGui::Separator();
 
             // 基本属性设置
-            ImGui::Text(TEXT("基本属性"));
-            ImGui::InputText(TEXT("实体名称"), m_newEntityName, sizeof(m_newEntityName));
+            ImGui::Text("基本属性");
+            ImGui::InputText("实体名称", m_newEntityName, sizeof(m_newEntityName));
 
             ImGui::Separator();
 
             // 预留扩展区域
-            ImGui::Text(TEXT("组件设置"));
+            ImGui::Text("组件设置");
             ImGui::BeginChild("ComponentSettings", ImVec2(0, 150), true);
             {
                 // 这里以后可以添加各种组件的设置选项
-                ImGui::Text(TEXT("暂无可配置组件"));
-                ImGui::Text(TEXT("(未来可在此处添加Transform、Renderer等组件配置)"));
+                ImGui::Text("暂无可配置组件");
+                ImGui::Text("(未来可在此处添加Transform、Renderer等组件配置)");
             }
             ImGui::EndChild();
 
@@ -59,7 +59,7 @@ namespace MQEngine {
 
             ImGui::SetCursorPosX(ImGui::GetCursorPosX() + startX);
 
-            if (ImGui::Button(TEXT("创建"), ImVec2(buttonWidth, 0))) {
+            if (ImGui::Button("创建", ImVec2(buttonWidth, 0))) {
                 // 验证名称不为空
                 std::string entityName = std::string(m_newEntityName);
                 if (!entityName.empty()) {
@@ -70,7 +70,7 @@ namespace MQEngine {
 
             ImGui::SameLine();
 
-            if (ImGui::Button(TEXT("取消"), ImVec2(buttonWidth, 0))) {
+            if (ImGui::Button("取消", ImVec2(buttonWidth, 0))) {
                 m_showCreateEntityDialog = false;
             }
         }
@@ -131,11 +131,11 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
             }
 
-            ImGui::BulletText(TEXT("%s"), displayName.c_str());
+            ImGui::BulletText("%s", displayName.c_str());
         }
 
         if (!hasEntities) {
-            ImGui::TextDisabled(TEXT("(空)"));
+            ImGui::TextDisabled("(空)");
         }
 
         ImGui::Dummy(ImVec2(0, 20));
@@ -147,7 +147,7 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
         }
 
         if (ImGui::BeginPopup("GlobalEntityContextMenu")) {
-            if (ImGui::MenuItem(TEXT("创建实体"))) {
+            if (ImGui::MenuItem("创建实体")) {
                 showCreateEntityDialog("", true);
             }
             ImGui::EndPopup();
@@ -173,11 +173,11 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
             }
 
-            ImGui::BulletText(TEXT("%s"), displayName.c_str());
+            ImGui::BulletText("%s", displayName.c_str());
         }
 
         if (!hasEntities) {
-            ImGui::TextDisabled(TEXT("(空)"));
+            ImGui::TextDisabled("(空)");
         }
 
         ImGui::Dummy(ImVec2(0, 20));
@@ -191,7 +191,7 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
 
         std::string contextMenuId = "TrunkEntityContextMenu_" + trunkName;
         if (ImGui::BeginPopup(contextMenuId.c_str())) {
-            if (ImGui::MenuItem(TEXT("创建实体"))) {
+            if (ImGui::MenuItem("创建实体")) {
                 showCreateEntityDialog(trunkName, false);
             }
             ImGui::EndPopup();
@@ -200,14 +200,14 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
     void SceneEntityViewer::renderSceneEntityList(Scene* scene)
     {
         std::string sceneName = scene->getName();
-        ImGui::Text(TEXT("当前场景: %s"), sceneName.c_str());
+        ImGui::Text("当前场景: %s", sceneName.c_str());
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("保存场景"))) {
+        if (ImGui::Button("保存场景")) {
             scene->save();
         }
         ImGui::Separator();
-        ImGui::Text(TEXT("实体列表:"));
-        if (ImGui::TreeNode(TEXT("场景全局"))) {
+        ImGui::Text("实体列表:");
+        if (ImGui::TreeNode("场景全局")) {
             renderGloabaEntityList(scene);
             ImGui::TreePop();
         }
@@ -218,7 +218,7 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f)); // 灰色
             }
 
-            if (ImGui::TreeNode(TEXT("%s"), trunk.c_str())) {
+            if (ImGui::TreeNode("%s", trunk.c_str())) {
                 if (scene->isLoad(trunk))
                 {
                     renderTrunkEntityList(scene, trunk);
@@ -237,7 +237,7 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
 
     void SceneEntityViewer::render()
     {
-        ImGui::Begin(TEXT("场景实体查看器"));
+        ImGui::Begin("场景实体查看器");
 
         std::string uuid = m_dataManager->getCurrentSceneUuid();
         if (uuid.size())
@@ -248,13 +248,13 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                     renderSceneEntityList(scene);
                     renderCreateEntityDialog(scene);
                 } else {
-                    ImGui::Text(TEXT("场景加载失败"));
+                    ImGui::Text("场景加载失败");
                 }
             } catch (const std::exception& e) {
-                ImGui::Text(TEXT("获取场景信息失败: %s"), e.what());
+                ImGui::Text("获取场景信息失败: %s", e.what());
             }
         } else {
-            ImGui::Text(TEXT("未选择场景"));
+            ImGui::Text("未选择场景");
         }
 
         ImGui::End();

@@ -165,13 +165,13 @@ namespace MQEngine
 
     void ModelManager::render()
     {
-        ImGui::Begin(TEXT("模型资产管理"));
+        ImGui::Begin("模型资产管理");
         auto modelPaths = m_dataManager->getModelList();
 
         ImGui::Columns(2, "ModelManagerColumns");
         ImGui::SetColumnWidth(0, 350);
 
-        ImGui::BeginChild(TEXT("模型列表"), ImVec2(0, 0), true);
+        ImGui::BeginChild("模型列表", ImVec2(0, 0), true);
         {
             std::filesystem::path modelsDir = "./res/models";
             if (std::filesystem::exists(modelsDir) && std::filesystem::is_directory(modelsDir)) {
@@ -186,7 +186,7 @@ namespace MQEngine
                             }
 
                             if (ImGui::BeginPopupContextItem()) {
-                                if (ImGui::MenuItem(TEXT("删除模型"))) {
+                                if (ImGui::MenuItem("删除模型")) {
                                     try {
                                         std::filesystem::remove_all(entry.path());
                                         if (m_selectedModel == modelName) {
@@ -197,7 +197,7 @@ namespace MQEngine
                                         ShowErrorDialog("删除模型失败", e.what());
                                     }
                                 }
-                                if (ImGui::MenuItem(TEXT("在文件夹中显示"))) {
+                                if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
                                     std::string command = "explorer \"" + entry.path().string() + "\"";
                                     system(command.c_str());
@@ -219,14 +219,14 @@ namespace MQEngine
 
         // 在render()函数中的模型详情部分，替换整个详情显示逻辑：
 
-        ImGui::BeginChild(TEXT("模型详情"), ImVec2(0, 0), true);
+        ImGui::BeginChild("模型详情", ImVec2(0, 0), true);
         {
             if (!m_selectedModel.empty()) {
-                ImGui::Text(TEXT("模型: %s"), m_selectedModel.c_str());
+                ImGui::Text("模型: %s", m_selectedModel.c_str());
                 ImGui::Separator();
 
                 if (!m_selectedModelInfo.name.empty() || !m_selectedModelInfo.meshInfos.empty()) {
-                    ImGui::Text(TEXT("场景名称: %s"), m_selectedModelInfo.name.c_str());
+                    ImGui::Text("场景名称: %s", m_selectedModelInfo.name.c_str());
                     ImGui::Separator();
 
                     // 获取图标
@@ -244,7 +244,7 @@ namespace MQEngine
 
                     // 网格部分
                     if (!m_selectedModelInfo.meshInfos.empty()) {
-                        ImGui::Text(TEXT("网格 (%zu)"), m_selectedModelInfo.meshInfos.size());
+                        ImGui::Text("网格 (%zu)", m_selectedModelInfo.meshInfos.size());
                         ImGui::Separator();
 
                         for (size_t i = 0; i < m_selectedModelInfo.meshInfos.size(); i++) {
@@ -296,9 +296,9 @@ namespace MQEngine
                             // 悬停提示
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
-                                ImGui::Text(TEXT("网格: %s"), meshInfo.name.c_str());
-                                ImGui::Text(TEXT("顶点数: %u"), meshInfo.vertexCount);
-                                ImGui::Text(TEXT("三角形数: %u"), meshInfo.triangleCount);
+                                ImGui::Text("网格: %s", meshInfo.name.c_str());
+                                ImGui::Text("顶点数: %u", meshInfo.vertexCount);
+                                ImGui::Text("三角形数: %u", meshInfo.triangleCount);
                                 ImGui::EndTooltip();
                             }
                         }
@@ -307,7 +307,7 @@ namespace MQEngine
                     }
 
                     if (!m_selectedModelInfo.textureInfos.empty()) {
-                        ImGui::Text(TEXT("纹理 (%zu)"), m_selectedModelInfo.textureInfos.size());
+                        ImGui::Text("纹理 (%zu)", m_selectedModelInfo.textureInfos.size());
                         ImGui::Separator();
 
                         for (size_t i = 0; i < m_selectedModelInfo.textureInfos.size(); i++) {
@@ -352,8 +352,8 @@ namespace MQEngine
 
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
-                                ImGui::Text(TEXT("纹理: %s"), textureInfo.path.c_str());
-                                ImGui::Text(TEXT("类型: %s"), textureInfo.isInner ? TEXT("内嵌") : TEXT("外部"));
+                                ImGui::Text("纹理: %s", textureInfo.path.c_str());
+                                ImGui::Text("类型: %s", textureInfo.isInner ? "内嵌" : "外部");
                                 ImGui::EndTooltip();
                             }
                         }
@@ -363,7 +363,7 @@ namespace MQEngine
 
                     // 材质部分
                     if (!m_selectedModelInfo.materialInfos.empty()) {
-                        ImGui::Text(TEXT("材质 (%zu)"), m_selectedModelInfo.materialInfos.size());
+                        ImGui::Text("材质 (%zu)", m_selectedModelInfo.materialInfos.size());
                         ImGui::Separator();
 
                         for (size_t i = 0; i < m_selectedModelInfo.materialInfos.size(); i++) {
@@ -385,12 +385,12 @@ namespace MQEngine
 
                                     ImGui::Image(materialIconID, ImVec2(32, 32));
                                     ImGui::SameLine();
-                                    ImGui::Text(TEXT("材质 %zu"), i);
+                                    ImGui::Text("材质 %zu", i);
 
                                     ImGui::EndDragDropSource();
                                 }
 
-                                std::string materialName = TEXT("材质 ") + std::to_string(i);
+                                std::string materialName = "材质 " + std::to_string(i);
                                 float textWidth = ImGui::CalcTextSize(materialName.c_str()).x;
                                 float centerOffset = (iconSize - textWidth) * 0.5f;
                                 if (centerOffset > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + centerOffset);
@@ -402,17 +402,17 @@ namespace MQEngine
 
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
-                                ImGui::Text(TEXT("材质 %zu"), i);
+                                ImGui::Text("材质 %zu", i);
                                 // TODO: 显示更多材质信息
                                 ImGui::EndTooltip();
                             }
                         }
                     }
                 } else {
-                    ImGui::Text(TEXT("无法读取模型信息"));
+                    ImGui::Text("无法读取模型信息");
                 }
             } else {
-                ImGui::Text(TEXT("请选择一个模型"));
+                ImGui::Text("请选择一个模型");
             }
         }
         ImGui::EndChild();

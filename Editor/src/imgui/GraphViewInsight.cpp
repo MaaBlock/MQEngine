@@ -25,7 +25,7 @@ namespace MQEngine
     {
         auto textures = m_imguiCtx->getTexturesFromPass();
         for (const auto& [textureName, imagePtr] : textures) {
-            std::string windowTitle = std::string(TEXT("贴图: ")) + textureName;
+            std::string windowTitle = std::string("贴图: ") + textureName;
 
             ImGui::Begin(windowTitle.c_str());
 
@@ -39,8 +39,8 @@ namespace MQEngine
                     float imageHeight = static_cast<float>(imagePtr->height());
                     float aspectRatio = imageWidth / imageHeight;
 
-                    ImGui::Text(TEXT("贴图名称: %s"), textureName.c_str());
-                    ImGui::Text(TEXT("分辨率: %.0fx%.0f"), imageWidth, imageHeight);
+                    ImGui::Text("贴图名称: %s", textureName.c_str());
+                    ImGui::Text("分辨率: %.0fx%.0f", imageWidth, imageHeight);
                     ImGui::Separator();
 
                     float displayWidth = windowSize.x;
@@ -54,13 +54,13 @@ namespace MQEngine
                     ImGui::Image(textureId, ImVec2(displayWidth, displayHeight));
 
                     if (ImGui::IsItemHovered()) {
-                        ImGui::SetTooltip(TEXT("贴图: %s\n分辨率: %.0fx%.0f"), textureName.c_str(), imageWidth, imageHeight);
+                        ImGui::SetTooltip("贴图: %s\n分辨率: %.0fx%.0f", textureName.c_str(), imageWidth, imageHeight);
                     }
                 } else {
-                    ImGui::Text(TEXT("无法获取贴图 '%s' 的纹理ID"), textureName.c_str());
+                    ImGui::Text("无法获取贴图 '%s' 的纹理ID", textureName.c_str());
                 }
             } else {
-                ImGui::Text(TEXT("贴图 '%s' 的Image指针为空"), textureName.c_str());
+                ImGui::Text("贴图 '%s' 的Image指针为空", textureName.c_str());
             }
 
             ImGui::End();

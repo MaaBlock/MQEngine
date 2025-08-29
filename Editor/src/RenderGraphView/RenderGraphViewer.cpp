@@ -165,9 +165,9 @@ namespace MQEngine
 
     void RenderGraphViewer::render()
     {
-        ImGui::Begin(TEXT("Pass代码生成器"));
+        ImGui::Begin("Pass代码生成器");
 
-        if (ImGui::Button(TEXT("保存图表...")))
+        if (ImGui::Button("保存图表..."))
         {
             std::string filename = openPassGraphFileDialog(true);
             if (!filename.empty()) {
@@ -176,7 +176,7 @@ namespace MQEngine
         }
 
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("读取图表...")))
+        if (ImGui::Button("读取图表..."))
         {
             std::string filename = openPassGraphFileDialog(false);
             if (!filename.empty()) {
@@ -184,7 +184,7 @@ namespace MQEngine
             }
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("清空图表")))
+        if (ImGui::Button("清空图表"))
         {
             m_passes.clear();
             m_images.clear();
@@ -196,12 +196,12 @@ namespace MQEngine
             std::cout << "已清空图表" << std::endl;
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("整理图表")))
+        if (ImGui::Button("整理图表"))
         {
             autoLayoutGraph();
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("读取图表从当前")))
+        if (ImGui::Button("读取图表从当前"))
         {
             auto rg = m_ctx->getModule<FCT::RenderGraph>();
             if (rg)
@@ -231,7 +231,7 @@ namespace MQEngine
             }
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("编译图表到当前")))
+        if (ImGui::Button("编译图表到当前"))
         {
             auto rg = m_ctx->getModule<FCT::RenderGraph>();
             if (rg)
@@ -266,7 +266,7 @@ namespace MQEngine
             }
         }
 
-        ImGui::Text(TEXT("节点数: Pass(%zu) Image(%zu) 连接数: %zu"),
+        ImGui::Text("节点数: Pass(%zu) Image(%zu) 连接数: %zu",
                     m_passes.size(), m_images.size(),
                     m_passOutputlinks.size() + m_passInputLinks.size());
 
@@ -298,12 +298,12 @@ namespace MQEngine
         ImGui::Separator();
 
         // 代码生成按钮
-        if (ImGui::Button(TEXT("生成代码")))
+        if (ImGui::Button("生成代码"))
         {
             m_generatedCode = generatorCode();
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("清空代码")))
+        if (ImGui::Button("清空代码"))
         {
             m_generatedCode.clear();
         }
@@ -312,12 +312,12 @@ namespace MQEngine
         if (!m_generatedCode.empty())
         {
             ImGui::SameLine();
-            if (ImGui::Button(TEXT("复制到剪贴板")))
+            if (ImGui::Button("复制到剪贴板"))
             {
                 ImGui::SetClipboardText(m_generatedCode.c_str());
             }
 
-            ImGui::Text(TEXT("生成的代码:"));
+            ImGui::Text("生成的代码:");
 
             ImGui::BeginChild("CodeDisplay", ImVec2(0, 400), true, ImGuiWindowFlags_HorizontalScrollbar);
             ImGui::TextUnformatted(m_generatedCode.c_str());
@@ -371,11 +371,11 @@ namespace MQEngine
 
         if (ImGui::BeginPopup("AddNodePopup"))
         {
-            if (ImGui::MenuItem(TEXT("添加Pass节点")))
+            if (ImGui::MenuItem("添加Pass节点"))
             {
                 newPassNode();
             }
-            if (ImGui::MenuItem(TEXT("添加Image节点")))
+            if (ImGui::MenuItem("添加Image节点"))
             {
                 newImageNode();
             }
@@ -386,16 +386,16 @@ namespace MQEngine
         {
             if (m_passes.count(m_contextMenuNodeId))
             {
-                ImGui::Text(TEXT("Pass节点: %s"), m_passes[m_contextMenuNodeId].name.c_str());
+                ImGui::Text("Pass节点: %s", m_passes[m_contextMenuNodeId].name.c_str());
             }
             else if (m_images.count(m_contextMenuNodeId))
             {
-                ImGui::Text(TEXT("Image节点: %s"), m_images[m_contextMenuNodeId].name.c_str());
+                ImGui::Text("Image节点: %s", m_images[m_contextMenuNodeId].name.c_str());
             }
 
             ImGui::Separator();
 
-            if (ImGui::MenuItem(TEXT("删除节点")))
+            if (ImGui::MenuItem("删除节点"))
             {
                 deleteNode(m_contextMenuNodeId);
             }
@@ -975,24 +975,24 @@ namespace MQEngine
         }
         ImGui::Separator();
         // Clear设置
-        ImGui::Checkbox(TEXT("开启Clear"), &pass.enableClear);
+        ImGui::Checkbox("开启Clear", &pass.enableClear);
         if (pass.enableClear)
         {
             ImGui::Checkbox("Clear Target", &pass.enableClearTarget);
             if (pass.enableClearTarget)
             {
-                ImGui::ColorEdit4(TEXT("颜色"), pass.clearColor);
+                ImGui::ColorEdit4("颜色", pass.clearColor);
             }
 
             ImGui::Checkbox("Clear Depth", &pass.enableClearDepth);
             if (pass.enableClearDepth)
             {
-                ImGui::SliderFloat(TEXT("深度值"), &pass.clearDepth, 0.0f, 1.0f);
+                ImGui::SliderFloat("深度值", &pass.clearDepth, 0.0f, 1.0f);
             }
             ImGui::Checkbox("Clear Stencil", &pass.enableClearStencil);
             if (pass.enableClearStencil)
             {
-                ImGui::SliderInt(TEXT("模板值"), &pass.clearStencil, 0, 255);
+                ImGui::SliderInt("模板值", &pass.clearStencil, 0, 255);
             }
         }
 
@@ -1010,11 +1010,11 @@ namespace MQEngine
             ImNodes::EndOutputAttribute();
 
             ImGui::PushID(i);
-            ImGui::Checkbox(TEXT("为target指定属性"), &targetConfig.enabled);
+            ImGui::Checkbox("为target指定属性", &targetConfig.enabled);
 
             if (targetConfig.enabled)
             {
-                ImGui::Checkbox(TEXT("窗口"), &targetConfig.isWindow);
+                ImGui::Checkbox("窗口", &targetConfig.isWindow);
 
                 if (targetConfig.isWindow)
                 {
@@ -1023,17 +1023,17 @@ namespace MQEngine
 
                     ImGui::BeginDisabled();
                     bool tempFormat = false;
-                    ImGui::Checkbox(TEXT("自定义格式"), &tempFormat);
+                    ImGui::Checkbox("自定义格式", &tempFormat);
                     ImGui::EndDisabled();
 
                     ImGui::BeginDisabled();
                     bool tempSize = false;
-                    ImGui::Checkbox(TEXT("自定义尺寸"), &tempSize);
+                    ImGui::Checkbox("自定义尺寸", &tempSize);
                     ImGui::EndDisabled();
                 }
                 else
                 {
-                    ImGui::Checkbox(TEXT("自定义格式"), &targetConfig.useCustomFormat);
+                    ImGui::Checkbox("自定义格式", &targetConfig.useCustomFormat);
 
                     if (targetConfig.useCustomFormat)
                     {
@@ -1073,7 +1073,7 @@ namespace MQEngine
                         ImGui::PopItemWidth();
                     }
 
-                    ImGui::Checkbox(TEXT("自定义尺寸"), &targetConfig.useCustomSize);
+                    ImGui::Checkbox("自定义尺寸", &targetConfig.useCustomSize);
 
                     if (targetConfig.useCustomSize)
                     {
@@ -1096,11 +1096,11 @@ namespace MQEngine
         ImNodes::EndOutputAttribute();
 
         auto& depthConfig = pass.depthStencilDesc;
-        ImGui::Checkbox(TEXT("为DepthStencil指定属性"), &depthConfig.enabled);
+        ImGui::Checkbox("为DepthStencil指定属性", &depthConfig.enabled);
 
         if (depthConfig.enabled)
         {
-            ImGui::Checkbox(TEXT("窗口##depth"), &depthConfig.isWindow);
+            ImGui::Checkbox("窗口##depth", &depthConfig.isWindow);
             if (depthConfig.isWindow)
             {
                 depthConfig.useCustomFormat = false;
@@ -1108,16 +1108,16 @@ namespace MQEngine
 
                 ImGui::BeginDisabled();
                 bool tempFormat = false;
-                ImGui::Checkbox(TEXT("自定义格式##depth"), &tempFormat);
+                ImGui::Checkbox("自定义格式##depth", &tempFormat);
                 ImGui::EndDisabled();
 
                 ImGui::BeginDisabled();
                 bool tempSize = false;
-                ImGui::Checkbox(TEXT("自定义尺寸##depth"), &tempSize);
+                ImGui::Checkbox("自定义尺寸##depth", &tempSize);
                 ImGui::EndDisabled();
             } else
             {
-                ImGui::Checkbox(TEXT("自定义格式##depth"), &depthConfig.useCustomFormat);
+                ImGui::Checkbox("自定义格式##depth", &depthConfig.useCustomFormat);
 
                 if (depthConfig.useCustomFormat)
                 {
@@ -1148,7 +1148,7 @@ namespace MQEngine
                     ImGui::PopItemWidth();
                 }
 
-                ImGui::Checkbox(TEXT("自定义尺寸##depth"), &depthConfig.useCustomSize);
+                ImGui::Checkbox("自定义尺寸##depth", &depthConfig.useCustomSize);
 
                 if (depthConfig.useCustomSize)
                 {
