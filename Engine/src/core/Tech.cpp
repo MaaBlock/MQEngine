@@ -7,7 +7,6 @@
 using namespace FCT;
 namespace MQEngine
 {
-
     TechManager::TechManager()
     {
         m_ctx = g_engineGlobal.ctx;
