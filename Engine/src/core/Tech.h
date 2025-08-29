@@ -45,11 +45,14 @@ namespace MQEngine
     private:
         struct LayoutKey
         {
+            std::string passName;
             size_t vertexLayoutHash;
             size_t pixelLayoutHash;
 
             bool operator<(const LayoutKey& other) const
             {
+                if (passName < other.passName) return true;
+                if (passName > other.passName) return false;
                 if (vertexLayoutHash < other.vertexLayoutHash) return true;
                 if (vertexLayoutHash > other.vertexLayoutHash) return false;
                 return pixelLayoutHash < other.pixelLayoutHash;
