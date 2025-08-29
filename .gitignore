@@ -5,3 +5,8 @@
 /.vs
 /out/build
 /build
+/build-debug
+build.bat
+load.bat
+run.bat
+.trae
