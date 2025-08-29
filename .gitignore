@@ -6,6 +6,7 @@
 /out/build
 /build
 /build-debug
+/Engine/include
 build.bat
 load.bat
 run.bat

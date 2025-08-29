@@ -84,24 +84,24 @@ namespace MQEngine {
 
 void SceneManager::render()
 {
-    ImGui::Begin(TEXT("场景管理器"));
+    ImGui::Begin("场景管理器");
 
-    if (ImGui::Button(TEXT("创建新场景"))) {
+    if (ImGui::Button("创建新场景")) {
         m_showCreateDialog = true;
     }
     ImGui::SameLine();
-    if (ImGui::Button(TEXT("刷新"))) {
+    if (ImGui::Button("刷新")) {
         refreshSceneList();
     }
 
     ImGui::Separator();
 
     // 显示场景列表
-    ImGui::BeginChild(TEXT("场景列表"), ImVec2(0, 0), true);
+    ImGui::BeginChild("场景列表", ImVec2(0, 0), true);
     {
         if (m_sceneList.empty()) {
-            ImGui::Text(TEXT("暂无场景"));
-            ImGui::Text(TEXT("点击 '创建新场景' 创建第一个场景"));
+            ImGui::Text("暂无场景");
+            ImGui::Text("点击 '创建新场景' 创建第一个场景");
         } else {
             const float iconSize = 64.0f;
             const float iconSpacing = 10.0f;
@@ -129,7 +129,7 @@ void SceneManager::render()
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.8f, 1.0f));
                     }
 
-                    if (ImGui::Button(TEXT("场景"), ImVec2(iconSize, iconSize))) {
+                    if (ImGui::Button("场景", ImVec2(iconSize, iconSize))) {
                         m_selectedSceneIndex = i;
                     }
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
@@ -140,14 +140,14 @@ void SceneManager::render()
                     }
 
                     if (ImGui::BeginPopupContextItem(("SceneContextMenu" + std::to_string(i)).c_str())) {
-                        if (ImGui::MenuItem(TEXT("在文件夹中显示"))) {
+                        if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
                             std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
                             std::string command = "explorer \"" + sceneFolder.string() + "\"";
                             system(command.c_str());
 #endif
                         }
-                        if (ImGui::MenuItem(TEXT("删除"), nullptr, false)) {
+                        if (ImGui::MenuItem("删除", nullptr, false)) {
                             m_deleteSceneIndex = i;
                             m_showDeleteDialog = true;
                         }
@@ -173,10 +173,10 @@ void SceneManager::render()
                 // 悬停提示
                 if (ImGui::IsItemHovered()) {
                     ImGui::BeginTooltip();
-                    ImGui::Text(TEXT("场景: %s"), sceneName.c_str());
+                    ImGui::Text("场景: %s", sceneName.c_str());
                     std::string uuid = getSceneUuid(sceneName);
                     if (!uuid.empty()) {
-                        ImGui::Text(TEXT("UUID: %s"), uuid.c_str());
+                        ImGui::Text("UUID: %s", uuid.c_str());
                     }
                     ImGui::EndTooltip();
                 }
@@ -228,13 +228,13 @@ void SceneManager::refreshSceneList()
 void SceneManager::renderCreateSceneDialog()
 {
     if (m_showCreateDialog) {
-        ImGui::OpenPopup(TEXT("创建新场景"));
+        ImGui::OpenPopup("创建新场景");
     }
 
-    if (ImGui::BeginPopupModal(TEXT("创建新场景"), &m_showCreateDialog, ImGuiWindowFlags_AlwaysAutoResize)) {
+    if (ImGui::BeginPopupModal("创建新场景", &m_showCreateDialog, ImGuiWindowFlags_AlwaysAutoResize)) {
         static char sceneName[256] = "";
 
-        ImGui::Text(TEXT("场景名称:"));
+        ImGui::Text("场景名称:");
         ImGui::InputText("##SceneName", sceneName, sizeof(sceneName));
 
         if (!m_errorMessage.empty()) {
@@ -243,7 +243,7 @@ void SceneManager::renderCreateSceneDialog()
 
         ImGui::Separator();
 
-        if (ImGui::Button(TEXT("创建"))) {
+        if (ImGui::Button("创建")) {
             if (strlen(sceneName) > 0) {
                 // 检查场景是否已存在
                 std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
@@ -268,7 +268,7 @@ void SceneManager::renderCreateSceneDialog()
             }
         }
         ImGui::SameLine();
-        if (ImGui::Button(TEXT("取消"))) {
+        if (ImGui::Button("取消")) {
             memset(sceneName, 0, sizeof(sceneName));
             m_errorMessage.clear();
             m_showCreateDialog = false;
@@ -281,17 +281,17 @@ void SceneManager::renderCreateSceneDialog()
 void SceneManager::renderDeleteSceneDialog()
 {
     if (m_showDeleteDialog) {
-        ImGui::OpenPopup(TEXT("删除场景"));
+        ImGui::OpenPopup("删除场景");
     }
 
-    if (ImGui::BeginPopupModal(TEXT("删除场景"), &m_showDeleteDialog, ImGuiWindowFlags_AlwaysAutoResize)) {
+    if (ImGui::BeginPopupModal("删除场景", &m_showDeleteDialog, ImGuiWindowFlags_AlwaysAutoResize)) {
         if (m_deleteSceneIndex >= 0 && m_deleteSceneIndex < m_sceneList.size()) {
-            ImGui::Text(TEXT("确定要删除场景 '%s' 吗？"), m_sceneList[m_deleteSceneIndex].c_str());
-            ImGui::Text(TEXT("此操作不可撤销！"));
+            ImGui::Text("确定要删除场景 '%s' 吗？", m_sceneList[m_deleteSceneIndex].c_str());
+            ImGui::Text("此操作不可撤销！");
 
             ImGui::Separator();
 
-            if (ImGui::Button(TEXT("删除"))) {
+            if (ImGui::Button("删除")) {
                 // 删除场景文件夹
                 std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / m_sceneList[m_deleteSceneIndex];
                 try {
@@ -306,7 +306,7 @@ void SceneManager::renderDeleteSceneDialog()
                 m_showDeleteDialog = false;
             }
             ImGui::SameLine();
-            if (ImGui::Button(TEXT("取消"))) {
+            if (ImGui::Button("取消")) {
                 m_deleteSceneIndex = -1;
                 m_showDeleteDialog = false;
             }

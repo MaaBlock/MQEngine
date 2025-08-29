@@ -129,7 +129,7 @@ namespace MQEngine
     void UiManager::renderScene()
     {
 
-        ImGui::Begin(TEXT("场景视口"));
+        ImGui::Begin("场景视口");
 
         auto sceneTextureId = m_imguiCtx->getTexture("SceneColorTarget");
         if (sceneTextureId) {
@@ -158,11 +158,11 @@ namespace MQEngine
             // 显示一些场景信息
             ImGui::Separator();
             ImGui::Text("场景分辨率: %.0fx%.0f", imageWidth, imageHeight);
-            ImGui::Text(TEXT("窗口大小: %.0fx%.0f"), windowSize.x, windowSize.y);
+            ImGui::Text("窗口大小: %.0fx%.0f", windowSize.x, windowSize.y);
         } else
         {
-            ImGui::Text(TEXT("场景纹理未找到"));
-            ImGui::Text(TEXT("请检查SceneColorTarget纹理是否正确创建"));
+            ImGui::Text("场景纹理未找到");
+            ImGui::Text("请检查SceneColorTarget纹理是否正确创建");
         }
         ImGui::End();
     }
