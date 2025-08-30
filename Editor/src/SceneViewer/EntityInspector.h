@@ -12,6 +12,9 @@ namespace MQEngine {
     private:
         void renderEntityDetails();
         void renderComponents(entt::registry* registry);
+        
+        template<typename ComponentType>
+        bool tryRenderComponent(entt::registry* registry, entt::entity entity);
     };
 
 } // MQEngine
