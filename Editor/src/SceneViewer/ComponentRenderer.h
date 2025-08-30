@@ -66,10 +66,12 @@ namespace MQEngine {
     inline void renderComponent<StaticMeshInstance>(const StaticMeshInstance* component) {
         if (ImGui::CollapsingHeader("StaticMeshInstance", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
-            if (component->staticMesh) {
-                ImGui::Text("网格: 已加载");
+            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
+            ImGui::Text("网格体名称: %s", component->meshName.empty() ? "未设置" : component->meshName.c_str());
+            if (component->mesh) {
+                ImGui::Text("网格状态: 已加载");
             } else {
-                ImGui::Text("网格: 未加载");
+                ImGui::Text("网格状态: 未加载");
             }
             ImGui::Unindent();
         }

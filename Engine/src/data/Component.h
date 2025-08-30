@@ -8,7 +8,14 @@
 namespace MQEngine {
     struct StaticMeshInstance
     {
-        FCT::StaticMesh<uint32_t>* staticMesh;
+        std::string modelUuid;          // 模型UUID，用于定位模型文件
+        std::string meshName;           // 网格体名称，用于从模型中选择特定网格
+        FCT::StaticMesh<uint32_t>* mesh; // 实际存储的mesh，默认为nullptr表示未加载
+        
+        StaticMeshInstance() : mesh(nullptr) {}
+        
+        StaticMeshInstance(const std::string& uuid, const std::string& name) 
+            : modelUuid(uuid), meshName(name), mesh(nullptr) {}
     };
 }
 
