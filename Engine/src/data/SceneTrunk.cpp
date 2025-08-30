@@ -47,7 +47,8 @@ namespace MQEngine {
 
                 entt::snapshot{m_registry}
                 .get<entt::entity>(wrapper)
-                .get<NameTag>(wrapper);
+                .get<NameTag>(wrapper)
+                .get<StaticMeshInstance>(wrapper);
             } else {
                 throw DataError("无法创建场景块registry文件: " + trunkRegistryPath);
             }
@@ -91,7 +92,8 @@ namespace MQEngine {
                     EnttInputArchiveWrapper wrapper(archive);
                     entt::snapshot_loader{m_registry}
                     .get<entt::entity>(wrapper)
-                    .get<NameTag>(wrapper);
+                    .get<NameTag>(wrapper)
+                    .get<StaticMeshInstance>(wrapper);
                 }
             }
 

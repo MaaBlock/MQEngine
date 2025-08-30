@@ -51,8 +51,6 @@ namespace MQEngine {
         SystemManager m_systemManager;
         FCT::Window* m_wnd;
         FCT::Context* m_ctx;
-        FCT::StaticMesh<uint32_t>* m_mesh;
-        FCT::StaticMesh<uint32_t>* m_floor;
         FCT::VertexLayout vertexLayout = {
             FCT::VertexElement{FCT::VtxType::Color4f,"color"},
             FCT::VertexElement{FCT::VtxType::Position4f,"position"},
