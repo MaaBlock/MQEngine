@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/18.
 //
 
@@ -7,6 +7,14 @@
 #include "../Thirdparty/thirdparty.h"
 
 namespace MQEngine{
+    struct SelectedEntityState
+    {
+        Scene* scene = nullptr;
+        std::string trunkName;
+        entt::entity entity = entt::null;
+        bool isGlobal = false;
+    };
+    
     struct EditorGlobal
     {
         FCT::Window* wnd;
@@ -16,6 +24,7 @@ namespace MQEngine{
         FCT::Runtime* rt;
         entt::registry* editorRegistry;
         FCT::ImguiContext* imguiContext;
+        SelectedEntityState selectedEntity;
     };
     extern EditorGlobal g_editorGlobal;
 }

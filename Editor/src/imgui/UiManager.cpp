@@ -22,6 +22,7 @@ namespace MQEngine
         m_editorCameraManager = new EditorCameraManager();
         m_sceneManager = new SceneManager();
         m_sceneEntityViewer = new SceneEntityViewer();
+        m_entityInspector = new EntityInspector();
     }
 
     void UiManager::term()
@@ -123,6 +124,7 @@ namespace MQEngine
             m_modelManager->render();
             m_sceneManager->render();
             m_sceneEntityViewer->render();
+            m_entityInspector->render();
         });
     }
 
