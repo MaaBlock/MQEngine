@@ -1,4 +1,5 @@
 #include "Tech.h"
+#include "Tech.hpp"
 #include <numeric> // For std::accumulate
 
 #include "EngineGlobal.h"
@@ -15,8 +16,8 @@ namespace MQEngine
 
     void TechManager::addTech(const std::string& passName, Tech&& tech)
     {
-        tech.passName = passName;
-        auto techName = tech.name;
+        tech.setPassName(passName);
+        auto techName = tech.getName();
         auto it = m_techs.find(techName);
         if (it == m_techs.end())
         {
@@ -52,35 +53,35 @@ namespace MQEngine
         Tech& tech = techIt->second;
 
         size_t vertexLayoutsHash = 0;
-        for (const auto& vl : tech.vertexLayouts)
+        for (const auto& vl : tech.getVertexLayouts())
         {
             boost::hash_combine(vertexLayoutsHash, vl.getHash());
         }
 
-        LayoutKey key = { tech.passName, vertexLayoutsHash, tech.pixelLayout.getHash() };
+        LayoutKey key = { tech.getPassName(), vertexLayoutsHash, tech.getPixelLayout().getHash() };
 
         auto layoutIt = m_layouts.find(key);
         if (layoutIt == m_layouts.end())
         {
-            auto newLayout = std::make_unique<FCT::Layout>(m_ctx,PassName(tech.passName), tech.vertexLayouts, tech.pixelLayout);
+            auto newLayout = std::make_unique<FCT::Layout>(m_ctx,PassName(tech.getPassName()), tech.getVertexLayouts(), tech.getPixelLayout());
             layoutIt = m_layouts.emplace(key, std::move(newLayout)).first;
         }
         Layout* layout = layoutIt->second.get();
 
-        for (const auto& slot : tech.uniformSlots) { layout->addUniformSlot(slot); }
-        for (const auto& slot : tech.samplerSlots) { layout->addSamplerSlot(slot); }
-        for (const auto& slot : tech.textureSlots)
+        for (const auto& slot : tech.getUniformSlots()) { layout->addUniformSlot(slot); }
+        for (const auto& slot : tech.getSamplerSlots()) { layout->addSamplerSlot(slot); }
+        for (const auto& slot : tech.getTextureSlots())
         {
             layout->addTextureSlot(slot);
         }
 
-        if (!tech.vs_source.empty())
+        if (!tech.getVertexShaderSource().empty())
         {
-            tech.vs_ref = layout->cacheVertexShader(tech.vs_source);
+            tech.setVertexShaderRef(layout->cacheVertexShader(tech.getVertexShaderSource()));
         }
-        if (!tech.ps_source.empty())
+        if (!tech.getPixelShaderSource().empty())
         {
-            tech.ps_ref = layout->cachePixelShader(tech.ps_source);
+            tech.setPixelShaderRef(layout->cachePixelShader(tech.getPixelShaderSource()));
         }
 
         m_techToLayoutMap[techName] = layout;

@@ -1,4 +1,5 @@
 ﻿#include "../engineapi.h"
+#include "Tech.hpp"
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
@@ -59,37 +60,33 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
-        m_techManager->addTech("ObjectPass", {
-            .name = "BasicTech",
-            .vs_source = LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize),
-            .ps_source = LoadStringFromStringResource(g_engineShaderObjectPixel,g_engineShaderObjectPixelSize),
-            .vertexLayouts = {
-                vertexLayout
-            },
-            .pixelLayout = pixelLayout,
-            .uniformSlots = {
+        m_techManager->addTech("ObjectPass", Tech(
+            TechName{"BasicTech"},
+            VertexShaderSource{LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize)},
+            PixelShaderSource{LoadStringFromStringResource(g_engineShaderObjectPixel,g_engineShaderObjectPixelSize)},
+            vertexLayout,
+            pixelLayout,
+            std::vector<FCT::UniformSlot>{
                 LightUniformSlot,
                 CameraUniformSlot,
                 ShadowUniformSlot,
                 ModelUniformSlot,
             },
-            .samplerSlots = {
+            std::vector<FCT::SamplerSlot>{
                 SamplerSlot{"shadowSampler"}
-            },
-        });
-        m_techManager->addTech("ShadowMapPass", {
-            .name = "ShadowTech",
-            .vs_source = LoadStringFromStringResource(
-                g_engineShaderShadowVertex, g_engineShaderShadowVertexSize),
-            .vertexLayouts = {
-                vertexLayout
-            },
-            .pixelLayout = vertexLayout,
-            .uniformSlots = {
+            }
+        ));
+        m_techManager->addTech("ShadowMapPass", Tech(
+            TechName{"ShadowTech"},
+            VertexShaderSource{LoadStringFromStringResource(
+                g_engineShaderShadowVertex, g_engineShaderShadowVertexSize)},
+            vertexLayout,
+            pixelLayout,
+            std::vector<FCT::UniformSlot>{
                 ShadowUniformSlot,
                 ModelUniformSlot
             }
-        });
+        ));
     }
 
     void Engine::settingUpPass()
@@ -161,10 +158,10 @@ namespace MQEngine
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
-                auto layout = m_techManager->getLayoutForTech(tech->name);
+                auto layout = m_techManager->getLayoutForTech(tech->getName());
                 layout->begin();
                 layout->bindUniform(m_shadowUniform);
-                layout->bindVertexShader(tech->vs_ref);
+                layout->bindVertexShader(tech->getVertexShaderRef());
                 
                 // 渲染MeshRenderSystem收集到的所有mesh
                 const auto& renderData = m_meshRenderSystem->getRenderData();
@@ -187,14 +184,14 @@ namespace MQEngine
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
-                auto layout = m_techManager->getLayoutForTech(tech->name);
+                auto layout = m_techManager->getLayoutForTech(tech->getName());
                 layout->begin();
                 layout->bindSampler("shadowSampler",m_shadowSampler);
                 m_cameraSystem->bind(layout);
                 layout->bindUniform(m_baseUniform);
                 layout->bindUniform(m_shadowUniform);
-                layout->bindVertexShader(tech->vs_ref);
-                layout->bindPixelShader(tech->ps_ref);
+                layout->bindVertexShader(tech->getVertexShaderRef());
+                layout->bindPixelShader(tech->getPixelShaderRef());
                 
                 // 渲染MeshRenderSystem收集到的所有mesh
                 const auto& renderData = m_meshRenderSystem->getRenderData();
