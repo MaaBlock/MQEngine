@@ -69,8 +69,16 @@ namespace MQEngine
 
             auto scenePtr = m_loadScenes[uuid];
             if (scenePtr) {
-                //scenePtr.onOpen();
+                appendRegistry(&scenePtr->getRegistry());
 
+                for (const auto& trunkName : scenePtr->getTrunkList()) {
+                    if (scenePtr->isLoad(trunkName)) {
+                        auto trunk = scenePtr->getLoadedTrunk(trunkName);
+                        if (trunk) {
+                            appendRegistry(&trunk->getRegistry());
+                        }
+                    }
+                }
             }
             g_engineGlobal.sceneEventPipe.trigger<SceneEvent::EntryScene>(
             {
@@ -86,7 +94,24 @@ namespace MQEngine
 
     void DataManager::closeScene(const std::string& uuid)
     {
-        //scenePtr.onClose();
+        if (m_loadScenes.find(uuid) != m_loadScenes.end()) {
+            auto scenePtr = m_loadScenes[uuid];
+            if (scenePtr) {
+                // 从当前实体表列表中移除场景的主registry
+                removeRegistry(&scenePtr->getRegistry());
+                
+                // 从当前实体表列表中移除所有已加载的trunk的registry
+                for (const auto& trunkName : scenePtr->getTrunkList()) {
+                    if (scenePtr->isLoad(trunkName)) {
+                        auto trunk = scenePtr->getLoadedTrunk(trunkName);
+                        if (trunk) {
+                            removeRegistry(&trunk->getRegistry());
+                        }
+                    }
+                }
+            }
+        }
+        
         g_engineGlobal.sceneEventPipe.trigger<SceneEvent::ExitScene>(
             {
                 .uuid = uuid,
@@ -100,6 +125,7 @@ namespace MQEngine
             return true;
         }
         m_loadScenes[uuid]->save();
+        return true;
     }
 
     std::string DataManager::getCurrentSceneUuid() const
@@ -128,5 +154,38 @@ namespace MQEngine
             return nullptr;
         }
         return m_loadScenes.at(m_currentScene).get();
+    }
+
+    std::string DataManager::getModelPathByUuid(const std::string& uuid) const
+    {
+        auto it = m_uuidToModel.find(uuid);
+        if (it != m_uuidToModel.end()) {
+            return it->second;
+        }
+        return "";
+    }
+
+    std::string DataManager::getModelRelativePathByUuid(const std::string& uuid) const
+    {
+        std::string modelPath = getModelPathByUuid(uuid);
+        if (modelPath.empty()) {
+            return "";
+        }
+        
+        std::string modelUuidFilePath = modelPath + "/model.uuid";
+        std::ifstream file(modelUuidFilePath);
+        if (!file.is_open()) {
+            return "";
+        }
+        
+        try {
+            boost::archive::binary_iarchive ia(file);
+            ModelUuidFile modelUuidFile;
+            ia >> modelUuidFile;
+            return modelUuidFile.modelRelativePath;
+        } catch (const std::exception& e) {
+            FCT::fout << "读取模型UUID文件失败: " << e.what() << std::endl;
+            return "";
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace MQEngine {
         m_editorCameraEntity = m_editorRegistry->create();
 
         auto& position = m_editorRegistry->emplace<PositionComponent>(m_editorCameraEntity);
-        position.position = Vec3(40.0f, 40.0f, 40.0f);
+        position.position = Vec3(3.0f, 3.0f, 3.0f);
 
         auto& rotation = m_editorRegistry->emplace<RotationComponent>(m_editorCameraEntity);
 
@@ -35,8 +35,8 @@ namespace MQEngine {
 
         auto& camera = m_editorRegistry->emplace<CameraComponent>(m_editorCameraEntity);
         camera.active = true;
-        camera.fov = 90;
+        camera.fov = 60;
         camera.nearPlane = 0.1f;
-        camera.farPlane = 250.0f;
+        camera.farPlane = 50.0f;
     }
 }
