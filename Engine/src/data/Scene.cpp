@@ -1,4 +1,4 @@
-﻿#include "Scene.h"
+#include "Scene.h"
 #include "EnttArchiveWrapper.h"
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -57,6 +57,10 @@ namespace MQEngine
             trunk->load();
 
             m_loadedSceneTrunks[trunkName] = std::move(trunk);
+
+            if (m_dataManager->getCurrentSceneUuid() == m_uuid) {
+                m_dataManager->appendRegistry(&m_loadedSceneTrunks[trunkName]->getRegistry());
+            }
 
         } catch (const DataError& e) {
             throw;

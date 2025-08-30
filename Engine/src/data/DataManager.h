@@ -112,6 +112,8 @@ namespace MQEngine
         {
             m_isEditorMode = isEditorMode;
         }
+        std::string getModelPathByUuid(const std::string& uuid) const;
+        std::string getModelRelativePathByUuid(const std::string& uuid) const;
         Scene* getCurrentScene() const;
     private:
         bool m_isEditorMode;
@@ -133,7 +135,7 @@ namespace MQEngine
                 std::vector<std::string> modelDirs = m_dataLoader->getSubDirectories("./res/models");
 
                 for (const std::string& modelDir : modelDirs) {
-                    std::string uuidFilePath = "./res/models/" + modelDir + "/model.uuid";
+                    std::string uuidFilePath = modelDir + "/model.uuid";
 
                     if (m_dataLoader->fileExists(uuidFilePath)) {
                         try {

@@ -28,6 +28,11 @@ namespace FCT
         "ShadowUniform",
         UniformVar{UniformType::MVPMatrix,"lightMvp"},
     };
+    
+    constexpr UniformSlot ModelUniformSlot {
+        "ModelUniform",
+        UniformVar{UniformType::ModelMatrix,"modelMatrix"}
+    };
 }
 namespace MQEngine
 {
@@ -48,6 +53,7 @@ namespace MQEngine
         g_engineGlobal.ctx = m_ctx;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
+        m_meshRenderSystem = makeUnique<MeshRenderSystem>(m_ctx,m_dataManager);
         m_techManager = makeUnique<TechManager>();
     }
 
@@ -65,6 +71,7 @@ namespace MQEngine
                 LightUniformSlot,
                 CameraUniformSlot,
                 ShadowUniformSlot,
+                ModelUniformSlot,
             },
             .samplerSlots = {
                 SamplerSlot{"shadowSampler"}
@@ -79,35 +86,10 @@ namespace MQEngine
             },
             .pixelLayout = vertexLayout,
             .uniformSlots = {
-                ShadowUniformSlot
+                ShadowUniformSlot,
+                ModelUniformSlot
             }
         });
-        /*
-        m_layout = new Layout(
-            m_ctx,
-            vertexLayout,
-            pixelLayout,
-            LightUniformSlot,
-            CameraUniformSlot,
-            ShadowUniformSlot,
-            PassName("ObjectPass"),
-            SamplerSlot{"shadowSampler"}
-        );
-        m_ps = m_layout->cachePixelShader(
-            LoadStringFromStringResource(g_engineShaderObjectPixel,g_engineShaderObjectPixelSize)
-        );
-        m_vs = m_layout->cacheVertexShader(
-            LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize)
-            );
-        m_shadowLayout = new Layout(
-            m_ctx,
-            vertexLayout,
-            ShadowUniformSlot,
-            PassName("ShadowMapPass")
-            );
-        m_vsShadow = m_shadowLayout->cacheVertexShader(
-            LoadStringFromStringResource(g_engineShaderShadowVertex,g_engineShaderShadowVertexSize)
-            );*/
     }
 
     void Engine::settingUpPass()
@@ -159,6 +141,8 @@ namespace MQEngine
         // m_layout->allocateUniform("LightUniform");
         //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
         m_shadowUniform = Uniform(m_ctx,ShadowUniformSlot);
+        m_meshModelUniform = Uniform(m_ctx,ModelUniformSlot);
+        m_floorModelUniform = Uniform(m_ctx,ModelUniformSlot);
     }
 
 
@@ -195,7 +179,24 @@ namespace MQEngine
                 layout->begin();
                 layout->bindUniform(m_shadowUniform);
                 layout->bindVertexShader(tech->vs_ref);
+                
+                // 渲染MeshRenderSystem收集到的所有mesh
+                const auto& renderData = m_meshRenderSystem->getRenderData();
+                for (const auto& meshData : renderData)
+                {
+                    if (meshData.mesh)
+                    {
+                        // 暂时为每个mesh绑定默认的单位矩阵ModelUniform
+                        layout->bindUniform(m_meshModelUniform);
+                        layout->drawMesh(cmdBuf, meshData.mesh);
+                    }
+                }
+                
+                // 保留原有的硬编码mesh作为后备，为它们绑定单位矩阵
+                layout->bindUniform(m_meshModelUniform);
                 layout->drawMesh(cmdBuf, m_mesh);
+                
+                layout->bindUniform(m_floorModelUniform);
                 layout->drawMesh(cmdBuf, m_floor);
                 layout->end();
             }
@@ -228,7 +229,24 @@ namespace MQEngine
                 layout->bindUniform(m_shadowUniform);
                 layout->bindVertexShader(tech->vs_ref);
                 layout->bindPixelShader(tech->ps_ref);
+                
+                // 渲染MeshRenderSystem收集到的所有mesh
+                const auto& renderData = m_meshRenderSystem->getRenderData();
+                for (const auto& meshData : renderData)
+                {
+                    if (meshData.mesh)
+                    {
+                        // 暂时为每个mesh绑定默认的单位矩阵ModelUniform
+                        layout->bindUniform(m_meshModelUniform);
+                        layout->drawMesh(cmdBuf, meshData.mesh);
+                    }
+                }
+                
+                // 保留原有的硬编码mesh作为后备，为它们绑定单位矩阵
+                layout->bindUniform(m_meshModelUniform);
                 layout->drawMesh(cmdBuf, m_mesh);
+                
+                layout->bindUniform(m_floorModelUniform);
                 layout->drawMesh(cmdBuf, m_floor);
                 layout->end();
             }
@@ -242,7 +260,7 @@ namespace MQEngine
     void Engine::initUniformValue()
     {
         //init base uniform value
-        m_lightPos = Vec4(200,0,0,1);
+        m_lightPos = Vec4(20,0,0,1);
 
         m_lightDistance = 40.0f;
         m_ambientColor[0] = m_ambientColor[1] = m_ambientColor[2] = 0.2f;
@@ -274,6 +292,12 @@ namespace MQEngine
                 Vec3(0,0,0),
                 m_lightPos.xyz().cross(Vec3(0,0,-1))));
         m_shadowUniform.update();
+        
+        //init model uniform values
+        m_meshModelUniform.setValue("modelMatrix", FCT::Mat4());
+        m_meshModelUniform.update();
+        m_floorModelUniform.setValue("modelMatrix", FCT::Mat4());
+        m_floorModelUniform.update();
     }
 
 
@@ -291,9 +315,9 @@ namespace MQEngine
         m_baseUniform.setValue("lightType",m_lightType);
         m_baseUniform.update();
         m_shadowUniform.setValue("lightMvp",
-        Mat4::Ortho(-75.0f,75.0f,
-            -75.0f, 75.0f,
-            1.0f, 300.0f) * Mat4::LookAt(m_lightPos.xyz(),
+        Mat4::Ortho(-25.0f,25.0f,
+            -25.0f, 25.0f,
+            1.0f, 50.0f) * Mat4::LookAt(m_lightPos.xyz(),
                 Vec3(0,0,0),
                 m_lightPos.xyz().cross(Vec3(0,0,-1))
                 //Vec3(0,1,0)
@@ -301,6 +325,7 @@ namespace MQEngine
         m_shadowUniform.update();
         m_application->logicTick();
         m_cameraSystem->update();
+        m_meshRenderSystem->update();
         m_ctx->flush();
     }
 

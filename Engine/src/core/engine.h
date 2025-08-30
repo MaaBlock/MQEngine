@@ -1,4 +1,4 @@
-﻿/*
+/*
  *@file engine.h
  */
 
@@ -10,6 +10,7 @@
 #include "layout.h"
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
+#include "../system/MeshRenderSystem.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
 
@@ -88,7 +89,10 @@ namespace MQEngine {
         float m_cutOffAngle = 45.0f;
         DataManager* m_dataManager;
         FCT::UniquePtr<CameraSystem> m_cameraSystem;
+        FCT::UniquePtr<MeshRenderSystem> m_meshRenderSystem;
         FCT::UniquePtr<TechManager> m_techManager;
+        FCT::Uniform m_meshModelUniform;
+        FCT::Uniform m_floorModelUniform;
     };
     /**
      * @return engine version
