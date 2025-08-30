@@ -131,12 +131,6 @@ namespace MQEngine
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
 
-        //setting up mesh
-        m_mesh = m_ctx->loadMesh(
-            "ball.obj","ball",vertexLayout);
-        m_floor = m_ctx->loadMesh(
-            "ball.obj","floor",vertexLayout);
-
         m_baseUniform = Uniform(m_ctx,LightUniformSlot);
         // m_layout->allocateUniform("LightUniform");
         //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
@@ -164,14 +158,6 @@ namespace MQEngine
             auto cmdBuf = env.cmdBuf;
             cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
             cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-/*
-            m_shadowLayout->begin();
-            m_shadowLayout->bindUniform(m_shadowUniform);
-            m_shadowLayout->bindVertexShader(m_vsShadow);
-            m_shadowLayout->drawMesh(cmdBuf, m_mesh);
-            m_shadowLayout->drawMesh(cmdBuf, m_floor);
-            m_shadowLayout->end();
-            */
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
@@ -191,14 +177,6 @@ namespace MQEngine
                         layout->drawMesh(cmdBuf, meshData.mesh);
                     }
                 }
-                
-                // 保留原有的硬编码mesh作为后备，为它们绑定单位矩阵
-                layout->bindUniform(m_meshModelUniform);
-                layout->drawMesh(cmdBuf, m_mesh);
-                
-                layout->bindUniform(m_floorModelUniform);
-                layout->drawMesh(cmdBuf, m_floor);
-                layout->end();
             }
         });
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
@@ -206,18 +184,6 @@ namespace MQEngine
             auto cmdBuf = env.cmdBuf;
             cmdBuf->viewport({0,0},{1024,768});
             cmdBuf->scissor({0,0},{1024,768});
-            /*
-            m_layout->begin();
-            m_layout->bindSampler("shadowSampler",m_shadowSampler);
-            m_cameraSystem->bind(m_layout);
-            m_layout->bindUniform(m_baseUniform);
-            m_layout->bindUniform(m_shadowUniform);
-            m_layout->bindVertexShader(m_vs);
-            m_layout->bindPixelShader(m_ps);
-            m_layout->drawMesh(cmdBuf, m_mesh);
-            m_layout->drawMesh(cmdBuf, m_floor);
-            m_layout->end();
-            */
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
@@ -241,13 +207,7 @@ namespace MQEngine
                         layout->drawMesh(cmdBuf, meshData.mesh);
                     }
                 }
-                
-                // 保留原有的硬编码mesh作为后备，为它们绑定单位矩阵
-                layout->bindUniform(m_meshModelUniform);
-                layout->drawMesh(cmdBuf, m_mesh);
-                
-                layout->bindUniform(m_floorModelUniform);
-                layout->drawMesh(cmdBuf, m_floor);
+
                 layout->end();
             }
         });

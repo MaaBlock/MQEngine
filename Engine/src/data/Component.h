@@ -5,6 +5,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 #include "NameTag.h"
+#include "../thirdparty/thirdparty.h"
 namespace MQEngine {
     struct StaticMeshInstance
     {
@@ -15,7 +16,17 @@ namespace MQEngine {
         StaticMeshInstance() : mesh(nullptr) {}
         
         StaticMeshInstance(const std::string& uuid, const std::string& name) 
-            : modelUuid(uuid), meshName(name), mesh(nullptr) {}
+            : modelUuid(uuid), meshName(name), mesh(nullptr)
+        {
+        }
+        friend class boost::serialization::access;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & modelUuid;
+            ar & meshName;
+        }
     };
 }
 
