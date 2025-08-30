@@ -3,6 +3,7 @@
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
+#include "../data/Component.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
@@ -60,6 +61,10 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
+        ComponentFilter testFilter;
+        testFilter.include_types.push_back(entt::type_id<StaticMeshInstance>());
+        testFilter.include_types.push_back(entt::type_id<NameTag>());
+        
         m_techManager->addTech("ObjectPass", Tech(
             TechName{"BasicTech"},
             VertexShaderSource{LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize)},
@@ -74,7 +79,8 @@ namespace MQEngine
             },
             std::vector<FCT::SamplerSlot>{
                 SamplerSlot{"shadowSampler"}
-            }
+            },
+            testFilter
         ));
         m_techManager->addTech("ShadowMapPass", Tech(
             TechName{"ShadowTech"},
@@ -162,16 +168,59 @@ namespace MQEngine
                 layout->begin();
                 layout->bindUniform(m_shadowUniform);
                 layout->bindVertexShader(tech->getVertexShaderRef());
-                
-                // 渲染MeshRenderSystem收集到的所有mesh
-                const auto& renderData = m_meshRenderSystem->getRenderData();
-                for (const auto& meshData : renderData)
+
+                const auto& registries = m_dataManager->currentRegistries();
+                for (auto* registry : registries)
                 {
-                    if (meshData.mesh)
+                    const auto& filter = tech->getComponentFilter();
+
+                    if (filter.include_types.empty() && filter.exclude_types.empty())
                     {
-                        // 暂时为每个mesh绑定默认的单位矩阵ModelUniform
-                        layout->bindUniform(m_meshModelUniform);
-                        layout->drawMesh(cmdBuf, meshData.mesh);
+                        auto view = registry->view<StaticMeshInstance>();
+                        for (auto entity : view)
+                        {
+                            const auto& meshInstance = view.get<StaticMeshInstance>(entity);
+                            if (meshInstance.mesh != nullptr)
+                            {
+                                layout->bindUniform(m_meshModelUniform);
+                                layout->drawMesh(cmdBuf, meshInstance.mesh);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entt::runtime_view runtime_view{};
+
+                        for (const auto& type_info : filter.include_types)
+                        {
+                            auto* storage = registry->storage(type_info.hash());
+                            if (storage)
+                            {
+                                runtime_view.iterate(*storage);
+                            }
+                        }
+
+                        for (const auto& type_info : filter.exclude_types)
+                        {
+                            auto* storage = registry->storage(type_info.hash());
+                            if (storage)
+                            {
+                                runtime_view.exclude(*storage);
+                            }
+                        }
+                        
+                        for (auto entity : runtime_view)
+                        {
+                            if (registry->all_of<StaticMeshInstance>(entity))
+                            {
+                                const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
+                                if (meshInstance.mesh != nullptr)
+                                {
+                                    layout->bindUniform(m_meshModelUniform);
+                                    layout->drawMesh(cmdBuf, meshInstance.mesh);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -192,16 +241,59 @@ namespace MQEngine
                 layout->bindUniform(m_shadowUniform);
                 layout->bindVertexShader(tech->getVertexShaderRef());
                 layout->bindPixelShader(tech->getPixelShaderRef());
-                
-                // 渲染MeshRenderSystem收集到的所有mesh
-                const auto& renderData = m_meshRenderSystem->getRenderData();
-                for (const auto& meshData : renderData)
+
+                const auto& registries = m_dataManager->currentRegistries();
+                for (auto* registry : registries)
                 {
-                    if (meshData.mesh)
+                    const auto& filter = tech->getComponentFilter();
+
+                    if (filter.include_types.empty() && filter.exclude_types.empty())
                     {
-                        // 暂时为每个mesh绑定默认的单位矩阵ModelUniform
-                        layout->bindUniform(m_meshModelUniform);
-                        layout->drawMesh(cmdBuf, meshData.mesh);
+                        auto view = registry->view<StaticMeshInstance>();
+                        for (auto entity : view)
+                        {
+                            const auto& meshInstance = view.get<StaticMeshInstance>(entity);
+                            if (meshInstance.mesh != nullptr)
+                            {
+                                layout->bindUniform(m_meshModelUniform);
+                                layout->drawMesh(cmdBuf, meshInstance.mesh);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entt::runtime_view runtime_view{};
+
+                        for (const auto& type_info : filter.include_types)
+                        {
+                            auto* storage = registry->storage(type_info.hash());
+                            if (storage)
+                            {
+                                runtime_view.iterate(*storage);
+                            }
+                        }
+
+                        for (const auto& type_info : filter.exclude_types)
+                        {
+                            auto* storage = registry->storage(type_info.hash());
+                            if (storage)
+                            {
+                                runtime_view.exclude(*storage);
+                            }
+                        }
+                        
+                        for (auto entity : runtime_view)
+                        {
+                            if (registry->all_of<StaticMeshInstance>(entity))
+                            {
+                                const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
+                                if (meshInstance.mesh != nullptr)
+                                {
+                                    layout->bindUniform(m_meshModelUniform);
+                                    layout->drawMesh(cmdBuf, meshInstance.mesh);
+                                }
+                            }
+                        }
                     }
                 }
 

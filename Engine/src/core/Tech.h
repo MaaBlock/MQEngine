@@ -35,6 +35,15 @@ namespace MQEngine
         std::string source;
     };
 
+    /**
+     * @brief 定义组件过滤器，用于runtime view
+     */
+    struct ComponentFilter
+    {
+        std::vector<entt::type_info> include_types;  // 必须包含的组件类型
+        std::vector<entt::type_info> exclude_types;  // 必须排除的组件类型
+    };
+
     // Tech 定义了一套完整的渲染技术，使用声明式接口
     class Tech
     {
@@ -60,6 +69,7 @@ namespace MQEngine
         const std::string& getPassName() const { return m_passName; }
         const ShaderRef& getVertexShaderRef() const { return m_vs_ref; }
         const ShaderRef& getPixelShaderRef() const { return m_ps_ref; }
+        const ComponentFilter& getComponentFilter() const { return m_componentFilter; }
         /** @} */
 
         /** @name 内部设置器（供TechManager使用）
@@ -111,6 +121,9 @@ namespace MQEngine
         
         template<typename... Args>
         void processArgs(const std::vector<FCT::TextureSlot>& slots, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const ComponentFilter& filter, Args... args);
 
         // --- 成员变量 ---
         std::string m_name;
@@ -124,6 +137,7 @@ namespace MQEngine
         ShaderRef m_vs_ref;
         ShaderRef m_ps_ref;
         std::string m_passName;
+        ComponentFilter m_componentFilter;
     };
 
     class TechManager

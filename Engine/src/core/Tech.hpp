@@ -111,6 +111,13 @@ namespace MQEngine
         }
         processArgs(args...);
     }
+
+    template<typename... Args>
+    void Tech::processArgs(const ComponentFilter& filter, Args... args)
+    {
+        m_componentFilter = filter;
+        processArgs(args...);
+    }
 }
 
 #endif // TECH_HPP
