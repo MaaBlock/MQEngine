@@ -12,6 +12,7 @@
 #include "./EditorCameraManager.h"
 #include "../AssetsManager/SceneManager.h"
 #include "../SceneViewer/SceneEntityViewer.h"
+#include "../SceneViewer/EntityInspector.h"
 
 namespace MQEngine {
     class UiManager {
@@ -29,6 +30,7 @@ namespace MQEngine {
         EditorCameraManager* m_editorCameraManager;
         SceneManager* m_sceneManager;
         SceneEntityViewer* m_sceneEntityViewer;
+        EntityInspector* m_entityInspector;
     };
 }
 

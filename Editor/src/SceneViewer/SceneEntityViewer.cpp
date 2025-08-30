@@ -131,7 +131,13 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
             }
 
-            ImGui::BulletText("%s", displayName.c_str());
+            // 检查是否为选中的实体
+            auto& selectedEntity = g_editorGlobal.selectedEntity;
+            bool isSelected = (selectedEntity.entity == entity && selectedEntity.isGlobal);
+            
+            if (ImGui::Selectable(displayName.c_str(), isSelected)) {
+                selectEntity(entity, "", true);
+            }
         }
 
         if (!hasEntities) {
@@ -173,7 +179,13 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
             }
 
-            ImGui::BulletText("%s", displayName.c_str());
+            // 检查是否为选中的实体
+            auto& selectedEntity = g_editorGlobal.selectedEntity;
+            bool isSelected = (selectedEntity.entity == entity && !selectedEntity.isGlobal && selectedEntity.trunkName == trunkName);
+            
+            if (ImGui::Selectable(displayName.c_str(), isSelected)) {
+                selectEntity(entity, trunkName, false);
+            }
         }
 
         if (!hasEntities) {
@@ -259,4 +271,14 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
 
         ImGui::End();
     }
+    
+    void SceneEntityViewer::selectEntity(entt::entity entity, const std::string& trunkName, bool isGlobal) {
+        auto& selectedEntity = g_editorGlobal.selectedEntity;
+        selectedEntity.entity = entity;
+        selectedEntity.trunkName = trunkName;
+        selectedEntity.isGlobal = isGlobal;
+        selectedEntity.scene = m_dataManager->getCurrentScene();
+    }
+    
+
 } // MQEngine

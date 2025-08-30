@@ -15,6 +15,7 @@ namespace MQEngine {
         void renderTrunkEntityList(Scene* scene, std::string trunkName);
         void renderSceneEntityList(Scene* scene);
         void render();
+        void selectEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
     private:
         DataManager* m_dataManager;
 
