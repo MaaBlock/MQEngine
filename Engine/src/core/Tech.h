@@ -11,26 +11,121 @@ namespace MQEngine
 {
     class DataManager;
 
-    // Tech 定义了一套完整的渲染技术
-    struct Tech
+    /**
+     * @brief 定义Tech的名称
+     */
+    struct TechName
     {
         std::string name;
-        std::string vs_source;
-        std::string ps_source;
-
-        std::vector<FCT::VertexLayout> vertexLayouts;
-        FCT::PixelLayout pixelLayout;
-        std::vector<FCT::UniformSlot> uniformSlots;
-        std::vector<FCT::SamplerSlot> samplerSlots;
-        std::vector<FCT::TextureSlot> textureSlots;
-
-        ShaderRef vs_ref;
-        ShaderRef ps_ref;
-        std::string passName;
     };
 
+    /**
+     * @brief 定义顶点着色器源码
+     */
+    struct VertexShaderSource
+    {
+        std::string source;
+    };
 
-    // TechManager 负责管理Tech、Layout和Shader的生命周期
+    /**
+     * @brief 定义像素着色器源码
+     */
+    struct PixelShaderSource
+    {
+        std::string source;
+    };
+
+    // Tech 定义了一套完整的渲染技术，使用声明式接口
+    class Tech
+    {
+    public:
+        /** @name 构造与配置
+         *  @{
+         */
+        template<typename... Args>
+        Tech(Args... args);
+        /** @} */
+
+        /** @name 访问器
+         *  @{
+         */
+        const std::string& getName() const { return m_name; }
+        const std::string& getVertexShaderSource() const { return m_vs_source; }
+        const std::string& getPixelShaderSource() const { return m_ps_source; }
+        const std::vector<FCT::VertexLayout>& getVertexLayouts() const { return m_vertexLayouts; }
+        const FCT::PixelLayout& getPixelLayout() const { return m_pixelLayout; }
+        const std::vector<FCT::UniformSlot>& getUniformSlots() const { return m_uniformSlots; }
+        const std::vector<FCT::SamplerSlot>& getSamplerSlots() const { return m_samplerSlots; }
+        const std::vector<FCT::TextureSlot>& getTextureSlots() const { return m_textureSlots; }
+        const std::string& getPassName() const { return m_passName; }
+        const ShaderRef& getVertexShaderRef() const { return m_vs_ref; }
+        const ShaderRef& getPixelShaderRef() const { return m_ps_ref; }
+        /** @} */
+
+        /** @name 内部设置器（供TechManager使用）
+         *  @{
+         */
+        void setPassName(const std::string& passName) { m_passName = passName; }
+        void setVertexShaderRef(const ShaderRef& ref) { m_vs_ref = ref; }
+        void setPixelShaderRef(const ShaderRef& ref) { m_ps_ref = ref; }
+        /** @} */
+
+    private:
+        // --- 构造函数参数处理 ---
+        template<typename... Args>
+        void processArgs(Args... args);
+        void processArgs() {} // 终止递归
+        
+        template<typename... Args>
+        void processArgs(const TechName& name, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const VertexShaderSource& vs, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const PixelShaderSource& ps, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const FCT::VertexLayout& layout, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const std::vector<FCT::VertexLayout>& layouts, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const FCT::PixelLayout& layout, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const FCT::UniformSlot& slot, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const std::vector<FCT::UniformSlot>& slots, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const FCT::SamplerSlot& slot, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const std::vector<FCT::SamplerSlot>& slots, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const FCT::TextureSlot& slot, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const std::vector<FCT::TextureSlot>& slots, Args... args);
+
+        // --- 成员变量 ---
+        std::string m_name;
+        std::string m_vs_source;
+        std::string m_ps_source;
+        std::vector<FCT::VertexLayout> m_vertexLayouts;
+        FCT::PixelLayout m_pixelLayout;
+        std::vector<FCT::UniformSlot> m_uniformSlots;
+        std::vector<FCT::SamplerSlot> m_samplerSlots;
+        std::vector<FCT::TextureSlot> m_textureSlots;
+        ShaderRef m_vs_ref;
+        ShaderRef m_ps_ref;
+        std::string m_passName;
+    };
+
     class TechManager
     {
     public:
