@@ -6,6 +6,7 @@
 
 #include "../core/Global.h"
 #include "../data/NameTag.h"
+#include "../Thirdparty/thirdparty.h"
 
 #define TEXT(str) (const char*)u8##str
 namespace MQEngine {
@@ -138,6 +139,19 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
             if (ImGui::Selectable(displayName.c_str(), isSelected)) {
                 selectEntity(entity, "", true);
             }
+
+            if (ImGui::BeginDragDropTarget()) {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
+                    std::string dragData = static_cast<const char*>(payload->Data);
+                    size_t separatorPos = dragData.find('|');
+                    if (separatorPos != std::string::npos) {
+                        std::string modelUuid = dragData.substr(0, separatorPos);
+                        std::string meshName = dragData.substr(separatorPos + 1);
+                        addStaticMeshComponent(entity, modelUuid, meshName, true);
+                    }
+                }
+                ImGui::EndDragDropTarget();
+            }
         }
 
         if (!hasEntities) {
@@ -179,12 +193,25 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
             }
 
-            // 检查是否为选中的实体
             auto& selectedEntity = g_editorGlobal.selectedEntity;
             bool isSelected = (selectedEntity.entity == entity && !selectedEntity.isGlobal && selectedEntity.trunkName == trunkName);
             
             if (ImGui::Selectable(displayName.c_str(), isSelected)) {
                 selectEntity(entity, trunkName, false);
+            }
+
+            if (ImGui::BeginDragDropTarget()) {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
+                    std::string dragData = static_cast<const char*>(payload->Data);
+                    size_t separatorPos = dragData.find('|');
+                    if (separatorPos != std::string::npos) {
+                        std::string modelUuid = dragData.substr(0, separatorPos);
+                        std::string meshName = dragData.substr(separatorPos + 1);
+
+                        addStaticMeshComponent(entity, modelUuid, meshName, false, trunkName);
+                    }
+                }
+                ImGui::EndDragDropTarget();
             }
         }
 
@@ -280,5 +307,29 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
         selectedEntity.scene = m_dataManager->getCurrentScene();
     }
     
+    void SceneEntityViewer::addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName) {
+        Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+        
+        entt::registry* registry;
+        if (isGlobal) {
+            registry = &scene->getRegistry();
+        } else {
+            SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
+            if (!trunk) return;
+            registry = &trunk->getRegistry();
+        }
+
+        if (registry->all_of<StaticMeshInstance>(entity)) {
+            auto& meshComponent = registry->get<StaticMeshInstance>(entity);
+            meshComponent.modelUuid = modelUuid;
+            meshComponent.meshName = meshName;
+            meshComponent.mesh = nullptr;
+        } else {
+            registry->emplace<StaticMeshInstance>(entity, modelUuid, meshName);
+        }
+        
+        FCT::fout << "为实体添加了StaticMeshInstance组件: modelUuid=" << modelUuid << ", meshName=" << meshName << std::endl;
+    }
 
 } // MQEngine
