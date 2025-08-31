@@ -11,6 +11,7 @@
 #include "../RenderGraphView/RenderGraphViewer.h"
 #include "./EditorCameraManager.h"
 #include "../AssetsManager/SceneManager.h"
+#include "../AssetsManager/ScriptManager.h"
 #include "../SceneViewer/SceneEntityViewer.h"
 #include "../SceneViewer/EntityInspector.h"
 
@@ -29,6 +30,7 @@ namespace MQEngine {
         ModelManager* m_modelManager;
         EditorCameraManager* m_editorCameraManager;
         SceneManager* m_sceneManager;
+        ScriptManager* m_scriptManager;
         SceneEntityViewer* m_sceneEntityViewer;
         EntityInspector* m_entityInspector;
     };

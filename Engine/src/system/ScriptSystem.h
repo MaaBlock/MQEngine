@@ -25,6 +25,12 @@ namespace MQEngine {
          */
         void loadScripts();
         
+        /**
+         * @brief 获取当前JavaScript环境中的所有函数名
+         * @return JavaScript函数名列表
+         */
+        std::vector<std::string> getFunctionNames() const;
+        
     private:
         DataManager* m_dataManager;
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;

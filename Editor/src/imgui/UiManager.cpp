@@ -21,6 +21,7 @@ namespace MQEngine
         m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager);
         m_editorCameraManager = new EditorCameraManager();
         m_sceneManager = new SceneManager();
+        m_scriptManager = new ScriptManager();
         m_sceneEntityViewer = new SceneEntityViewer();
         m_entityInspector = new EntityInspector();
     }
@@ -28,6 +29,13 @@ namespace MQEngine
     void UiManager::term()
     {
         delete m_graphView;
+        delete m_passGenerator;
+        delete m_modelManager;
+        delete m_editorCameraManager;
+        delete m_sceneManager;
+        delete m_scriptManager;
+        delete m_sceneEntityViewer;
+        delete m_entityInspector;
         ImNodes::DestroyContext();
     }
 
@@ -123,6 +131,7 @@ namespace MQEngine
             m_passGenerator->render();
             m_modelManager->render();
             m_sceneManager->render();
+            m_scriptManager->render();
             m_sceneEntityViewer->render();
             m_entityInspector->render();
         });
