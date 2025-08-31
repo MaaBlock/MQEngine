@@ -12,6 +12,7 @@ namespace MQEngine {
     public:
         MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         void update();
+        void updateUniforms();
         
     private:
         void processEntity(entt::registry* registry, entt::entity entity);

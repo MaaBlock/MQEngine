@@ -4,6 +4,7 @@
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
 #include "../data/Component.h"
+#include "../data/Camera.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
@@ -30,11 +31,7 @@ namespace FCT
         "ShadowUniform",
         UniformVar{UniformType::MVPMatrix,"lightMvp"},
     };
-    
-    constexpr UniformSlot ModelUniformSlot {
-        "ModelUniform",
-        UniformVar{UniformType::ModelMatrix,"modelMatrix"}
-    };
+
 }
 namespace MQEngine
 {
@@ -210,7 +207,15 @@ namespace MQEngine
                             const auto& meshInstance = view.get<StaticMeshInstance>(entity);
                             if (meshInstance.mesh != nullptr)
                             {
-                                layout->bindUniform(m_meshModelUniform);
+                                const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
+                                if (cacheMatrix && cacheMatrix->init)
+                                {
+                                    layout->bindUniform(cacheMatrix->uniform);
+                                }
+                                else
+                                {
+                                    layout->bindUniform(m_meshModelUniform);
+                                }
                                 layout->drawMesh(cmdBuf, meshInstance.mesh);
                             }
                         }
@@ -244,7 +249,15 @@ namespace MQEngine
                                 const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
                                 if (meshInstance.mesh != nullptr)
                                 {
-                                    layout->bindUniform(m_meshModelUniform);
+                                    const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
+                                    if (cacheMatrix && cacheMatrix->uniform)
+                                    {
+                                        layout->bindUniform(cacheMatrix->uniform);
+                                    }
+                                    else
+                                    {
+                                        layout->bindUniform(m_meshModelUniform);
+                                    }
                                     layout->drawMesh(cmdBuf, meshInstance.mesh);
                                 }
                             }
@@ -300,7 +313,15 @@ namespace MQEngine
                             const auto& meshInstance = view.get<StaticMeshInstance>(entity);
                             if (meshInstance.mesh != nullptr)
                             {
-                                layout->bindUniform(m_meshModelUniform);
+                                const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
+                                if (cacheMatrix && cacheMatrix->uniform)
+                                {
+                                    layout->bindUniform(cacheMatrix->uniform);
+                                }
+                                else
+                                {
+                                    layout->bindUniform(m_meshModelUniform);
+                                }
                                 layout->drawMesh(cmdBuf, meshInstance.mesh);
                             }
                         }
@@ -334,7 +355,15 @@ namespace MQEngine
                                 const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
                                 if (meshInstance.mesh != nullptr)
                                 {
-                                    layout->bindUniform(m_meshModelUniform);
+                                    const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
+                                    if (cacheMatrix && cacheMatrix->uniform)
+                                    {
+                                        layout->bindUniform(cacheMatrix->uniform);
+                                    }
+                                    else
+                                    {
+                                        layout->bindUniform(m_meshModelUniform);
+                                    }
                                     layout->drawMesh(cmdBuf, meshInstance.mesh);
                                 }
                             }
@@ -345,6 +374,16 @@ namespace MQEngine
                 layout->end();
             }
         });
+        auto& submitTickers = m_ctx->submitTickers();
+        submitTickers["MatrixCacheSystemUpdateTicker"] = {
+            [this]() {
+                m_matrixCacheSystem->updateUniforms();
+            },
+            {},
+            {RenderGraphTickers::RenderGraphSubmit}
+        };
+        submitTickers.update();
+
         RenderCallBack::SubscribePass callback;
         callback.graph = graph;
         m_application->renderCallBackDispatcher.trigger(callback);
@@ -436,8 +475,7 @@ namespace MQEngine
         initUniformValue();
         settingUpSubmitTicker();
         settingUpSync();
-        
-        // 初始化完成后加载脚本
+
         if (m_scriptSystem) {
             m_scriptSystem->loadScripts();
         }

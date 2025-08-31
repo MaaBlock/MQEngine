@@ -13,11 +13,12 @@ namespace MQEngine {
 
     void MatrixCacheSystem::update()
     {
+
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
             cleanupCacheComponents(registry);
-
+            
             std::set<entt::entity> entitiesToProcess;
 
             auto positionView = registry->view<PositionComponent>();
@@ -76,8 +77,26 @@ namespace MQEngine {
         }
 
         FCT::Mat4 modelMatrix = calculateModelMatrix(pos, rot, scl);
-        cacheModel->uniform.setValue(FCT::UniformType::ModelMatrix, modelMatrix);
-        cacheModel->uniform.update();
+        cacheModel->uniform->setValue(FCT::UniformType::ModelMatrix, modelMatrix);
+        cacheModel->init = true;
+    }
+
+    void MatrixCacheSystem::updateUniforms()
+    {
+
+        auto registries = m_dataManager->currentRegistries();
+        for (auto& registry : registries)
+        {
+            auto modelCacheView = registry->view<CacheModelMatrix>();
+            for (auto entity : modelCacheView)
+            {
+                auto& cacheModel = registry->get<CacheModelMatrix>(entity);
+                if (cacheModel.init)
+                {
+                    cacheModel.uniform->update();
+                }
+            }
+        }
     }
 
     FCT::Mat4 MatrixCacheSystem::calculateRotationMatrix(const RotationComponent& rotation)
