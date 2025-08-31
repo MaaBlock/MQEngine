@@ -42,9 +42,23 @@ namespace MQEngine
     {
         std::vector<entt::type_info> include_types;  // 必须包含的组件类型
         std::vector<entt::type_info> exclude_types;  // 必须排除的组件类型
+
+        template<typename... Components>
+        ComponentFilter& include()
+        {
+            (include_types.push_back(entt::type_id<Components>()), ...);
+            return *this;
+        }
+
+        template<typename... Components>
+        ComponentFilter& exclude()
+        {
+            (exclude_types.push_back(entt::type_id<Components>()), ...);
+            return *this;
+        }
     };
 
-    // Tech 定义了一套完整的渲染技术，使用声明式接口
+
     class Tech
     {
     public:
