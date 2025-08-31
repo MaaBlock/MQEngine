@@ -123,4 +123,17 @@ namespace MQEngine {
         return "";
     }
     
+    std::vector<std::string> ScriptSystem::getFunctionNames() const {
+        if (!m_nodeEnv) {
+            return {};
+        }
+        
+        try {
+            return m_nodeEnv->global().getFunctionNames();
+        } catch (const std::exception& e) {
+            std::cerr << "Error getting function names: " << e.what() << std::endl;
+            return {};
+        }
+    }
+    
 } // namespace MQEngine

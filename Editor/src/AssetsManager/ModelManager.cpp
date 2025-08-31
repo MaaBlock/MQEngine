@@ -36,6 +36,11 @@ namespace MQEngine
 
     }
 
+    ModelManager::~ModelManager()
+    {
+        
+    }
+
     void ModelManager::importModel(const std::string& modelPath)
     {
         std::filesystem::path modelFilePath(modelPath);

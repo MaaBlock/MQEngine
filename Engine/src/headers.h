@@ -19,4 +19,5 @@
 #include "core/systemmanager.h"
 #include "core/enginescope.h"
 #include "data/DataManager.h"
+#include "system/ScriptSystem.h"
 #endif //HEADERS_H

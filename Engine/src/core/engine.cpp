@@ -58,10 +58,12 @@ namespace MQEngine
         m_application->global.dataManager = m_dataManager;
         m_application->global.runtime = &m_rt;
         g_engineGlobal.ctx = m_ctx;
+        g_engineGlobal.dataManager = m_dataManager;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_meshRenderSystem = makeUnique<MeshRenderSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
+        g_engineGlobal.scriptSystem = m_scriptSystem.get();
         m_techManager = makeUnique<TechManager>();
     }
 

@@ -6,11 +6,13 @@
 namespace MQEngine
 {
     class DataManager;
+    class ScriptSystem;
     using Context = FCT::Context;
     struct ENGINE_API EngineGlobal
     {
         Context* ctx;
         DataManager* dataManager;
+        ScriptSystem* scriptSystem;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
         EngineGlobal() = default;
         EngineGlobal(const EngineGlobal&) = delete;
