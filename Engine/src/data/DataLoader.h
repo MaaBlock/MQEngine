@@ -19,6 +19,7 @@ namespace MQEngine
         virtual std::unique_ptr<std::ofstream> openBinaryOutputStream(const std::string& filePath) const = 0;
         virtual bool directoryExists(const std::string& string) = 0;
         virtual std::vector<std::string> getFileNamesWithExtension(const std::string& dir, const std::string& extension) const = 0;
+        virtual std::vector<std::string> getFilePathsWithExtension(const std::string& dir, const std::string& extension) const = 0;
 
     };
 } // MQEngine

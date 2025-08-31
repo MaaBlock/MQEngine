@@ -167,6 +167,44 @@ namespace MQEngine {
         return fileNames;
     }
 
+    std::vector<std::string> FileDataLoader::getFilePathsWithExtension(const std::string& dir, const std::string& extension) const
+    {
+        std::vector<std::string> filePaths;
+
+        if (!std::filesystem::exists(dir) || !std::filesystem::is_directory(dir)) {
+            return filePaths;
+        }
+
+        try {
+            for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+                if (entry.is_regular_file()) {
+                    std::string fileExtension = entry.path().extension().string();
+
+                    // 比较扩展名（不区分大小写）
+                    if (fileExtension.size() == extension.size()) {
+                        bool match = true;
+                        for (size_t i = 0; i < extension.size(); ++i) {
+                            if (std::tolower(fileExtension[i]) != std::tolower(extension[i])) {
+                                match = false;
+                                break;
+                            }
+                        }
+                        if (match) {
+                            // 获取完整文件路径
+                            std::string filePath = entry.path().string();
+                            filePaths.push_back(filePath);
+                        }
+                    }
+                }
+            }
+        } catch (const std::filesystem::filesystem_error& e) {
+            // 可以选择抛出异常或记录日志
+            // throw DataError("获取文件路径列表失败: " + std::string(e.what()));
+        }
+
+        return filePaths;
+    }
+
     bool FileDataLoader::directoryExists(const std::string& string)
     {
         return std::filesystem::exists(string) && std::filesystem::is_directory(string);

@@ -11,6 +11,7 @@
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
 #include "../system/MeshRenderSystem.h"
+#include "../system/ScriptSystem.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
 
@@ -88,6 +89,7 @@ namespace MQEngine {
         DataManager* m_dataManager;
         FCT::UniquePtr<CameraSystem> m_cameraSystem;
         FCT::UniquePtr<MeshRenderSystem> m_meshRenderSystem;
+        FCT::UniquePtr<ScriptSystem> m_scriptSystem;
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::Uniform m_meshModelUniform;
         FCT::Uniform m_floorModelUniform;
