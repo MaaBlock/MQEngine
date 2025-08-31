@@ -25,6 +25,7 @@ namespace MQEngine{
         entt::registry* editorRegistry;
         FCT::ImguiContext* imguiContext;
         SelectedEntityState selectedEntity;
+        std::string componentToDelete; // 标记要删除的组件类型
     };
     extern EditorGlobal g_editorGlobal;
 }

@@ -73,6 +73,12 @@ namespace MQEngine {
             } else {
                 ImGui::Text("网格状态: 未加载");
             }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##StaticMeshInstance")) {
+                g_editorGlobal.componentToDelete = "StaticMeshInstance";
+            }
+            
             ImGui::Unindent();
         }
     }
@@ -82,6 +88,13 @@ namespace MQEngine {
         if (ImGui::CollapsingHeader("Script", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
             ImGui::Text("函数名: %s", component->functionName.empty() ? "未设置" : component->functionName.c_str());
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##ScriptComponent")) {
+                // 设置删除标记，由EntityInspector处理
+                g_editorGlobal.componentToDelete = "ScriptComponent";
+            }
+            
             ImGui::Unindent();
         }
     }
