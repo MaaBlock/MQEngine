@@ -21,9 +21,40 @@ namespace MQEngine {
     inline void renderComponent<PositionComponent>(const PositionComponent* component) {
         if (ImGui::CollapsingHeader("Position", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
-            ImGui::Text("X: %.3f", component->position.x);
-            ImGui::Text("Y: %.3f", component->position.y);
-            ImGui::Text("Z: %.3f", component->position.z);
+            
+            static float pos[3] = {component->position.x, component->position.y, component->position.z};
+            pos[0] = component->position.x;
+            pos[1] = component->position.y;
+            pos[2] = component->position.z;
+            
+            if (ImGui::DragFloat3("Position", pos, 0.1f)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<PositionComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->position.x = pos[0];
+                            mutableComponent->position.y = pos[1];
+                            mutableComponent->position.z = pos[2];
+                        }
+                    }
+                }
+            }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##PositionComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<PositionComponent>::value();
+            }
+            
             ImGui::Unindent();
         }
     }
@@ -32,9 +63,40 @@ namespace MQEngine {
     inline void renderComponent<RotationComponent>(const RotationComponent* component) {
         if (ImGui::CollapsingHeader("Rotation", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
-            ImGui::Text("X: %.3f°", component->rotation.x);
-            ImGui::Text("Y: %.3f°", component->rotation.y);
-            ImGui::Text("Z: %.3f°", component->rotation.z);
+            
+            static float rot[3] = {component->rotation.x, component->rotation.y, component->rotation.z};
+            rot[0] = component->rotation.x;
+            rot[1] = component->rotation.y;
+            rot[2] = component->rotation.z;
+            
+            if (ImGui::DragFloat3("Rotation (degrees)", rot, 1.0f)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<RotationComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->rotation.x = rot[0];
+                            mutableComponent->rotation.y = rot[1];
+                            mutableComponent->rotation.z = rot[2];
+                        }
+                    }
+                }
+            }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##RotationComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<RotationComponent>::value();
+            }
+            
             ImGui::Unindent();
         }
     }
@@ -43,9 +105,40 @@ namespace MQEngine {
     inline void renderComponent<ScaleComponent>(const ScaleComponent* component) {
         if (ImGui::CollapsingHeader("Scale", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
-            ImGui::Text("X: %.3f", component->scale.x);
-            ImGui::Text("Y: %.3f", component->scale.y);
-            ImGui::Text("Z: %.3f", component->scale.z);
+            
+            static float scale[3] = {component->scale.x, component->scale.y, component->scale.z};
+            scale[0] = component->scale.x;
+            scale[1] = component->scale.y;
+            scale[2] = component->scale.z;
+            
+            if (ImGui::DragFloat3("Scale", scale, 0.01f, 0.001f, 100.0f)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<ScaleComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->scale.x = scale[0];
+                            mutableComponent->scale.y = scale[1];
+                            mutableComponent->scale.z = scale[2];
+                        }
+                    }
+                }
+            }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##ScaleComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<ScaleComponent>::value();
+            }
+            
             ImGui::Unindent();
         }
     }
@@ -94,6 +187,37 @@ namespace MQEngine {
                 g_editorGlobal.componentToDelete = entt::type_hash<ScriptComponent>::value();
             }
             
+            ImGui::Unindent();
+        }
+    }
+
+    template<>
+    inline void renderComponent<CacheRotationMatrix>(const CacheRotationMatrix* component) {
+        if (ImGui::CollapsingHeader("CacheRotationMatrix", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("旋转矩阵 (缓存)");
+            ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", 
+                component->rotationMatrix.m[0], component->rotationMatrix.m[1], 
+                component->rotationMatrix.m[2], component->rotationMatrix.m[3]);
+            ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", 
+                component->rotationMatrix.m[4], component->rotationMatrix.m[5], 
+                component->rotationMatrix.m[6], component->rotationMatrix.m[7]);
+            ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", 
+                component->rotationMatrix.m[8], component->rotationMatrix.m[9], 
+                component->rotationMatrix.m[10], component->rotationMatrix.m[11]);
+            ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", 
+                component->rotationMatrix.m[12], component->rotationMatrix.m[13], 
+                component->rotationMatrix.m[14], component->rotationMatrix.m[15]);
+            ImGui::Unindent();
+        }
+    }
+
+    template<>
+    inline void renderComponent<CacheModelMatrix>(const CacheModelMatrix* component) {
+        if (ImGui::CollapsingHeader("CacheModelMatrix", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("模型矩阵 (缓存)");
+            ImGui::Text("Uniform已缓存并上传到GPU");
             ImGui::Unindent();
         }
     }
