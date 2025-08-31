@@ -91,6 +91,10 @@ namespace MQEngine {
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::Uniform m_meshModelUniform;
         FCT::Uniform m_floorModelUniform;
+        
+        // OutputInfo for passes
+        FCT::OutputInfo m_shadowPassOutputInfo;
+        FCT::OutputInfo m_objectPassOutputInfo;
     };
     /**
      * @return engine version

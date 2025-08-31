@@ -157,11 +157,35 @@ namespace MQEngine
     void Engine::settingUpSubmitTicker()
     {
         auto graph = m_ctx->getModule<RenderGraph>();
+        
+        // Subscribe to PassInfo for ShadowMapPass to get OutputInfo
+        m_ctx->pipeHub().passPipe.subscribe<PassInfo>("ShadowMapPass", [this](PassInfo& passInfo) {
+            // Store the OutputInfo for ShadowMapPass
+            m_shadowPassOutputInfo = passInfo.outputInfo;
+        });
+        
         graph->subscribe("ShadowMapPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
-            cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
-            cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(2048, 2048));
+            
+            // Use OutputInfo to set viewport and scissor
+            if (m_shadowPassOutputInfo.isWindow) {
+                // Use window's autoviewport module
+                if (m_shadowPassOutputInfo.window) {
+                    auto autoViewport = m_shadowPassOutputInfo.window->getModule<WindowModule::AutoViewport>();
+                    if (autoViewport) {
+                        autoViewport->submit(cmdBuf);
+                    } else {
+                        // Fallback to window size
+                        cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
+                        cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
+                    }
+                }
+            } else {
+                // Use OutputInfo width and height
+                cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
+                cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
+            }
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
@@ -226,11 +250,34 @@ namespace MQEngine
                 }
             }
         });
+        // Subscribe to PassInfo for ObjectPass to get OutputInfo
+        m_ctx->pipeHub().passPipe.subscribe<PassInfo>("ObjectPass", [this](PassInfo& passInfo) {
+            // Store the OutputInfo for ObjectPass
+            m_objectPassOutputInfo = passInfo.outputInfo;
+        });
+        
         graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
         {
             auto cmdBuf = env.cmdBuf;
-            cmdBuf->viewport({0,0},{1024,768});
-            cmdBuf->scissor({0,0},{1024,768});
+            
+            // Use OutputInfo to set viewport and scissor
+            if (m_objectPassOutputInfo.isWindow) {
+                // Use window's autoviewport module
+                if (m_objectPassOutputInfo.window) {
+                    auto autoViewport = m_objectPassOutputInfo.window->getModule<WindowModule::AutoViewport>();
+                    if (autoViewport) {
+                        autoViewport->submit(cmdBuf);
+                    } else {
+                        // Fallback to window size
+                        cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
+                        cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
+                    }
+                }
+            } else {
+                // Use OutputInfo width and height
+                cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
+                cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
+            }
             auto techs = m_techManager->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
