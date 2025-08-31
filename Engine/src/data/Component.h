@@ -28,6 +28,26 @@ namespace MQEngine {
             ar & meshName;
         }
     };
+
+    struct ENGINE_API ScriptComponent
+    {
+        std::string functionName;       
+        
+        ScriptComponent() = default;
+        
+        ScriptComponent(const std::string& funcName) 
+            : functionName(funcName)
+        {
+        }
+        
+        friend class boost::serialization::access;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & functionName;
+        }
+    };
 }
 
 #endif //COMPONENT_H

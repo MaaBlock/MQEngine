@@ -136,4 +136,42 @@ namespace MQEngine {
         }
     }
     
+    void ScriptSystem::update() {
+        if (!m_nodeEnv) {
+            std::cerr << "NodeEnvironment not initialized." << std::endl;
+            return;
+        }
+        
+        if (!m_dataManager) {
+            std::cerr << "DataManager not available." << std::endl;
+            return;
+        }
+
+        auto registries = m_dataManager->currentRegistries();
+
+        for (auto& registry : registries) {
+
+            auto view = registry->view<ScriptComponent>();
+
+            for (auto entity : view) {
+                auto& scriptComponent = view.get<ScriptComponent>(entity);
+                if (!scriptComponent.functionName.empty()) {
+                    try {
+                        std::string callCode = scriptComponent.functionName + "();";
+
+                        m_nodeEnv->excuteScript(callCode);
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error executing script function '" << scriptComponent.functionName << "': " << e.what() << std::endl;
+                    }
+                }
+            }
+        }
+
+        try {
+            m_nodeEnv->tick();
+        } catch (const std::exception& e) {
+            std::cerr << "Error during NodeEnvironment tick: " << e.what() << std::endl;
+        }
+    }
+    
 } // namespace MQEngine

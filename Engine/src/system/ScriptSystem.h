@@ -31,6 +31,11 @@ namespace MQEngine {
          */
         std::vector<std::string> getFunctionNames() const;
         
+        /**
+         * @brief 更新系统，执行所有ScriptComponent的脚本
+         */
+        void update();
+        
     private:
         DataManager* m_dataManager;
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;

@@ -76,6 +76,15 @@ namespace MQEngine {
             ImGui::Unindent();
         }
     }
+
+    template<>
+    inline void renderComponent<ScriptComponent>(const ScriptComponent* component) {
+        if (ImGui::CollapsingHeader("Script", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("函数名: %s", component->functionName.empty() ? "未设置" : component->functionName.c_str());
+            ImGui::Unindent();
+        }
+    }
     
 } // MQEngine
 
