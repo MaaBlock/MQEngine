@@ -89,6 +89,7 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<ScaleComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CameraComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
         
         if (!hasComponents) {
             ImGui::Text("该实体没有组件");

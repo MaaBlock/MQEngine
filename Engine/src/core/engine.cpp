@@ -419,6 +419,8 @@ namespace MQEngine
         m_application->logicTick();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
+        m_scriptSystem->update();
+        
         m_ctx->flush();
     }
 
