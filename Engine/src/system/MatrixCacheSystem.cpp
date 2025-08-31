@@ -7,8 +7,11 @@
 
 namespace MQEngine {
     MatrixCacheSystem::MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager)
-        : m_ctx(ctx), m_dataManager(dataManager)
+        : m_ctx(ctx), m_dataManager(dataManager), m_defaultModelUniform(ctx, ModelUniformSlot)
     {
+        // 初始化默认模型矩阵为单位矩阵
+        m_defaultModelUniform.setValue("modelMatrix", FCT::Mat4());
+        m_defaultModelUniform.update();
     }
 
     void MatrixCacheSystem::update()
@@ -119,6 +122,19 @@ namespace MQEngine {
         FCT::Mat4 scaleMatrix = FCT::Mat4::Scale(scale.scale.x, scale.scale.y, scale.scale.z);
         
         return translationMatrix * rotationMatrix * scaleMatrix;
+    }
+
+    void MatrixCacheSystem::bindModelMatrix(entt::registry* registry, entt::entity entity, FCT::Layout* layout)
+    {
+        const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
+        if (cacheMatrix && cacheMatrix->init)
+        {
+            layout->bindUniform(cacheMatrix->uniform);
+        }
+        else
+        {
+            layout->bindUniform(m_defaultModelUniform);
+        }
     }
 
     void MatrixCacheSystem::cleanupCacheComponents(entt::registry* registry)
