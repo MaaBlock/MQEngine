@@ -1,4 +1,5 @@
-
+#ifndef TECH_H
+#define TECH_H
 #pragma once
 
 #include <string>
@@ -190,3 +191,4 @@ namespace MQEngine
         DataManager* m_dataManager;
     };
 }
+#endif

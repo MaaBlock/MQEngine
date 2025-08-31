@@ -153,7 +153,11 @@ namespace MQEngine
         if (m_currentScene.empty()) {
             return nullptr;
         }
-        return m_loadScenes.at(m_currentScene).get();
+        auto it = m_loadScenes.find(m_currentScene);
+        if (it == m_loadScenes.end()) {
+            return nullptr;
+        }
+        return it->second.get();
     }
 
     std::string DataManager::getModelPathByUuid(const std::string& uuid) const

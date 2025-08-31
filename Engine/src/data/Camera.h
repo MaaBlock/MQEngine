@@ -35,11 +35,51 @@ namespace MQEngine {
         FCT::Mat4 rotationMatrix;
     };
 
+    constexpr FCT::UniformSlot ModelUniformSlot {
+        "ModelUniform",
+        FCT::UniformVar{FCT::UniformType::ModelMatrix,"modelMatrix"}
+    };
+
     struct ENGINE_API CacheModelMatrix {
-        FCT::Uniform uniform;
+        FCT::Uniform* uniform = nullptr;
+        bool init = false;
+        bool ownsUniform = true;  // 标记是否拥有uniform的所有权
         
-        CacheModelMatrix() = default;
-        CacheModelMatrix(FCT::Context* ctx) : uniform(ctx, FCT::PredefinedUniforms::MVP) {}
+        CacheModelMatrix() = delete;
+        explicit CacheModelMatrix(FCT::Context* ctx) :  init(false), ownsUniform(true)
+        {
+            uniform = new FCT::Uniform(ctx, ModelUniformSlot);
+        }
+        
+        ~CacheModelMatrix() {
+            if (ownsUniform && uniform) {
+                delete uniform;
+                uniform = nullptr;
+            }
+        }
+        
+        CacheModelMatrix(const CacheModelMatrix&) = delete;
+        CacheModelMatrix& operator=(const CacheModelMatrix&) = delete;
+        
+        CacheModelMatrix(CacheModelMatrix&& other) noexcept 
+            : uniform(other.uniform), init(other.init), ownsUniform(other.ownsUniform) {
+            other.uniform = nullptr;
+            other.ownsUniform = false;
+        }
+        
+        CacheModelMatrix& operator=(CacheModelMatrix&& other) noexcept {
+            if (this != &other) {
+                if (ownsUniform && uniform) {
+                    delete uniform;
+                }
+                uniform = other.uniform;
+                init = other.init;
+                ownsUniform = other.ownsUniform;
+                other.uniform = nullptr;
+                other.ownsUniform = false;
+            }
+            return *this;
+        }
     };
 
 } // MQEngine
