@@ -31,32 +31,14 @@ float calculateShadow(float4 shadowPos, float3 normal, float3 directionalLightDi
 
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
-    float4 directionalLightDir;
+    // 只支持方向光，移除其他光源类型
+    float4 directionalLightDir = -directionalLightDirection;
     float attenuation = 1.0;
-    switch(directionalLightType) {
-    case 0:
-        float distance = length(sIn.srcpos - directionalLightPos);
-        directionalLightDir = normalize(directionalLightPos - sIn.srcpos);
-        attenuation = 1.0 / (constant + linearAttenuation * distance +
-                quadratic * (distance * distance));
-        break;
-    case 1:
-        directionalLightDir = -directionalLightDirection;
-        break;
-    case 2:
-        directionalLightDir = normalize(directionalLightPos - sIn.srcpos);
-        if (dot(-directionalLightDir, directionalLightDirection) < cutOff) {
-            attenuation = 0;
-        }
-        break;
-    }
-    float4 viewDir = normalize(viewPos - sIn.srcpos);
-    float3 halfDir = normalize(viewDir + directionalLightDir).xyz;
-    float3 diff = max(dot(sIn.normal.xyz, directionalLightDir.xyz), 0.0) * diffuseColor;
-    float3 spec = pow(max(dot(sIn.normal, halfDir), 0.0), shininess) * specularColor;
-    float3 ambi = ambientColor;
+    // 简化的方向光照计算
+    float3 diff = max(dot(sIn.normal.xyz, directionalLightDir.xyz), 0.0) * float3(0.8, 0.8, 0.8);
+    float3 ambi = float3(0.2, 0.2, 0.2);
     float shadow = calculateShadow(directionalLightMvp * sIn.srcpos, sIn.normal.xyz, directionalLightDir.xyz);
-    float3 finalColor = (sIn.color.xyz * (ambi +  shadow * (spec  + diff) * attenuation));
+    float3 finalColor = sIn.color.xyz * (ambi + shadow * diff * attenuation);
     sOut.target0 = float4(finalColor, 1.0);
     float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
 

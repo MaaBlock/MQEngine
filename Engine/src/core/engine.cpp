@@ -13,18 +13,7 @@ namespace FCT
     }
     constexpr UniformSlot DirectionalLightUniformSlot {
         "DirectionalLightUniform",
-        UniformVar{UniformType::Vec4,"directionalLightPos"},
-        UniformVar{UniformType::Vec4,"viewPos"},
-        UniformVar{UniformType::Vec4,"directionalLightDirection"},
-        UniformVar{UniformType::Int,"directionalLightType"},
-        UniformVar{UniformType::Vec3,"ambientColor"},
-        UniformVar{UniformType::Vec3,"diffuseColor"},
-        UniformVar{UniformType::Vec3,"specularColor"},
-        UniformVar{UniformType::Float,"shininess"},
-        UniformVar{UniformType::Float,"constant"},
-        UniformVar{UniformType::Float,"linearAttenuation"},
-        UniformVar{UniformType::Float,"quadratic"},
-        UniformVar{UniformType::Float,"cutOff"}
+        UniformVar{UniformType::Vec4,"directionalLightDirection"}
     };
 
     UniformSlot ShadowUniformSlot = {
@@ -330,26 +319,6 @@ namespace MQEngine
         //init base uniform value
         m_directionalLightPos = Vec4(20,0,0,1);
 
-        m_lightDistance = 40.0f;
-        m_ambientColor[0] = m_ambientColor[1] = m_ambientColor[2] = 0.2f;
-        m_diffuseColor[0] = m_diffuseColor[1] = m_diffuseColor[2] = 0.5f;
-        m_specularColor[0] = m_specularColor[1] = m_specularColor[2] = 1.0f;
-        m_shininess = 32.0f;
-        m_constant = 1.0f;
-        m_linearAttenuation = 0.09f;
-        m_quadratic = 0.032f;
-        m_cutOffAngle = 45.0f;
-
-        m_baseUniform.setValue("viewPos", Vec4(40.0,40.0,40.0,1.0));
-        m_baseUniform.setValue("ambientColor", m_ambientColor);
-        m_baseUniform.setValue("diffuseColor", m_diffuseColor);
-        m_baseUniform.setValue("specularColor", m_specularColor);
-        m_baseUniform.setValue("shininess", m_shininess);
-        m_baseUniform.setValue("constant", m_constant);
-        m_baseUniform.setValue("linearAttenuation", m_linearAttenuation);
-        m_baseUniform.setValue("quadratic", m_quadratic);
-        m_baseUniform.setValue("cutOff", cos(m_cutOffAngle * 3.1415926535f / 180.0f));
-
         m_baseUniform.update();
 
         //init shadow uniform value
@@ -376,9 +345,7 @@ namespace MQEngine
         Mat4 mat;
         mat.rotateZ(deltaTime * 90);
         m_directionalLightPos = mat * m_directionalLightPos;
-        m_baseUniform.setValue("directionalLightPos", m_directionalLightPos);
         m_baseUniform.setValue("directionalLightDirection", (-m_directionalLightPos).normalize());
-        m_baseUniform.setValue("directionalLightType",m_directionalLightType);
         m_baseUniform.update();
         m_shadowUniform.setValue("directionalLightMvp",
         Mat4::Ortho(-25.0f,25.0f,
