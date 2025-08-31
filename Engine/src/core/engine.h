@@ -71,9 +71,9 @@ namespace MQEngine {
         FCT::RHI::RasterizationPipeline* m_pipeline;
         FCT::UniformBuffer* m_uniform;
         FCT::RHI::ConstBuffer* m_constBuffer;
-        FCT::Vec4 m_lightPos;
+        FCT::Vec4 m_directionalLightPos;
         FCT::AutoViewport* m_autoViewport;
-        int m_lightType = 1;
+        int m_directionalLightType = 1;
         FCT::Uniform m_shadowUniform;
         FCT::Uniform m_baseUniform;
         FCT::Layout* m_layout;

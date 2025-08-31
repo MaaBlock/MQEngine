@@ -5,6 +5,6 @@ ShaderOut main(ShaderIn sIn) {
     sOut.texCoord = sIn.texCoord;
     sOut.normal = sIn.normal;
     sOut.srcpos = sIn.position;
-    sOut.shadowPos = lightMvp * modelMatrix * sIn.position;
+    sOut.shadowPos = directionalLightMvp * modelMatrix * sIn.position;
     return sOut;
 }

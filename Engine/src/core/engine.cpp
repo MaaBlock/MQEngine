@@ -11,12 +11,12 @@ namespace FCT
     {
         return std::string(reinterpret_cast<const char*>(resource), size);
     }
-    constexpr UniformSlot LightUniformSlot {
-        "LightUniform",
-        UniformVar{UniformType::Vec4,"lightPos"},
+    constexpr UniformSlot DirectionalLightUniformSlot {
+        "DirectionalLightUniform",
+        UniformVar{UniformType::Vec4,"directionalLightPos"},
         UniformVar{UniformType::Vec4,"viewPos"},
-        UniformVar{UniformType::Vec4,"lightDirection"},
-        UniformVar{UniformType::Int,"lightType"},
+        UniformVar{UniformType::Vec4,"directionalLightDirection"},
+        UniformVar{UniformType::Int,"directionalLightType"},
         UniformVar{UniformType::Vec3,"ambientColor"},
         UniformVar{UniformType::Vec3,"diffuseColor"},
         UniformVar{UniformType::Vec3,"specularColor"},
@@ -29,7 +29,7 @@ namespace FCT
 
     UniformSlot ShadowUniformSlot = {
         "ShadowUniform",
-        UniformVar{UniformType::MVPMatrix,"lightMvp"},
+        UniformVar{UniformType::MVPMatrix,"directionalLightMvp"},
     };
 
 }
@@ -75,7 +75,7 @@ namespace MQEngine
             vertexLayout,
             pixelLayout,
             std::vector<FCT::UniformSlot>{
-                LightUniformSlot,
+                DirectionalLightUniformSlot,
                 CameraUniformSlot,
                 ShadowUniformSlot,
                 ModelUniformSlot,
@@ -141,7 +141,7 @@ namespace MQEngine
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
 
-        m_baseUniform = Uniform(m_ctx,LightUniformSlot);
+        m_baseUniform = Uniform(m_ctx,DirectionalLightUniformSlot);
         // m_layout->allocateUniform("LightUniform");
         //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
         m_shadowUniform = Uniform(m_ctx,ShadowUniformSlot);
@@ -328,7 +328,7 @@ namespace MQEngine
     void Engine::initUniformValue()
     {
         //init base uniform value
-        m_lightPos = Vec4(20,0,0,1);
+        m_directionalLightPos = Vec4(20,0,0,1);
 
         m_lightDistance = 40.0f;
         m_ambientColor[0] = m_ambientColor[1] = m_ambientColor[2] = 0.2f;
@@ -353,12 +353,12 @@ namespace MQEngine
         m_baseUniform.update();
 
         //init shadow uniform value
-        m_shadowUniform.setValue("lightMvp",
+        m_shadowUniform.setValue("directionalLightMvp",
             Mat4::Ortho(-25.0f,25.0f,
                 -25.0f, 25.0f,
-                1.0f, 25.0f) * Mat4::LookAt(m_lightPos.xyz(),
+                1.0f, 25.0f) * Mat4::LookAt(m_directionalLightPos.xyz(),
                 Vec3(0,0,0),
-                m_lightPos.xyz().cross(Vec3(0,0,-1))));
+                m_directionalLightPos.xyz().cross(Vec3(0,0,-1))));
         m_shadowUniform.update();
         
         //init model uniform values
@@ -375,17 +375,17 @@ namespace MQEngine
         lastFrameTime = currentTime;
         Mat4 mat;
         mat.rotateZ(deltaTime * 90);
-        m_lightPos = mat * m_lightPos;
-        m_baseUniform.setValue("lightPos", m_lightPos);
-        m_baseUniform.setValue("lightDirection", (-m_lightPos).normalize());
-        m_baseUniform.setValue("lightType",m_lightType);
+        m_directionalLightPos = mat * m_directionalLightPos;
+        m_baseUniform.setValue("directionalLightPos", m_directionalLightPos);
+        m_baseUniform.setValue("directionalLightDirection", (-m_directionalLightPos).normalize());
+        m_baseUniform.setValue("directionalLightType",m_directionalLightType);
         m_baseUniform.update();
-        m_shadowUniform.setValue("lightMvp",
+        m_shadowUniform.setValue("directionalLightMvp",
         Mat4::Ortho(-25.0f,25.0f,
             -25.0f, 25.0f,
-            1.0f, 50.0f) * Mat4::LookAt(m_lightPos.xyz(),
+            1.0f, 50.0f) * Mat4::LookAt(m_directionalLightPos.xyz(),
                 Vec3(0,0,0),
-                m_lightPos.xyz().cross(Vec3(0,0,-1))
+                m_directionalLightPos.xyz().cross(Vec3(0,0,-1))
                 //Vec3(0,1,0)
                 ));
         m_shadowUniform.update();
