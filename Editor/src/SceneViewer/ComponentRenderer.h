@@ -76,7 +76,7 @@ namespace MQEngine {
             
             ImGui::Spacing();
             if (ImGui::Button("删除组件##StaticMeshInstance")) {
-                g_editorGlobal.componentToDelete = "StaticMeshInstance";
+                g_editorGlobal.componentToDelete = entt::type_hash<StaticMeshInstance>::value();
             }
             
             ImGui::Unindent();
@@ -91,8 +91,7 @@ namespace MQEngine {
             
             ImGui::Spacing();
             if (ImGui::Button("删除组件##ScriptComponent")) {
-                // 设置删除标记，由EntityInspector处理
-                g_editorGlobal.componentToDelete = "ScriptComponent";
+                g_editorGlobal.componentToDelete = entt::type_hash<ScriptComponent>::value();
             }
             
             ImGui::Unindent();
