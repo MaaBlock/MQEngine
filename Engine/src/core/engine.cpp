@@ -61,9 +61,6 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
-        ComponentFilter testFilter;
-        testFilter.include_types.push_back(entt::type_id<StaticMeshInstance>());
-        testFilter.include_types.push_back(entt::type_id<NameTag>());
         
         m_techManager->addTech("ObjectPass", Tech(
             TechName{"BasicTech"},
@@ -80,7 +77,9 @@ namespace MQEngine
             std::vector<FCT::SamplerSlot>{
                 SamplerSlot{"shadowSampler"}
             },
-            testFilter
+            ComponentFilter{
+                {entt::type_id<StaticMeshInstance>()}
+            }
         ));
         m_techManager->addTech("ShadowMapPass", Tech(
             TechName{"ShadowTech"},
@@ -91,7 +90,9 @@ namespace MQEngine
             std::vector<FCT::UniformSlot>{
                 ShadowUniformSlot,
                 ModelUniformSlot
-            }
+            },
+            ComponentFilter().
+                include<StaticMeshInstance>()
         ));
     }
 
