@@ -13,6 +13,7 @@ namespace MQEngine {
         MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         void update();
         void updateUniforms();
+        void bindModelMatrix(entt::registry* registry, entt::entity entity, FCT::Layout* layout);
         
     private:
         void processEntity(entt::registry* registry, entt::entity entity);
@@ -22,6 +23,7 @@ namespace MQEngine {
         
         FCT::Context* m_ctx;
         DataManager* m_dataManager;
+        FCT::Uniform m_defaultModelUniform;  // 默认模型矩阵uniform，用于没有矩阵cache的情况
     };
 }
 

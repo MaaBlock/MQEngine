@@ -145,7 +145,6 @@ namespace MQEngine
         // m_layout->allocateUniform("LightUniform");
         //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
         m_shadowUniform = Uniform(m_ctx,ShadowUniformSlot);
-        m_meshModelUniform = Uniform(m_ctx,ModelUniformSlot);
         m_floorModelUniform = Uniform(m_ctx,ModelUniformSlot);
     }
 
@@ -199,67 +198,35 @@ namespace MQEngine
                 {
                     const auto& filter = tech->getComponentFilter();
 
-                    if (filter.include_types.empty() && filter.exclude_types.empty())
+                    entt::runtime_view runtime_view{};
+
+                    for (const auto& type_info : filter.include_types)
                     {
-                        auto view = registry->view<StaticMeshInstance>();
-                        for (auto entity : view)
+                        auto* storage = registry->storage(type_info.hash());
+                        if (storage)
                         {
-                            const auto& meshInstance = view.get<StaticMeshInstance>(entity);
-                            if (meshInstance.mesh != nullptr)
-                            {
-                                const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
-                                if (cacheMatrix && cacheMatrix->init)
-                                {
-                                    layout->bindUniform(cacheMatrix->uniform);
-                                }
-                                else
-                                {
-                                    layout->bindUniform(m_meshModelUniform);
-                                }
-                                layout->drawMesh(cmdBuf, meshInstance.mesh);
-                            }
+                            runtime_view.iterate(*storage);
                         }
                     }
-                    else
+
+                    for (const auto& type_info : filter.exclude_types)
                     {
-                        entt::runtime_view runtime_view{};
-
-                        for (const auto& type_info : filter.include_types)
+                        auto* storage = registry->storage(type_info.hash());
+                        if (storage)
                         {
-                            auto* storage = registry->storage(type_info.hash());
-                            if (storage)
-                            {
-                                runtime_view.iterate(*storage);
-                            }
+                            runtime_view.exclude(*storage);
                         }
+                    }
 
-                        for (const auto& type_info : filter.exclude_types)
+                    for (auto entity : runtime_view)
+                    {
+                        if (registry->all_of<StaticMeshInstance>(entity))
                         {
-                            auto* storage = registry->storage(type_info.hash());
-                            if (storage)
+                            const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
+                            if (meshInstance.mesh != nullptr)
                             {
-                                runtime_view.exclude(*storage);
-                            }
-                        }
-                        
-                        for (auto entity : runtime_view)
-                        {
-                            if (registry->all_of<StaticMeshInstance>(entity))
-                            {
-                                const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
-                                if (meshInstance.mesh != nullptr)
-                                {
-                                    const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
-                                    if (cacheMatrix && cacheMatrix->uniform)
-                                    {
-                                        layout->bindUniform(cacheMatrix->uniform);
-                                    }
-                                    else
-                                    {
-                                        layout->bindUniform(m_meshModelUniform);
-                                    }
-                                    layout->drawMesh(cmdBuf, meshInstance.mesh);
-                                }
+                                m_matrixCacheSystem->bindModelMatrix(registry, entity, layout);
+                                layout->drawMesh(cmdBuf, meshInstance.mesh);
                             }
                         }
                     }
@@ -305,67 +272,35 @@ namespace MQEngine
                 {
                     const auto& filter = tech->getComponentFilter();
 
-                    if (filter.include_types.empty() && filter.exclude_types.empty())
+                    entt::runtime_view runtime_view{};
+
+                    for (const auto& type_info : filter.include_types)
                     {
-                        auto view = registry->view<StaticMeshInstance>();
-                        for (auto entity : view)
+                        auto* storage = registry->storage(type_info.hash());
+                        if (storage)
                         {
-                            const auto& meshInstance = view.get<StaticMeshInstance>(entity);
-                            if (meshInstance.mesh != nullptr)
-                            {
-                                const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
-                                if (cacheMatrix && cacheMatrix->uniform)
-                                {
-                                    layout->bindUniform(cacheMatrix->uniform);
-                                }
-                                else
-                                {
-                                    layout->bindUniform(m_meshModelUniform);
-                                }
-                                layout->drawMesh(cmdBuf, meshInstance.mesh);
-                            }
+                            runtime_view.iterate(*storage);
                         }
                     }
-                    else
+
+                    for (const auto& type_info : filter.exclude_types)
                     {
-                        entt::runtime_view runtime_view{};
-
-                        for (const auto& type_info : filter.include_types)
+                        auto* storage = registry->storage(type_info.hash());
+                        if (storage)
                         {
-                            auto* storage = registry->storage(type_info.hash());
-                            if (storage)
-                            {
-                                runtime_view.iterate(*storage);
-                            }
+                            runtime_view.exclude(*storage);
                         }
+                    }
 
-                        for (const auto& type_info : filter.exclude_types)
+                    for (auto entity : runtime_view)
+                    {
+                        if (registry->all_of<StaticMeshInstance>(entity))
                         {
-                            auto* storage = registry->storage(type_info.hash());
-                            if (storage)
+                            const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
+                            if (meshInstance.mesh != nullptr)
                             {
-                                runtime_view.exclude(*storage);
-                            }
-                        }
-                        
-                        for (auto entity : runtime_view)
-                        {
-                            if (registry->all_of<StaticMeshInstance>(entity))
-                            {
-                                const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
-                                if (meshInstance.mesh != nullptr)
-                                {
-                                    const CacheModelMatrix* cacheMatrix = registry->try_get<CacheModelMatrix>(entity);
-                                    if (cacheMatrix && cacheMatrix->uniform)
-                                    {
-                                        layout->bindUniform(cacheMatrix->uniform);
-                                    }
-                                    else
-                                    {
-                                        layout->bindUniform(m_meshModelUniform);
-                                    }
-                                    layout->drawMesh(cmdBuf, meshInstance.mesh);
-                                }
+                                m_matrixCacheSystem->bindModelMatrix(registry, entity, layout);
+                                layout->drawMesh(cmdBuf, meshInstance.mesh);
                             }
                         }
                     }
@@ -427,8 +362,6 @@ namespace MQEngine
         m_shadowUniform.update();
         
         //init model uniform values
-        m_meshModelUniform.setValue("modelMatrix", FCT::Mat4());
-        m_meshModelUniform.update();
         m_floorModelUniform.setValue("modelMatrix", FCT::Mat4());
         m_floorModelUniform.update();
     }

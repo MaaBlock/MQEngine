@@ -93,7 +93,6 @@ namespace MQEngine {
         FCT::UniquePtr<ScriptSystem> m_scriptSystem;
         FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
         FCT::UniquePtr<TechManager> m_techManager;
-        FCT::Uniform m_meshModelUniform;
         FCT::Uniform m_floorModelUniform;
         
         // OutputInfo for passes
