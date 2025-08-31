@@ -150,6 +150,10 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
                         addStaticMeshComponent(entity, modelUuid, meshName, true);
                     }
                 }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
+                    std::string functionName = static_cast<const char*>(payload->Data);
+                    addScriptComponent(entity, functionName, true);
+                }
                 ImGui::EndDragDropTarget();
             }
         }
@@ -210,6 +214,10 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
 
                         addStaticMeshComponent(entity, modelUuid, meshName, false, trunkName);
                     }
+                }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
+                    std::string functionName = static_cast<const char*>(payload->Data);
+                    addScriptComponent(entity, functionName, false, trunkName);
                 }
                 ImGui::EndDragDropTarget();
             }
@@ -330,6 +338,29 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
         }
         
         FCT::fout << "为实体添加了StaticMeshInstance组件: modelUuid=" << modelUuid << ", meshName=" << meshName << std::endl;
+    }
+    
+    void SceneEntityViewer::addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName) {
+        Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+        
+        entt::registry* registry;
+        if (isGlobal) {
+            registry = &scene->getRegistry();
+        } else {
+            SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
+            if (!trunk) return;
+            registry = &trunk->getRegistry();
+        }
+
+        if (registry->all_of<ScriptComponent>(entity)) {
+            auto& scriptComponent = registry->get<ScriptComponent>(entity);
+            scriptComponent.functionName = functionName;
+        } else {
+            registry->emplace<ScriptComponent>(entity, functionName);
+        }
+        
+        FCT::fout << "为实体添加了ScriptComponent组件: functionName=" << functionName << std::endl;
     }
 
 } // MQEngine
