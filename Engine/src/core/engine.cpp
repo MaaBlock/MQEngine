@@ -63,6 +63,7 @@ namespace MQEngine
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_meshRenderSystem = makeUnique<MeshRenderSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
+        m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         m_techManager = makeUnique<TechManager>();
     }
@@ -417,6 +418,7 @@ namespace MQEngine
                 ));
         m_shadowUniform.update();
         m_application->logicTick();
+        m_matrixCacheSystem->update();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
         m_scriptSystem->update();

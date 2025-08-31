@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/24.
 //
 
@@ -29,6 +29,17 @@ namespace MQEngine {
         float fov = 45.0f;
         float nearPlane = 0.1f;
         float farPlane = 1000.0f;
+    };
+
+    struct ENGINE_API CacheRotationMatrix {
+        FCT::Mat4 rotationMatrix;
+    };
+
+    struct ENGINE_API CacheModelMatrix {
+        FCT::Uniform uniform;
+        
+        CacheModelMatrix() = default;
+        CacheModelMatrix(FCT::Context* ctx) : uniform(ctx, FCT::PredefinedUniforms::MVP) {}
     };
 
 } // MQEngine

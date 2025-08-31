@@ -61,6 +61,60 @@ namespace MQEngine {
         }
 
         ImGui::Text("组件列表:");
+
+        if (ImGui::Button("添加组件")) {
+            ImGui::OpenPopup("AddComponentPopup");
+        }
+
+        if (ImGui::BeginPopup("AddComponentPopup")) {
+            ImGui::Text("选择要添加的组件:");
+            ImGui::Separator();
+            
+            if (ImGui::MenuItem("Position Component")) {
+                if (!registry->all_of<PositionComponent>(selectedEntity.entity)) {
+                    registry->emplace<PositionComponent>(selectedEntity.entity, FCT::Vec3{0.0f, 0.0f, 0.0f});
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Rotation Component")) {
+                if (!registry->all_of<RotationComponent>(selectedEntity.entity)) {
+                    registry->emplace<RotationComponent>(selectedEntity.entity, FCT::Vec3{0.0f, 0.0f, 0.0f});
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Scale Component")) {
+                if (!registry->all_of<ScaleComponent>(selectedEntity.entity)) {
+                    registry->emplace<ScaleComponent>(selectedEntity.entity, FCT::Vec3{1.0f, 1.0f, 1.0f});
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Camera Component")) {
+                if (!registry->all_of<CameraComponent>(selectedEntity.entity)) {
+                    registry->emplace<CameraComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Static Mesh Instance")) {
+                if (!registry->all_of<StaticMeshInstance>(selectedEntity.entity)) {
+                    registry->emplace<StaticMeshInstance>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Script Component")) {
+                if (!registry->all_of<ScriptComponent>(selectedEntity.entity)) {
+                    registry->emplace<ScriptComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            ImGui::EndPopup();
+        }
+        
         ImGui::BeginChild("ComponentList", ImVec2(0, 0), true);
         
         renderComponents(registry);
@@ -88,6 +142,8 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<RotationComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScaleComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CameraComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<CacheRotationMatrix>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<CacheModelMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
 
