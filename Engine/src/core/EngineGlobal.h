@@ -1,10 +1,11 @@
-﻿#ifndef ENGINEGLOBAL_H
+#ifndef ENGINEGLOBAL_H
 #define ENGINEGLOBAL_H
 #include "../Thirdparty/thirdparty.h"
 #include "../EnginePCH.h"
 #include "../event/sceneEvent.h"
 namespace MQEngine
 {
+    class DataManager;
     using Context = FCT::Context;
     struct ENGINE_API EngineGlobal
     {
