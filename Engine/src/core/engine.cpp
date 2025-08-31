@@ -42,6 +42,11 @@ namespace MQEngine
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
+        m_nodeEnv = new NodeEnvironment;
+        m_nodeEnv->addModulePath("./node_modules");
+        m_nodeEnv->setup();
+        m_dataManager = new DataManager();
+        g_engineGlobal.dataManager = m_dataManager;
         m_wnd = m_rt.createWindow(800,600,m_application->renderConfig().windowTitle);
         m_ctx = m_rt.createContext();
         m_ctx->create();
@@ -428,8 +433,6 @@ namespace MQEngine
 
     void Engine::init(Application* application)
     {
-        m_dataManager = new DataManager();
-        g_engineGlobal.dataManager = m_dataManager;
         m_application = application;
         settingUpEnv();
         settingUpPass();
@@ -450,9 +453,12 @@ namespace MQEngine
 
     void Engine::term()
     {
+        m_nodeEnv->stop();
+        delete m_nodeEnv;
         m_ctx->release();
         m_wnd->release();
         m_systemManager.term();
+        NodeCommon::Term();
     }
 
     Engine& Engine::getInstance() {
