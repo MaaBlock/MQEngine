@@ -91,23 +91,17 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
 
-        if (!g_editorGlobal.componentToDelete.empty()) {
-            if (g_editorGlobal.componentToDelete == "ScriptComponent") {
-                if (registry->all_of<ScriptComponent>(selectedEntity.entity)) {
-                    registry->remove<ScriptComponent>(selectedEntity.entity);
-                    FCT::fout << "已删除ScriptComponent组件" << std::endl;
-                }
-            } else if (g_editorGlobal.componentToDelete == "StaticMeshInstance") {
-                if (registry->all_of<StaticMeshInstance>(selectedEntity.entity)) {
-                    registry->remove<StaticMeshInstance>(selectedEntity.entity);
-                    FCT::fout << "已删除StaticMeshInstance组件" << std::endl;
-                }
+        if (g_editorGlobal.componentToDelete != 0) {
+            auto storage = registry->storage(g_editorGlobal.componentToDelete);
+            if (storage && storage->contains(selectedEntity.entity)) {
+                storage->remove(selectedEntity.entity);
             }
-            g_editorGlobal.componentToDelete.clear();
+            g_editorGlobal.componentToDelete = 0;
         }
         
         if (!hasComponents) {
             ImGui::Text("该实体没有组件");
         }
     }
+
 } // MQEngine
