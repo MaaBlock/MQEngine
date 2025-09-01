@@ -7,12 +7,18 @@ namespace MQEngine
 {
     class DataManager;
     class ScriptSystem;
+    class CameraSystem;
+    class LightingSystem;
+    class MatrixCacheSystem;
     using Context = FCT::Context;
     struct ENGINE_API EngineGlobal
     {
         Context* ctx;
         DataManager* dataManager;
         ScriptSystem* scriptSystem;
+        CameraSystem* cameraSystem;
+        LightingSystem* lightingSystem;
+        MatrixCacheSystem* matrixCacheSystem;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
         EngineGlobal() = default;
         EngineGlobal(const EngineGlobal&) = delete;

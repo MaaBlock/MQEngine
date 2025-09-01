@@ -6,11 +6,20 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <set>
 #include "../Thirdparty/thirdparty.h"
 
 namespace MQEngine
 {
     class DataManager;
+    
+    /**
+     * @brief Tech绑定回调函数类型
+     * @param layout 当前的Layout对象
+     * @param techName Tech名称
+     * @param passName Pass名称
+     */
+    using TechBindCallback = std::function<void(FCT::Layout* layout, const std::string& techName, const std::string& passName)>;
 
     /**
      * @brief 定义Tech的名称
@@ -68,6 +77,8 @@ namespace MQEngine
          */
         template<typename... Args>
         Tech(Args... args);
+        
+
         /** @} */
 
         /** @name 访问器
@@ -93,12 +104,21 @@ namespace MQEngine
         void setPassName(const std::string& passName) { m_passName = passName; }
         void setVertexShaderRef(const ShaderRef& ref) { m_vs_ref = ref; }
         void setPixelShaderRef(const ShaderRef& ref) { m_ps_ref = ref; }
+        void setBindCallback(const TechBindCallback& callback) { m_bindCallback = callback; }
+        /** @} */
+        
+        /** @name 回调执行
+         *  @{
+         */
+        void executeBindCallback(FCT::Layout* layout) const {
+            if (m_bindCallback) {
+                m_bindCallback(layout, m_name, m_passName);
+            }
+        }
         /** @} */
 
     private:
         // --- 构造函数参数处理 ---
-        template<typename... Args>
-        void processArgs(Args... args);
         void processArgs() {} // 终止递归
         
         template<typename... Args>
@@ -139,6 +159,9 @@ namespace MQEngine
         
         template<typename... Args>
         void processArgs(const ComponentFilter& filter, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const TechBindCallback& callback, Args... args);
 
         // --- 成员变量 ---
         std::string m_name;
@@ -153,6 +176,7 @@ namespace MQEngine
         ShaderRef m_ps_ref;
         std::string m_passName;
         ComponentFilter m_componentFilter;
+        TechBindCallback m_bindCallback;  // Tech绑定回调函数
     };
 
     class TechManager
@@ -165,6 +189,14 @@ namespace MQEngine
         const std::vector<Tech*>& getTechsForPass(const std::string& passName);
 
         FCT::Layout* getLayoutForTech(const std::string& techName);
+        
+        /**
+         * @brief 为指定Pass订阅渲染事件和PassInfo更新
+         * @param passName Pass名称
+         */
+        void subscribeToPass(const std::string& passName);
+        
+
 
     private:
         struct LayoutKey
@@ -188,6 +220,8 @@ namespace MQEngine
         std::map<std::string, std::vector<Tech*>> m_passTechs;
         std::map<LayoutKey, std::unique_ptr<FCT::Layout>> m_layouts;
         std::map<std::string, FCT::Layout*> m_techToLayoutMap;
+        std::set<std::string> m_subscribedPasses;  // 跟踪已订阅的Pass
+        std::map<std::string, FCT::OutputInfo> m_passOutputInfos;  // 存储各Pass的输出信息
         DataManager* m_dataManager;
     };
 }
