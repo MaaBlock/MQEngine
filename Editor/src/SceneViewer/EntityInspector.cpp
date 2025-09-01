@@ -154,6 +154,7 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DirectionalLightComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<DiffuseTextureComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);

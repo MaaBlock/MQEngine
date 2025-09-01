@@ -339,6 +339,23 @@ namespace MQEngine {
             ImGui::Unindent();
         }
     }
+
+    template<>
+    inline void renderComponent<DiffuseTextureComponent>(const DiffuseTextureComponent* component) {
+        if (ImGui::CollapsingHeader("Diffuse Texture", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
+            ImGui::Text("纹理路径: %s", component->texturePath.empty() ? "未设置" : component->texturePath.c_str());
+            ImGui::Text("纹理状态: %s", component->texture ? "已加载" : "未加载");
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##DiffuseTextureComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<DiffuseTextureComponent>::value();
+            }
+            
+            ImGui::Unindent();
+        }
+    }
     
 } // MQEngine
 

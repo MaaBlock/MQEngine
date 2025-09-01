@@ -183,15 +183,8 @@ namespace MQEngine
                         }
                     }
 
-                    int i = 0;
                     for (auto entity : runtime_view)
                     {
-                        if (filter.include_types.size() == 2)
-                        {
-                            fout << "DiffuseTech" << std::endl;
-                            fout << i << std::endl;
-                            i++;
-                        }
                         tech->executeEntityOperationCallback(*registry, entity, layout, env.cmdBuf);
                     }
                 }
