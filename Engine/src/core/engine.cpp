@@ -121,7 +121,10 @@ namespace MQEngine
                  TextureSlot{"diffuseTexture"}
              },
              ComponentFilter{
-                 {entt::type_id<StaticMeshInstance>(), entt::type_id<DiffuseTextureComponent>()}
+                 {
+                     entt::type_id<DiffuseTextureComponent>(),
+                     entt::type_id<StaticMeshInstance>()
+                 }
              },
              objectPassCallback,
              universalEntityCallback
