@@ -221,6 +221,124 @@ namespace MQEngine {
             ImGui::Unindent();
         }
     }
+
+    template<>
+    inline void renderComponent<DirectionalLightComponent>(const DirectionalLightComponent* component) {
+        if (ImGui::CollapsingHeader("Directional Light", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+
+            static float direction[3] = {component->direction.x, component->direction.y, component->direction.z};
+            direction[0] = component->direction.x;
+            direction[1] = component->direction.y;
+            direction[2] = component->direction.z;
+            
+            if (ImGui::DragFloat3("Direction", direction, 0.01f, -1.0f, 1.0f)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<DirectionalLightComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->direction.x = direction[0];
+                            mutableComponent->direction.y = direction[1];
+                            mutableComponent->direction.z = direction[2];
+                        }
+                    }
+                }
+            }
+
+            static float color[3] = {component->color.x, component->color.y, component->color.z};
+            color[0] = component->color.x;
+            color[1] = component->color.y;
+            color[2] = component->color.z;
+            
+            if (ImGui::ColorEdit3("Color", color)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<DirectionalLightComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->color.x = color[0];
+                            mutableComponent->color.y = color[1];
+                            mutableComponent->color.z = color[2];
+                        }
+                    }
+                }
+            }
+
+            static float intensity = component->intensity;
+            intensity = component->intensity;
+            
+            if (ImGui::SliderFloat("Intensity", &intensity, 0.0f, 5.0f)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<DirectionalLightComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->intensity = intensity;
+                        }
+                    }
+                }
+            }
+
+            static bool enabled = component->enabled;
+            enabled = component->enabled;
+            
+            if (ImGui::Checkbox("Enabled", &enabled)) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry;
+                    if (selectedEntity.isGlobal) {
+                        registry = &selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (!trunk) return;
+                        registry = &trunk->getRegistry();
+                    }
+                    
+                    if (registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<DirectionalLightComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->enabled = enabled;
+                        }
+                    }
+                }
+            }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##DirectionalLightComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<DirectionalLightComponent>::value();
+            }
+            
+            ImGui::Unindent();
+        }
+    }
     
 } // MQEngine
 

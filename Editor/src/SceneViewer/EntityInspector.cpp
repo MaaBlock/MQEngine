@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/25.
 //
 
@@ -112,6 +112,13 @@ namespace MQEngine {
                 ImGui::CloseCurrentPopup();
             }
             
+            if (ImGui::MenuItem("Directional Light Component")) {
+                if (!registry->all_of<DirectionalLightComponent>(selectedEntity.entity)) {
+                    registry->emplace<DirectionalLightComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
             ImGui::EndPopup();
         }
         
@@ -146,6 +153,7 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<CacheModelMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<DirectionalLightComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);

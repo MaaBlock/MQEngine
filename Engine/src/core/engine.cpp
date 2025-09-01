@@ -11,10 +11,7 @@ namespace FCT
     {
         return std::string(reinterpret_cast<const char*>(resource), size);
     }
-    UniformSlot ShadowUniformSlot = {
-        "ShadowUniform",
-        UniformVar{UniformType::MVPMatrix,"directionalLightMvp"},
-    };
+
 
 }
 namespace MQEngine
@@ -45,6 +42,7 @@ namespace MQEngine
         m_meshRenderSystem = makeUnique<MeshRenderSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
+        m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         m_techManager = makeUnique<TechManager>();
     }
@@ -126,10 +124,7 @@ namespace MQEngine
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
 
-        m_baseUniform = Uniform(m_ctx,DirectionalLightUniformSlot);
-        // m_layout->allocateUniform("LightUniform");
-        //m_shadowUniform = m_layout->allocateUniform("ShadowUniform");
-        m_shadowUniform = Uniform(m_ctx,ShadowUniformSlot);
+        // Shadow and lighting uniforms are now handled by LightingSystem
         m_floorModelUniform = Uniform(m_ctx,ModelUniformSlot);
     }
 
@@ -175,7 +170,7 @@ namespace MQEngine
             {
                 auto layout = m_techManager->getLayoutForTech(tech->getName());
                 layout->begin();
-                layout->bindUniform(m_shadowUniform);
+                m_lightingSystem->bind(layout);
                 layout->bindVertexShader(tech->getVertexShaderRef());
 
                 const auto& registries = m_dataManager->currentRegistries();
@@ -247,8 +242,7 @@ namespace MQEngine
                 layout->begin();
                 layout->bindSampler("shadowSampler",m_shadowSampler);
                 m_cameraSystem->bind(layout);
-                layout->bindUniform(m_baseUniform);
-                layout->bindUniform(m_shadowUniform);
+                m_lightingSystem->bind(layout);
                 layout->bindVertexShader(tech->getVertexShaderRef());
                 layout->bindPixelShader(tech->getPixelShaderRef());
 
@@ -312,20 +306,6 @@ namespace MQEngine
 
     void Engine::initUniformValue()
     {
-        //init base uniform value
-        m_directionalLightPos = Vec4(20,0,0,1);
-
-        m_baseUniform.update();
-
-        //init shadow uniform value
-        m_shadowUniform.setValue("directionalLightMvp",
-            Mat4::Ortho(-25.0f,25.0f,
-                -25.0f, 25.0f,
-                1.0f, 25.0f) * Mat4::LookAt(m_directionalLightPos.xyz(),
-                Vec3(0,0,0),
-                m_directionalLightPos.xyz().cross(Vec3(0,0,-1))));
-        m_shadowUniform.update();
-        
         //init model uniform values
         m_floorModelUniform.setValue("modelMatrix", FCT::Mat4());
         m_floorModelUniform.update();
@@ -338,25 +318,11 @@ namespace MQEngine
         auto currentTime = std::chrono::high_resolution_clock::now();
         float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - lastFrameTime).count() / 1000000.0f;
         lastFrameTime = currentTime;
-        Mat4 mat;
-        mat.rotateZ(deltaTime * 90);
-        m_directionalLightPos = mat * m_directionalLightPos;
-        m_baseUniform.setValue("directionalLightDirection", (-m_directionalLightPos).normalize());
-        m_baseUniform.setValue("directionalLightEnable", true);
-        m_baseUniform.update();
-        m_shadowUniform.setValue("directionalLightMvp",
-        Mat4::Ortho(-25.0f,25.0f,
-            -25.0f, 25.0f,
-            1.0f, 50.0f) * Mat4::LookAt(m_directionalLightPos.xyz(),
-                Vec3(0,0,0),
-                m_directionalLightPos.xyz().cross(Vec3(0,0,-1))
-                //Vec3(0,1,0)
-                ));
-        m_shadowUniform.update();
         m_application->logicTick();
         m_matrixCacheSystem->update();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
+        m_lightingSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_scriptSystem->update();
         

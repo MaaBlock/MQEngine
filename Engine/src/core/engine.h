@@ -13,6 +13,7 @@
 #include "../system/MeshRenderSystem.h"
 #include "../system/ScriptSystem.h"
 #include "../system/MatrixCacheSystem.h"
+#include "../system/LightingSystem.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
 
@@ -21,16 +22,7 @@ namespace FCT
     class Layout;
 }
 
-constexpr FCT::UniformSlot DirectionalLightUniformSlot {
-    "DirectionalLightUniform",
-    FCT::UniformVar{FCT::UniformType::Vec4,"directionalLightDirection"},
-    FCT::UniformVar{FCT::UniformType::Bool,"directionalLightEnable"}
-};
-
-constexpr FCT::UniformSlot ViewPosUniformSlot {
-    "ViewPosUniform",
-    FCT::UniformVar{FCT::UniformType::Vec3,"viewPosition"}
-};
+#include "UniformSlots.h"
 
 namespace MQEngine {
     class EngineScope;
@@ -79,10 +71,8 @@ namespace MQEngine {
         FCT::RHI::RasterizationPipeline* m_pipeline;
         FCT::UniformBuffer* m_uniform;
         FCT::RHI::ConstBuffer* m_constBuffer;
-        FCT::Vec4 m_directionalLightPos;
         FCT::AutoViewport* m_autoViewport;
-        FCT::Uniform m_shadowUniform;
-        FCT::Uniform m_baseUniform;
+
         FCT::Layout* m_layout;
         FCT::Layout* m_shadowLayout;
         DataManager* m_dataManager;
@@ -90,6 +80,7 @@ namespace MQEngine {
         FCT::UniquePtr<MeshRenderSystem> m_meshRenderSystem;
         FCT::UniquePtr<ScriptSystem> m_scriptSystem;
         FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
+        FCT::UniquePtr<LightingSystem> m_lightingSystem;
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::Uniform m_floorModelUniform;
         
