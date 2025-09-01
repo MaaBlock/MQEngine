@@ -37,10 +37,17 @@ namespace MQEngine {
          */
         void update();
         
+        /**
+         * @brief 设置逻辑帧时间间隔
+         * @param deltaTime 帧时间间隔（秒）
+         */
+        void setLogicDeltaTime(float deltaTime);
+        
     private:
         DataManager* m_dataManager;
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;
         std::unique_ptr<ComponentReflection> m_componentReflection;
+        float m_logicDeltaTime = 0.0f;
         
         /**
          * 从指定目录加载所有JavaScript文件

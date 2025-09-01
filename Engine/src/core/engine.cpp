@@ -1,4 +1,4 @@
-﻿#include "../engineapi.h"
+#include "../engineapi.h"
 #include "Tech.hpp"
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
@@ -360,6 +360,7 @@ namespace MQEngine
         m_matrixCacheSystem->update();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
+        m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_scriptSystem->update();
         
         m_ctx->flush();
