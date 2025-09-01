@@ -61,9 +61,9 @@ namespace MQEngine {
          * @param fieldName 字段名称（同时用于错误输出）
          * @return 转换后的ComponentValue
          */
-        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSObject& jsObject, const std::string& fieldName);
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSAny& jsAny, const std::string& fieldName);
         
-        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSObject& fieldValue);
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSAny& fieldValue);
         std::pair<entt::registry*, entt::entity> getEntityFromJS(FCT::NodeEnvironment& env);
         v8::Local<v8::Value> convertComponentValueToJS(const ComponentValue& value);
         
