@@ -14,6 +14,7 @@
 #include "../system/ScriptSystem.h"
 #include "../system/MatrixCacheSystem.h"
 #include "../system/LightingSystem.h"
+#include "../system/TextureRenderSystem.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
 
@@ -83,6 +84,7 @@ namespace MQEngine {
         FCT::UniquePtr<ScriptSystem> m_scriptSystem;
         FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
         FCT::UniquePtr<LightingSystem> m_lightingSystem;
+        FCT::UniquePtr<TextureRenderSystem> m_textureRenderSystem;
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::Uniform m_floorModelUniform;
         

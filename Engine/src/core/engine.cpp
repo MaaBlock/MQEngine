@@ -38,6 +38,7 @@ namespace MQEngine
         m_application->global.dataManager = m_dataManager;
         m_application->global.runtime = &m_rt;
         g_engineGlobal.ctx = m_ctx;
+        g_engineGlobal.rt = &m_rt;
         g_engineGlobal.dataManager = m_dataManager;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
@@ -45,10 +46,12 @@ namespace MQEngine
         m_scriptSystem = makeUnique<ScriptSystem>();
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
+        m_textureRenderSystem = makeUnique<TextureRenderSystem>(m_ctx,m_dataManager);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         g_engineGlobal.cameraSystem = m_cameraSystem.get();
         g_engineGlobal.lightingSystem = m_lightingSystem.get();
         g_engineGlobal.matrixCacheSystem = m_matrixCacheSystem.get();
+        g_engineGlobal.textureRenderSystem = m_textureRenderSystem.get();
         m_techManager = makeUnique<TechManager>();
     }
 
@@ -127,8 +130,23 @@ namespace MQEngine
                  }
              },
              objectPassCallback,
-             universalEntityCallback
-         ));
+             EntityOperationCallback(
+                 [](const EntityRenderContext& context)
+                 {
+                    if (context.registry.all_of<StaticMeshInstance>(context.entity))
+                    {
+                        const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
+                        const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
+                        if (diffuseTexture.texture)
+                            context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
+                        if (meshInstance.mesh)
+                        {
+                            g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                            context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                        }
+                    }
+                })
+                ));
         
         m_techManager->addTech("ShadowMapPass", Tech(
             TechName{"ShadowTech"},
@@ -246,6 +264,7 @@ namespace MQEngine
         m_matrixCacheSystem->update();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
+        m_textureRenderSystem->update();
         m_lightingSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_scriptSystem->update();

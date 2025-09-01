@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/25.
 //
 
@@ -154,6 +154,15 @@ void SceneEntityViewer::renderGloabaEntityList(Scene* scene)
                     std::string functionName = static_cast<const char*>(payload->Data);
                     addScriptComponent(entity, functionName, true);
                 }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_TEXTURE_FROM_MODEL")) {
+                    std::string dragData = static_cast<const char*>(payload->Data);
+                    size_t separatorPos = dragData.find('|');
+                    if (separatorPos != std::string::npos) {
+                        std::string modelUuid = dragData.substr(0, separatorPos);
+                        std::string texturePath = dragData.substr(separatorPos + 1);
+                        addDiffuseTextureComponent(entity, modelUuid, texturePath, true);
+                    }
+                }
                 ImGui::EndDragDropTarget();
             }
         }
@@ -218,6 +227,15 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
                     std::string functionName = static_cast<const char*>(payload->Data);
                     addScriptComponent(entity, functionName, false, trunkName);
+                }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_TEXTURE_FROM_MODEL")) {
+                    std::string dragData = static_cast<const char*>(payload->Data);
+                    size_t separatorPos = dragData.find('|');
+                    if (separatorPos != std::string::npos) {
+                        std::string modelUuid = dragData.substr(0, separatorPos);
+                        std::string texturePath = dragData.substr(separatorPos + 1);
+                        addDiffuseTextureComponent(entity, modelUuid, texturePath, false, trunkName);
+                    }
                 }
                 ImGui::EndDragDropTarget();
             }
@@ -361,6 +379,31 @@ void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkNam
         }
         
         FCT::fout << "为实体添加了ScriptComponent组件: functionName=" << functionName << std::endl;
+    }
+    
+    void SceneEntityViewer::addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+        
+        entt::registry* registry;
+        if (isGlobal) {
+            registry = &scene->getRegistry();
+        } else {
+            SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
+            if (!trunk) return;
+            registry = &trunk->getRegistry();
+        }
+
+        if (registry->all_of<DiffuseTextureComponent>(entity)) {
+            auto& diffuseComponent = registry->get<DiffuseTextureComponent>(entity);
+            diffuseComponent.modelUuid = modelUuid;
+            diffuseComponent.texturePath = texturePath;
+            diffuseComponent.texture = nullptr;
+        } else {
+            registry->emplace<DiffuseTextureComponent>(entity, modelUuid, texturePath);
+        }
+        
+        FCT::fout << "为实体添加了DiffuseTextureComponent组件: modelUuid=" << modelUuid << ", texturePath=" << texturePath << std::endl;
     }
 
 } // MQEngine

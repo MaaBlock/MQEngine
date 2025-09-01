@@ -10,15 +10,18 @@ namespace MQEngine
     class CameraSystem;
     class LightingSystem;
     class MatrixCacheSystem;
+    class TextureRenderSystem;
     using Context = FCT::Context;
     struct ENGINE_API EngineGlobal
     {
         Context* ctx;
+        FCT::Runtime* rt;
         DataManager* dataManager;
         ScriptSystem* scriptSystem;
         CameraSystem* cameraSystem;
         LightingSystem* lightingSystem;
         MatrixCacheSystem* matrixCacheSystem;
+        TextureRenderSystem* textureRenderSystem;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
         EngineGlobal() = default;
         EngineGlobal(const EngineGlobal&) = delete;

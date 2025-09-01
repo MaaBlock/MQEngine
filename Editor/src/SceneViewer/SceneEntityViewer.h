@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/25.
 //
 
@@ -32,6 +32,7 @@ namespace MQEngine {
         void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
         void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "");
+        void addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
     };
 
 } // MQEngine
