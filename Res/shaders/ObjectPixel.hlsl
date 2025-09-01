@@ -31,14 +31,31 @@ float calculateShadow(float4 shadowPos, float3 normal, float3 directionalLightDi
 
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
-    // 只支持方向光，移除其他光源类型
-    float4 directionalLightDir = -directionalLightDirection;
-    float attenuation = 1.0;
-    // 简化的方向光照计算
-    float3 diff = max(dot(sIn.normal.xyz, directionalLightDir.xyz), 0.0) * float3(0.8, 0.8, 0.8);
-    float3 ambi = float3(0.2, 0.2, 0.2);
-    float shadow = calculateShadow(directionalLightMvp * sIn.srcpos, sIn.normal.xyz, directionalLightDir.xyz);
-    float3 finalColor = sIn.color.xyz * (ambi + shadow * diff * attenuation);
+
+    float3 ambient = float3(0.2, 0.2, 0.2);
+    float3 finalColor = sIn.color.xyz * ambient;
+
+    if (directionalLightEnable) {
+        float4 lightDir = -directionalLightDirection;
+        float3 normal = normalize(sIn.normal.xyz);
+        float3 lightDirection = normalize(lightDir.xyz);
+        
+        float3 viewDir = normalize(viewPosition - sIn.srcpos.xyz);
+
+        float NdotL = max(dot(normal, lightDirection), 0.0);
+        float3 diffuse = NdotL * float3(0.8, 0.8, 0.8);
+
+        float3 halfwayDir = normalize(lightDirection + viewDir);
+        float NdotH = max(dot(normal, halfwayDir), 0.0);
+        float shininess = 32.0;
+        float spec = pow(NdotH, shininess);
+        float3 specular = spec * float3(0.3, 0.3, 0.3);
+
+        float shadow = calculateShadow(directionalLightMvp * sIn.srcpos, sIn.normal.xyz, lightDirection);
+        
+        finalColor = sIn.color.xyz * (ambient + shadow * (diffuse + specular));
+    }
+    
     sOut.target0 = float4(finalColor, 1.0);
     float3 projCoords = sIn.shadowPos.xyz / sIn.shadowPos.w;
 
