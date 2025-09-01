@@ -18,6 +18,7 @@
 #include "core/entry.h"
 #include "core/systemmanager.h"
 #include "core/enginescope.h"
+#include "core/TextureUtils.h"
 #include "data/DataManager.h"
 #include "system/ScriptSystem.h"
 #endif //HEADERS_H
