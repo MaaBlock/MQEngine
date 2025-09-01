@@ -190,32 +190,28 @@ namespace MQEngine {
         }
     }
     
-    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSObject& jsObject, const std::string& fieldName) {
+    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSAny& jsAny, const std::string& fieldName) {
         ComponentValue componentValue;
         
         try {
             if (fieldType == "int") {
-                v8::Local<v8::Value> jsValue = jsObject.getLocalObject().As<v8::Value>();
-                int intValue = FCT::convertFromJS<int>(*m_nodeEnv, jsValue);
+                int intValue = jsAny.to<int>();
                 componentValue = intValue;
             } else if (fieldType == "float") {
-                v8::Local<v8::Value> jsValue = jsObject.getLocalObject().As<v8::Value>();
-                float floatValue = FCT::convertFromJS<float>(*m_nodeEnv, jsValue);
+                float floatValue = jsAny.to<float>();
                 componentValue = floatValue;
             } else if (fieldType == "double") {
-                v8::Local<v8::Value> jsValue = jsObject.getLocalObject().As<v8::Value>();
-                double doubleValue = FCT::convertFromJS<double>(*m_nodeEnv, jsValue);
+                double doubleValue = jsAny.to<double>();
                 componentValue = doubleValue;
             } else if (fieldType == "bool") {
-                v8::Local<v8::Value> jsValue = jsObject.getLocalObject().As<v8::Value>();
-                bool boolValue = FCT::convertFromJS<bool>(*m_nodeEnv, jsValue);
+                bool boolValue = jsAny.to<bool>();
                 componentValue = boolValue;
             } else if (fieldType == "std::string" || fieldType == "string") {
-                v8::Local<v8::Value> jsValue = jsObject.getLocalObject().As<v8::Value>();
-                std::string stringValue = FCT::convertFromJS<std::string>(*m_nodeEnv, jsValue);
+                std::string stringValue = jsAny.to<std::string>();
                 componentValue = stringValue;
             } else if (fieldType == "Vec3") {
                 // 处理Vec3类型
+                FCT::JSObject jsObject = jsAny.to<FCT::JSObject>();
                 if (jsObject.hasProperty("x") && jsObject.hasProperty("y") && jsObject.hasProperty("z")) {
                     float x = jsObject.get<float>("x");
                     float y = jsObject.get<float>("y");
@@ -234,6 +230,12 @@ namespace MQEngine {
         }
         
         return componentValue;
+    }
+
+    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSAny& fieldValue) {
+        // 由于JSAny的拷贝构造函数被删除，我们需要通过const_cast来移除const限定符
+        FCT::JSAny& mutableFieldValue = const_cast<FCT::JSAny&>(fieldValue);
+        return convertJSObjectToComponentValue(fieldType, mutableFieldValue, "unknown");
     }
 
     std::pair<entt::registry*, entt::entity> ScriptSystem::getEntityFromJS(FCT::NodeEnvironment& env) {
@@ -350,7 +352,7 @@ namespace MQEngine {
                             std::string fieldType = m_componentReflection->getComponentFieldType(componentName, fieldName);
                             
                             try {
-                                FCT::JSObject fieldValue = componentObj.get<FCT::JSObject>(fieldName);
+                                FCT::JSAny fieldValue = componentObj.get<FCT::JSAny>(fieldName);
                                 ComponentValue componentValue = convertJSObjectToComponentValue(fieldType, fieldValue, fieldName);
                                 m_componentReflection->setComponentField(*targetRegistry, entity, componentName, fieldName, componentValue);
                             } catch (const std::exception& e) {
@@ -389,7 +391,7 @@ namespace MQEngine {
             return v8::Undefined(m_nodeEnv->isolate());
         };
         
-        entityInfo["setComponentField"] = [this](std::string componentName, std::string fieldName, FCT::JSObject fieldValue) -> bool {
+        entityInfo["setComponentField"] = [this](std::string componentName, std::string fieldName, FCT::JSAny fieldValue) -> bool {
             try {
                 FCT::JSObject globalObj = m_nodeEnv->global();
                 FCT::JSObject entityInfo = globalObj["entityInfo"];
