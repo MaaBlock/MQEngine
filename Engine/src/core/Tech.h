@@ -22,6 +22,24 @@ namespace MQEngine
     using TechBindCallback = std::function<void(FCT::Layout* layout, const std::string& techName, const std::string& passName)>;
 
     /**
+     * @brief 实体渲染上下文结构体
+     */
+    struct EntityRenderContext {
+        entt::registry& registry;
+        entt::entity entity;
+        FCT::Layout* layout;
+        FCT::RHI::CommandBuffer* cmdBuf;
+        const std::string& techName;
+        const std::string& passName;
+    };
+
+    /**
+     * @brief 实体操作回调函数类型
+     * @param context 渲染上下文
+     */
+    using EntityOperationCallback = std::function<void(const EntityRenderContext& context)>;
+
+    /**
      * @brief 定义Tech的名称
      */
     struct TechName
@@ -98,6 +116,17 @@ namespace MQEngine
         const ComponentFilter& getComponentFilter() const { return m_componentFilter; }
         /** @} */
 
+        /** @name 实体操作回调
+         *  @{
+         */
+        void executeEntityOperationCallback(entt::registry& registry, entt::entity entity, FCT::Layout* layout, FCT::RHI::CommandBuffer* cmdBuf) const {
+            if (m_entityOperationCallback) {
+                EntityRenderContext context{registry, entity, layout, cmdBuf, m_name, m_passName};
+                m_entityOperationCallback(context);
+            }
+        }
+        /** @} */
+
         /** @name 内部设置器（供TechManager使用）
          *  @{
          */
@@ -105,6 +134,7 @@ namespace MQEngine
         void setVertexShaderRef(const ShaderRef& ref) { m_vs_ref = ref; }
         void setPixelShaderRef(const ShaderRef& ref) { m_ps_ref = ref; }
         void setBindCallback(const TechBindCallback& callback) { m_bindCallback = callback; }
+        void setEntityOperationCallback(const EntityOperationCallback& callback) { m_entityOperationCallback = callback; }
         /** @} */
         
         /** @name 回调执行
@@ -162,6 +192,9 @@ namespace MQEngine
         
         template<typename... Args>
         void processArgs(const TechBindCallback& callback, Args... args);
+        
+        template<typename... Args>
+        void processArgs(const EntityOperationCallback& callback, Args... args);
 
         // --- 成员变量 ---
         std::string m_name;
@@ -177,6 +210,7 @@ namespace MQEngine
         std::string m_passName;
         ComponentFilter m_componentFilter;
         TechBindCallback m_bindCallback;  // Tech绑定回调函数
+        EntityOperationCallback m_entityOperationCallback;  // 实体操作回调函数
     };
 
     class TechManager

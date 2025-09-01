@@ -174,15 +174,7 @@ namespace MQEngine
 
                     for (auto entity : runtime_view)
                     {
-                        if (registry->all_of<StaticMeshInstance>(entity))
-                        {
-                            const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
-                            if (meshInstance.mesh != nullptr)
-                            {
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(registry, entity, layout);
-                                layout->drawMesh(cmdBuf, meshInstance.mesh);
-                            }
-                        }
+                        tech->executeEntityOperationCallback(*registry, entity, layout, env.cmdBuf);
                     }
                 }
 
