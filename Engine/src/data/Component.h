@@ -51,6 +51,33 @@ namespace MQEngine {
         }
     };
     BOOST_DESCRIBE_STRUCT(ScriptComponent, (), (functionName))
+
+    struct ENGINE_API DirectionalLightComponent
+    {
+        FCT::Vec3 direction = FCT::Vec3(0.0f, -1.0f, 0.0f);  // 光照方向
+        FCT::Vec3 color = FCT::Vec3(1.0f, 1.0f, 1.0f);       // 光照颜色
+        float intensity = 1.0f;                              // 光照强度
+        bool enabled = true;                                  // 是否启用
+        
+        DirectionalLightComponent() = default;
+        
+        DirectionalLightComponent(const FCT::Vec3& dir, const FCT::Vec3& col, float intens, bool enable = true)
+            : direction(dir), color(col), intensity(intens), enabled(enable)
+        {
+        }
+        
+        friend class boost::serialization::access;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & direction;
+            ar & color;
+            ar & intensity;
+            ar & enabled;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(DirectionalLightComponent, (), (direction, color, intensity, enabled))
 }
 
 #endif //COMPONENT_H

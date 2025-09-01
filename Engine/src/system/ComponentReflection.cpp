@@ -12,6 +12,7 @@ namespace MQEngine {
         registerComponent<NameTag>("NameTag");
         registerComponent<ScriptComponent>("ScriptComponent");
         registerComponent<StaticMeshInstance>("StaticMeshInstance");
+        registerComponent<DirectionalLightComponent>("DirectionalLightComponent");
     }
     
     const std::unordered_map<std::string, ComponentInfo>& ComponentReflection::getComponentInfos() const {
