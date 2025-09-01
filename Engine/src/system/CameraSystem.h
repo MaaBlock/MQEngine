@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/24.
 //
 
@@ -17,6 +17,7 @@ namespace MQEngine {
         FCT::Vec3 calculateForward(const RotationComponent& rotation);
         FCT::Context* m_ctx;
         FCT::Uniform m_cameraUniform;
+        FCT::Uniform m_viewPosUniform;
         DataManager* m_dataManager;
     };
 }

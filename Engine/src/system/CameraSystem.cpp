@@ -1,8 +1,9 @@
-﻿//
+//
 // Created by Administrator on 2025/8/24.
 //
 
 #include "./CameraSystem.h"
+#include "../core/engine.h"
 namespace MQEngine
 {
     CameraSystem::CameraSystem(FCT::Context* ctx, DataManager* dataManager)
@@ -10,6 +11,7 @@ namespace MQEngine
         m_ctx = ctx;
         m_dataManager = dataManager;
         m_cameraUniform = FCT::Uniform(m_ctx,CameraUniformSlot);
+        m_viewPosUniform = FCT::Uniform(m_ctx, ViewPosUniformSlot);
     }
 
     void CameraSystem::update()
@@ -35,6 +37,9 @@ namespace MQEngine
                     m_cameraUniform.setValue(FCT::UniformType::ViewMatrix,
                         calculateViewMatrix(position, rotation));
                     m_cameraUniform.update();
+                    
+                    m_viewPosUniform.setValue("viewPosition", position.position);
+                    m_viewPosUniform.update();
                 }
             }
         }
@@ -43,6 +48,7 @@ namespace MQEngine
     void CameraSystem::bind(FCT::Layout* layout)
     {
         layout->bindUniform(m_cameraUniform);
+        layout->bindUniform(m_viewPosUniform);
     }
 
     FCT::Vec3 CameraSystem::calculateForward(const RotationComponent& rotation)

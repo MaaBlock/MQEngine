@@ -11,11 +11,6 @@ namespace FCT
     {
         return std::string(reinterpret_cast<const char*>(resource), size);
     }
-    constexpr UniformSlot DirectionalLightUniformSlot {
-        "DirectionalLightUniform",
-        UniformVar{UniformType::Vec4,"directionalLightDirection"}
-    };
-
     UniformSlot ShadowUniformSlot = {
         "ShadowUniform",
         UniformVar{UniformType::MVPMatrix,"directionalLightMvp"},
@@ -66,6 +61,7 @@ namespace MQEngine
             std::vector<FCT::UniformSlot>{
                 DirectionalLightUniformSlot,
                 CameraUniformSlot,
+                ViewPosUniformSlot,
                 ShadowUniformSlot,
                 ModelUniformSlot,
             },
@@ -346,6 +342,7 @@ namespace MQEngine
         mat.rotateZ(deltaTime * 90);
         m_directionalLightPos = mat * m_directionalLightPos;
         m_baseUniform.setValue("directionalLightDirection", (-m_directionalLightPos).normalize());
+        m_baseUniform.setValue("directionalLightEnable", true);
         m_baseUniform.update();
         m_shadowUniform.setValue("directionalLightMvp",
         Mat4::Ortho(-25.0f,25.0f,

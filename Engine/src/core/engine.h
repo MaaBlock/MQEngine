@@ -21,8 +21,16 @@ namespace FCT
     class Layout;
 }
 
+constexpr FCT::UniformSlot DirectionalLightUniformSlot {
+    "DirectionalLightUniform",
+    FCT::UniformVar{FCT::UniformType::Vec4,"directionalLightDirection"},
+    FCT::UniformVar{FCT::UniformType::Bool,"directionalLightEnable"}
+};
 
-
+constexpr FCT::UniformSlot ViewPosUniformSlot {
+    "ViewPosUniform",
+    FCT::UniformVar{FCT::UniformType::Vec3,"viewPosition"}
+};
 
 namespace MQEngine {
     class EngineScope;
