@@ -6,6 +6,7 @@
 #define CAMERA_H
 #include "../EnginePCH.h"
 #include "../Thirdparty/thirdparty.h"
+#include <boost/describe.hpp>
 namespace MQEngine {
     constexpr FCT::UniformSlot CameraUniformSlot {
         "CameraUniform",
@@ -15,14 +16,17 @@ namespace MQEngine {
     struct ENGINE_API PositionComponent {
         FCT::Vec3 position;
     };
+    BOOST_DESCRIBE_STRUCT(PositionComponent, (), (position))
 
     struct ENGINE_API RotationComponent {
         FCT::Vec3 rotation;
     };
+    BOOST_DESCRIBE_STRUCT(RotationComponent, (), (rotation))
 
     struct ENGINE_API ScaleComponent {
         FCT::Vec3 scale = FCT::Vec3(1.0f, 1.0f, 1.0f);
     };
+    BOOST_DESCRIBE_STRUCT(ScaleComponent, (), (scale))
 
     struct ENGINE_API CameraComponent {
         bool active = true;
@@ -30,6 +34,7 @@ namespace MQEngine {
         float nearPlane = 0.1f;
         float farPlane = 1000.0f;
     };
+    BOOST_DESCRIBE_STRUCT(CameraComponent, (), (active, fov, nearPlane, farPlane))
 
     struct ENGINE_API CacheRotationMatrix {
         FCT::Mat4 rotationMatrix;

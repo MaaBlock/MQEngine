@@ -6,6 +6,7 @@
 #define COMPONENT_H
 #include "NameTag.h"
 #include "../thirdparty/thirdparty.h"
+#include <boost/describe.hpp>
 namespace MQEngine {
     struct StaticMeshInstance
     {
@@ -28,6 +29,7 @@ namespace MQEngine {
             ar & meshName;
         }
     };
+    BOOST_DESCRIBE_STRUCT(StaticMeshInstance, (), (modelUuid, meshName))
 
     struct ENGINE_API ScriptComponent
     {
@@ -48,6 +50,7 @@ namespace MQEngine {
             ar & functionName;
         }
     };
+    BOOST_DESCRIBE_STRUCT(ScriptComponent, (), (functionName))
 }
 
 #endif //COMPONENT_H
