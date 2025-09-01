@@ -8,6 +8,7 @@
 #include "../EnginePCH.h"
 #include "../thirdparty/thirdparty.h"
 #include "../core/EngineGlobal.h"
+#include "ComponentReflection.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -39,13 +40,32 @@ namespace MQEngine {
     private:
         DataManager* m_dataManager;
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;
+        std::unique_ptr<ComponentReflection> m_componentReflection;
         
         /**
-         * @brief 从指定目录加载所有JavaScript文件
+         * 从指定目录加载所有JavaScript文件
          * @param directory 目录路径
-         * @return JavaScript文件路径列表
+         * @return 文件路径列表
          */
         std::vector<std::string> loadJSFilesFromDirectory(const std::string& directory);
+
+        /**
+         * 注册实体成员函数到JavaScript环境
+         */
+        void registerEntityFunctions();
+        
+        /**
+         * @brief 通用类型转换函数：从JSObject转换为ComponentValue
+         * @param fieldType 字段类型
+         * @param jsObject JavaScript对象
+         * @param fieldName 字段名称（同时用于错误输出）
+         * @return 转换后的ComponentValue
+         */
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSObject& jsObject, const std::string& fieldName);
+        
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSObject& fieldValue);
+        std::pair<entt::registry*, entt::entity> getEntityFromJS(FCT::NodeEnvironment& env);
+        v8::Local<v8::Value> convertComponentValueToJS(const ComponentValue& value);
         
         /**
          * @brief 读取文件内容

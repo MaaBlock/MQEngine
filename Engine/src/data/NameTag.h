@@ -3,6 +3,7 @@
 #include "../EnginePCH.h"
 #include <string>
 #include <boost/serialization/access.hpp>
+#include <boost/describe.hpp>
 
 namespace MQEngine {
     struct ENGINE_API NameTag {
@@ -15,6 +16,7 @@ namespace MQEngine {
             ar & name;
         }
     };
+    BOOST_DESCRIBE_STRUCT(NameTag, (), (name))
 } // MQEngine
 
 #endif //NAMETAG_H
