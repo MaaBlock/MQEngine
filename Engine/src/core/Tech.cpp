@@ -157,14 +157,21 @@ namespace MQEngine
                     const auto& filter = tech->getComponentFilter();
 
                     entt::runtime_view runtime_view{};
-
+                    bool hasEmpty = false;
                     for (const auto& type_info : filter.include_types)
                     {
                         auto* storage = registry->storage(type_info.hash());
                         if (storage)
                         {
                             runtime_view.iterate(*storage);
+                        } else
+                        {
+                            hasEmpty = true;
                         }
+                    }
+                    if (hasEmpty)
+                    {
+                        continue;
                     }
 
                     for (const auto& type_info : filter.exclude_types)
@@ -176,11 +183,14 @@ namespace MQEngine
                         }
                     }
 
+                    int i = 0;
                     for (auto entity : runtime_view)
                     {
                         if (filter.include_types.size() == 2)
                         {
                             fout << "DiffuseTech" << std::endl;
+                            fout << i << std::endl;
+                            i++;
                         }
                         tech->executeEntityOperationCallback(*registry, entity, layout, env.cmdBuf);
                     }
