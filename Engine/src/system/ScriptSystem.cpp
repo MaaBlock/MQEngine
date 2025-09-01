@@ -39,8 +39,8 @@ namespace MQEngine {
             m_nodeEnv->excuteScript(R"(
                 globalThis.entityInfo = { registry_ptr: 0, entity_id: 0 };
                 globalThis.engine = {
-
-  }
+                    logicDealt: 0.0
+                };
             )");
 
             registerEntityFunctions();
@@ -144,6 +144,20 @@ namespace MQEngine {
         } catch (const std::exception& e) {
             std::cerr << "Error getting function names: " << e.what() << std::endl;
             return {};
+        }
+    }
+    
+    void ScriptSystem::setLogicDeltaTime(float deltaTime) {
+        m_logicDeltaTime = deltaTime;
+        
+        if (m_nodeEnv) {
+            try {
+                auto global = m_nodeEnv->global();
+                FCT::JSObject engine = global["engine"];
+                engine["logicDealt"] = deltaTime;
+            } catch (const std::exception& e) {
+                std::cerr << "Error updating logicDealt: " << e.what() << std::endl;
+            }
         }
     }
     
