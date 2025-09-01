@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/23.
 //
 
@@ -6,6 +6,7 @@
 #include "g_editorIconMesh.h"
 #include "g_editorIconMaterial.h"
 #include "g_editorIconTexture.h"
+#include "../thirdparty/thirdparty.h"
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
 namespace MQEngine
@@ -358,7 +359,24 @@ namespace MQEngine
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
                                 ImGui::Text("纹理: %s", textureInfo.path.c_str());
-                                ImGui::Text("类型: %s", textureInfo.isInner ? "内嵌" : "外部");
+                                ImGui::Text("存储: %s", textureInfo.isInner ? "内嵌" : "外部");
+                                
+                                // 显示多个纹理类型
+                                if (!textureInfo.types.empty()) {
+                                    std::string typesStr = "类型: ";
+                                    bool first = true;
+                                    for (const auto& type : textureInfo.types) {
+                                        if (!first) {
+                                            typesStr += ", ";
+                                        }
+                                        typesStr += textureTypeToChineseString(type);
+                                        first = false;
+                                    }
+                                    ImGui::Text("%s", typesStr.c_str());
+                                } else {
+                                    ImGui::Text("类型: 未知");
+                                }
+                                
                                 ImGui::EndTooltip();
                             }
                         }
