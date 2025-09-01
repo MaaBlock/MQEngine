@@ -7,6 +7,7 @@
 #include <map>
 #include <functional>
 #include <set>
+#include <algorithm>
 #include "../Thirdparty/thirdparty.h"
 
 namespace MQEngine

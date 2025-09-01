@@ -3,6 +3,8 @@
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
+#include "g_engineShaderDiffuseObjectPixel.h"
+#include "g_engineShaderDiffuseObjectVertex.h"
 #include "../data/Component.h"
 #include "../data/Camera.h"
 namespace FCT
@@ -91,11 +93,39 @@ namespace MQEngine
                 SamplerSlot{"shadowSampler"}
             },
             ComponentFilter{
-                {entt::type_id<StaticMeshInstance>()}
+                {entt::type_id<StaticMeshInstance>()},
+                {entt::type_id<DiffuseTextureComponent>()}
             },
             objectPassCallback,
             universalEntityCallback
         ));
+        
+        m_techManager->addTech("ObjectPass", Tech(
+             TechName{"DiffuseTech"},
+             VertexShaderSource{LoadStringFromStringResource(g_engineShaderDiffuseObjectVertex,g_engineShaderDiffuseObjectVertexSize)},
+             PixelShaderSource{LoadStringFromStringResource(g_engineShaderDiffuseObjectPixel,g_engineShaderDiffuseObjectPixelSize)},
+             vertexLayout,
+             pixelLayout,
+             std::vector<FCT::UniformSlot>{
+                 DirectionalLightUniformSlot,
+                 CameraUniformSlot,
+                 ViewPosUniformSlot,
+                 ShadowUniformSlot,
+                 ModelUniformSlot,
+             },
+             std::vector<FCT::SamplerSlot>{
+                 SamplerSlot{"shadowSampler"},
+                 SamplerSlot{"diffuseSampler"}
+             },
+             std::vector<FCT::TextureSlot>{
+                 TextureSlot{"diffuseTexture"}
+             },
+             ComponentFilter{
+                 {entt::type_id<StaticMeshInstance>(), entt::type_id<DiffuseTextureComponent>()}
+             },
+             objectPassCallback,
+             universalEntityCallback
+         ));
         
         m_techManager->addTech("ShadowMapPass", Tech(
             TechName{"ShadowTech"},

@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/25.
 //
 
@@ -78,6 +78,28 @@ namespace MQEngine {
         }
     };
     BOOST_DESCRIBE_STRUCT(DirectionalLightComponent, (), (direction, color, intensity, enabled))
+
+    struct ENGINE_API DiffuseTextureComponent
+    {
+        std::string modelUuid;          
+        std::string texturePath;       
+        FCT::Image* texture = nullptr;
+        DiffuseTextureComponent() = default;
+        
+        DiffuseTextureComponent(const std::string& uuid, const std::string& path) 
+            : modelUuid(uuid), texturePath(path)
+        {
+        }
+        
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & modelUuid;
+            ar & texturePath;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (), (modelUuid, texturePath))
 }
 
 #endif //COMPONENT_H
