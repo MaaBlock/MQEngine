@@ -34,6 +34,8 @@ namespace MQEngine {
         void loop();
         static Engine& getInstance();
         friend class EngineScope;
+
+        
     private:
         void init(Application* application);
         void term();

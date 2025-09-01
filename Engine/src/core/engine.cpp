@@ -44,11 +44,23 @@ namespace MQEngine
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
+        g_engineGlobal.cameraSystem = m_cameraSystem.get();
+        g_engineGlobal.lightingSystem = m_lightingSystem.get();
+        g_engineGlobal.matrixCacheSystem = m_matrixCacheSystem.get();
         m_techManager = makeUnique<TechManager>();
     }
 
     void Engine::settingUpTechs()
     {
+        TechBindCallback objectPassCallback = [this](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
+            layout->bindSampler("shadowSampler", m_shadowSampler);
+            g_engineGlobal.cameraSystem->bind(layout);
+            g_engineGlobal.lightingSystem->bind(layout);
+        };
+
+        TechBindCallback shadowPassCallback = [](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
+            g_engineGlobal.lightingSystem->bind(layout);
+        };
         
         m_techManager->addTech("ObjectPass", Tech(
             TechName{"BasicTech"},
@@ -68,8 +80,10 @@ namespace MQEngine
             },
             ComponentFilter{
                 {entt::type_id<StaticMeshInstance>()}
-            }
+            },
+            objectPassCallback  
         ));
+        
         m_techManager->addTech("ShadowMapPass", Tech(
             TechName{"ShadowTech"},
             VertexShaderSource{LoadStringFromStringResource(
@@ -80,8 +94,10 @@ namespace MQEngine
                 ShadowUniformSlot,
                 ModelUniformSlot
             },
-            ComponentFilter().
-                include<StaticMeshInstance>()
+            ComponentFilter{
+                {entt::type_id<StaticMeshInstance>()}
+            },
+            shadowPassCallback  
         ));
     }
 
@@ -147,146 +163,8 @@ namespace MQEngine
             m_shadowPassOutputInfo = passInfo.outputInfo;
         });
         
-        graph->subscribe("ShadowMapPass",[this](PassSubmitEvent env)
-        {
-            auto cmdBuf = env.cmdBuf;
-
-            if (m_shadowPassOutputInfo.isWindow) {
-                if (m_shadowPassOutputInfo.window) {
-                    auto autoViewport = m_shadowPassOutputInfo.window->getModule<WindowModule::AutoViewport>();
-                    if (autoViewport) {
-                        autoViewport->submit(cmdBuf);
-                    } else {
-                        cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
-                        cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
-                    }
-                }
-            } else {
-                cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
-                cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_shadowPassOutputInfo.width, m_shadowPassOutputInfo.height));
-            }
-            auto techs = m_techManager->getTechsForPass(env.passName);
-            for (auto tech : techs)
-            {
-                auto layout = m_techManager->getLayoutForTech(tech->getName());
-                layout->begin();
-                m_lightingSystem->bind(layout);
-                layout->bindVertexShader(tech->getVertexShaderRef());
-
-                const auto& registries = m_dataManager->currentRegistries();
-                for (auto* registry : registries)
-                {
-                    const auto& filter = tech->getComponentFilter();
-
-                    entt::runtime_view runtime_view{};
-
-                    for (const auto& type_info : filter.include_types)
-                    {
-                        auto* storage = registry->storage(type_info.hash());
-                        if (storage)
-                        {
-                            runtime_view.iterate(*storage);
-                        }
-                    }
-
-                    for (const auto& type_info : filter.exclude_types)
-                    {
-                        auto* storage = registry->storage(type_info.hash());
-                        if (storage)
-                        {
-                            runtime_view.exclude(*storage);
-                        }
-                    }
-
-                    for (auto entity : runtime_view)
-                    {
-                        if (registry->all_of<StaticMeshInstance>(entity))
-                        {
-                            const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
-                            if (meshInstance.mesh != nullptr)
-                            {
-                                m_matrixCacheSystem->bindModelMatrix(registry, entity, layout);
-                                layout->drawMesh(cmdBuf, meshInstance.mesh);
-                            }
-                        }
-                    }
-                }
-            }
-        });
         m_ctx->pipeHub().passPipe.subscribe<PassInfo>("ObjectPass", [this](PassInfo& passInfo) {
             m_objectPassOutputInfo = passInfo.outputInfo;
-        });
-        
-        graph->subscribe("ObjectPass",[this](PassSubmitEvent env)
-        {
-            auto cmdBuf = env.cmdBuf;
-
-            if (m_objectPassOutputInfo.isWindow) {
-                if (m_objectPassOutputInfo.window) {
-                    auto autoViewport = m_objectPassOutputInfo.window->getModule<WindowModule::AutoViewport>();
-                    if (autoViewport) {
-                        autoViewport->submit(cmdBuf);
-                    } else {
-                        cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
-                        cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
-                    }
-                }
-            } else {
-                cmdBuf->viewport(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
-                cmdBuf->scissor(FCT::Vec2(0, 0), FCT::Vec2(m_objectPassOutputInfo.width, m_objectPassOutputInfo.height));
-            }
-            auto techs = m_techManager->getTechsForPass(env.passName);
-            for (auto tech : techs)
-            {
-                auto layout = m_techManager->getLayoutForTech(tech->getName());
-                layout->begin();
-                layout->bindSampler("shadowSampler",m_shadowSampler);
-                m_cameraSystem->bind(layout);
-                m_lightingSystem->bind(layout);
-                layout->bindVertexShader(tech->getVertexShaderRef());
-                layout->bindPixelShader(tech->getPixelShaderRef());
-
-                const auto& registries = m_dataManager->currentRegistries();
-                for (auto* registry : registries)
-                {
-                    const auto& filter = tech->getComponentFilter();
-
-                    entt::runtime_view runtime_view{};
-
-                    for (const auto& type_info : filter.include_types)
-                    {
-                        auto* storage = registry->storage(type_info.hash());
-                        if (storage)
-                        {
-                            runtime_view.iterate(*storage);
-                        }
-                    }
-
-                    for (const auto& type_info : filter.exclude_types)
-                    {
-                        auto* storage = registry->storage(type_info.hash());
-                        if (storage)
-                        {
-                            runtime_view.exclude(*storage);
-                        }
-                    }
-
-                    for (auto entity : runtime_view)
-                    {
-                        if (registry->all_of<StaticMeshInstance>(entity))
-                        {
-                            const auto& meshInstance = registry->get<StaticMeshInstance>(entity);
-                            if (meshInstance.mesh != nullptr)
-                            {
-                                m_matrixCacheSystem->bindModelMatrix(registry, entity, layout);
-                                layout->drawMesh(cmdBuf, meshInstance.mesh);
-                            }
-                        }
-                    }
-                }
-
-                layout->end();
-            }
         });
         auto& submitTickers = m_ctx->submitTickers();
         submitTickers["MatrixCacheSystemUpdateTicker"] = {
@@ -306,7 +184,6 @@ namespace MQEngine
 
     void Engine::initUniformValue()
     {
-        //init model uniform values
         m_floorModelUniform.setValue("modelMatrix", FCT::Mat4());
         m_floorModelUniform.update();
     }

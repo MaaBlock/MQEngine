@@ -10,11 +10,7 @@ namespace MQEngine
         processArgs(args...);
     }
 
-    template<typename... Args>
-    void Tech::processArgs(Args... args)
-    {
-        processArgs(args...);
-    }
+
 
     template<typename... Args>
     void Tech::processArgs(const TechName& name, Args... args)
@@ -118,6 +114,14 @@ namespace MQEngine
         m_componentFilter = filter;
         processArgs(args...);
     }
+    
+    template<typename... Args>
+    void Tech::processArgs(const TechBindCallback& callback, Args... args)
+    {
+        m_bindCallback = callback;
+        processArgs(args...);
+    }
+
 }
 
 #endif // TECH_HPP
