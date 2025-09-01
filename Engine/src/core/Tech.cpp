@@ -26,8 +26,7 @@ namespace MQEngine
             it = m_techs.emplace(techName, std::move(tech)).first;
         }
         m_passTechs[passName].push_back(&it->second);
-        
-        // 自动订阅Pass
+
         subscribeToPass(passName);
     }
 
@@ -74,7 +73,12 @@ namespace MQEngine
         Layout* layout = layoutIt->second.get();
 
         for (const auto& slot : tech.getUniformSlots()) { layout->addUniformSlot(slot); }
-        for (const auto& slot : tech.getSamplerSlots()) { layout->addSamplerSlot(slot); }
+        
+        for (const auto& slot : tech.getSamplerSlots())
+        {
+            layout->addSamplerSlot(slot);
+        }
+        
         for (const auto& slot : tech.getTextureSlots())
         {
             layout->addTextureSlot(slot);
@@ -174,6 +178,10 @@ namespace MQEngine
 
                     for (auto entity : runtime_view)
                     {
+                        if (filter.include_types.size() == 2)
+                        {
+                            fout << "DiffuseTech" << std::endl;
+                        }
                         tech->executeEntityOperationCallback(*registry, entity, layout, env.cmdBuf);
                     }
                 }
