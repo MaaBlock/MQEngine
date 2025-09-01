@@ -122,6 +122,13 @@ namespace MQEngine
         processArgs(args...);
     }
 
+    template<typename... Args>
+    void Tech::processArgs(const EntityOperationCallback& callback, Args... args)
+    {
+        m_entityOperationCallback = callback;
+        processArgs(args...);
+    }
+
 }
 
 #endif // TECH_HPP

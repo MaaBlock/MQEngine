@@ -62,6 +62,18 @@ namespace MQEngine
             g_engineGlobal.lightingSystem->bind(layout);
         };
         
+        EntityOperationCallback universalEntityCallback = [](const EntityRenderContext& context) {
+            if (context.registry.all_of<StaticMeshInstance>(context.entity))
+            {
+                const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
+                if (meshInstance.mesh != nullptr)
+                {
+                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                }
+            }
+        };
+        
         m_techManager->addTech("ObjectPass", Tech(
             TechName{"BasicTech"},
             VertexShaderSource{LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize)},
@@ -81,7 +93,8 @@ namespace MQEngine
             ComponentFilter{
                 {entt::type_id<StaticMeshInstance>()}
             },
-            objectPassCallback  
+            objectPassCallback,
+            universalEntityCallback
         ));
         
         m_techManager->addTech("ShadowMapPass", Tech(
@@ -97,7 +110,8 @@ namespace MQEngine
             ComponentFilter{
                 {entt::type_id<StaticMeshInstance>()}
             },
-            shadowPassCallback  
+            shadowPassCallback,
+            universalEntityCallback
         ));
     }
 
