@@ -100,7 +100,9 @@ namespace MQEngine
                 entt::snapshot{m_registry}
                 .get<entt::entity>(wrapper)
                 .get<NameTag>(wrapper)
-                .get<StaticMeshInstance>(wrapper);
+                .get<StaticMeshInstance>(wrapper)
+                .get<DirectionalLightComponent>(wrapper)
+                .get<DiffuseTextureComponent>(wrapper);
 
             } else {
                 throw DataError("无法创建registry文件: " + registryDataPath);
@@ -153,7 +155,9 @@ namespace MQEngine
                     entt::snapshot_loader{m_registry}
                     .get<entt::entity>(wrapper)
                     .get<NameTag>(wrapper)
-                    .get<StaticMeshInstance>(wrapper);
+                    .get<StaticMeshInstance>(wrapper)
+                    .get<DirectionalLightComponent>(wrapper)
+                    .get<DiffuseTextureComponent>(wrapper);
 
                 }
             }

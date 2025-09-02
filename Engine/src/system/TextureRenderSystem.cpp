@@ -16,10 +16,9 @@ namespace MQEngine {
     }
 
     TextureRenderSystem::~TextureRenderSystem() {
-        // 清理已加载的纹理
         for (auto& pair : m_loadedTextures) {
             if (pair.second) {
-                // FCT::Image 由 Context 管理，这里不需要手动删除
+              pair.second->release();
             }
         }
         m_loadedTextures.clear();
