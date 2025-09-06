@@ -1,21 +1,21 @@
 #ifndef ENGINE_TEXTURE_RENDER_SYSTEM_CPP
 #define ENGINE_TEXTURE_RENDER_SYSTEM_CPP
 
-#include "TextureRenderSystem.h"
+#include "TextureCacheSystem.h"
 #include "../core/EngineGlobal.h"
 #include "../core/TextureUtils.h"
 #include <filesystem>
 
 namespace MQEngine {
 
-    TextureRenderSystem::TextureRenderSystem(FCT::Context* ctx, DataManager* dataManager)
+    TextureCacheSystem::TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager)
     : m_ctx(ctx), m_dataManager(dataManager)
 {
     m_modelLoader = g_engineGlobal.rt->createModelLoader();
         FCT::fout << "TextureRenderSystem 初始化" << std::endl;
     }
 
-    TextureRenderSystem::~TextureRenderSystem() {
+    TextureCacheSystem::~TextureCacheSystem() {
         for (auto& pair : m_loadedTextures) {
             if (pair.second) {
               pair.second->release();
@@ -25,11 +25,11 @@ namespace MQEngine {
         FCT::fout << "TextureRenderSystem 销毁" << std::endl;
     }
 
-    void TextureRenderSystem::update() {
+    void TextureCacheSystem::update() {
         collectTextures();
     }
 
-    void TextureRenderSystem::collectTextures() {
+    void TextureCacheSystem::collectTextures() {
         
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
@@ -57,7 +57,7 @@ namespace MQEngine {
         }
     }
 
-    void TextureRenderSystem::loadTexture(const std::string& modelUuid, const std::string& texturePath) {
+    void TextureCacheSystem::loadTexture(const std::string& modelUuid, const std::string& texturePath) {
         std::string textureKey = modelUuid + "|" + texturePath;
 
         if (m_loadedTextures.find(textureKey) != m_loadedTextures.end()) {

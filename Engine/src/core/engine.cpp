@@ -42,11 +42,11 @@ namespace MQEngine
         g_engineGlobal.dataManager = m_dataManager;
         m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
-        m_meshRenderSystem = makeUnique<MeshRenderSystem>(m_ctx,m_dataManager);
+        m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
-        m_textureRenderSystem = makeUnique<TextureRenderSystem>(m_ctx,m_dataManager);
+        m_textureRenderSystem = makeUnique<TextureCacheSystem>(m_ctx,m_dataManager);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         g_engineGlobal.cameraSystem = m_cameraSystem.get();
         g_engineGlobal.lightingSystem = m_lightingSystem.get();

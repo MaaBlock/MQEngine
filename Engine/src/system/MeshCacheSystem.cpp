@@ -2,18 +2,18 @@
 // Created by Administrator on 2025/1/20.
 //
 
-#include "./MeshRenderSystem.h"
+#include "./MeshCacheSystem.h"
 #include "../core/EngineGlobal.h"
 #include "../core/VertexLayouts.h"
 
 namespace MQEngine
 {
-    MeshRenderSystem::MeshRenderSystem(FCT::Context* ctx, DataManager* dataManager)
+    MeshCacheSystem::MeshCacheSystem(FCT::Context* ctx, DataManager* dataManager)
         : m_ctx(ctx), m_dataManager(dataManager)
     {
     }
 
-    MeshRenderSystem::~MeshRenderSystem()
+    MeshCacheSystem::~MeshCacheSystem()
     {
         for (auto& pair : m_loadedMeshes) {
             if (pair.second) {
@@ -23,14 +23,13 @@ namespace MQEngine
         m_loadedMeshes.clear();
     }
 
-    void MeshRenderSystem::update()
+    void MeshCacheSystem::update()
     {
         collectMeshes();
     }
 
-    void MeshRenderSystem::collectMeshes()
+    void MeshCacheSystem::collectMeshes()
     {
-        m_renderData.clear();
         
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
@@ -49,33 +48,11 @@ namespace MQEngine
                         const_cast<StaticMeshInstance&>(meshInstance).mesh = it->second;
                     }
                 }
-
-                if (meshInstance.mesh) {
-                    PositionComponent defaultPosition{{0.0f, 0.0f, 0.0f}};
-                    RotationComponent defaultRotation{{0.0f, 0.0f, 0.0f}};
-                    ScaleComponent defaultScale{{1.0f, 1.0f, 1.0f}};
-                    
-                    const PositionComponent* position = registry->try_get<PositionComponent>(entity);
-                    const RotationComponent* rotation = registry->try_get<RotationComponent>(entity);
-                    const ScaleComponent* scale = registry->try_get<ScaleComponent>(entity);
-                    
-                    MeshRenderData renderData;
-                    renderData.mesh = meshInstance.mesh;
-                    renderData.modelMatrix = calculateModelMatrix(
-                        position ? *position : defaultPosition,
-                        rotation ? *rotation : defaultRotation,
-                        scale ? *scale : defaultScale
-                    );
-                    renderData.modelUuid = meshInstance.modelUuid;
-                    renderData.meshName = meshInstance.meshName;
-                    
-                    m_renderData.push_back(renderData);
-                }
             }
         }
     }
 
-    void MeshRenderSystem::loadMesh(const std::string& modelUuid, const std::string& meshName)
+    void MeshCacheSystem::loadMesh(const std::string& modelUuid, const std::string& meshName)
     {
         std::string meshKey = modelUuid + "|" + meshName;
 
@@ -113,7 +90,7 @@ namespace MQEngine
         }
     }
 
-    FCT::Mat4 MeshRenderSystem::calculateModelMatrix(const PositionComponent& position, const RotationComponent& rotation, const ScaleComponent& scale)
+    FCT::Mat4 MeshCacheSystem::calculateModelMatrix(const PositionComponent& position, const RotationComponent& rotation, const ScaleComponent& scale)
     {
         FCT::Mat4 translationMatrix = FCT::Mat4::Translate(position.position.x, position.position.y, position.position.z);
 

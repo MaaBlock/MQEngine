@@ -10,16 +10,11 @@
 #include <vector>
 
 namespace MQEngine {
-    struct TextureRenderData {
-        FCT::Image* texture;
-        std::string modelUuid;
-        std::string texturePath;
-    };
 
-    class ENGINE_API TextureRenderSystem {
+    class ENGINE_API TextureCacheSystem {
     public:
-        TextureRenderSystem(FCT::Context* ctx, DataManager* dataManager);
-        ~TextureRenderSystem();
+        TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager);
+        ~TextureCacheSystem();
         
         void update();
         void collectTextures();
