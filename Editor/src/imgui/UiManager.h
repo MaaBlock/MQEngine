@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/18.
 //
 
@@ -24,6 +24,7 @@ namespace MQEngine {
         void logicTick();
         void renderScene();
     private:
+        void setupCustomDarkTheme();
         FCT::ImguiContext* m_imguiCtx;
         GraphViewInsight* m_graphView;
         RenderGraphViewer* m_passGenerator;
