@@ -186,6 +186,7 @@ namespace MQEngine
 
         m_imguiCtx->push([this]()
         {
+            renderMainMenuBar();
             ImguiContext::createMainDockSpace("MQEngine");
             renderScene();
 #ifdef FCT_DEBUG
@@ -265,5 +266,26 @@ namespace MQEngine
             ImGui::Text("请检查SceneColorTarget纹理是否正确创建");
         }
         ImGui::End();
+    }
+
+    void UiManager::renderMainMenuBar()
+    {
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu(TEXT("文件")))
+            {
+                if (ImGui::MenuItem(TEXT("保存项目设置"), "Ctrl+S"))
+                {
+                    
+                }
+                ImGui::Separator();
+                if (ImGui::MenuItem(TEXT("退出"), "Alt+F4"))
+                {
+
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMainMenuBar();
+        }
     }
 }
