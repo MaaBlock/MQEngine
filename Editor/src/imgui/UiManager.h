@@ -23,6 +23,7 @@ namespace MQEngine {
         void registerRenderCallback(FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>& renderCallBack);
         void logicTick();
         void renderScene();
+        void renderMainMenuBar();
     private:
         void setupCustomDarkTheme();
         FCT::ImguiContext* m_imguiCtx;
