@@ -3,9 +3,10 @@
 #include <boost/archive/binary_oarchive.hpp>
 
 #include "DataManager.h"
-
+#include "SavedComponentsList.h"
 namespace MQEngine
 {
+
     Scene::Scene(DataManager* dataManager, const std::string& uuid)
     {
         m_dataManager = dataManager;
@@ -96,14 +97,7 @@ namespace MQEngine
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
                 EnttOutputArchiveWrapper wrapper(archive);
-
-                entt::snapshot{m_registry}
-                .get<entt::entity>(wrapper)
-                .get<NameTag>(wrapper)
-                .get<StaticMeshInstance>(wrapper)
-                .get<DirectionalLightComponent>(wrapper)
-                .get<DiffuseTextureComponent>(wrapper);
-
+                SerializeComponents(entt::snapshot{m_registry}, wrapper);
             } else {
                 throw DataError("无法创建registry文件: " + registryDataPath);
             }
@@ -152,12 +146,7 @@ namespace MQEngine
                 if (registryStream && registryStream->is_open()) {
                     boost::archive::binary_iarchive archive(*registryStream);
                     EnttInputArchiveWrapper wrapper(archive);
-                    entt::snapshot_loader{m_registry}
-                    .get<entt::entity>(wrapper)
-                    .get<NameTag>(wrapper)
-                    .get<StaticMeshInstance>(wrapper)
-                    .get<DirectionalLightComponent>(wrapper)
-                    .get<DiffuseTextureComponent>(wrapper);
+                    SerializeComponents(entt::snapshot_loader{m_registry}, wrapper);
 
                 }
             }

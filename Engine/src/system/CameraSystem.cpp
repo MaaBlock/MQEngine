@@ -76,4 +76,26 @@ namespace MQEngine
 
         return FCT::Mat4::LookAt(position.position, target, up);
     }
+
+    void CameraSystem::setActiveCamera(entt::registry* registry, entt::entity cameraEntity)
+    {
+        if (!registry) return;
+        
+        auto registries = m_dataManager->currentRegistries();
+        for (auto& currentRegistry : registries)
+        {
+            auto view = currentRegistry->view<CameraComponent>();
+            for (auto entity : view)
+            {
+                auto& camera = view.get<CameraComponent>(entity);
+                camera.active = false;
+            }
+        }
+        
+        if (registry->valid(cameraEntity) && registry->all_of<CameraComponent>(cameraEntity))
+        {
+            auto& targetCamera = registry->get<CameraComponent>(cameraEntity);
+            targetCamera.active = true;
+        }
+    }
 }

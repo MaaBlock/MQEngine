@@ -24,6 +24,7 @@ namespace MQEngine
         m_passGenerator = FCT_NEW(RenderGraphViewer,g_editorGlobal.ctx,g_editorGlobal.wnd);
         m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager);
         m_editorCameraManager = new EditorCameraManager();
+        g_editorGlobal.cameraManager = m_editorCameraManager;
         m_sceneManager = new SceneManager();
         m_scriptManager = new ScriptManager();
         m_sceneEntityViewer = new SceneEntityViewer();
@@ -231,6 +232,10 @@ namespace MQEngine
     {
 
         ImGui::Begin("场景视口");
+        
+        renderCameraWindow();
+        
+        ImGui::Separator();
 
         auto sceneTextureId = m_imguiCtx->getTexture("SceneColorTarget");
         if (sceneTextureId) {
@@ -287,5 +292,126 @@ namespace MQEngine
             }
             ImGui::EndMainMenuBar();
         }
+    }
+
+    void UiManager::renderCameraWindow()
+    {
+        if (ImGui::Begin("相机控制"))
+        {
+        
+        // 检查编辑器相机是否存在且活跃
+        auto editorEntity = m_editorCameraManager->getEditorCameraEntity();
+        auto editorRegistry = m_editorCameraManager->getEditorRegistry();
+        bool usingEditorCamera = false;
+        
+        if (editorEntity != entt::null && editorRegistry && 
+            editorRegistry->valid(editorEntity) && 
+            editorRegistry->all_of<CameraComponent>(editorEntity))
+        {
+            auto& editorCamera = editorRegistry->get<CameraComponent>(editorEntity);
+            usingEditorCamera = editorCamera.active;
+        }
+        
+        // 编辑器相机选项
+        if (ImGui::RadioButton("编辑器相机", usingEditorCamera))
+        {
+            if (!usingEditorCamera && editorEntity != entt::null && editorRegistry)
+            {
+                // 切换到编辑器相机
+                if (g_engineGlobal.cameraSystem)
+                 {
+                     g_engineGlobal.cameraSystem->setActiveCamera(editorRegistry, editorEntity);
+                 }
+            }
+        }
+        
+        // 场景相机选项
+        ImGui::Separator();
+        ImGui::Text("场景相机:");
+        
+        // 收集所有场景相机
+        struct SceneCameraInfo {
+            entt::entity entity;
+            entt::registry* registry;
+            std::string name;
+            bool active;
+        };
+        
+        std::vector<SceneCameraInfo> sceneCameras;
+        auto registries = g_editorGlobal.dataManager->currentRegistries();
+        int cameraIndex = 0;
+        
+        for (auto& registry : registries)
+        {
+            auto view = registry->view<CameraComponent>();
+            for (auto entity : view)
+            {
+                auto& camera = view.get<CameraComponent>(entity);
+                SceneCameraInfo info;
+                info.entity = entity;
+                info.registry = registry;
+                info.active = camera.active;
+                
+                // 尝试获取实体名称
+                if (registry->all_of<NameTag>(entity))
+                {
+                    auto& nameTag = registry->get<NameTag>(entity);
+                    info.name = nameTag.name + " (相机 " + std::to_string(cameraIndex) + ")";
+                }
+                else
+                {
+                    info.name = "相机 " + std::to_string(cameraIndex);
+                }
+                
+                sceneCameras.push_back(info);
+                cameraIndex++;
+            }
+        }
+        
+        if (sceneCameras.empty())
+        {
+            ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "  无场景相机");
+        }
+        else
+        {
+            for (const auto& cameraInfo : sceneCameras)
+            {
+                bool isSelected = cameraInfo.active && !usingEditorCamera;
+                if (ImGui::RadioButton(cameraInfo.name.c_str(), isSelected))
+                {
+                    if (!isSelected)
+                    {
+                        // 切换到这个场景相机
+                        if (g_engineGlobal.cameraSystem)
+                         {
+                             g_engineGlobal.cameraSystem->setActiveCamera(cameraInfo.registry, cameraInfo.entity);
+                         }
+                    }
+                }
+            }
+        }
+        
+        // 显示当前相机信息
+        ImGui::Separator();
+        if (usingEditorCamera)
+        {
+            ImGui::Text("当前使用: 编辑器相机");
+        }
+        else
+        {
+            // 找到当前活跃的场景相机
+            std::string activeCameraName = "未知场景相机";
+            for (const auto& cameraInfo : sceneCameras)
+            {
+                if (cameraInfo.active)
+                {
+                    activeCameraName = cameraInfo.name;
+                    break;
+                }
+            }
+            ImGui::Text(("当前使用: " + activeCameraName).c_str());
+        }
+        }
+        ImGui::End();
     }
 }

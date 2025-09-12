@@ -6,6 +6,11 @@
 #define GLOBAL_H
 #include "../Thirdparty/thirdparty.h"
 
+namespace MQEngine
+{
+    class EditorCameraManager;
+}
+
 namespace MQEngine{
     struct SelectedEntityState
     {
@@ -21,6 +26,7 @@ namespace MQEngine{
         FCT::Context* ctx;
         FCT::ImguiModule* imguiModule;
         DataManager* dataManager;
+        EditorCameraManager* cameraManager;
         FCT::Runtime* rt;
         entt::registry* editorRegistry;
         FCT::ImguiContext* imguiContext;

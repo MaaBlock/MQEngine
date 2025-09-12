@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 
 #include "../core/Global.h"
+#include "../imgui/EditorCameraManager.h"
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
 namespace MQEngine {
@@ -73,9 +74,10 @@ namespace MQEngine {
     void SceneManager::openScene(const std::string& sceneName)
     {
         try {
-
             std::string uuid = getSceneUuid(sceneName);
+            m_dataManager->loadScenePathList();
              m_dataManager->openScene(uuid);
+            g_editorGlobal.cameraManager->hookCamera();
         } catch (const std::exception& e) {
             fout << "打开场景时发生错误: " << e.what() << std::endl;
         }

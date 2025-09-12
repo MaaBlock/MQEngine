@@ -10,7 +10,9 @@ namespace MQEngine {
     public:
         EditorCameraManager();
         void createEditorCamera();
-
+        entt::entity getEditorCameraEntity() const { return m_editorCameraEntity; }
+        entt::registry* getEditorRegistry() const { return m_editorRegistry; }
+        void hookCamera();
     private:
         entt::registry* m_editorRegistry;
         entt::entity m_editorCameraEntity;
