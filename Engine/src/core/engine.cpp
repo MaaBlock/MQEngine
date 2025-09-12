@@ -176,15 +176,31 @@ namespace MQEngine
                 2048,2048,
                 Format::D32_SFLOAT
                 ));
+        Target SceenColorTarget;
+        DepthStencil SceenDepthTarget;
+        if (m_application->renderConfig().target == RenderTarget::Window)
+        {
+            SceenColorTarget =
+                Target("SceneColorTarget", m_wnd);
+            SceenDepthTarget =
+                DepthStencil("SceneDepthTarget", m_wnd);
+        }
+        else if (m_application->renderConfig().target == RenderTarget::Texture)
+        {
+            SceenColorTarget =
+                Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_UNORM);
+            SceenDepthTarget =
+                DepthStencil("SceneDepthTarget",Format::D32_SFLOAT);
+        }
         graph->addPass(
             "ObjectPass",
             Texture("DepthFromLigth0Image"),
             EnablePassClear(ClearType::color | ClearType::depthStencil,
                 Vec4(0,0,0,1)),
-            Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_UNORM),
+            SceenColorTarget,
             Target("PosTarget"),
             Target("RetTarget"),
-            DepthStencil("SceneDepthTarget",Format::D32_SFLOAT)
+            SceenDepthTarget
             );
         {
             RenderCallBack::SettingUpPass callback;

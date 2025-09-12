@@ -1,4 +1,4 @@
-﻿#include "DataManager.h"
+#include "DataManager.h"
 
 #include "../core/EngineGlobal.h"
 
@@ -7,6 +7,7 @@ namespace MQEngine
     void DataManager::loadRes()
     {
         m_dataLoader->ensureDirectory("./res");
+        loadProjectSetting();
         loadScenePathList();
         updateModelPathList();
     }
@@ -97,10 +98,7 @@ namespace MQEngine
         if (m_loadScenes.find(uuid) != m_loadScenes.end()) {
             auto scenePtr = m_loadScenes[uuid];
             if (scenePtr) {
-                // 从当前实体表列表中移除场景的主registry
                 removeRegistry(&scenePtr->getRegistry());
-                
-                // 从当前实体表列表中移除所有已加载的trunk的registry
                 for (const auto& trunkName : scenePtr->getTrunkList()) {
                     if (scenePtr->isLoad(trunkName)) {
                         auto trunk = scenePtr->getLoadedTrunk(trunkName);
@@ -191,5 +189,58 @@ namespace MQEngine
             FCT::fout << "读取模型UUID文件失败: " << e.what() << std::endl;
             return "";
         }
+    }
+
+    void DataManager::loadProjectSetting()
+    {
+        std::string settingFilePath = "./res/project.setting";
+        
+        if (!m_dataLoader->fileExists(settingFilePath)) {
+            m_projectSetting.initialSceneUuid = "";
+            return;
+        }
+        
+        try {
+            auto inputStream = m_dataLoader->openBinaryInputStream(settingFilePath);
+            if (inputStream && inputStream->is_open()) {
+                boost::archive::binary_iarchive archive(*inputStream);
+                archive >> m_projectSetting;
+            }
+        } catch (const std::exception& e) {
+            FCT::fout << "读取项目设置文件失败: " << e.what() << std::endl;
+            m_projectSetting.initialSceneUuid = "";
+        }
+    }
+
+    void DataManager::saveProjectSetting(const ProjectSetting& setting)
+    {
+        std::string settingFilePath = "./res/project.setting";
+        m_projectSetting = setting;
+        
+        try {
+            auto outputStream = m_dataLoader->openBinaryOutputStream(settingFilePath);
+            if (outputStream && outputStream->is_open()) {
+                boost::archive::binary_oarchive archive(*outputStream);
+                archive << m_projectSetting;
+            }
+        } catch (const std::exception& e) {
+            FCT::fout << "保存项目设置文件失败: " << e.what() << std::endl;
+        }
+    }
+
+    ProjectSetting DataManager::getProjectSetting() const
+    {
+        return m_projectSetting;
+    }
+
+    void DataManager::setInitialSceneUuid(const std::string& uuid)
+    {
+        m_projectSetting.initialSceneUuid = uuid;
+        saveProjectSetting(m_projectSetting);
+    }
+
+    std::string DataManager::getInitialSceneUuid() const
+    {
+        return m_projectSetting.initialSceneUuid;
     }
 }
