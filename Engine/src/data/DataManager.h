@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/20.
 //
 
@@ -43,6 +43,17 @@ namespace MQEngine
         }
     };
 
+    struct ProjectSetting
+    {
+        std::string initialSceneUuid;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & initialSceneUuid;
+        }
+    };
+
     class ENGINE_API DataManager
     {
     public:
@@ -64,6 +75,11 @@ namespace MQEngine
         void removeRegistry(entt::registry* registry);
         void openScene(const std::string& uuid);
         void closeScene(const std::string& uuid);
+        void loadProjectSetting();
+        void saveProjectSetting(const ProjectSetting& setting);
+        ProjectSetting getProjectSetting() const;
+        void setInitialSceneUuid(const std::string& uuid);
+        std::string getInitialSceneUuid() const;
 
 
         void loadScene(const std::string& uuid)
@@ -126,6 +142,7 @@ namespace MQEngine
         std::unordered_map<std::string,std::string> m_uuidToSceneName;
         std::vector<std::string> m_modelPathList;
         std::unique_ptr<DataLoader> m_dataLoader;
+        ProjectSetting m_projectSetting;
         void loadModelUuidMapping() {
             m_uuidToModel.clear();
 

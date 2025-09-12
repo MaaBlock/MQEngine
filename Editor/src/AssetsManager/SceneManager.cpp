@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/24.
 //
 
@@ -140,6 +140,14 @@ void SceneManager::render()
                     }
 
                     if (ImGui::BeginPopupContextItem(("SceneContextMenu" + std::to_string(i)).c_str())) {
+                        if (ImGui::MenuItem("设置为初始场景")) {
+                            std::string uuid = getSceneUuid(sceneName);
+                            if (!uuid.empty()) {
+                                m_dataManager->setInitialSceneUuid(uuid);
+                                fout << "已设置初始场景: " << sceneName << " (UUID: " << uuid << ")" << std::endl;
+                            }
+                        }
+                        ImGui::Separator();
                         if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
                             std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
