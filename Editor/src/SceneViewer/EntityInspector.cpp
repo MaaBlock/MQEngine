@@ -4,6 +4,7 @@
 
 #include "EntityInspector.h"
 #include "ComponentRenderer.h"
+#include "../imgui/EditorCameraManager.h"
 
 namespace MQEngine {
     EntityInspector::EntityInspector()
@@ -93,7 +94,12 @@ namespace MQEngine {
             
             if (ImGui::MenuItem("Camera Component")) {
                 if (!registry->all_of<CameraComponent>(selectedEntity.entity)) {
-                    registry->emplace<CameraComponent>(selectedEntity.entity);
+                    auto& camera = registry->emplace<CameraComponent>(selectedEntity.entity);
+                    camera.active = false;
+                    camera.fov = 60;
+                    camera.nearPlane = 0.1f;
+                    camera.farPlane = 50.0f;
+                    g_editorGlobal.cameraManager->hookCamera();
                 }
                 ImGui::CloseCurrentPopup();
             }

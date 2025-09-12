@@ -7,11 +7,12 @@
 #include "../data/DataManager.h"
 
 namespace MQEngine {
-    class CameraSystem {
+    class ENGINE_API CameraSystem {
     public:
         CameraSystem(FCT::Context* ctx,DataManager* dataManager);
         void update();
         void bind(FCT::Layout* layout);
+        void setActiveCamera(entt::registry* registry, entt::entity cameraEntity);
     private:
         FCT::Mat4 calculateViewMatrix(const PositionComponent& position, const RotationComponent& rotation);
         FCT::Vec3 calculateForward(const RotationComponent& rotation);

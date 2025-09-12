@@ -2,6 +2,7 @@
 
 #include "DataManager.h"
 #include "EnttArchiveWrapper.h"
+#include "SavedComponentsList.h"
 #include "Scene.h"
 
 namespace MQEngine {
@@ -44,13 +45,8 @@ namespace MQEngine {
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
                 EnttOutputArchiveWrapper wrapper(archive);
+                SerializeComponents(entt::snapshot{m_registry}, wrapper);
 
-                entt::snapshot{m_registry}
-                .get<entt::entity>(wrapper)
-                .get<NameTag>(wrapper)
-                .get<StaticMeshInstance>(wrapper)
-                .get<DirectionalLightComponent>(wrapper)
-                .get<DiffuseTextureComponent>(wrapper);
             } else {
                 throw DataError("无法创建场景块registry文件: " + trunkRegistryPath);
             }
@@ -92,12 +88,7 @@ namespace MQEngine {
                 if (registryStream && registryStream->is_open()) {
                     boost::archive::binary_iarchive archive(*registryStream);
                     EnttInputArchiveWrapper wrapper(archive);
-                    entt::snapshot_loader{m_registry}
-                    .get<entt::entity>(wrapper)
-                    .get<NameTag>(wrapper)
-                    .get<StaticMeshInstance>(wrapper)
-                    .get<DirectionalLightComponent>(wrapper)
-                    .get<DiffuseTextureComponent>(wrapper);
+                    SerializeComponents(entt::snapshot_loader{m_registry}, wrapper);
                 }
             }
 

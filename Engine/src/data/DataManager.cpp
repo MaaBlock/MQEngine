@@ -52,7 +52,6 @@ namespace MQEngine
             if (m_currentScene == uuid) {
                 return;
             }
-
             auto sceneIt = m_uuidToScenePath.find(uuid);
             if (sceneIt == m_uuidToScenePath.end()) {
                 throw DataError("场景UUID不存在: " + uuid);

@@ -29,22 +29,18 @@ namespace MQEngine {
         ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
         if (ImGui::Begin("创建实体", &m_showCreateEntityDialog, ImGuiWindowFlags_Modal | ImGuiWindowFlags_NoResize)) {
 
-            // 显示创建位置信息
             ImGui::Text("创建位置: %s",
                 m_createInGlobal ? "场景全局" : m_targetTrunkName.c_str());
             ImGui::Separator();
 
-            // 基本属性设置
             ImGui::Text("基本属性");
             ImGui::InputText("实体名称", m_newEntityName, sizeof(m_newEntityName));
 
             ImGui::Separator();
 
-            // 预留扩展区域
             ImGui::Text("组件设置");
             ImGui::BeginChild("ComponentSettings", ImVec2(0, 150), true);
             {
-                // 这里以后可以添加各种组件的设置选项
                 ImGui::Text("暂无可配置组件");
                 ImGui::Text("(未来可在此处添加Transform、Renderer等组件配置)");
             }
@@ -52,7 +48,6 @@ namespace MQEngine {
 
             ImGui::Separator();
 
-            // 按钮区域
             float buttonWidth = 80.0f;
             float spacing = ImGui::GetStyle().ItemSpacing.x;
             float totalWidth = buttonWidth * 2 + spacing;
@@ -61,7 +56,6 @@ namespace MQEngine {
             ImGui::SetCursorPosX(ImGui::GetCursorPosX() + startX);
 
             if (ImGui::Button("创建", ImVec2(buttonWidth, 0))) {
-                // 验证名称不为空
                 std::string entityName = std::string(m_newEntityName);
                 if (!entityName.empty()) {
                     createEntity(scene, entityName, m_targetTrunkName, m_createInGlobal);
@@ -83,33 +77,26 @@ namespace MQEngine {
             entt::entity newEntity;
 
             if (isGlobal) {
-                // 在场景全局注册表中创建实体
                 auto& registry = scene->getRegistry();
                 newEntity = registry.create();
 
-                // 添加名称组件
                 registry.emplace<NameTag>(newEntity, name);
             } else {
-                // 在指定的trunk中创建实体
                 SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
                 if (trunk) {
                     auto& registry = trunk->getRegistry();
                     newEntity = registry.create();
 
-                    // 添加名称组件
                     registry.emplace<NameTag>(newEntity, name);
                 } else {
-                    // trunk未加载，可能需要先加载或给出错误提示
+
                     return;
                 }
             }
 
-            // 这里以后可以添加其他默认组件
-            // 比如 Transform 组件等
 
         } catch (const std::exception& e) {
-            // 错误处理，可以显示错误消息
-            // 或者记录日志
+
         }
     }
 

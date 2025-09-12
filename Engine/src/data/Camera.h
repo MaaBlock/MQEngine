@@ -15,16 +15,29 @@ namespace MQEngine {
     };
     struct ENGINE_API PositionComponent {
         FCT::Vec3 position;
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & position;
+        }
     };
     BOOST_DESCRIBE_STRUCT(PositionComponent, (), (position))
 
     struct ENGINE_API RotationComponent {
         FCT::Vec3 rotation;
+
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & rotation;
+        }
     };
     BOOST_DESCRIBE_STRUCT(RotationComponent, (), (rotation))
 
     struct ENGINE_API ScaleComponent {
         FCT::Vec3 scale = FCT::Vec3(1.0f, 1.0f, 1.0f);
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & scale;
+        }
     };
     BOOST_DESCRIBE_STRUCT(ScaleComponent, (), (scale))
 
@@ -33,6 +46,12 @@ namespace MQEngine {
         float fov = 45.0f;
         float nearPlane = 0.1f;
         float farPlane = 1000.0f;
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & fov;
+            ar & nearPlane;
+            ar & farPlane;
+        }
     };
     BOOST_DESCRIBE_STRUCT(CameraComponent, (), (active, fov, nearPlane, farPlane))
 

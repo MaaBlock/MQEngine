@@ -24,6 +24,7 @@ namespace MQEngine {
         void logicTick();
         void renderScene();
         void renderMainMenuBar();
+        void renderCameraWindow();
     private:
         void setupCustomDarkTheme();
         FCT::ImguiContext* m_imguiCtx;

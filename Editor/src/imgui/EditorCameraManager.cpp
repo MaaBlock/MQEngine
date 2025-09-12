@@ -39,4 +39,14 @@ namespace MQEngine {
         camera.nearPlane = 0.1f;
         camera.farPlane = 50.0f;
     }
+
+    void EditorCameraManager::hookCamera() {
+        if (g_engineGlobal.cameraSystem && m_editorRegistry) {
+            auto editorView = m_editorRegistry->view<CameraComponent>();
+            for (auto editorEntity : editorView) {
+                g_engineGlobal.cameraSystem->setActiveCamera(m_editorRegistry, editorEntity);
+                break;
+            }
+        }
+    }
 }
