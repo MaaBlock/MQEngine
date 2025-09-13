@@ -7,3 +7,6 @@
 [submodule "FCT_Node"]
 	path = FCT_Node
 	url = https://github.com/MaaBlock/FCT_Node
+[submodule "FCT_Phys"]
+	path = FCT_Phys
+	url = https://github.com/MaaBlock/FCT_Phys
