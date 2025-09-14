@@ -177,10 +177,10 @@ namespace MQEngine {
         for (size_t registryIndex = 0; registryIndex < registries.size(); ++registryIndex) {
             auto& registry = registries[registryIndex];
 
-            auto view = registry->view<ScriptComponent>();
+            auto view = registry->view<TickerScriptComponent>();
 
             for (auto entity : view) {
-                auto& scriptComponent = view.get<ScriptComponent>(entity);
+                auto& scriptComponent = view.get<TickerScriptComponent>(entity);
                 if (!scriptComponent.functionName.empty()) {
                     try {
                         uint64_t registryPtr = reinterpret_cast<uint64_t>(registry);
@@ -202,6 +202,41 @@ namespace MQEngine {
         } catch (const std::exception& e) {
             std::cerr << "Error during NodeEnvironment tick: " << e.what() << std::endl;
         }
+    }
+
+    void ScriptSystem::start() {
+        if (!m_nodeEnv || !m_dataManager) {
+            return;
+        }
+
+        auto registries = m_dataManager->currentRegistries();
+        for (auto& registry : registries) {
+            auto view = registry->view<OnStartScriptComponent>();
+            for (auto entity : view) {
+                if (m_startedEntities.find(entity) == m_startedEntities.end()) {
+                    const auto& scriptComponent = view.get<OnStartScriptComponent>(entity);
+                    if (!scriptComponent.functionName.empty()) {
+                        try {
+                            uint64_t registryPtr = reinterpret_cast<uint64_t>(registry);
+                            std::string setupCode = "globalThis.entityInfo.registry_ptr = " + std::to_string(registryPtr) +
+                                                  "; globalThis.entityInfo.entity_id = " + std::to_string(static_cast<uint32_t>(entity)) + ";";
+                            m_nodeEnv->excuteScript(setupCode);
+
+                            std::string callCode = scriptComponent.functionName + "();";
+                            m_nodeEnv->excuteScript(callCode);
+                            m_startedEntities.insert(entity);
+                        } catch (const std::exception& e) {
+                            std::cerr << "Error executing OnStart script '" << scriptComponent.functionName << "': " << e.what() << std::endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void ScriptSystem::cleanUp()
+    {
+        m_startedEntities.clear();
     }
     
     ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSAny& jsAny, const std::string& fieldName) {

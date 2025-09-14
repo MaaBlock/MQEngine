@@ -10,7 +10,8 @@ namespace MQEngine {
         registerComponent<ScaleComponent>("ScaleComponent");
         registerComponent<CameraComponent>("CameraComponent");
         registerComponent<NameTag>("NameTag");
-        registerComponent<ScriptComponent>("ScriptComponent");
+        registerComponent<TickerScriptComponent>("TickerScriptComponent");
+        registerComponent<OnStartScriptComponent>("OnStartScriptComponent");
         registerComponent<StaticMeshInstance>("StaticMeshInstance");
         registerComponent<DirectionalLightComponent>("DirectionalLightComponent");
         registerComponent<DiffuseTextureComponent>("DiffuseTextureComponent");

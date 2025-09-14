@@ -301,6 +301,7 @@ namespace MQEngine
 
         if (m_scriptSystem) {
             m_scriptSystem->loadScripts();
+            m_scriptSystem->start();
         }
     }
 
@@ -314,6 +315,9 @@ namespace MQEngine
 
     void Engine::term()
     {
+        if (m_scriptSystem) {
+            m_scriptSystem->cleanUp();
+        }
         RenderCallBack::WindowClose callback;
         m_application->renderCallBackDispatcher.trigger(callback);
 

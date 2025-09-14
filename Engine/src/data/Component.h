@@ -31,17 +31,17 @@ namespace MQEngine {
     };
     BOOST_DESCRIBE_STRUCT(StaticMeshInstance, (), (modelUuid, meshName))
 
-    struct ENGINE_API ScriptComponent
+    struct ENGINE_API TickerScriptComponent
     {
-        std::string functionName;       
-        
-        ScriptComponent() = default;
-        
-        ScriptComponent(const std::string& funcName) 
+        std::string functionName;
+
+        TickerScriptComponent() = default;
+
+        TickerScriptComponent(const std::string& funcName)
             : functionName(funcName)
         {
         }
-        
+
         friend class boost::serialization::access;
 
         template<class Archive>
@@ -50,7 +50,28 @@ namespace MQEngine {
             ar & functionName;
         }
     };
-    BOOST_DESCRIBE_STRUCT(ScriptComponent, (), (functionName))
+    BOOST_DESCRIBE_STRUCT(TickerScriptComponent, (), (functionName))
+
+    struct ENGINE_API OnStartScriptComponent
+    {
+        std::string functionName;
+
+        OnStartScriptComponent() = default;
+
+        OnStartScriptComponent(const std::string& funcName)
+            : functionName(funcName)
+        {
+        }
+
+        friend class boost::serialization::access;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & functionName;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(OnStartScriptComponent, (), (functionName))
 
     struct ENGINE_API DirectionalLightComponent
     {

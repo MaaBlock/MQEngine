@@ -11,7 +11,7 @@ namespace MQEngine {
     class SceneEntityViewer {
     public:
         SceneEntityViewer();
-        void renderGloabaEntityList(Scene* scene);
+        void renderGlobalEntityList(Scene* scene);
         void renderTrunkEntityList(Scene* scene, std::string trunkName);
         void renderSceneEntityList(Scene* scene);
         void render();
@@ -30,9 +30,16 @@ namespace MQEngine {
         void renderCreateEntityDialog(Scene* scene);
         void showCreateEntityDialog(const std::string& targetTrunk = "", bool isGlobal = true);
         void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
+        void deleteEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
         void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "");
         void addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
+        void renderScriptTypeSelectionPopup();
+
+        bool m_showScriptTypePopup = false;
+        std::string m_draggedFunctionName;
+        entt::entity m_targetEntity;
+        bool m_targetIsGlobal;
     };
 
 } // MQEngine
