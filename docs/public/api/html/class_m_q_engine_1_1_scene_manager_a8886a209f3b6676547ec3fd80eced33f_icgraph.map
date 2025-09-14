@@ -1,0 +1,8 @@
+<map id="MQEngine::SceneManager::getSceneUuid" name="MQEngine::SceneManager::getSceneUuid">
+<area shape="rect" id="Node000001" title=" " alt="" coords="452,35,627,73"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_scene_manager.html#a30c42c6058eac51c209d2013d929d4bb" title=" " alt="" coords="229,5,404,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="436,43,404,39,405,34,437,38"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_scene_manager.html#aacf6a8d63c28578b04015ca730242e1d" title=" " alt="" coords="5,35,181,73"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="436,58,404,58,229,58,181,58,181,52,229,53,404,53,436,52"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="214,41,181,45,181,40,213,36"/>
+</map>

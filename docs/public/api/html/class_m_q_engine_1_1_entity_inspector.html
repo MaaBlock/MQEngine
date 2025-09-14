@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine::EntityInspector类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_m_q_engine_1_1_entity_inspector.html','','class_m_q_engine_1_1_entity_inspector-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">MQEngine::EntityInspector类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_entity_inspector_8h_source.html">EntityInspector.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a64e00874909b218194c7ff362432c6d2" id="r_a64e00874909b218194c7ff362432c6d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64e00874909b218194c7ff362432c6d2">EntityInspector</a> ()</td></tr>
+<tr class="memitem:ac1d2000a4535ce6d11cf34ee2e59e374" id="r_ac1d2000a4535ce6d11cf34ee2e59e374"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1d2000a4535ce6d11cf34ee2e59e374">render</a> ()</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:abdceff784484c811de9172a09eb2378c" id="r_abdceff784484c811de9172a09eb2378c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdceff784484c811de9172a09eb2378c">renderEntityDetails</a> ()</td></tr>
+<tr class="memitem:aefbc84f582917571e4c9ccc5bb6ff0cf" id="r_aefbc84f582917571e4c9ccc5bb6ff0cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefbc84f582917571e4c9ccc5bb6ff0cf">renderComponents</a> (entt::registry *registry)</td></tr>
+<tr class="memitem:a779ee9027f84fb40897972bd9e01fd48" id="r_a779ee9027f84fb40897972bd9e01fd48"><td class="memTemplParams" colspan="2">template&lt;typename ComponentType&gt; </td></tr>
+<tr class="memitem:a779ee9027f84fb40897972bd9e01fd48 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a779ee9027f84fb40897972bd9e01fd48">tryRenderComponent</a> (entt::registry *registry, entt::entity entity)</td></tr>
+</table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
+<a id="a64e00874909b218194c7ff362432c6d2" name="a64e00874909b218194c7ff362432c6d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e00874909b218194c7ff362432c6d2">&#9670;&#160;</a></span>EntityInspector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MQEngine::EntityInspector::EntityInspector </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="ac1d2000a4535ce6d11cf34ee2e59e374" name="ac1d2000a4535ce6d11cf34ee2e59e374"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1d2000a4535ce6d11cf34ee2e59e374">&#9670;&#160;</a></span>render()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::EntityInspector::render </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_ac1d2000a4535ce6d11cf34ee2e59e374_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_ac1d2000a4535ce6d11cf34ee2e59e374_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_ac1d2000a4535ce6d11cf34ee2e59e374_cgraph" id="aclass_m_q_engine_1_1_entity_inspector_ac1d2000a4535ce6d11cf34ee2e59e374_cgraph">
+<area shape="rect" title=" " alt="" coords="5,37,202,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#abdceff784484c811de9172a09eb2378c" title=" " alt="" coords="250,37,446,76"/>
+<area shape="poly" title=" " alt="" coords="202,54,234,54,234,59,202,59"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="512,5,673,44"/>
+<area shape="poly" title=" " alt="" coords="446,41,496,35,497,40,447,46"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#aefbc84f582917571e4c9ccc5bb6ff0cf" title=" " alt="" coords="494,68,690,107"/>
+<area shape="poly" title=" " alt="" coords="447,66,479,70,478,76,446,72"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#a779ee9027f84fb40897972bd9e01fd48" title=" " alt="" coords="738,68,935,107"/>
+<area shape="poly" title=" " alt="" coords="691,85,723,85,723,90,691,90"/>
+<area shape="rect" href="namespace_m_q_engine.html#ad8e28b3bc806aad8f4735fe0f725275f" title=" " alt="" coords="983,75,1179,100"/>
+<area shape="poly" title=" " alt="" coords="935,85,967,85,967,90,935,90"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aefbc84f582917571e4c9ccc5bb6ff0cf" name="aefbc84f582917571e4c9ccc5bb6ff0cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefbc84f582917571e4c9ccc5bb6ff0cf">&#9670;&#160;</a></span>renderComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::EntityInspector::renderComponents </td>
+          <td>(</td>
+          <td class="paramtype">entt::registry *</td>          <td class="paramname"><span class="paramname"><em>registry</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_cgraph" id="aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,202,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#a779ee9027f84fb40897972bd9e01fd48" title=" " alt="" coords="250,5,446,44"/>
+<area shape="poly" title=" " alt="" coords="202,22,234,22,234,27,202,27"/>
+<area shape="rect" href="namespace_m_q_engine.html#ad8e28b3bc806aad8f4735fe0f725275f" title=" " alt="" coords="494,12,690,37"/>
+<area shape="poly" title=" " alt="" coords="446,22,478,22,478,27,446,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_icgraph" id="aclass_m_q_engine_1_1_entity_inspector_aefbc84f582917571e4c9ccc5bb6ff0cf_icgraph">
+<area shape="rect" title=" " alt="" coords="494,5,690,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#abdceff784484c811de9172a09eb2378c" title=" " alt="" coords="250,5,446,44"/>
+<area shape="poly" title=" " alt="" coords="479,27,447,27,447,22,479,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#ac1d2000a4535ce6d11cf34ee2e59e374" title=" " alt="" coords="5,5,202,44"/>
+<area shape="poly" title=" " alt="" coords="234,27,202,27,202,22,234,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abdceff784484c811de9172a09eb2378c" name="abdceff784484c811de9172a09eb2378c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdceff784484c811de9172a09eb2378c">&#9670;&#160;</a></span>renderEntityDetails()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::EntityInspector::renderEntityDetails </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_cgraph" id="aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,37,202,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="267,5,428,44"/>
+<area shape="poly" title=" " alt="" coords="202,41,252,35,252,40,202,46"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#aefbc84f582917571e4c9ccc5bb6ff0cf" title=" " alt="" coords="250,68,446,107"/>
+<area shape="poly" title=" " alt="" coords="202,66,234,70,234,76,202,72"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#a779ee9027f84fb40897972bd9e01fd48" title=" " alt="" coords="494,68,690,107"/>
+<area shape="poly" title=" " alt="" coords="446,85,478,85,478,90,446,90"/>
+<area shape="rect" href="namespace_m_q_engine.html#ad8e28b3bc806aad8f4735fe0f725275f" title=" " alt="" coords="738,75,935,100"/>
+<area shape="poly" title=" " alt="" coords="691,85,723,85,723,90,691,90"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_icgraph" id="aclass_m_q_engine_1_1_entity_inspector_abdceff784484c811de9172a09eb2378c_icgraph">
+<area shape="rect" title=" " alt="" coords="250,5,446,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#ac1d2000a4535ce6d11cf34ee2e59e374" title=" " alt="" coords="5,5,202,44"/>
+<area shape="poly" title=" " alt="" coords="234,27,202,27,202,22,234,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a779ee9027f84fb40897972bd9e01fd48" name="a779ee9027f84fb40897972bd9e01fd48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a779ee9027f84fb40897972bd9e01fd48">&#9670;&#160;</a></span>tryRenderComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ComponentType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::EntityInspector::tryRenderComponent </td>
+          <td>(</td>
+          <td class="paramtype">entt::registry *</td>          <td class="paramname"><span class="paramname"><em>registry</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_cgraph" id="aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,202,44"/>
+<area shape="rect" href="namespace_m_q_engine.html#ad8e28b3bc806aad8f4735fe0f725275f" title=" " alt="" coords="250,12,446,37"/>
+<area shape="poly" title=" " alt="" coords="202,22,234,22,234,27,202,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_icgraph" id="aclass_m_q_engine_1_1_entity_inspector_a779ee9027f84fb40897972bd9e01fd48_icgraph">
+<area shape="rect" title=" " alt="" coords="738,5,935,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#aefbc84f582917571e4c9ccc5bb6ff0cf" title=" " alt="" coords="494,5,690,44"/>
+<area shape="poly" title=" " alt="" coords="723,27,691,27,691,22,723,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#abdceff784484c811de9172a09eb2378c" title=" " alt="" coords="250,5,446,44"/>
+<area shape="poly" title=" " alt="" coords="479,27,447,27,447,22,479,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_entity_inspector.html#ac1d2000a4535ce6d11cf34ee2e59e374" title=" " alt="" coords="5,5,202,44"/>
+<area shape="poly" title=" " alt="" coords="234,27,202,27,202,22,234,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>MQEngine/Editor/src/SceneViewer/<a class="el" href="_entity_inspector_8h_source.html">EntityInspector.h</a></li>
+<li>MQEngine/Editor/src/SceneViewer/<a class="el" href="_entity_inspector_8cpp.html">EntityInspector.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_m_q_engine.html">MQEngine</a></li><li class="navelem"><a href="class_m_q_engine_1_1_entity_inspector.html">EntityInspector</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

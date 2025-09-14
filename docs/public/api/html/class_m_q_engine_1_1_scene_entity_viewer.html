@@ -1,0 +1,1052 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine::SceneEntityViewer类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_m_q_engine_1_1_scene_entity_viewer.html','','class_m_q_engine_1_1_scene_entity_viewer-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">MQEngine::SceneEntityViewer类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_scene_entity_viewer_8h_source.html">SceneEntityViewer.h</a>&gt;</code></p>
+<div class="dynheader">
+MQEngine::SceneEntityViewer 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer__coll__graph.png" border="0" usemap="#a_m_q_engine_1_1_scene_entity_viewer_coll__map" loading="lazy" alt="Collaboration graph"/></div>
+<map name="a_m_q_engine_1_1_scene_entity_viewer_coll__map" id="a_m_q_engine_1_1_scene_entity_viewer_coll__map">
+<area shape="rect" title=" " alt="" coords="5,195,216,219"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html" title=" " alt="" coords="26,100,195,125"/>
+<area shape="poly" title=" " alt="" coords="113,141,113,194,108,194,108,141"/>
+<area shape="rect" href="struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="16,5,205,30"/>
+<area shape="poly" title=" " alt="" coords="113,46,113,100,108,100,108,46"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ac5ab431465420a0d080c6cbc1771eb6e" id="r_ac5ab431465420a0d080c6cbc1771eb6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5ab431465420a0d080c6cbc1771eb6e">SceneEntityViewer</a> ()</td></tr>
+<tr class="memitem:a62175a746d495310a107ae43c87f6bd5" id="r_a62175a746d495310a107ae43c87f6bd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62175a746d495310a107ae43c87f6bd5">renderGloabaEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="memitem:a78bc78d55ecaeb8c7c232af69d0f797b" id="r_a78bc78d55ecaeb8c7c232af69d0f797b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78bc78d55ecaeb8c7c232af69d0f797b">renderTrunkEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene, std::string trunkName)</td></tr>
+<tr class="memitem:a34f7f70112edaa67aca17ba6deb98540" id="r_a34f7f70112edaa67aca17ba6deb98540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34f7f70112edaa67aca17ba6deb98540">renderSceneEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="memitem:a4fa5025fa9bb28ea96e7526b2aa2731b" id="r_a4fa5025fa9bb28ea96e7526b2aa2731b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fa5025fa9bb28ea96e7526b2aa2731b">render</a> ()</td></tr>
+<tr class="memitem:a18432073dde1c1fec4e90ae588898d58" id="r_a18432073dde1c1fec4e90ae588898d58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18432073dde1c1fec4e90ae588898d58">selectEntity</a> (entt::entity entity, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=false)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:a40682ccf79e101b58937ba18ca74fbdd" id="r_a40682ccf79e101b58937ba18ca74fbdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40682ccf79e101b58937ba18ca74fbdd">renderCreateEntityDialog</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="memitem:a5e2721f8ac43d75b191c9d7b97f405e5" id="r_a5e2721f8ac43d75b191c9d7b97f405e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e2721f8ac43d75b191c9d7b97f405e5">showCreateEntityDialog</a> (const std::string &amp;targetTrunk=&quot;&quot;, bool isGlobal=true)</td></tr>
+<tr class="memitem:a590baec1eafe0d79288b7c35db412a22" id="r_a590baec1eafe0d79288b7c35db412a22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a590baec1eafe0d79288b7c35db412a22">createEntity</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene, const std::string &amp;name, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=true)</td></tr>
+<tr class="memitem:ae19f68282012fa3e37b75cba1e5db14f" id="r_ae19f68282012fa3e37b75cba1e5db14f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae19f68282012fa3e37b75cba1e5db14f">addStaticMeshComponent</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;meshName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
+<tr class="memitem:a5d6af110b9eea865002235f0dbc53f83" id="r_a5d6af110b9eea865002235f0dbc53f83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d6af110b9eea865002235f0dbc53f83">addScriptComponent</a> (entt::entity entity, const std::string &amp;functionName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
+<tr class="memitem:a4d28835e8105ec229b0c27d776648eda" id="r_a4d28835e8105ec229b0c27d776648eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d28835e8105ec229b0c27d776648eda">addDiffuseTextureComponent</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;texturePath, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a6ae98c71d26b12838c05c75be86e9d1a" id="r_a6ae98c71d26b12838c05c75be86e9d1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_q_engine_1_1_data_manager.html">DataManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ae98c71d26b12838c05c75be86e9d1a">m_dataManager</a></td></tr>
+<tr class="memitem:a8d26330c28e9f4bb9f914dd7f1d92875" id="r_a8d26330c28e9f4bb9f914dd7f1d92875"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d26330c28e9f4bb9f914dd7f1d92875">m_showCreateEntityDialog</a> = false</td></tr>
+<tr class="memitem:a2eaf2afac5bce0d23af9905fa3787ef3" id="r_a2eaf2afac5bce0d23af9905fa3787ef3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2eaf2afac5bce0d23af9905fa3787ef3">m_newEntityName</a> [256] = &quot;entity&quot;</td></tr>
+<tr class="memitem:a836a7faf990d5ac0216391c527791e48" id="r_a836a7faf990d5ac0216391c527791e48"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a836a7faf990d5ac0216391c527791e48">m_targetTrunkName</a></td></tr>
+<tr class="memitem:a5062679e3cd27c644bb1173ee8a5e375" id="r_a5062679e3cd27c644bb1173ee8a5e375"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5062679e3cd27c644bb1173ee8a5e375">m_createInGlobal</a> = true</td></tr>
+<tr class="memitem:a3e8190f0271d14f8ebf1d2218166339e" id="r_a3e8190f0271d14f8ebf1d2218166339e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e8190f0271d14f8ebf1d2218166339e">m_showContextMenu</a> = false</td></tr>
+<tr class="memitem:ab8e48f71b3957834b264945e961c3548" id="r_ab8e48f71b3957834b264945e961c3548"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8e48f71b3957834b264945e961c3548">m_contextMenuTarget</a></td></tr>
+</table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
+<a id="ac5ab431465420a0d080c6cbc1771eb6e" name="ac5ab431465420a0d080c6cbc1771eb6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5ab431465420a0d080c6cbc1771eb6e">&#9670;&#160;</a></span>SceneEntityViewer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MQEngine::SceneEntityViewer::SceneEntityViewer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="a4d28835e8105ec229b0c27d776648eda" name="a4d28835e8105ec229b0c27d776648eda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d28835e8105ec229b0c27d776648eda">&#9670;&#160;</a></span>addDiffuseTextureComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::addDiffuseTextureComponent </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>modelUuid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>texturePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,223,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="278,5,481,44"/>
+<area shape="poly" title=" " alt="" coords="208,58,269,45,270,50,210,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="271,68,488,93"/>
+<area shape="poly" title=" " alt="" coords="223,78,255,78,255,83,223,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="299,117,460,156"/>
+<area shape="poly" title=" " alt="" coords="210,98,284,114,283,119,208,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,998,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,78,733,72,765,69"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5d6af110b9eea865002235f0dbc53f83" name="a5d6af110b9eea865002235f0dbc53f83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d6af110b9eea865002235f0dbc53f83">&#9670;&#160;</a></span>addScriptComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::addScriptComponent </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>functionName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae19f68282012fa3e37b75cba1e5db14f" name="ae19f68282012fa3e37b75cba1e5db14f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae19f68282012fa3e37b75cba1e5db14f">&#9670;&#160;</a></span>addStaticMeshComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::addStaticMeshComponent </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>modelUuid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>meshName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a590baec1eafe0d79288b7c35db412a22" name="a590baec1eafe0d79288b7c35db412a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a590baec1eafe0d79288b7c35db412a22">&#9670;&#160;</a></span>createEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::createEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a590baec1eafe0d79288b7c35db412a22_icgraph">
+<area shape="rect" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="506,27,475,27,475,22,506,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4fa5025fa9bb28ea96e7526b2aa2731b" name="a4fa5025fa9bb28ea96e7526b2aa2731b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fa5025fa9bb28ea96e7526b2aa2731b">&#9670;&#160;</a></span>render()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::render </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,440,216,479"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd" title=" " alt="" coords="264,295,474,333"/>
+<area shape="poly" title=" " alt="" coords="146,437,318,339,321,343,148,442"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,471,474,509"/>
+<area shape="poly" title=" " alt="" coords="217,469,248,473,248,478,216,474"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22" title=" " alt="" coords="812,55,1022,93"/>
+<area shape="poly" title=" " alt="" coords="410,292,577,214,793,118,846,97,848,102,795,123,579,219,412,297"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="1095,201,1298,240"/>
+<area shape="poly" title=" " alt="" coords="994,91,1041,110,1107,149,1162,190,1158,194,1104,154,1038,115,992,96"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="1088,364,1305,389"/>
+<area shape="poly" title=" " alt="" coords="962,91,1004,118,1024,135,1042,155,1055,177,1062,197,1066,236,1070,273,1077,292,1090,312,1116,337,1147,355,1144,360,1113,341,1086,316,1072,294,1065,274,1060,236,1056,198,1050,179,1038,158,1021,139,1001,122,960,96"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="1116,264,1277,303"/>
+<area shape="poly" title=" " alt="" coords="1014,92,1041,111,1056,128,1063,146,1066,182,1069,216,1076,233,1090,249,1104,260,1100,264,1086,253,1072,236,1064,218,1061,182,1058,148,1051,131,1038,115,1011,96"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="1102,583,1291,608"/>
+<area shape="poly" title=" " alt="" coords="383,508,404,543,436,587,476,630,523,666,560,685,593,698,652,709,715,712,795,715,919,732,973,732,1039,715,1079,696,1116,670,1173,617,1176,621,1120,675,1082,701,1041,720,973,737,919,738,794,721,715,717,652,715,592,703,558,690,521,671,472,634,431,590,400,546,378,511"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="522,478,746,502"/>
+<area shape="poly" title=" " alt="" coords="474,487,506,487,506,493,474,493"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="543,527,725,552"/>
+<area shape="poly" title=" " alt="" coords="475,507,550,521,549,526,474,512"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="529,357,739,396"/>
+<area shape="poly" title=" " alt="" coords="415,468,572,400,574,405,417,473"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="529,264,739,303"/>
+<area shape="poly" title=" " alt="" coords="386,468,443,409,520,342,577,308,580,312,524,347,447,413,389,472"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="550,632,718,657"/>
+<area shape="poly" title=" " alt="" coords="405,507,599,622,597,626,403,512"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="794,534,1040,558"/>
+<area shape="poly" title=" " alt="" coords="701,500,837,527,836,533,700,505"/>
+<area shape="poly" title=" " alt="" coords="991,556,1108,577,1107,582,991,561"/>
+<area shape="poly" title=" " alt="" coords="661,394,720,434,756,453,795,467,863,483,917,489,971,484,1039,467,1076,454,1110,436,1167,397,1170,401,1113,440,1078,459,1040,472,972,489,917,494,862,489,794,472,754,458,717,439,658,398"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="808,232,1026,271"/>
+<area shape="poly" title=" " alt="" coords="671,354,745,312,768,295,793,280,808,274,810,278,796,284,771,299,748,316,674,359"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="812,357,1022,396"/>
+<area shape="poly" title=" " alt="" coords="740,374,796,374,796,379,740,379"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="812,420,1022,459"/>
+<area shape="poly" title=" " alt="" coords="725,394,812,413,811,419,724,399"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="812,169,1022,208"/>
+<area shape="poly" title=" " alt="" coords="683,354,715,336,744,312,760,288,766,264,774,240,792,217,797,214,800,218,796,221,778,243,771,266,765,290,748,316,718,340,686,359"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="812,295,1022,333"/>
+<area shape="poly" title=" " alt="" coords="724,354,811,335,812,340,725,359"/>
+<area shape="poly" title=" " alt="" coords="1026,237,1079,231,1080,236,1026,242"/>
+<area shape="poly" title=" " alt="" coords="1012,269,1041,279,1066,294,1089,312,1161,354,1158,359,1086,316,1063,299,1039,284,1010,274"/>
+<area shape="poly" title=" " alt="" coords="1026,261,1101,270,1100,275,1026,266"/>
+<area shape="poly" title=" " alt="" coords="1019,354,1038,342,1049,332,1055,321,1061,297,1068,273,1086,249,1090,246,1093,250,1090,253,1072,275,1066,299,1060,323,1053,335,1041,347,1022,359"/>
+<area shape="poly" title=" " alt="" coords="1023,374,1072,374,1072,379,1023,379"/>
+<area shape="poly" title=" " alt="" coords="998,354,1039,342,1134,306,1136,311,1041,347,1000,359"/>
+<area shape="poly" title=" " alt="" coords="1021,418,1038,405,1052,387,1059,368,1061,329,1063,289,1071,269,1086,249,1087,248,1091,252,1090,253,1075,272,1068,290,1067,330,1065,369,1057,389,1042,409,1024,422"/>
+<area shape="poly" title=" " alt="" coords="1006,417,1122,390,1124,395,1007,422"/>
+<area shape="poly" title=" " alt="" coords="1014,417,1038,405,1053,393,1063,380,1072,366,1086,351,1145,309,1148,313,1089,355,1076,369,1067,383,1057,396,1041,409,1016,422"/>
+<area shape="poly" title=" " alt="" coords="639,262,657,214,688,151,708,119,733,88,761,61,793,40,858,11,888,5,916,3,944,6,974,13,1041,40,1087,69,1126,108,1158,149,1180,186,1176,189,1153,152,1122,111,1084,73,1038,44,972,18,943,11,916,8,888,10,860,16,796,44,764,65,737,92,713,122,692,154,662,216,644,264"/>
+<area shape="poly" title=" " alt="" coords="650,261,709,205,749,176,793,154,862,131,921,119,949,119,977,125,1008,136,1041,154,1054,165,1061,176,1068,201,1073,226,1079,238,1089,249,1103,259,1100,263,1086,253,1075,241,1068,228,1063,202,1057,179,1050,168,1038,159,1006,141,976,130,948,125,921,124,864,136,795,159,751,180,712,209,654,265"/>
+<area shape="poly" title=" " alt="" coords="740,269,793,263,793,268,740,274"/>
+<area shape="poly" title=" " alt="" coords="684,301,795,342,822,350,820,355,793,347,682,306"/>
+<area shape="poly" title=" " alt="" coords="682,301,716,319,748,343,763,360,772,376,780,391,796,405,805,411,802,415,793,409,776,394,767,378,759,363,745,347,713,324,680,305"/>
+<area shape="poly" title=" " alt="" coords="679,261,793,217,815,210,817,215,795,222,681,266"/>
+<area shape="poly" title=" " alt="" coords="740,292,797,298,796,303,740,297"/>
+<area shape="poly" title=" " alt="" coords="712,629,794,618,947,605,1086,597,1086,602,947,610,795,623,712,634"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="815,632,1019,657"/>
+<area shape="poly" title=" " alt="" coords="719,642,800,642,800,647,719,647"/>
+<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="805,682,1029,706"/>
+<area shape="poly" title=" " alt="" coords="710,655,828,676,827,681,709,660"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a40682ccf79e101b58937ba18ca74fbdd" name="a40682ccf79e101b58937ba18ca74fbdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40682ccf79e101b58937ba18ca74fbdd">&#9670;&#160;</a></span>renderCreateEntityDialog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderCreateEntityDialog </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22" title=" " alt="" coords="264,61,474,100"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="529,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="462,58,521,45,523,50,463,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="522,68,739,93"/>
+<area shape="poly" title=" " alt="" coords="474,78,506,78,506,83,474,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="550,117,711,156"/>
+<area shape="poly" title=" " alt="" coords="463,98,535,114,534,119,462,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a40682ccf79e101b58937ba18ca74fbdd_icgraph">
+<area shape="rect" title=" " alt="" coords="264,5,474,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a62175a746d495310a107ae43c87f6bd5" name="a62175a746d495310a107ae43c87f6bd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62175a746d495310a107ae43c87f6bd5">&#9670;&#160;</a></span>renderGloabaEntityList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderGloabaEntityList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,160,216,199"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="264,5,481,44"/>
+<area shape="poly" title=" " alt="" coords="129,158,185,106,223,77,262,53,273,48,275,53,265,58,226,82,189,110,132,162"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="529,135,746,160"/>
+<area shape="poly" title=" " alt="" coords="216,183,343,185,481,178,574,161,575,166,481,183,343,191,216,188"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="267,68,478,107"/>
+<area shape="poly" title=" " alt="" coords="157,157,263,115,282,109,284,114,265,121,159,162"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="267,131,478,169"/>
+<area shape="poly" title=" " alt="" coords="216,165,252,161,252,166,216,170"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="267,245,478,284"/>
+<area shape="poly" title=" " alt="" coords="173,197,297,238,295,243,171,202"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="267,308,478,347"/>
+<area shape="poly" title=" " alt="" coords="134,197,191,245,227,271,265,293,279,300,277,304,262,298,224,275,187,249,131,201"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="536,71,739,109"/>
+<area shape="poly" title=" " alt="" coords="455,42,542,64,541,69,453,47"/>
+<area shape="poly" title=" " alt="" coords="463,42,483,53,499,70,507,87,515,103,531,119,545,127,542,131,527,123,511,106,502,89,495,73,479,57,461,47"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="557,8,718,47"/>
+<area shape="poly" title=" " alt="" coords="482,23,541,24,541,29,482,28"/>
+<area shape="poly" title=" " alt="" coords="478,86,520,86,520,91,478,91"/>
+<area shape="poly" title=" " alt="" coords="462,105,566,128,564,134,461,110"/>
+<area shape="poly" title=" " alt="" coords="461,65,541,46,542,52,462,70"/>
+<area shape="poly" title=" " alt="" coords="461,127,533,111,535,116,462,133"/>
+<area shape="poly" title=" " alt="" coords="478,146,513,146,513,151,478,152"/>
+<area shape="poly" title=" " alt="" coords="457,128,479,116,494,102,503,87,511,71,527,56,541,48,544,52,531,60,516,74,507,89,499,105,483,120,460,132"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph">
+<area shape="rect" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="506,27,475,27,475,22,506,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a34f7f70112edaa67aca17ba6deb98540" name="a34f7f70112edaa67aca17ba6deb98540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34f7f70112edaa67aca17ba6deb98540">&#9670;&#160;</a></span>renderSceneEntityList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderSceneEntityList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph">
+<area shape="rect" title=" " alt="" coords="5,173,216,212"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="843,55,1033,79"/>
+<area shape="poly" title=" " alt="" coords="166,170,263,140,415,110,568,89,710,76,828,68,828,73,711,81,569,94,416,115,264,146,167,175"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="264,5,488,30"/>
+<area shape="poly" title=" " alt="" coords="125,171,181,109,220,75,262,46,292,33,294,38,265,51,223,79,185,113,129,174"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="285,204,467,229"/>
+<area shape="poly" title=" " alt="" coords="216,199,269,204,269,209,216,205"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="271,480,481,518"/>
+<area shape="poly" title=" " alt="" coords="123,211,143,255,175,313,216,376,266,433,290,453,317,470,314,474,287,457,262,437,212,379,170,316,138,257,118,213"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="271,385,481,424"/>
+<area shape="poly" title=" " alt="" coords="138,210,340,373,337,377,135,214"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="292,155,460,179"/>
+<area shape="poly" title=" " alt="" coords="216,180,276,174,277,179,216,185"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="536,5,781,30"/>
+<area shape="poly" title=" " alt="" coords="488,15,521,15,521,20,488,20"/>
+<area shape="poly" title=" " alt="" coords="733,28,849,49,848,54,732,33"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="550,354,767,393"/>
+<area shape="poly" title=" " alt="" coords="411,477,487,433,510,416,535,402,550,396,552,401,537,407,513,421,489,437,414,482"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="829,579,1047,603"/>
+<area shape="poly" title=" " alt="" coords="392,517,415,550,448,588,489,626,537,654,602,674,656,677,712,669,781,654,845,634,899,609,902,613,846,639,782,659,713,674,657,683,601,679,535,659,486,630,444,592,410,553,387,520"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="554,542,764,581"/>
+<area shape="poly" title=" " alt="" coords="467,516,554,536,553,541,466,522"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="554,605,764,644"/>
+<area shape="poly" title=" " alt="" coords="406,516,465,554,537,591,553,597,551,602,535,596,462,559,403,521"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="554,480,764,518"/>
+<area shape="poly" title=" " alt="" coords="481,496,538,496,538,502,481,502"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="554,417,764,456"/>
+<area shape="poly" title=" " alt="" coords="466,476,553,457,554,462,467,482"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="836,513,1040,552"/>
+<area shape="poly" title=" " alt="" coords="762,391,783,402,800,417,809,433,817,449,831,465,885,503,882,507,828,469,813,452,804,435,795,421,780,407,760,396"/>
+<area shape="poly" title=" " alt="" coords="769,392,783,402,799,422,806,443,808,483,810,523,817,542,831,561,840,568,837,573,827,565,812,545,804,524,803,484,801,444,794,425,779,406,766,396"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="857,417,1019,456"/>
+<area shape="poly" title=" " alt="" coords="749,391,843,412,842,418,747,396"/>
+<area shape="poly" title=" " alt="" coords="764,548,821,542,821,547,764,553"/>
+<area shape="poly" title=" " alt="" coords="764,570,814,575,814,581,764,575"/>
+<area shape="poly" title=" " alt="" coords="747,539,780,527,805,514,828,498,889,462,891,466,831,503,807,518,782,532,749,544"/>
+<area shape="poly" title=" " alt="" coords="749,602,780,591,804,578,828,565,853,555,855,560,830,569,807,583,782,596,750,607"/>
+<area shape="poly" title=" " alt="" coords="764,609,813,603,814,608,765,614"/>
+<area shape="poly" title=" " alt="" coords="763,602,780,592,797,570,804,548,811,524,827,499,851,478,877,461,880,465,854,482,831,502,816,526,810,550,802,573,783,596,766,607"/>
+<area shape="poly" title=" " alt="" coords="481,390,535,384,535,390,482,396"/>
+<area shape="poly" title=" " alt="" coords="410,382,483,347,529,329,580,315,632,307,685,306,736,316,783,339,798,353,807,368,812,399,815,432,821,449,831,465,853,486,879,503,876,508,850,490,827,469,816,451,810,433,807,400,802,370,794,357,780,344,734,321,685,312,633,312,581,320,531,335,485,352,412,387"/>
+<area shape="poly" title=" " alt="" coords="396,382,455,336,494,312,535,295,603,276,660,269,715,274,782,295,823,316,860,345,891,375,915,403,911,407,887,379,856,349,820,321,780,300,714,279,660,274,605,281,537,300,496,317,458,340,399,387"/>
+<area shape="poly" title=" " alt="" coords="423,422,457,441,490,465,505,482,513,498,522,513,538,528,547,533,544,538,534,532,518,517,509,501,500,485,486,469,454,445,420,426"/>
+<area shape="poly" title=" " alt="" coords="430,422,462,440,490,465,502,483,508,500,512,532,518,563,525,577,538,592,542,595,539,599,534,596,520,580,513,564,507,533,503,501,497,485,486,469,459,445,427,427"/>
+<area shape="poly" title=" " alt="" coords="424,422,537,464,563,473,562,478,535,470,423,427"/>
+<area shape="poly" title=" " alt="" coords="482,414,538,420,538,425,481,419"/>
+<area shape="poly" title=" " alt="" coords="449,151,849,80,850,85,450,157"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="557,155,760,179"/>
+<area shape="poly" title=" " alt="" coords="460,164,541,164,541,170,460,170"/>
+<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="546,204,771,229"/>
+<area shape="poly" title=" " alt="" coords="451,177,569,198,568,203,450,183"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph">
+<area shape="rect" title=" " alt="" coords="264,5,474,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a78bc78d55ecaeb8c7c232af69d0f797b" name="a78bc78d55ecaeb8c7c232af69d0f797b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78bc78d55ecaeb8c7c232af69d0f797b">&#9670;&#160;</a></span>renderTrunkEntityList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderTrunkEntityList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,165,216,204"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="264,40,481,79"/>
+<area shape="poly" title=" " alt="" coords="137,162,193,125,263,87,276,82,278,87,265,92,196,129,140,167"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="536,44,739,83"/>
+<area shape="poly" title=" " alt="" coords="121,163,143,131,175,91,215,54,263,25,302,12,343,5,385,3,427,5,505,18,572,36,570,41,504,23,426,10,385,8,344,10,303,17,265,30,218,58,179,95,147,134,126,166"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="557,161,718,200"/>
+<area shape="poly" title=" " alt="" coords="196,202,264,213,372,220,481,213,547,201,548,206,481,218,372,225,263,218,195,207"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="267,103,478,141"/>
+<area shape="poly" title=" " alt="" coords="194,162,273,143,274,148,195,167"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="267,165,478,204"/>
+<area shape="poly" title=" " alt="" coords="216,182,252,182,252,187,216,187"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="267,280,478,319"/>
+<area shape="poly" title=" " alt="" coords="150,202,265,258,299,272,297,277,263,263,148,207"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="267,343,478,381"/>
+<area shape="poly" title=" " alt="" coords="129,203,184,265,223,299,265,329,273,333,271,338,262,333,219,304,181,269,125,206"/>
+<area shape="poly" title=" " alt="" coords="482,58,521,59,520,64,482,64"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="529,110,746,134"/>
+<area shape="poly" title=" " alt="" coords="458,77,568,103,567,108,457,82"/>
+<area shape="poly" title=" " alt="" coords="462,77,483,88,498,102,507,116,516,130,531,144,545,152,542,157,527,148,512,134,503,119,494,105,479,92,459,82"/>
+<area shape="poly" title=" " alt="" coords="462,99,531,84,533,89,464,105"/>
+<area shape="poly" title=" " alt="" coords="478,119,513,119,513,125,478,125"/>
+<area shape="poly" title=" " alt="" coords="464,139,542,157,541,162,462,144"/>
+<area shape="poly" title=" " alt="" coords="457,162,479,150,494,137,503,124,512,110,527,96,543,87,545,92,531,100,516,113,507,127,498,141,483,155,459,167"/>
+<area shape="poly" title=" " alt="" coords="457,162,567,136,568,141,458,167"/>
+<area shape="poly" title=" " alt="" coords="478,180,542,179,542,185,478,186"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_icgraph">
+<area shape="rect" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="506,27,475,27,475,22,506,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a18432073dde1c1fec4e90ae588898d58" name="a18432073dde1c1fec4e90ae588898d58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18432073dde1c1fec4e90ae588898d58">&#9670;&#160;</a></span>selectEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::selectEntity </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5e2721f8ac43d75b191c9d7b97f405e5" name="a5e2721f8ac43d75b191c9d7b97f405e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e2721f8ac43d75b191c9d7b97f405e5">&#9670;&#160;</a></span>showCreateEntityDialog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::showCreateEntityDialog </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>targetTrunk</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">类成员变量说明</h2>
+<a id="ab8e48f71b3957834b264945e961c3548" name="ab8e48f71b3957834b264945e961c3548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8e48f71b3957834b264945e961c3548">&#9670;&#160;</a></span>m_contextMenuTarget</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::SceneEntityViewer::m_contextMenuTarget</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5062679e3cd27c644bb1173ee8a5e375" name="a5062679e3cd27c644bb1173ee8a5e375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5062679e3cd27c644bb1173ee8a5e375">&#9670;&#160;</a></span>m_createInGlobal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_createInGlobal = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6ae98c71d26b12838c05c75be86e9d1a" name="a6ae98c71d26b12838c05c75be86e9d1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae98c71d26b12838c05c75be86e9d1a">&#9670;&#160;</a></span>m_dataManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_q_engine_1_1_data_manager.html">DataManager</a>* MQEngine::SceneEntityViewer::m_dataManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2eaf2afac5bce0d23af9905fa3787ef3" name="a2eaf2afac5bce0d23af9905fa3787ef3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eaf2afac5bce0d23af9905fa3787ef3">&#9670;&#160;</a></span>m_newEntityName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char MQEngine::SceneEntityViewer::m_newEntityName[256] = &quot;entity&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e8190f0271d14f8ebf1d2218166339e" name="a3e8190f0271d14f8ebf1d2218166339e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e8190f0271d14f8ebf1d2218166339e">&#9670;&#160;</a></span>m_showContextMenu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_showContextMenu = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8d26330c28e9f4bb9f914dd7f1d92875" name="a8d26330c28e9f4bb9f914dd7f1d92875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d26330c28e9f4bb9f914dd7f1d92875">&#9670;&#160;</a></span>m_showCreateEntityDialog</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_showCreateEntityDialog = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a836a7faf990d5ac0216391c527791e48" name="a836a7faf990d5ac0216391c527791e48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a836a7faf990d5ac0216391c527791e48">&#9670;&#160;</a></span>m_targetTrunkName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::SceneEntityViewer::m_targetTrunkName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>MQEngine/Editor/src/SceneViewer/<a class="el" href="_scene_entity_viewer_8h_source.html">SceneEntityViewer.h</a></li>
+<li>MQEngine/Editor/src/SceneViewer/<a class="el" href="_scene_entity_viewer_8cpp.html">SceneEntityViewer.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_m_q_engine.html">MQEngine</a></li><li class="navelem"><a href="class_m_q_engine_1_1_scene_entity_viewer.html">SceneEntityViewer</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

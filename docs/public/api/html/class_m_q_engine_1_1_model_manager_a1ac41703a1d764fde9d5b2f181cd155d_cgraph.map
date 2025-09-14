@@ -1,0 +1,11 @@
+<map id="MQEngine::ModelManager::ModelManager" name="MQEngine::ModelManager::ModelManager">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,181,76"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_model_manager.html#a791cfa7e0e2c591e4b716410ce1ebe0a" title=" " alt="" coords="229,37,404,76"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,54,213,54,213,59,181,59"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_model_manager.html#a51933f42b4a57dcb7dc3fd932da8e838" title=" " alt="" coords="452,5,627,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,41,436,37,437,42,405,47"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_model_manager.html#afa513371ad7ebc484bfe030d619cb946" title=" " alt="" coords="452,68,627,107"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="405,66,437,71,436,76,404,71"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_model_manager.html#add5006213845fde02f6199c9e492cbc3" title=" " alt="" coords="675,5,851,44"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="628,22,660,22,660,27,628,27"/>
+</map>

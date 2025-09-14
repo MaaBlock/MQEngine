@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/data/DataLoader.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_data_loader_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DataLoader.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_data_loader_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef DATALOADER_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define DATALOADER_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_p_c_h_8h.html">../EnginePCH.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_data_error_8h.html">./DataError.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_class" href="class_m_q_engine_1_1_data_loader.html">DataLoader</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a7461453de8dca9c9d735acf9a79c8875">   12</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a7461453de8dca9c9d735acf9a79c8875">~DataLoader</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a6c3e1a7a6980c2dbad4935f33e5afdc7">   13</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a6c3e1a7a6980c2dbad4935f33e5afdc7">ensureDirectory</a>(<span class="keyword">const</span> std::string&amp; dir) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a83a69672cb8ce1b25c35cb596f7d0d4e">   14</a></span>        <span class="keyword">virtual</span> std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a83a69672cb8ce1b25c35cb596f7d0d4e">getSubDirectories</a>(<span class="keyword">const</span> std::string&amp; dir) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a8f0a4ab41bb8828bfd567a16776566f2">   15</a></span>        <span class="keyword">virtual</span> std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a8f0a4ab41bb8828bfd567a16776566f2">getSubDirectoriesName</a>(<span class="keyword">const</span> std::string&amp; dir) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#aaf53651dfe6278a5fd3e8591f58adc5f">   16</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#aaf53651dfe6278a5fd3e8591f58adc5f">createDirectory</a>(<span class="keyword">const</span> std::string&amp; dir) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a59e19f47b4d244f9244a73d190aa10d1">   17</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a59e19f47b4d244f9244a73d190aa10d1">fileExists</a>(<span class="keyword">const</span> std::string&amp; filePath) <span class="keyword">const</span> = 0 ;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#ab45666e91dd66f338f90564beb2035ae">   18</a></span>        <span class="keyword">virtual</span> std::unique_ptr&lt;std::ifstream&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#ab45666e91dd66f338f90564beb2035ae">openBinaryInputStream</a>(<span class="keyword">const</span> std::string&amp; filePath) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#acd9d56cfda1cf1bbecf684c35bea7ab3">   19</a></span>        <span class="keyword">virtual</span> std::unique_ptr&lt;std::ofstream&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#acd9d56cfda1cf1bbecf684c35bea7ab3">openBinaryOutputStream</a>(<span class="keyword">const</span> std::string&amp; filePath) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a3c5d036b77949cb64824f720a511f4c9">   20</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a3c5d036b77949cb64824f720a511f4c9">directoryExists</a>(<span class="keyword">const</span> std::string&amp; <span class="keywordtype">string</span>) = 0;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a8b239be443494adc39a72d6050289425">   21</a></span>        <span class="keyword">virtual</span> std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a8b239be443494adc39a72d6050289425">getFileNamesWithExtension</a>(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; extension) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_data_loader.html#a708b25132fc056ae5ca7ae6d4dd4d0ec">   22</a></span>        <span class="keyword">virtual</span> std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_data_loader.html#a708b25132fc056ae5ca7ae6d4dd4d0ec">getFilePathsWithExtension</a>(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; extension) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    };</div>
+</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <span class="comment">// MQEngine</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif </span><span class="comment">//DATALOADER_H</span></div>
+<div class="ttc" id="a_data_error_8h_html"><div class="ttname"><a href="_data_error_8h.html">DataError.h</a></div></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html"><div class="ttname"><a href="_engine_p_c_h_8h.html">EnginePCH.h</a></div></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html_a0697ee40f69dc5dab56d13131f4c4835"><div class="ttname"><a href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a></div><div class="ttdeci">#define ENGINE_API</div><div class="ttdef"><b>定义</b> EnginePCH.h:14</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html">MQEngine::DataLoader</a></div><div class="ttdef"><b>定义</b> DataLoader.h:10</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a3c5d036b77949cb64824f720a511f4c9"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a3c5d036b77949cb64824f720a511f4c9">MQEngine::DataLoader::directoryExists</a></div><div class="ttdeci">virtual bool directoryExists(const std::string &amp;string)=0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a59e19f47b4d244f9244a73d190aa10d1"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a59e19f47b4d244f9244a73d190aa10d1">MQEngine::DataLoader::fileExists</a></div><div class="ttdeci">virtual bool fileExists(const std::string &amp;filePath) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a6c3e1a7a6980c2dbad4935f33e5afdc7"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a6c3e1a7a6980c2dbad4935f33e5afdc7">MQEngine::DataLoader::ensureDirectory</a></div><div class="ttdeci">virtual void ensureDirectory(const std::string &amp;dir) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a708b25132fc056ae5ca7ae6d4dd4d0ec"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a708b25132fc056ae5ca7ae6d4dd4d0ec">MQEngine::DataLoader::getFilePathsWithExtension</a></div><div class="ttdeci">virtual std::vector&lt; std::string &gt; getFilePathsWithExtension(const std::string &amp;dir, const std::string &amp;extension) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a7461453de8dca9c9d735acf9a79c8875"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a7461453de8dca9c9d735acf9a79c8875">MQEngine::DataLoader::~DataLoader</a></div><div class="ttdeci">virtual ~DataLoader()=default</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a83a69672cb8ce1b25c35cb596f7d0d4e"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a83a69672cb8ce1b25c35cb596f7d0d4e">MQEngine::DataLoader::getSubDirectories</a></div><div class="ttdeci">virtual std::vector&lt; std::string &gt; getSubDirectories(const std::string &amp;dir) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a8b239be443494adc39a72d6050289425"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a8b239be443494adc39a72d6050289425">MQEngine::DataLoader::getFileNamesWithExtension</a></div><div class="ttdeci">virtual std::vector&lt; std::string &gt; getFileNamesWithExtension(const std::string &amp;dir, const std::string &amp;extension) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_a8f0a4ab41bb8828bfd567a16776566f2"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#a8f0a4ab41bb8828bfd567a16776566f2">MQEngine::DataLoader::getSubDirectoriesName</a></div><div class="ttdeci">virtual std::vector&lt; std::string &gt; getSubDirectoriesName(const std::string &amp;dir) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_aaf53651dfe6278a5fd3e8591f58adc5f"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#aaf53651dfe6278a5fd3e8591f58adc5f">MQEngine::DataLoader::createDirectory</a></div><div class="ttdeci">virtual void createDirectory(const std::string &amp;dir) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_ab45666e91dd66f338f90564beb2035ae"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#ab45666e91dd66f338f90564beb2035ae">MQEngine::DataLoader::openBinaryInputStream</a></div><div class="ttdeci">virtual std::unique_ptr&lt; std::ifstream &gt; openBinaryInputStream(const std::string &amp;filePath) const =0</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_loader_html_acd9d56cfda1cf1bbecf684c35bea7ab3"><div class="ttname"><a href="class_m_q_engine_1_1_data_loader.html#acd9d56cfda1cf1bbecf684c35bea7ab3">MQEngine::DataLoader::openBinaryOutputStream</a></div><div class="ttdeci">virtual std::unique_ptr&lt; std::ofstream &gt; openBinaryOutputStream(const std::string &amp;filePath) const =0</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_9d1d400ae0be4c726be2daa95e96e8a2.html">data</a></li><li class="navelem"><a href="_data_loader_8h.html">DataLoader.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

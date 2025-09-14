@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/event/sceneEvent.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('scene_event_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">sceneEvent.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="scene_event_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by Administrator on 2025/8/25.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef SCENEEVENT_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define SCENEEVENT_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">class </span><a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">class </span><a class="code hl_class" href="class_m_q_engine_1_1_scene_trunk.html">SceneTrunk</a>;</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespace_m_q_engine_1_1_scene_event.html">   12</a></span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine_1_1_scene_event.html">SceneEvent</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load.html">   14</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_load.html">Load</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load.html#a9c4443c6d1a6314b6a8a230dc5f64f65">   16</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load.html#a9c4443c6d1a6314b6a8a230dc5f64f65">uuid</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load.html#ab8387677e3d4ccb7a8b49a7afa6ff7f5">   17</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load.html#ab8387677e3d4ccb7a8b49a7afa6ff7f5">scene</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html">   19</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html">Unload</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a7b85fc08f635a46d2beacc7ebb2b69fa">   21</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a7b85fc08f635a46d2beacc7ebb2b69fa">uuid</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a1dfc3faf0bf6379c3491956da7e45ad8">   22</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a1dfc3faf0bf6379c3491956da7e45ad8">scene</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html">   24</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html">LoadTrunk</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a5cddc3cc0d9035488531ea8e2920129c">   26</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a5cddc3cc0d9035488531ea8e2920129c">uuid</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#aa9f520562ceab4f2a8182e722ef2e702">   27</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#aa9f520562ceab4f2a8182e722ef2e702">trunkName</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a62ce6cbbd039e4f4cf35de82cc7bcc0e">   28</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a62ce6cbbd039e4f4cf35de82cc7bcc0e">scene</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a0fdccf1428109e607516e6ce39cb2de3">   29</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene_trunk.html">SceneTrunk</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a0fdccf1428109e607516e6ce39cb2de3">trunk</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html">   31</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html">UnloadTrunk</a></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a77355cf10cb577fabc37dc0a7b7ca827">   33</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a77355cf10cb577fabc37dc0a7b7ca827">uuid</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a04b6e15c84d61aa979abb723ca033d10">   34</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a04b6e15c84d61aa979abb723ca033d10">trunkName</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#aae8f6efd455e22e319392bb1bcb8908b">   35</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#aae8f6efd455e22e319392bb1bcb8908b">scene</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#afe0bfc45ff0a9ce4ed4e837c1ef9edb0">   36</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene_trunk.html">SceneTrunk</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#afe0bfc45ff0a9ce4ed4e837c1ef9edb0">trunk</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="};">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html">   38</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html">EntryScene</a></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#ab66128ee2605b9e69e646722fad26ef6">   40</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#ab66128ee2605b9e69e646722fad26ef6">uuid</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#abd2db74ea2f5abb35a3ece6b97af4b8b">   41</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#abd2db74ea2f5abb35a3ece6b97af4b8b">scene</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html">   43</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html">ExitScene</a></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a25f4ad9765f4290c21cb0ef3dd0ccab0">   45</a></span>            std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a25f4ad9765f4290c21cb0ef3dd0ccab0">uuid</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a4bf3af2a5e7925ef53c02c20c4aadff7">   46</a></span>            <a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* <a class="code hl_variable" href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a4bf3af2a5e7925ef53c02c20c4aadff7">scene</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        };</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif </span><span class="comment">//SCENEEVENT_H</span></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_html"><div class="ttname"><a href="class_m_q_engine_1_1_scene.html">MQEngine::Scene</a></div><div class="ttdef"><b>定义</b> Scene.h:22</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_trunk_html"><div class="ttname"><a href="class_m_q_engine_1_1_scene_trunk.html">MQEngine::SceneTrunk</a></div><div class="ttdef"><b>定义</b> SceneTrunk.h:23</div></div>
+<div class="ttc" id="anamespace_m_q_engine_1_1_scene_event_html"><div class="ttname"><a href="namespace_m_q_engine_1_1_scene_event.html">MQEngine::SceneEvent</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:13</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_entry_scene_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html">MQEngine::SceneEvent::EntryScene</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:39</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_entry_scene_html_ab66128ee2605b9e69e646722fad26ef6"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#ab66128ee2605b9e69e646722fad26ef6">MQEngine::SceneEvent::EntryScene::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:40</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_entry_scene_html_abd2db74ea2f5abb35a3ece6b97af4b8b"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html#abd2db74ea2f5abb35a3ece6b97af4b8b">MQEngine::SceneEvent::EntryScene::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:41</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_exit_scene_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html">MQEngine::SceneEvent::ExitScene</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:44</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_exit_scene_html_a25f4ad9765f4290c21cb0ef3dd0ccab0"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a25f4ad9765f4290c21cb0ef3dd0ccab0">MQEngine::SceneEvent::ExitScene::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:45</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_exit_scene_html_a4bf3af2a5e7925ef53c02c20c4aadff7"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html#a4bf3af2a5e7925ef53c02c20c4aadff7">MQEngine::SceneEvent::ExitScene::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:46</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load.html">MQEngine::SceneEvent::Load</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:15</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_html_a9c4443c6d1a6314b6a8a230dc5f64f65"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load.html#a9c4443c6d1a6314b6a8a230dc5f64f65">MQEngine::SceneEvent::Load::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:16</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_html_ab8387677e3d4ccb7a8b49a7afa6ff7f5"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load.html#ab8387677e3d4ccb7a8b49a7afa6ff7f5">MQEngine::SceneEvent::Load::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:17</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_trunk_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html">MQEngine::SceneEvent::LoadTrunk</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:25</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_trunk_html_a0fdccf1428109e607516e6ce39cb2de3"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a0fdccf1428109e607516e6ce39cb2de3">MQEngine::SceneEvent::LoadTrunk::trunk</a></div><div class="ttdeci">SceneTrunk * trunk</div><div class="ttdef"><b>定义</b> sceneEvent.h:29</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_trunk_html_a5cddc3cc0d9035488531ea8e2920129c"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a5cddc3cc0d9035488531ea8e2920129c">MQEngine::SceneEvent::LoadTrunk::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:26</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_trunk_html_a62ce6cbbd039e4f4cf35de82cc7bcc0e"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#a62ce6cbbd039e4f4cf35de82cc7bcc0e">MQEngine::SceneEvent::LoadTrunk::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:28</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_load_trunk_html_aa9f520562ceab4f2a8182e722ef2e702"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_load_trunk.html#aa9f520562ceab4f2a8182e722ef2e702">MQEngine::SceneEvent::LoadTrunk::trunkName</a></div><div class="ttdeci">std::string trunkName</div><div class="ttdef"><b>定义</b> sceneEvent.h:27</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload.html">MQEngine::SceneEvent::Unload</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:20</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_html_a1dfc3faf0bf6379c3491956da7e45ad8"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a1dfc3faf0bf6379c3491956da7e45ad8">MQEngine::SceneEvent::Unload::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:22</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_html_a7b85fc08f635a46d2beacc7ebb2b69fa"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload.html#a7b85fc08f635a46d2beacc7ebb2b69fa">MQEngine::SceneEvent::Unload::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:21</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_trunk_html"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html">MQEngine::SceneEvent::UnloadTrunk</a></div><div class="ttdef"><b>定义</b> sceneEvent.h:32</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_trunk_html_a04b6e15c84d61aa979abb723ca033d10"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a04b6e15c84d61aa979abb723ca033d10">MQEngine::SceneEvent::UnloadTrunk::trunkName</a></div><div class="ttdeci">std::string trunkName</div><div class="ttdef"><b>定义</b> sceneEvent.h:34</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_trunk_html_a77355cf10cb577fabc37dc0a7b7ca827"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#a77355cf10cb577fabc37dc0a7b7ca827">MQEngine::SceneEvent::UnloadTrunk::uuid</a></div><div class="ttdeci">std::string uuid</div><div class="ttdef"><b>定义</b> sceneEvent.h:33</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_trunk_html_aae8f6efd455e22e319392bb1bcb8908b"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#aae8f6efd455e22e319392bb1bcb8908b">MQEngine::SceneEvent::UnloadTrunk::scene</a></div><div class="ttdeci">Scene * scene</div><div class="ttdef"><b>定义</b> sceneEvent.h:35</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_scene_event_1_1_unload_trunk_html_afe0bfc45ff0a9ce4ed4e837c1ef9edb0"><div class="ttname"><a href="struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html#afe0bfc45ff0a9ce4ed4e837c1ef9edb0">MQEngine::SceneEvent::UnloadTrunk::trunk</a></div><div class="ttdeci">SceneTrunk * trunk</div><div class="ttdef"><b>定义</b> sceneEvent.h:36</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_288839a8d98ef6c101756a94e9cf8245.html">event</a></li><li class="navelem"><a href="scene_event_8h.html">sceneEvent.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

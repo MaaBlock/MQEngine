@@ -1,0 +1,27 @@
+<map id="MQEngine::TechManager::subscribeToPass" name="MQEngine::TechManager::subscribeToPass">
+<area shape="rect" id="Node000001" title="为指定Pass订阅渲染事件和PassInfo更新" alt="" coords="5,306,174,345"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_tech_manager.html#a6dc8759046f36cca3bdd5f4db3c18777" title=" " alt="" coords="222,274,390,313"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,311,206,306,207,311,174,316"/>
+<area shape="rect" id="Node000013" href="$class_m_q_engine_1_1_tech_manager.html#a7f820bf7510c4a5d1a8a1c56a2b4d553" title=" " alt="" coords="222,337,390,376"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="174,335,206,340,206,345,174,340"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_tech.html#a9084dbf2339d055d1b628440c96a02e1" title=" " alt="" coords="438,5,648,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,273,322,225,347,162,384,96,408,66,436,40,442,36,445,40,440,44,412,69,389,99,352,164,327,227,314,275"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_tech.html#a640a126f76a351c6b0feafa028bb9972" title=" " alt="" coords="448,54,638,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="313,273,331,236,357,190,393,143,436,102,441,99,444,103,440,106,397,146,362,193,335,239,318,275"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_tech.html#aba2fa9b02d733def88852f9c28d24dd1" title=" " alt="" coords="448,117,638,156"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="320,272,368,219,401,190,437,165,445,160,448,165,439,169,404,194,372,223,324,276"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_tech.html#a234e7e3ccdf638f177e434e3a0a153a1" title=" " alt="" coords="442,180,645,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="343,271,437,227,454,221,455,226,439,232,345,276"/>
+<area shape="rect" id="Node000007" href="$class_m_q_engine_1_1_tech.html#a20d78d00e9e8bf5ef75d3a4f5c23259e" title=" " alt="" coords="442,242,645,281"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="390,280,426,275,426,280,391,285"/>
+<area shape="rect" id="Node000008" href="$class_m_q_engine_1_1_tech.html#a1a23b06d7c84c521b3d6d74e091da5ac" title=" " alt="" coords="442,305,645,344"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="391,302,426,307,426,312,390,307"/>
+<area shape="rect" id="Node000009" href="$class_m_q_engine_1_1_tech.html#aca7dc395a5575231c2a417e0fcbe5a46" title=" " alt="" coords="445,368,641,406"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="367,311,391,322,415,338,439,353,455,359,453,364,437,357,412,342,389,327,365,316"/>
+<area shape="rect" id="Node000010" href="$class_m_q_engine_1_1_tech.html#aec010397e1d8aa55605c790be580842c" title=" " alt="" coords="445,430,641,469"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="376,311,392,322,410,347,416,371,423,394,440,416,446,420,442,424,436,420,418,396,411,372,405,349,388,326,373,316"/>
+<area shape="rect" id="Node000011" href="$class_m_q_engine_1_1_tech.html#af080221ffe4f34fdade87c26d1e5cafb" title=" " alt="" coords="448,493,638,532"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="378,311,392,323,407,343,414,363,416,403,418,441,426,460,440,479,443,482,440,486,436,482,421,462,413,442,411,403,409,364,402,345,388,326,375,316"/>
+<area shape="rect" id="Node000012" href="$class_m_q_engine_1_1_tech.html#a3b6baac9a23a8709edaf28389284316d" title=" " alt="" coords="445,556,641,594"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="379,311,392,323,410,351,418,379,419,407,416,435,413,462,414,488,422,515,440,541,443,544,439,548,436,545,417,517,409,489,408,461,411,434,413,407,413,380,406,353,388,326,376,315"/>
+</map>

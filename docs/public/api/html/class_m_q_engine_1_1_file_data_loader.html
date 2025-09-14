@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine::FileDataLoader类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_m_q_engine_1_1_file_data_loader.html','','class_m_q_engine_1_1_file_data_loader-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">MQEngine::FileDataLoader类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_file_data_loader_8h_source.html">FileDataLoader.h</a>&gt;</code></p>
+<div class="dynheader">
+类 MQEngine::FileDataLoader 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_file_data_loader__inherit__graph.png" border="0" usemap="#a_m_q_engine_1_1_file_data_loader_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
+<map name="a_m_q_engine_1_1_file_data_loader_inherit__map" id="a_m_q_engine_1_1_file_data_loader_inherit__map">
+<area shape="rect" title=" " alt="" coords="5,78,195,103"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_loader.html" title=" " alt="" coords="19,5,181,30"/>
+<area shape="poly" title=" " alt="" coords="103,46,103,78,97,78,97,46"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+MQEngine::FileDataLoader 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_file_data_loader__coll__graph.png" border="0" usemap="#a_m_q_engine_1_1_file_data_loader_coll__map" loading="lazy" alt="Collaboration graph"/></div>
+<map name="a_m_q_engine_1_1_file_data_loader_coll__map" id="a_m_q_engine_1_1_file_data_loader_coll__map">
+<area shape="rect" title=" " alt="" coords="5,78,195,103"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_loader.html" title=" " alt="" coords="19,5,181,30"/>
+<area shape="poly" title=" " alt="" coords="103,46,103,78,97,78,97,46"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a9b00874c649eae370748b1ff1ccdecc4" id="r_a9b00874c649eae370748b1ff1ccdecc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b00874c649eae370748b1ff1ccdecc4">ensureDirectory</a> (const std::string &amp;dir) const override</td></tr>
+<tr class="memitem:a6688f50e27821ca225ff7114382d8020" id="r_a6688f50e27821ca225ff7114382d8020"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6688f50e27821ca225ff7114382d8020">getSubDirectories</a> (const std::string &amp;dir) const override</td></tr>
+<tr class="memitem:aaad8f819a3c9b02c7f69b4765dbf4400" id="r_aaad8f819a3c9b02c7f69b4765dbf4400"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaad8f819a3c9b02c7f69b4765dbf4400">getSubDirectoriesName</a> (const std::string &amp;dir) const override</td></tr>
+<tr class="memitem:a1c40c72623d0c0a4c9aee5a414f82e40" id="r_a1c40c72623d0c0a4c9aee5a414f82e40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c40c72623d0c0a4c9aee5a414f82e40">createDirectory</a> (const std::string &amp;dir) const override</td></tr>
+<tr class="memitem:a97b0011cdb0a91b41bbb753834f755a1" id="r_a97b0011cdb0a91b41bbb753834f755a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97b0011cdb0a91b41bbb753834f755a1">fileExists</a> (const std::string &amp;filePath) const override</td></tr>
+<tr class="memitem:af301d667c3e2190835ee19eeb6ab1655" id="r_af301d667c3e2190835ee19eeb6ab1655"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ifstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af301d667c3e2190835ee19eeb6ab1655">openBinaryInputStream</a> (const std::string &amp;filePath) const override</td></tr>
+<tr class="memitem:aa389a8e3ab383aceeb32388d90a98970" id="r_aa389a8e3ab383aceeb32388d90a98970"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ofstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa389a8e3ab383aceeb32388d90a98970">openBinaryOutputStream</a> (const std::string &amp;filePath) const override</td></tr>
+<tr class="memitem:a024c3cc5c44263b2b72d187a060bd53d" id="r_a024c3cc5c44263b2b72d187a060bd53d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a024c3cc5c44263b2b72d187a060bd53d">getFileNamesWithExtension</a> (const std::string &amp;dir, const std::string &amp;extension) const override</td></tr>
+<tr class="memitem:af3cca9de65fd8c7ddf2c3af837dd2e40" id="r_af3cca9de65fd8c7ddf2c3af837dd2e40"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3cca9de65fd8c7ddf2c3af837dd2e40">getFilePathsWithExtension</a> (const std::string &amp;dir, const std::string &amp;extension) const override</td></tr>
+<tr class="memitem:a545ba619f2b01080cb9a86932f97a01f" id="r_a545ba619f2b01080cb9a86932f97a01f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a545ba619f2b01080cb9a86932f97a01f">directoryExists</a> (const std::string &amp;string) override</td></tr>
+<tr class="inherit_header pub_methods_class_m_q_engine_1_1_data_loader"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_m_q_engine_1_1_data_loader')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public 成员函数 继承自 <a class="el" href="class_m_q_engine_1_1_data_loader.html">MQEngine::DataLoader</a></td></tr>
+<tr class="memitem:a7461453de8dca9c9d735acf9a79c8875 inherit pub_methods_class_m_q_engine_1_1_data_loader" id="r_a7461453de8dca9c9d735acf9a79c8875"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_q_engine_1_1_data_loader.html#a7461453de8dca9c9d735acf9a79c8875">~DataLoader</a> ()=default</td></tr>
+</table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="a1c40c72623d0c0a4c9aee5a414f82e40" name="a1c40c72623d0c0a4c9aee5a414f82e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c40c72623d0c0a4c9aee5a414f82e40">&#9670;&#160;</a></span>createDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::FileDataLoader::createDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#aaf53651dfe6278a5fd3e8591f58adc5f">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="a545ba619f2b01080cb9a86932f97a01f" name="a545ba619f2b01080cb9a86932f97a01f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a545ba619f2b01080cb9a86932f97a01f">&#9670;&#160;</a></span>directoryExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::FileDataLoader::directoryExists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>string</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a3c5d036b77949cb64824f720a511f4c9">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="a9b00874c649eae370748b1ff1ccdecc4" name="a9b00874c649eae370748b1ff1ccdecc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b00874c649eae370748b1ff1ccdecc4">&#9670;&#160;</a></span>ensureDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::FileDataLoader::ensureDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a6c3e1a7a6980c2dbad4935f33e5afdc7">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="a97b0011cdb0a91b41bbb753834f755a1" name="a97b0011cdb0a91b41bbb753834f755a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97b0011cdb0a91b41bbb753834f755a1">&#9670;&#160;</a></span>fileExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::FileDataLoader::fileExists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a59e19f47b4d244f9244a73d190aa10d1">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="a024c3cc5c44263b2b72d187a060bd53d" name="a024c3cc5c44263b2b72d187a060bd53d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a024c3cc5c44263b2b72d187a060bd53d">&#9670;&#160;</a></span>getFileNamesWithExtension()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; MQEngine::FileDataLoader::getFileNamesWithExtension </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>extension</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a8b239be443494adc39a72d6050289425">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="af3cca9de65fd8c7ddf2c3af837dd2e40" name="af3cca9de65fd8c7ddf2c3af837dd2e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3cca9de65fd8c7ddf2c3af837dd2e40">&#9670;&#160;</a></span>getFilePathsWithExtension()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; MQEngine::FileDataLoader::getFilePathsWithExtension </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>extension</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a708b25132fc056ae5ca7ae6d4dd4d0ec">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="a6688f50e27821ca225ff7114382d8020" name="a6688f50e27821ca225ff7114382d8020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6688f50e27821ca225ff7114382d8020">&#9670;&#160;</a></span>getSubDirectories()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; MQEngine::FileDataLoader::getSubDirectories </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a83a69672cb8ce1b25c35cb596f7d0d4e">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="aaad8f819a3c9b02c7f69b4765dbf4400" name="aaad8f819a3c9b02c7f69b4765dbf4400"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaad8f819a3c9b02c7f69b4765dbf4400">&#9670;&#160;</a></span>getSubDirectoriesName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; MQEngine::FileDataLoader::getSubDirectoriesName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>dir</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#a8f0a4ab41bb8828bfd567a16776566f2">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="af301d667c3e2190835ee19eeb6ab1655" name="af301d667c3e2190835ee19eeb6ab1655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af301d667c3e2190835ee19eeb6ab1655">&#9670;&#160;</a></span>openBinaryInputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; std::ifstream &gt; MQEngine::FileDataLoader::openBinaryInputStream </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#ab45666e91dd66f338f90564beb2035ae">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<a id="aa389a8e3ab383aceeb32388d90a98970" name="aa389a8e3ab383aceeb32388d90a98970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa389a8e3ab383aceeb32388d90a98970">&#9670;&#160;</a></span>openBinaryOutputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; std::ofstream &gt; MQEngine::FileDataLoader::openBinaryOutputStream </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="class_m_q_engine_1_1_data_loader.html#acd9d56cfda1cf1bbecf684c35bea7ab3">MQEngine::DataLoader</a>.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>MQEngine/Engine/src/data/<a class="el" href="_file_data_loader_8h_source.html">FileDataLoader.h</a></li>
+<li>MQEngine/Engine/src/data/<a class="el" href="_file_data_loader_8cpp.html">FileDataLoader.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_m_q_engine.html">MQEngine</a></li><li class="navelem"><a href="class_m_q_engine_1_1_file_data_loader.html">FileDataLoader</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

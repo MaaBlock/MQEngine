@@ -1,0 +1,10 @@
+<map id="MQEngine/Engine/src/core/EngineGlobal.h" name="MQEngine/Engine/src/core/EngineGlobal.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,167,44"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="19,165,222,189"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,46,37,61,21,78,13,97,16,115,38,139,66,156,63,160,35,143,12,118,7,96,16,75,33,57,53,42"/>
+<area shape="rect" id="Node000003" href="$_engine_p_c_h_8h.html" title=" " alt="" coords="26,92,146,117"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="89,45,89,76,83,76,83,45"/>
+<area shape="rect" id="Node000004" href="$scene_event_8h.html" title=" " alt="" coords="170,92,338,117"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="128,42,216,83,214,88,126,47"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="233,120,157,159,155,155,231,115"/>
+</map>

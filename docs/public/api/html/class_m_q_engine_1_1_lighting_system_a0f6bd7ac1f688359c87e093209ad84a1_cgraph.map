@@ -1,0 +1,15 @@
+<map id="MQEngine::LightingSystem::~LightingSystem" name="MQEngine::LightingSystem::~LightingSystem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,92,195,131"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_lighting_system.html#a6b965e1286351b1f4ce620956d6eff5c" title=" " alt="" coords="243,5,432,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,89,267,47,269,52,156,94"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_lighting_system.html#acd65090d2bdfe4a93a585cd846e4251b" title=" " alt="" coords="480,57,704,96"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,102,464,83,465,88,195,107"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_lighting_system.html#a268c5bc64362502b22b3907e8c387c3f" title=" " alt="" coords="243,120,432,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,120,227,124,227,129,195,125"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_lighting_system.html#a5bbaa4c1127319710377806cc3dbe6b6" title=" " alt="" coords="498,183,687,221"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="141,129,189,150,243,167,304,180,366,189,482,198,481,203,365,194,303,185,242,173,187,155,139,133"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="418,117,495,98,496,103,419,122"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="419,157,496,176,495,181,418,162"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_lighting_system.html#a5010fa1d56de311d50f316dd74989f87" title=" " alt="" coords="498,120,687,159"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="433,137,482,137,482,142,433,142"/>
+</map>

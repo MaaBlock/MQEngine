@@ -1,0 +1,5 @@
+<map id="MQEngine::RenderGraphViewer::newTexturePin" name="MQEngine::RenderGraphViewer::newTexturePin">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,216,44"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_render_graph_viewer.html#a3b5367942a7d1b2837fcd427e14a5b41" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,22,248,22,248,27,216,27"/>
+</map>

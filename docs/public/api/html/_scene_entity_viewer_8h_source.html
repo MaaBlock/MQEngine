@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Editor/src/SceneViewer/SceneEntityViewer.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_scene_entity_viewer_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SceneEntityViewer.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_scene_entity_viewer_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by Administrator on 2025/8/25.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef SCENEENTITYVIEWER_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define SCENEENTITYVIEWER_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_editor_2src_2thirdparty_2thirdparty_8h.html">../thirdparty/thirdparty.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html">   11</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#ac5ab431465420a0d080c6cbc1771eb6e">SceneEntityViewer</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#ac5ab431465420a0d080c6cbc1771eb6e">SceneEntityViewer</a>();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5">renderGloabaEntityList</a>(<a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* scene);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b">renderTrunkEntityList</a>(<a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* scene, std::string trunkName);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540">renderSceneEntityList</a>(<a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* scene);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b">render</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58">selectEntity</a>(entt::entity entity, <span class="keyword">const</span> std::string&amp; trunkName = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> isGlobal = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6ae98c71d26b12838c05c75be86e9d1a">   20</a></span>        <a class="code hl_class" href="class_m_q_engine_1_1_data_manager.html">DataManager</a>* <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6ae98c71d26b12838c05c75be86e9d1a">m_dataManager</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a8d26330c28e9f4bb9f914dd7f1d92875">   22</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a8d26330c28e9f4bb9f914dd7f1d92875">m_showCreateEntityDialog</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a2eaf2afac5bce0d23af9905fa3787ef3">   23</a></span>        <span class="keywordtype">char</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a2eaf2afac5bce0d23af9905fa3787ef3">m_newEntityName</a>[256] = <span class="stringliteral">&quot;entity&quot;</span>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a836a7faf990d5ac0216391c527791e48">   24</a></span>        std::string <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a836a7faf990d5ac0216391c527791e48">m_targetTrunkName</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5062679e3cd27c644bb1173ee8a5e375">   25</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5062679e3cd27c644bb1173ee8a5e375">m_createInGlobal</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3e8190f0271d14f8ebf1d2218166339e">   27</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3e8190f0271d14f8ebf1d2218166339e">m_showContextMenu</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_entity_viewer.html#ab8e48f71b3957834b264945e961c3548">   28</a></span>        std::string <a class="code hl_variable" href="class_m_q_engine_1_1_scene_entity_viewer.html#ab8e48f71b3957834b264945e961c3548">m_contextMenuTarget</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd">renderCreateEntityDialog</a>(<a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* scene);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5">showCreateEntityDialog</a>(<span class="keyword">const</span> std::string&amp; targetTrunk = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> isGlobal = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22">createEntity</a>(<a class="code hl_class" href="class_m_q_engine_1_1_scene.html">Scene</a>* scene, <span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; trunkName = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> isGlobal = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f">addStaticMeshComponent</a>(entt::entity entity, <span class="keyword">const</span> std::string&amp; modelUuid, <span class="keyword">const</span> std::string&amp; meshName, <span class="keywordtype">bool</span> isGlobal, <span class="keyword">const</span> std::string&amp; trunkName = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83">addScriptComponent</a>(entt::entity entity, <span class="keyword">const</span> std::string&amp; functionName, <span class="keywordtype">bool</span> isGlobal, <span class="keyword">const</span> std::string&amp; trunkName = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda">addDiffuseTextureComponent</a>(entt::entity entity, <span class="keyword">const</span> std::string&amp; modelUuid, <span class="keyword">const</span> std::string&amp; texturePath, <span class="keywordtype">bool</span> isGlobal, <span class="keyword">const</span> std::string&amp; trunkName = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    };</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>} <span class="comment">// MQEngine</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif </span><span class="comment">//SCENEENTITYVIEWER_H</span></div>
+<div class="ttc" id="a_editor_2src_2thirdparty_2thirdparty_8h_html"><div class="ttname"><a href="_editor_2src_2thirdparty_2thirdparty_8h.html">thirdparty.h</a></div><div class="ttdoc">A header file containing third party libraries and macros for platform</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_manager_html"><div class="ttname"><a href="class_m_q_engine_1_1_data_manager.html">MQEngine::DataManager</a></div><div class="ttdef"><b>定义</b> DataManager.h:58</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a18432073dde1c1fec4e90ae588898d58"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58">MQEngine::SceneEntityViewer::selectEntity</a></div><div class="ttdeci">void selectEntity(entt::entity entity, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=false)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:315</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a2eaf2afac5bce0d23af9905fa3787ef3"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a2eaf2afac5bce0d23af9905fa3787ef3">MQEngine::SceneEntityViewer::m_newEntityName</a></div><div class="ttdeci">char m_newEntityName[256]</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:23</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a34f7f70112edaa67aca17ba6deb98540"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540">MQEngine::SceneEntityViewer::renderSceneEntityList</a></div><div class="ttdeci">void renderSceneEntityList(Scene *scene)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:252</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a3e8190f0271d14f8ebf1d2218166339e"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a3e8190f0271d14f8ebf1d2218166339e">MQEngine::SceneEntityViewer::m_showContextMenu</a></div><div class="ttdeci">bool m_showContextMenu</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:27</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a40682ccf79e101b58937ba18ca74fbdd"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd">MQEngine::SceneEntityViewer::renderCreateEntityDialog</a></div><div class="ttdeci">void renderCreateEntityDialog(Scene *scene)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:25</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a4d28835e8105ec229b0c27d776648eda"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda">MQEngine::SceneEntityViewer::addDiffuseTextureComponent</a></div><div class="ttdeci">void addDiffuseTextureComponent(entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;texturePath, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:371</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a4fa5025fa9bb28ea96e7526b2aa2731b"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b">MQEngine::SceneEntityViewer::render</a></div><div class="ttdeci">void render()</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:290</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a5062679e3cd27c644bb1173ee8a5e375"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a5062679e3cd27c644bb1173ee8a5e375">MQEngine::SceneEntityViewer::m_createInGlobal</a></div><div class="ttdeci">bool m_createInGlobal</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:25</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a590baec1eafe0d79288b7c35db412a22"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22">MQEngine::SceneEntityViewer::createEntity</a></div><div class="ttdeci">void createEntity(Scene *scene, const std::string &amp;name, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=true)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:74</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a5d6af110b9eea865002235f0dbc53f83"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83">MQEngine::SceneEntityViewer::addScriptComponent</a></div><div class="ttdeci">void addScriptComponent(entt::entity entity, const std::string &amp;functionName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:348</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a5e2721f8ac43d75b191c9d7b97f405e5"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5">MQEngine::SceneEntityViewer::showCreateEntityDialog</a></div><div class="ttdeci">void showCreateEntityDialog(const std::string &amp;targetTrunk=&quot;&quot;, bool isGlobal=true)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:17</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a62175a746d495310a107ae43c87f6bd5"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5">MQEngine::SceneEntityViewer::renderGloabaEntityList</a></div><div class="ttdeci">void renderGloabaEntityList(Scene *scene)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:104</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a6ae98c71d26b12838c05c75be86e9d1a"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a6ae98c71d26b12838c05c75be86e9d1a">MQEngine::SceneEntityViewer::m_dataManager</a></div><div class="ttdeci">DataManager * m_dataManager</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:20</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a78bc78d55ecaeb8c7c232af69d0f797b"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b">MQEngine::SceneEntityViewer::renderTrunkEntityList</a></div><div class="ttdeci">void renderTrunkEntityList(Scene *scene, std::string trunkName)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:177</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a836a7faf990d5ac0216391c527791e48"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a836a7faf990d5ac0216391c527791e48">MQEngine::SceneEntityViewer::m_targetTrunkName</a></div><div class="ttdeci">std::string m_targetTrunkName</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:24</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_a8d26330c28e9f4bb9f914dd7f1d92875"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#a8d26330c28e9f4bb9f914dd7f1d92875">MQEngine::SceneEntityViewer::m_showCreateEntityDialog</a></div><div class="ttdeci">bool m_showCreateEntityDialog</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:22</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_ab8e48f71b3957834b264945e961c3548"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#ab8e48f71b3957834b264945e961c3548">MQEngine::SceneEntityViewer::m_contextMenuTarget</a></div><div class="ttdeci">std::string m_contextMenuTarget</div><div class="ttdef"><b>定义</b> SceneEntityViewer.h:28</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_ac5ab431465420a0d080c6cbc1771eb6e"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#ac5ab431465420a0d080c6cbc1771eb6e">MQEngine::SceneEntityViewer::SceneEntityViewer</a></div><div class="ttdeci">SceneEntityViewer()</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:13</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_entity_viewer_html_ae19f68282012fa3e37b75cba1e5db14f"><div class="ttname"><a href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f">MQEngine::SceneEntityViewer::addStaticMeshComponent</a></div><div class="ttdeci">void addStaticMeshComponent(entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;meshName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</div><div class="ttdef"><b>定义</b> SceneEntityViewer.cpp:323</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_html"><div class="ttname"><a href="class_m_q_engine_1_1_scene.html">MQEngine::Scene</a></div><div class="ttdef"><b>定义</b> Scene.h:22</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_3fe05bf57f03bb649fb5db365b213374.html">Editor</a></li><li class="navelem"><a href="dir_3a3d8eb816b60cde77cfac1e438cf069.html">src</a></li><li class="navelem"><a href="dir_3dd5fbfc1a2c6593074c7c474def556d.html">SceneViewer</a></li><li class="navelem"><a href="_scene_entity_viewer_8h.html">SceneEntityViewer.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

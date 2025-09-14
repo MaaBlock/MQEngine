@@ -1,0 +1,9 @@
+<map id="MQEngine::LightingSystem::update" name="MQEngine::LightingSystem::update">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,68,195,107"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_lighting_system.html#acd65090d2bdfe4a93a585cd846e4251b" title=" " alt="" coords="243,5,467,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,65,258,46,259,51,182,70"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_lighting_system.html#a5bbaa4c1127319710377806cc3dbe6b6" title=" " alt="" coords="260,68,450,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,85,245,85,245,90,195,90"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_lighting_system.html#a5010fa1d56de311d50f316dd74989f87" title=" " alt="" coords="260,131,450,169"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="182,105,259,124,258,129,181,110"/>
+</map>

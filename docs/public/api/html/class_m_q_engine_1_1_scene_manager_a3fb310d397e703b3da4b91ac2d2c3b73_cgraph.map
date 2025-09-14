@@ -1,0 +1,7 @@
+<map id="MQEngine::SceneManager::renderCreateSceneDialog" name="MQEngine::SceneManager::renderCreateSceneDialog">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,202,76"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_scene_manager.html#aa0139c7e8d5a5df93866533d04531b52" title=" " alt="" coords="250,5,425,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,41,234,36,235,41,203,46"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_scene_manager.html#a0dbe30d3591ba8698440a7f7abf92f3c" title=" " alt="" coords="250,68,425,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,67,235,71,234,76,202,72"/>
+</map>

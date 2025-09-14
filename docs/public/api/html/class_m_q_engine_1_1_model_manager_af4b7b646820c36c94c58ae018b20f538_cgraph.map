@@ -1,0 +1,9 @@
+<map id="MQEngine::ModelManager::render" name="MQEngine::ModelManager::render">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,68,181,107"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_model_manager.html#a43b0b988b635cf463092ec400c8a55fc" title=" " alt="" coords="257,5,432,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,65,248,46,250,51,174,70"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_model_manager.html#aa94168bab217b84a60a0f449558d44dd" title=" " alt="" coords="253,68,436,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,85,238,85,238,90,181,90"/>
+<area shape="rect" id="Node000004" href="$namespace_m_q_engine.html#a2886735c58adeafbc91f6486be198db4" title="将纹理类型枚举转换为本地化字符串（中文）" alt="" coords="229,131,460,169"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="174,105,250,124,248,129,173,110"/>
+</map>

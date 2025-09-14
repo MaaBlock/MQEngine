@@ -1,0 +1,27 @@
+<map id="MQEngine/Editor/src/data/NameTag.cpp" name="MQEngine/Editor/src/data/NameTag.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="507,5,662,44"/>
+<area shape="rect" id="Node000002" href="$_editor_2src_2data_2_name_tag_8h.html" title=" " alt="" coords="542,92,626,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="587,45,587,76,582,76,582,45"/>
+<area shape="rect" id="Node000003" href="$_editor_2src_2thirdparty_2thirdparty_8h.html" title="A header file containing third party libraries and macros for platform" alt="" coords="483,165,686,189"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="587,117,587,149,582,149,582,117"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,244,97,269"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="483,188,307,207,207,221,109,240,99,242,98,237,108,235,206,216,306,202,482,183"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="120,244,176,269"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="483,188,342,206,265,221,189,240,186,241,184,236,188,235,263,216,341,201,482,183"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="200,244,299,269"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="525,193,312,240,303,242,302,237,310,235,524,187"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="324,244,408,269"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="552,192,413,241,412,236,551,187"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="432,244,566,269"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="574,192,525,236,521,232,570,188"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="590,237,752,276"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="599,188,641,225,637,229,595,192"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="776,237,937,276"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="626,187,777,230,775,235,624,192"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="960,237,1115,276"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="663,187,946,234,945,239,662,193"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1139,237,1307,276"/>
+<area shape="poly" id="edge11_Node000003_Node000012" title=" " alt="" coords="687,184,885,204,1124,234,1123,240,884,210,686,190"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1331,237,1520,276"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="686,181,966,200,1139,215,1316,234,1315,240,1138,220,966,205,686,186"/>
+</map>

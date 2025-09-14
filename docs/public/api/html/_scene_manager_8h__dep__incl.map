@@ -1,0 +1,17 @@
+<map id="MQEngine/Editor/src/AssetsManager/SceneManager.h" name="MQEngine/Editor/src/AssetsManager/SceneManager.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="213,5,437,44"/>
+<area shape="rect" id="Node000002" href="$_scene_manager_8cpp.html" title=" " alt="" coords="97,92,335,131"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,56,242,94,238,89,288,52"/>
+<area shape="rect" id="Node000003" href="$_ui_manager_8h.html" title=" " alt="" coords="359,92,513,131"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="363,52,413,89,410,94,360,56"/>
+<area shape="rect" id="Node000004" href="$_editor_application_8h.html" title=" " alt="" coords="236,179,433,217"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="403,143,359,180,355,176,400,139"/>
+<area shape="rect" id="Node000008" href="$_ui_manager_8cpp.html" title=" " alt="" coords="456,179,618,217"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="472,139,516,176,513,180,468,143"/>
+<area shape="rect" id="Node000005" href="$_editor_application_8cpp.html" title=" " alt="" coords="5,265,216,304"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="272,226,161,267,159,262,270,221"/>
+<area shape="rect" id="Node000006" href="$_render_call_back_8cpp.html" title=" " alt="" coords="240,265,429,304"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="337,233,337,265,332,265,332,233"/>
+<area shape="rect" id="Node000007" href="$_editor_2src_2core_2entry_8cpp.html" title=" " alt="" coords="453,265,608,304"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="393,221,488,262,486,267,391,226"/>
+</map>

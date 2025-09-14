@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/data/Scene.h 文件参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_scene_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Scene.h 文件参考</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="_engine_p_c_h_8h_source.html">../EnginePCH.h</a>&quot;</code><br />
+<code>#include &quot;../Thirdparty/thirdparty.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="_data_error_8h_source.html">DataError.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_scene_trunk_8h_source.html">SceneTrunk.h</a>&quot;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;filesystem&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Scene.h 的引用(Include)关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="_scene_8h__incl.png" border="0" usemap="#a_m_q_engine_2_engine_2src_2data_2_scene_8h" loading="lazy" alt=""/></div>
+<map name="a_m_q_engine_2_engine_2src_2data_2_scene_8h" id="a_m_q_engine_2_engine_2src_2data_2_scene_8h">
+<area shape="rect" title=" " alt="" coords="509,5,664,44"/>
+<area shape="rect" href="_engine_p_c_h_8h.html" title=" " alt="" coords="136,317,256,342"/>
+<area shape="poly" title=" " alt="" coords="509,36,381,52,233,78,162,96,100,116,51,140,19,166,9,188,11,209,23,229,42,248,95,283,151,308,149,313,93,287,39,252,19,232,6,210,4,187,15,163,48,135,98,111,161,90,232,73,380,46,508,31"/>
+<area shape="rect" title=" " alt="" coords="29,165,232,189"/>
+<area shape="poly" title=" " alt="" coords="524,47,371,95,177,162,176,156,370,89,523,42"/>
+<area shape="rect" href="_data_error_8h.html" title=" " alt="" coords="256,165,354,189"/>
+<area shape="poly" title=" " alt="" coords="527,47,472,68,416,94,369,125,331,156,327,152,366,121,413,90,470,63,525,42"/>
+<area shape="rect" title=" " alt="" coords="630,317,693,342"/>
+<area shape="poly" title=" " alt="" coords="625,42,657,63,693,90,726,124,752,164,757,184,757,205,752,225,742,245,717,280,689,308,685,304,713,277,738,242,747,223,752,204,752,185,747,166,722,127,690,94,654,67,622,47"/>
+<area shape="rect" href="_scene_trunk_8h.html" title=" " alt="" coords="426,92,531,117"/>
+<area shape="poly" title=" " alt="" coords="562,47,508,85,505,81,559,42"/>
+<area shape="rect" title=" " alt="" coords="551,165,622,189"/>
+<area shape="poly" title=" " alt="" coords="589,44,589,149,584,149,584,44"/>
+<area shape="rect" title=" " alt="" coords="646,165,738,189"/>
+<area shape="poly" title=" " alt="" coords="602,43,677,150,673,153,597,46"/>
+<area shape="rect" title=" " alt="" coords="812,92,876,117"/>
+<area shape="poly" title=" " alt="" coords="650,42,798,87,797,92,648,47"/>
+<area shape="rect" title=" " alt="" coords="900,92,964,117"/>
+<area shape="poly" title=" " alt="" coords="665,40,885,89,884,94,664,45"/>
+<area shape="rect" title=" " alt="" coords="263,237,347,262"/>
+<area shape="poly" title=" " alt="" coords="308,190,308,222,303,222,303,190"/>
+<area shape="poly" title=" " alt="" coords="355,184,437,203,483,217,528,235,588,269,637,305,634,309,585,274,525,240,482,222,436,208,354,189"/>
+<area shape="poly" title=" " alt="" coords="467,119,443,140,419,166,403,193,394,217,383,240,362,264,313,290,248,314,246,309,311,285,358,260,378,237,389,215,398,191,415,163,440,136,463,115"/>
+<area shape="poly" title=" " alt="" coords="426,119,204,164,203,158,425,114"/>
+<area shape="poly" title=" " alt="" coords="451,120,349,161,347,156,449,115"/>
+<area shape="rect" href="_component_8h.html" title=" " alt="" coords="429,165,528,189"/>
+<area shape="poly" title=" " alt="" coords="481,117,481,149,476,149,476,117"/>
+<area shape="poly" title=" " alt="" coords="498,115,558,154,555,158,495,119"/>
+<area shape="poly" title=" " alt="" coords="515,115,643,157,641,162,513,120"/>
+<area shape="rect" href="_engine_2src_2data_2_name_tag_8h.html" title=" " alt="" coords="430,237,514,262"/>
+<area shape="poly" title=" " alt="" coords="480,190,477,222,472,222,475,190"/>
+<area shape="rect" title=" " alt="" coords="458,317,606,342"/>
+<area shape="poly" title=" " alt="" coords="494,188,513,209,529,236,536,270,537,301,532,301,531,270,524,238,509,212,490,192"/>
+<area shape="rect" href="_engine_2src_2thirdparty_2thirdparty_8h.html" title="A header file containing third party libraries and macros for platform" alt="" coords="1430,237,1634,262"/>
+<area shape="poly" title=" " alt="" coords="529,185,540,187,783,211,1026,227,1415,243,1414,248,1025,232,783,216,540,192,528,190"/>
+<area shape="poly" title=" " alt="" coords="431,265,253,315,251,310,430,260"/>
+<area shape="poly" title=" " alt="" coords="501,260,618,308,620,308,618,313,616,312,499,265"/>
+<area shape="rect" title=" " alt="" coords="280,310,434,349"/>
+<area shape="poly" title=" " alt="" coords="456,265,399,303,396,299,453,260"/>
+<area shape="poly" title=" " alt="" coords="483,261,516,303,512,307,479,264"/>
+<area shape="poly" title=" " alt="" coords="1430,257,1047,275,849,292,768,301,706,313,700,314,699,309,705,307,767,296,848,286,1047,270,1430,252"/>
+<area shape="rect" title=" " alt="" coords="1288,317,1379,342"/>
+<area shape="poly" title=" " alt="" coords="1503,265,1378,313,1376,308,1501,260"/>
+<area shape="rect" title=" " alt="" coords="1402,317,1459,342"/>
+<area shape="poly" title=" " alt="" coords="1519,264,1460,309,1456,305,1515,260"/>
+<area shape="rect" title=" " alt="" coords="1483,317,1581,342"/>
+<area shape="poly" title=" " alt="" coords="1535,262,1535,301,1529,301,1529,262"/>
+<area shape="rect" title=" " alt="" coords="1605,310,1752,349"/>
+<area shape="poly" title=" " alt="" coords="1555,260,1631,300,1629,305,1552,265"/>
+<area shape="rect" title=" " alt="" coords="1777,310,1924,349"/>
+<area shape="poly" title=" " alt="" coords="1581,260,1763,304,1761,309,1579,265"/>
+<area shape="rect" title=" " alt="" coords="1948,310,2102,349"/>
+<area shape="poly" title=" " alt="" coords="1622,260,1933,307,1932,312,1621,265"/>
+<area shape="rect" title=" " alt="" coords="2127,310,2281,349"/>
+<area shape="poly" title=" " alt="" coords="1634,256,1850,275,2112,307,2111,312,1849,280,1634,261"/>
+<area shape="rect" title=" " alt="" coords="2305,310,2460,349"/>
+<area shape="poly" title=" " alt="" coords="1634,252,1925,270,2106,286,2291,307,2290,312,2105,291,1925,275,1634,258"/>
+<area shape="rect" title=" " alt="" coords="2484,317,2638,342"/>
+<area shape="poly" title=" " alt="" coords="1634,250,2005,265,2238,282,2472,307,2496,311,2495,316,2472,313,2237,288,2004,271,1634,256"/>
+<area shape="rect" title=" " alt="" coords="2663,317,2894,342"/>
+<area shape="poly" title=" " alt="" coords="1634,251,2076,268,2362,284,2651,307,2689,312,2688,317,2650,313,2362,289,2076,273,1634,256"/>
+<area shape="rect" title=" " alt="" coords="718,317,893,342"/>
+<area shape="poly" title=" " alt="" coords="1430,261,1190,281,906,313,880,317,879,311,905,307,1190,275,1430,255"/>
+<area shape="rect" title=" " alt="" coords="917,310,1078,349"/>
+<area shape="poly" title=" " alt="" coords="1433,265,1277,285,1093,312,1093,307,1277,280,1432,260"/>
+<area shape="rect" title=" " alt="" coords="1102,310,1263,349"/>
+<area shape="poly" title=" " alt="" coords="1480,265,1279,309,1278,304,1479,260"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+此图展示该文件被哪些文件直接或间接地引用了:</div>
+<div class="dyncontent">
+<div class="center"><img src="_scene_8h__dep__incl.png" border="0" usemap="#a_m_q_engine_2_engine_2src_2data_2_scene_8hdep" loading="lazy" alt=""/></div>
+<map name="a_m_q_engine_2_engine_2src_2data_2_scene_8hdep" id="a_m_q_engine_2_engine_2src_2data_2_scene_8hdep">
+<area shape="rect" title=" " alt="" coords="1800,5,1954,44"/>
+<area shape="rect" href="_data_manager_8h.html" title=" " alt="" coords="1134,92,1288,131"/>
+<area shape="poly" title=" " alt="" coords="1785,40,1289,103,1288,98,1784,35"/>
+<area shape="rect" href="_scene_8cpp.html" title=" " alt="" coords="1800,179,1954,217"/>
+<area shape="poly" title=" " alt="" coords="1880,59,1880,178,1875,178,1875,59"/>
+<area shape="rect" href="_scene_trunk_8cpp.html" title=" " alt="" coords="1978,179,2139,217"/>
+<area shape="poly" title=" " alt="" coords="1910,53,2041,176,2037,180,1906,57"/>
+<area shape="rect" href="application_8h.html" title=" " alt="" coords="454,179,608,217"/>
+<area shape="poly" title=" " alt="" coords="1118,124,894,147,627,181,609,184,608,179,626,176,894,142,1118,118"/>
+<area shape="rect" href="core_2engine_8h.html" title=" " alt="" coords="564,265,718,304"/>
+<area shape="poly" title=" " alt="" coords="1118,115,1000,118,868,127,805,136,750,147,704,162,672,181,658,199,649,222,643,265,638,265,644,220,653,197,669,177,702,157,748,142,804,131,867,122,999,112,1118,109"/>
+<area shape="rect" href="headers_8h.html" title="include all headers in this file for one who wants to use the engine" alt="" coords="706,439,860,477"/>
+<area shape="poly" title=" " alt="" coords="1286,136,1312,153,1333,177,1350,211,1357,242,1352,273,1334,306,1303,333,1255,358,1195,380,1127,399,984,430,860,449,860,444,983,424,1126,394,1193,375,1253,353,1300,329,1330,302,1347,271,1352,243,1345,213,1328,180,1309,157,1283,140"/>
+<area shape="rect" href="_data_manager_8cpp.html" title=" " alt="" coords="1394,179,1563,217"/>
+<area shape="poly" title=" " alt="" coords="1285,133,1420,176,1419,181,1284,138"/>
+<area shape="poly" title=" " alt="" coords="1304,118,1525,141,1788,176,1800,178,1799,183,1788,181,1525,146,1303,123"/>
+<area shape="poly" title=" " alt="" coords="1303,115,1600,136,1783,153,1967,176,1978,178,1977,183,1966,181,1782,159,1599,141,1303,120"/>
+<area shape="rect" href="_camera_system_8h.html" title=" " alt="" coords="903,179,1078,217"/>
+<area shape="poly" title=" " alt="" coords="1149,139,1040,181,1038,176,1147,134"/>
+<area shape="rect" href="_lighting_system_8h.html" title=" " alt="" coords="5,179,195,217"/>
+<area shape="poly" title=" " alt="" coords="1118,118,721,138,465,156,207,181,196,183,195,177,206,176,465,151,721,132,1118,113"/>
+<area shape="rect" href="_matrix_cache_system_8h.html" title=" " alt="" coords="219,179,429,217"/>
+<area shape="poly" title=" " alt="" coords="1118,121,817,144,442,181,430,183,429,177,441,176,816,139,1118,116"/>
+<area shape="rect" href="_mesh_cache_system_8h.html" title=" " alt="" coords="683,179,880,217"/>
+<area shape="poly" title=" " alt="" coords="1119,133,877,181,876,175,1118,128"/>
+<area shape="rect" href="_script_system_8cpp.html" title=" " alt="" coords="1587,179,1776,217"/>
+<area shape="poly" title=" " alt="" coords="1304,127,1586,177,1586,182,1303,132"/>
+<area shape="rect" href="_texture_cache_system_8h.html" title=" " alt="" coords="1102,179,1319,217"/>
+<area shape="poly" title=" " alt="" coords="1213,147,1213,178,1208,178,1208,147"/>
+<area shape="poly" title=" " alt="" coords="569,225,618,263,615,267,565,229"/>
+<area shape="rect" href="_tech_8cpp.html" title=" " alt="" coords="412,352,566,391"/>
+<area shape="poly" title=" " alt="" coords="596,314,524,354,522,349,593,310"/>
+<area shape="rect" href="enginescope_8h.html" title="Engine scope for managing the engine instance" alt="" coords="591,352,745,391"/>
+<area shape="poly" title=" " alt="" coords="654,318,665,351,660,352,649,320"/>
+<area shape="poly" title=" " alt="" coords="708,309,736,327,759,350,772,372,779,396,785,438,780,439,774,397,767,374,755,354,733,331,706,314"/>
+<area shape="rect" href="_camera_system_8cpp.html" title=" " alt="" coords="845,352,1035,391"/>
+<area shape="poly" title=" " alt="" coords="723,306,875,349,873,354,721,311"/>
+<area shape="rect" href="_lighting_system_8cpp.html" title=" " alt="" coords="117,352,320,391"/>
+<area shape="poly" title=" " alt="" coords="549,307,313,354,312,349,548,302"/>
+<area shape="rect" href="engineapi_8h.html" title="include all the headers for the engine inner" alt="" coords="648,525,802,564"/>
+<area shape="poly" title=" " alt="" coords="677,405,696,476,717,524,713,526,691,478,672,406"/>
+<area shape="poly" title=" " alt="" coords="707,398,759,436,756,440,704,402"/>
+<area shape="rect" href="_tutorial_8cpp.html" title=" " alt="" coords="291,612,445,651"/>
+<area shape="poly" title=" " alt="" coords="634,570,446,614,445,609,632,565"/>
+<area shape="rect" href="engine_8cpp.html" title=" " alt="" coords="470,612,624,651"/>
+<area shape="poly" title=" " alt="" coords="673,574,587,614,585,609,671,569"/>
+<area shape="rect" href="_engine_2src_2core_2entry_8cpp.html" title="The definition of entry point" alt="" coords="648,612,802,651"/>
+<area shape="poly" title=" " alt="" coords="728,580,728,611,723,611,723,580"/>
+<area shape="rect" href="imgui_8cpp.html" title=" " alt="" coords="827,612,981,651"/>
+<area shape="poly" title=" " alt="" coords="780,569,866,609,863,614,778,574"/>
+<area shape="rect" href="systemmanager_8cpp.html" title="class source for start and stop system" alt="" coords="1005,612,1187,651"/>
+<area shape="poly" title=" " alt="" coords="819,564,1014,609,1013,614,817,570"/>
+<area shape="poly" title=" " alt="" coords="764,492,740,526,736,523,759,489"/>
+<area shape="poly" title=" " alt="" coords="899,224,719,267,718,262,898,219"/>
+<area shape="poly" title=" " alt="" coords="986,233,968,305,950,353,945,351,963,303,981,231"/>
+<area shape="poly" title=" " alt="" coords="210,215,564,269,563,275,209,220"/>
+<area shape="poly" title=" " alt="" coords="123,228,208,350,204,353,119,231"/>
+<area shape="poly" title=" " alt="" coords="410,219,572,262,570,267,408,224"/>
+<area shape="rect" href="_matrix_cache_system_8cpp.html" title=" " alt="" coords="212,265,436,304"/>
+<area shape="poly" title=" " alt="" coords="327,233,327,265,321,265,321,233"/>
+<area shape="poly" title=" " alt="" coords="739,228,674,267,671,262,736,223"/>
+<area shape="rect" href="_mesh_cache_system_8cpp.html" title=" " alt="" coords="743,265,953,304"/>
+<area shape="poly" title=" " alt="" coords="808,228,835,263,831,266,804,232"/>
+<area shape="poly" title=" " alt="" coords="1087,221,907,243,731,268,719,270,718,265,730,263,907,238,1086,215"/>
+<area shape="rect" href="_texture_cache_system_8cpp.html" title=" " alt="" coords="1088,265,1320,304"/>
+<area shape="poly" title=" " alt="" coords="1211,233,1208,265,1203,265,1205,233"/>
+</map>
+</div>
+</div>
+<p><a href="_scene_8h_source.html">浏览该文件的源代码.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+类</h2></td></tr>
+<tr class="memitem:MQEngine_3A_3AScene" id="r_MQEngine_3A_3AScene"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_q_engine_1_1_scene.html">MQEngine::Scene</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+命名空间</h2></td></tr>
+<tr class="memitem:MQEngine" id="r_MQEngine"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_q_engine.html">MQEngine</a></td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_9d1d400ae0be4c726be2daa95e96e8a2.html">data</a></li><li class="navelem"><a href="_scene_8h.html">Scene.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

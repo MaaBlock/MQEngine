@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/data/Camera.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_camera_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Camera.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_camera_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by Administrator on 2025/8/24.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef CAMERA_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define CAMERA_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_p_c_h_8h.html">../EnginePCH.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;boost/describe.hpp&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#aee3dcad995f77a0f6b215f465d1e5997">   11</a></span>    <span class="keyword">constexpr</span> FCT::UniformSlot <a class="code hl_variable" href="namespace_m_q_engine.html#aee3dcad995f77a0f6b215f465d1e5997">CameraUniformSlot</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="stringliteral">&quot;CameraUniform&quot;</span>,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        FCT::UniformVar{FCT::UniformType::ProjectionMatrix},</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        FCT::UniformVar{FCT::UniformType::ViewMatrix}</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    };</div>
+</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_position_component.html">   16</a></span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_struct" href="struct_m_q_engine_1_1_position_component.html">PositionComponent</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_position_component.html#aff631893b4710e1628953c75aefd64d2">   17</a></span>        FCT::Vec3 <a class="code hl_variable" href="struct_m_q_engine_1_1_position_component.html#aff631893b4710e1628953c75aefd64d2">position</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_position_component.html#a71f48f838a5b0abe103b00f28e5278bd">   19</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="struct_m_q_engine_1_1_position_component.html#a71f48f838a5b0abe103b00f28e5278bd">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version) {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            ar &amp; <a class="code hl_variable" href="struct_m_q_engine_1_1_position_component.html#aff631893b4710e1628953c75aefd64d2">position</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        }</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    };</div>
+</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">   23</a></span>    <a class="code hl_function" href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">BOOST_DESCRIBE_STRUCT</a>(<a class="code hl_struct" href="struct_m_q_engine_1_1_position_component.html">PositionComponent</a>, (), (position))</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> RotationComponent {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        FCT::Vec3 rotation;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">void</span> serialize(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version) {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            ar &amp; rotation;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        }</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    };</div>
+</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a7b6a9e0c133865aee88aa3bc1458e3fe">   33</a></span>    <a class="code hl_function" href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">BOOST_DESCRIBE_STRUCT</a>(RotationComponent, (), (rotation))</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> ScaleComponent {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        FCT::Vec3 scale = FCT::Vec3(1.0f, 1.0f, 1.0f);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">void</span> serialize(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            ar &amp; scale;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
+</div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a0770167aafa7d544f96e6b74bf340eb7">   42</a></span>    <a class="code hl_function" href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">BOOST_DESCRIBE_STRUCT</a>(ScaleComponent, (), (scale))</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> CameraComponent {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordtype">bool</span> active = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">float</span> fov = 45.0f;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordtype">float</span> nearPlane = 0.1f;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordtype">float</span> farPlane = 1000.0f;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordtype">void</span> serialize(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            ar &amp; fov;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            ar &amp; nearPlane;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            ar &amp; farPlane;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    };</div>
+</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a390eb9925297d9ddca2d6440b1ce9f3a">   56</a></span>    <a class="code hl_function" href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">BOOST_DESCRIBE_STRUCT</a>(CameraComponent, (), (active, fov, nearPlane, farPlane))</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> CacheRotationMatrix {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        FCT::Mat4 rotationMatrix;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    };</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="};">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a70ad6c5cd64217020b7e61364ad5ecc7">   62</a></span>    <span class="keyword">constexpr</span> FCT::UniformSlot <a class="code hl_variable" href="namespace_m_q_engine.html#a70ad6c5cd64217020b7e61364ad5ecc7">ModelUniformSlot</a> {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="stringliteral">&quot;ModelUniform&quot;</span>,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        FCT::UniformVar{FCT::UniformType::ModelMatrix,<span class="stringliteral">&quot;modelMatrix&quot;</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    };</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="};">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html">   67</a></span>    <span class="keyword">struct </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a> {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">   68</a></span>        FCT::Uniform* <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">   69</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">init</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">   70</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a> = <span class="keyword">true</span>;  <span class="comment">// 标记是否拥有uniform的所有权</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">   72</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>() = <span class="keyword">delete</span>;</div>
+<div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#af5d5136e8d023ad0a715e6a8bb8cf0a0">   73</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#af5d5136e8d023ad0a715e6a8bb8cf0a0">CacheModelMatrix</a>(FCT::Context* ctx) :  <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">init</a>(false), <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a>(true)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a> = <span class="keyword">new</span> FCT::Uniform(ctx, <a class="code hl_variable" href="namespace_m_q_engine.html#a70ad6c5cd64217020b7e61364ad5ecc7">ModelUniformSlot</a>);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        </div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a8971609ff0543201c726918bb8de4845">   78</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a8971609ff0543201c726918bb8de4845">~CacheModelMatrix</a>() {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a> &amp;&amp; <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a>) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                <span class="keyword">delete</span> <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        }</div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#a4b4e19e4777808861c59602a1b392f3e">   85</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a4b4e19e4777808861c59602a1b392f3e">CacheModelMatrix</a>(<span class="keyword">const</span> <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#acfb72658d4010568d1bb18e2abfa2af2">   86</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp; <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#acfb72658d4010568d1bb18e2abfa2af2">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        </div>
+<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#ae9d6d5287eba3f547cc88132971c8fad">   88</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#ae9d6d5287eba3f547cc88132971c8fad">CacheModelMatrix</a>(<a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp;&amp; other) noexcept </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            : <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a>(other.uniform), <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">init</a>(other.init), <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a>(other.ownsUniform) {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            other.uniform = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            other.ownsUniform = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        </div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_cache_model_matrix.html#aacad3369ab616488d67a28db939d2c27">   94</a></span>        <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp; <a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#aacad3369ab616488d67a28db939d2c27">operator=</a>(<a class="code hl_function" href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">CacheModelMatrix</a>&amp;&amp; other) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a> &amp;&amp; <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a>) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                    <span class="keyword">delete</span> <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a>;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                }</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">uniform</a> = other.uniform;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">init</a> = other.init;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <a class="code hl_variable" href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">ownsUniform</a> = other.ownsUniform;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                other.uniform = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                other.ownsUniform = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    };</div>
+</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>} <span class="comment">// MQEngine</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#endif </span><span class="comment">//CAMERA_H</span></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html"><div class="ttname"><a href="_engine_p_c_h_8h.html">EnginePCH.h</a></div></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html_a0697ee40f69dc5dab56d13131f4c4835"><div class="ttname"><a href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a></div><div class="ttdeci">#define ENGINE_API</div><div class="ttdef"><b>定义</b> EnginePCH.h:14</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a1fc18b18b2c4c45b93a27681815ef45e"><div class="ttname"><a href="namespace_m_q_engine.html#a1fc18b18b2c4c45b93a27681815ef45e">MQEngine::BOOST_DESCRIBE_STRUCT</a></div><div class="ttdeci">BOOST_DESCRIBE_STRUCT(PositionComponent,(),(position)) struct ENGINE_API RotationComponent</div><div class="ttdef"><b>定义</b> Camera.h:23</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a70ad6c5cd64217020b7e61364ad5ecc7"><div class="ttname"><a href="namespace_m_q_engine.html#a70ad6c5cd64217020b7e61364ad5ecc7">MQEngine::ModelUniformSlot</a></div><div class="ttdeci">constexpr FCT::UniformSlot ModelUniformSlot</div><div class="ttdef"><b>定义</b> Camera.h:62</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_aee3dcad995f77a0f6b215f465d1e5997"><div class="ttname"><a href="namespace_m_q_engine.html#aee3dcad995f77a0f6b215f465d1e5997">MQEngine::CameraUniformSlot</a></div><div class="ttdeci">constexpr FCT::UniformSlot CameraUniformSlot</div><div class="ttdef"><b>定义</b> Camera.h:11</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a486ae79c1088913e92488cc23fa96e39"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a486ae79c1088913e92488cc23fa96e39">MQEngine::CacheModelMatrix::init</a></div><div class="ttdeci">bool init</div><div class="ttdef"><b>定义</b> Camera.h:69</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a4b4e19e4777808861c59602a1b392f3e"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a4b4e19e4777808861c59602a1b392f3e">MQEngine::CacheModelMatrix::CacheModelMatrix</a></div><div class="ttdeci">CacheModelMatrix(const CacheModelMatrix &amp;)=delete</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a50bdf1f1891f622cad4479a80ee9611c"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a50bdf1f1891f622cad4479a80ee9611c">MQEngine::CacheModelMatrix::ownsUniform</a></div><div class="ttdeci">bool ownsUniform</div><div class="ttdef"><b>定义</b> Camera.h:70</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a7400abbe5daa3ac30e338a8f61fa20b3"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a7400abbe5daa3ac30e338a8f61fa20b3">MQEngine::CacheModelMatrix::CacheModelMatrix</a></div><div class="ttdeci">CacheModelMatrix()=delete</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a88ef9f0efe85d1b9dee5e1be090f1077"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a88ef9f0efe85d1b9dee5e1be090f1077">MQEngine::CacheModelMatrix::uniform</a></div><div class="ttdeci">FCT::Uniform * uniform</div><div class="ttdef"><b>定义</b> Camera.h:68</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_a8971609ff0543201c726918bb8de4845"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#a8971609ff0543201c726918bb8de4845">MQEngine::CacheModelMatrix::~CacheModelMatrix</a></div><div class="ttdeci">~CacheModelMatrix()</div><div class="ttdef"><b>定义</b> Camera.h:78</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_aacad3369ab616488d67a28db939d2c27"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#aacad3369ab616488d67a28db939d2c27">MQEngine::CacheModelMatrix::operator=</a></div><div class="ttdeci">CacheModelMatrix &amp; operator=(CacheModelMatrix &amp;&amp;other) noexcept</div><div class="ttdef"><b>定义</b> Camera.h:94</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_acfb72658d4010568d1bb18e2abfa2af2"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#acfb72658d4010568d1bb18e2abfa2af2">MQEngine::CacheModelMatrix::operator=</a></div><div class="ttdeci">CacheModelMatrix &amp; operator=(const CacheModelMatrix &amp;)=delete</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_ae9d6d5287eba3f547cc88132971c8fad"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#ae9d6d5287eba3f547cc88132971c8fad">MQEngine::CacheModelMatrix::CacheModelMatrix</a></div><div class="ttdeci">CacheModelMatrix(CacheModelMatrix &amp;&amp;other) noexcept</div><div class="ttdef"><b>定义</b> Camera.h:88</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_cache_model_matrix_html_af5d5136e8d023ad0a715e6a8bb8cf0a0"><div class="ttname"><a href="struct_m_q_engine_1_1_cache_model_matrix.html#af5d5136e8d023ad0a715e6a8bb8cf0a0">MQEngine::CacheModelMatrix::CacheModelMatrix</a></div><div class="ttdeci">CacheModelMatrix(FCT::Context *ctx)</div><div class="ttdef"><b>定义</b> Camera.h:73</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_position_component_html"><div class="ttname"><a href="struct_m_q_engine_1_1_position_component.html">MQEngine::PositionComponent</a></div><div class="ttdef"><b>定义</b> Camera.h:16</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_position_component_html_a71f48f838a5b0abe103b00f28e5278bd"><div class="ttname"><a href="struct_m_q_engine_1_1_position_component.html#a71f48f838a5b0abe103b00f28e5278bd">MQEngine::PositionComponent::serialize</a></div><div class="ttdeci">void serialize(Archive &amp;ar, const unsigned int version)</div><div class="ttdef"><b>定义</b> Camera.h:19</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_position_component_html_aff631893b4710e1628953c75aefd64d2"><div class="ttname"><a href="struct_m_q_engine_1_1_position_component.html#aff631893b4710e1628953c75aefd64d2">MQEngine::PositionComponent::position</a></div><div class="ttdeci">FCT::Vec3 position</div><div class="ttdef"><b>定义</b> Camera.h:17</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_9d1d400ae0be4c726be2daa95e96e8a2.html">data</a></li><li class="navelem"><a href="_camera_8h.html">Camera.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

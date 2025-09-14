@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Editor/src/AssetsManager/SceneManager.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_scene_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SceneManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_scene_manager_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by Administrator on 2025/8/24.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef SCENEMANAGER_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define SCENEMANAGER_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#aaaea4309b328be956e0476522ee6b266">SceneManager</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#aaaea4309b328be956e0476522ee6b266">SceneManager</a>();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        std::string <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#a8886a209f3b6676547ec3fd80eced33f">getSceneUuid</a>(<span class="keyword">const</span> std::string&amp; sceneName);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#aa0139c7e8d5a5df93866533d04531b52">newScene</a>(<span class="keyword">const</span> std::string&amp; sceneName);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#a30c42c6058eac51c209d2013d929d4bb">openScene</a>(<span class="keyword">const</span> std::string&amp; sceneName);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#aacf6a8d63c28578b04015ca730242e1d">render</a>();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#a0dbe30d3591ba8698440a7f7abf92f3c">refreshSceneList</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#a3fb310d397e703b3da4b91ac2d2c3b73">renderCreateSceneDialog</a>();</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_scene_manager.html#a0c8dc6ce947325de045811b89515eaf7">renderDeleteSceneDialog</a>();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a5a8815d63d91a1bf50edc03f48eb3474">   21</a></span>        <a class="code hl_class" href="class_m_q_engine_1_1_data_manager.html">DataManager</a>* <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a5a8815d63d91a1bf50edc03f48eb3474">m_dataManager</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#afeab3cdd3b85413c613241a03af6dcdb">   22</a></span>        std::vector&lt;std::string&gt; <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#afeab3cdd3b85413c613241a03af6dcdb">m_sceneList</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a6b58959344c45595ed0bce70720ac4f0">   23</a></span>        <span class="keywordtype">int</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a6b58959344c45595ed0bce70720ac4f0">m_selectedSceneIndex</a> = -1;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a109835e7dc76e259854ff31e67bbf9fa">   25</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a109835e7dc76e259854ff31e67bbf9fa">m_showCreateDialog</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a7e26dc5145f5537eb28e23e199db7e5c">   26</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a7e26dc5145f5537eb28e23e199db7e5c">m_showDeleteDialog</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a8679cf88368944a3324bdbafa0746c9c">   27</a></span>        <span class="keywordtype">int</span> <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a8679cf88368944a3324bdbafa0746c9c">m_deleteSceneIndex</a> = -1;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_scene_manager.html#a8dd8c0f2df67129ad77ed44c633b4530">   29</a></span>        std::string <a class="code hl_variable" href="class_m_q_engine_1_1_scene_manager.html#a8dd8c0f2df67129ad77ed44c633b4530">m_errorMessage</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>} <span class="comment">// MQEngine</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif </span><span class="comment">//SCENEMANAGER_H</span></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_manager_html"><div class="ttname"><a href="class_m_q_engine_1_1_data_manager.html">MQEngine::DataManager</a></div><div class="ttdef"><b>定义</b> DataManager.h:58</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a0c8dc6ce947325de045811b89515eaf7"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a0c8dc6ce947325de045811b89515eaf7">MQEngine::SceneManager::renderDeleteSceneDialog</a></div><div class="ttdeci">void renderDeleteSceneDialog()</div><div class="ttdef"><b>定义</b> SceneManager.cpp:291</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a0dbe30d3591ba8698440a7f7abf92f3c"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a0dbe30d3591ba8698440a7f7abf92f3c">MQEngine::SceneManager::refreshSceneList</a></div><div class="ttdeci">void refreshSceneList()</div><div class="ttdef"><b>定义</b> SceneManager.cpp:207</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a109835e7dc76e259854ff31e67bbf9fa"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a109835e7dc76e259854ff31e67bbf9fa">MQEngine::SceneManager::m_showCreateDialog</a></div><div class="ttdeci">bool m_showCreateDialog</div><div class="ttdef"><b>定义</b> SceneManager.h:25</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a30c42c6058eac51c209d2013d929d4bb"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a30c42c6058eac51c209d2013d929d4bb">MQEngine::SceneManager::openScene</a></div><div class="ttdeci">void openScene(const std::string &amp;sceneName)</div><div class="ttdef"><b>定义</b> SceneManager.cpp:74</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a3fb310d397e703b3da4b91ac2d2c3b73"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a3fb310d397e703b3da4b91ac2d2c3b73">MQEngine::SceneManager::renderCreateSceneDialog</a></div><div class="ttdeci">void renderCreateSceneDialog()</div><div class="ttdef"><b>定义</b> SceneManager.cpp:238</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a5a8815d63d91a1bf50edc03f48eb3474"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a5a8815d63d91a1bf50edc03f48eb3474">MQEngine::SceneManager::m_dataManager</a></div><div class="ttdeci">DataManager * m_dataManager</div><div class="ttdef"><b>定义</b> SceneManager.h:21</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a6b58959344c45595ed0bce70720ac4f0"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a6b58959344c45595ed0bce70720ac4f0">MQEngine::SceneManager::m_selectedSceneIndex</a></div><div class="ttdeci">int m_selectedSceneIndex</div><div class="ttdef"><b>定义</b> SceneManager.h:23</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a7e26dc5145f5537eb28e23e199db7e5c"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a7e26dc5145f5537eb28e23e199db7e5c">MQEngine::SceneManager::m_showDeleteDialog</a></div><div class="ttdeci">bool m_showDeleteDialog</div><div class="ttdef"><b>定义</b> SceneManager.h:26</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a8679cf88368944a3324bdbafa0746c9c"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a8679cf88368944a3324bdbafa0746c9c">MQEngine::SceneManager::m_deleteSceneIndex</a></div><div class="ttdeci">int m_deleteSceneIndex</div><div class="ttdef"><b>定义</b> SceneManager.h:27</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a8886a209f3b6676547ec3fd80eced33f"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a8886a209f3b6676547ec3fd80eced33f">MQEngine::SceneManager::getSceneUuid</a></div><div class="ttdeci">std::string getSceneUuid(const std::string &amp;sceneName)</div><div class="ttdef"><b>定义</b> SceneManager.cpp:17</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_a8dd8c0f2df67129ad77ed44c633b4530"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#a8dd8c0f2df67129ad77ed44c633b4530">MQEngine::SceneManager::m_errorMessage</a></div><div class="ttdeci">std::string m_errorMessage</div><div class="ttdef"><b>定义</b> SceneManager.h:29</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_aa0139c7e8d5a5df93866533d04531b52"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#aa0139c7e8d5a5df93866533d04531b52">MQEngine::SceneManager::newScene</a></div><div class="ttdeci">void newScene(const std::string &amp;sceneName)</div><div class="ttdef"><b>定义</b> SceneManager.cpp:39</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_aaaea4309b328be956e0476522ee6b266"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#aaaea4309b328be956e0476522ee6b266">MQEngine::SceneManager::SceneManager</a></div><div class="ttdeci">SceneManager()</div><div class="ttdef"><b>定义</b> SceneManager.cpp:12</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_aacf6a8d63c28578b04015ca730242e1d"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#aacf6a8d63c28578b04015ca730242e1d">MQEngine::SceneManager::render</a></div><div class="ttdeci">void render()</div><div class="ttdef"><b>定义</b> SceneManager.cpp:87</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_scene_manager_html_afeab3cdd3b85413c613241a03af6dcdb"><div class="ttname"><a href="class_m_q_engine_1_1_scene_manager.html#afeab3cdd3b85413c613241a03af6dcdb">MQEngine::SceneManager::m_sceneList</a></div><div class="ttdeci">std::vector&lt; std::string &gt; m_sceneList</div><div class="ttdef"><b>定义</b> SceneManager.h:22</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_3fe05bf57f03bb649fb5db365b213374.html">Editor</a></li><li class="navelem"><a href="dir_3a3d8eb816b60cde77cfac1e438cf069.html">src</a></li><li class="navelem"><a href="dir_061a572e3943abf0cd19179bc2ccbfec.html">AssetsManager</a></li><li class="navelem"><a href="_scene_manager_8h.html">SceneManager.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

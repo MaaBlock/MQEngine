@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Editor/src/AssetsManager/ModelManager.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_model_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ModelManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_model_manager_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by Administrator on 2025/8/23.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef MODELMANAGER_H</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define MODELMANAGER_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_global_8h.html">../core/Global.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a1ac41703a1d764fde9d5b2f181cd155d">ModelManager</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a1ac41703a1d764fde9d5b2f181cd155d">ModelManager</a>(<a class="code hl_class" href="class_m_q_engine_1_1_data_manager.html">DataManager</a>* dataManager);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a7ee3885c0e4fa166c0fa59ae81800faf">~ModelManager</a>();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#af4b7b646820c36c94c58ae018b20f538">render</a>();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        std::string <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a43b0b988b635cf463092ec400c8a55fc">getModelUuid</a>(<span class="keyword">const</span> std::string&amp; modelName);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#aa94168bab217b84a60a0f449558d44dd">loadSelectedModelInfo</a>(<span class="keyword">const</span> std::filesystem::path&amp; modelDir);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a791cfa7e0e2c591e4b716410ce1ebe0a">importModel</a>(<span class="keyword">const</span> std::string&amp; modelPath);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#a51933f42b4a57dcb7dc3fd932da8e838">saveModelIndex</a>(<span class="keyword">const</span> std::filesystem::path&amp; targetDir, <span class="keyword">const</span> std::string&amp; modelBaseName,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                            <span class="keyword">const</span> std::string&amp; originalPath);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#add5006213845fde02f6199c9e492cbc3">generateUuidFile</a>(<span class="keyword">const</span> std::filesystem::path&amp; targetDir, <span class="keyword">const</span> std::string&amp; originalPath);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_model_manager.html#afa513371ad7ebc484bfe030d619cb946">saveModelTimestamp</a>(<span class="keyword">const</span> std::filesystem::path&amp; targetDir, <span class="keyword">const</span> std::string&amp; modelPath);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#a785050ab75a5456f56f657632976366a">   23</a></span>        <a class="code hl_class" href="class_m_q_engine_1_1_data_manager.html">DataManager</a>* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#a785050ab75a5456f56f657632976366a">m_dataManager</a>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#a6a08bc056597dde413ae93f7b3de6438">   24</a></span>        FCT::ModelLoader* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#a6a08bc056597dde413ae93f7b3de6438">m_modelLoader</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#ade08213bbd930d8910972f145cd029c5">   25</a></span>        std::set&lt;std::string&gt; <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#ade08213bbd930d8910972f145cd029c5">m_supportedExtensions</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#af522c6ba520b56cffa58ae9b0415ec0e">   26</a></span>        std::string <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#af522c6ba520b56cffa58ae9b0415ec0e">m_selectedModel</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#af1038c4a927274a6edbfeb26fbcde7d9">   27</a></span>        FCT::ModelInfo::SceneInfo <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#af1038c4a927274a6edbfeb26fbcde7d9">m_selectedModelInfo</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#a45937a8c5245b1de8edd81363d057a13">   28</a></span>        FCT::Context* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#a45937a8c5245b1de8edd81363d057a13">m_ctx</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#a6d659a02750aa4bcd384ca85a0bf172b">   29</a></span>        FCT::Image* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#a6d659a02750aa4bcd384ca85a0bf172b">m_meshIcon</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#aa8f9f1967d0a43a78cba71dccc54839e">   30</a></span>        FCT::Image* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#aa8f9f1967d0a43a78cba71dccc54839e">m_materialIcon</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#ab663b264f279c7f420dbeb5df7616fb9">   31</a></span>        FCT::Image* <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#ab663b264f279c7f420dbeb5df7616fb9">m_textureIcon</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#ae7d7ccd1458df6f6934fb8e9e42f2d48">   33</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#ae7d7ccd1458df6f6934fb8e9e42f2d48">m_isWindowHovered</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_model_manager.html#a793c8e2b93b3f2f006e8cf5414c39176">   34</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_model_manager.html#a793c8e2b93b3f2f006e8cf5414c39176">m_isWindowFocused</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    };</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif </span><span class="comment">//MODELMANAGER_H</span></div>
+<div class="ttc" id="a_global_8h_html"><div class="ttname"><a href="_global_8h.html">Global.h</a></div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_data_manager_html"><div class="ttname"><a href="class_m_q_engine_1_1_data_manager.html">MQEngine::DataManager</a></div><div class="ttdef"><b>定义</b> DataManager.h:58</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a1ac41703a1d764fde9d5b2f181cd155d"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a1ac41703a1d764fde9d5b2f181cd155d">MQEngine::ModelManager::ModelManager</a></div><div class="ttdeci">ModelManager(DataManager *dataManager)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:14</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a43b0b988b635cf463092ec400c8a55fc"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a43b0b988b635cf463092ec400c8a55fc">MQEngine::ModelManager::getModelUuid</a></div><div class="ttdeci">std::string getModelUuid(const std::string &amp;modelName)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:446</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a45937a8c5245b1de8edd81363d057a13"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a45937a8c5245b1de8edd81363d057a13">MQEngine::ModelManager::m_ctx</a></div><div class="ttdeci">FCT::Context * m_ctx</div><div class="ttdef"><b>定义</b> ModelManager.h:28</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a51933f42b4a57dcb7dc3fd932da8e838"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a51933f42b4a57dcb7dc3fd932da8e838">MQEngine::ModelManager::saveModelIndex</a></div><div class="ttdeci">void saveModelIndex(const std::filesystem::path &amp;targetDir, const std::string &amp;modelBaseName, const std::string &amp;originalPath)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:83</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a6a08bc056597dde413ae93f7b3de6438"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a6a08bc056597dde413ae93f7b3de6438">MQEngine::ModelManager::m_modelLoader</a></div><div class="ttdeci">FCT::ModelLoader * m_modelLoader</div><div class="ttdef"><b>定义</b> ModelManager.h:24</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a6d659a02750aa4bcd384ca85a0bf172b"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a6d659a02750aa4bcd384ca85a0bf172b">MQEngine::ModelManager::m_meshIcon</a></div><div class="ttdeci">FCT::Image * m_meshIcon</div><div class="ttdef"><b>定义</b> ModelManager.h:29</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a785050ab75a5456f56f657632976366a"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a785050ab75a5456f56f657632976366a">MQEngine::ModelManager::m_dataManager</a></div><div class="ttdeci">DataManager * m_dataManager</div><div class="ttdef"><b>定义</b> ModelManager.h:23</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a791cfa7e0e2c591e4b716410ce1ebe0a"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a791cfa7e0e2c591e4b716410ce1ebe0a">MQEngine::ModelManager::importModel</a></div><div class="ttdeci">void importModel(const std::string &amp;modelPath)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:45</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a793c8e2b93b3f2f006e8cf5414c39176"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a793c8e2b93b3f2f006e8cf5414c39176">MQEngine::ModelManager::m_isWindowFocused</a></div><div class="ttdeci">bool m_isWindowFocused</div><div class="ttdef"><b>定义</b> ModelManager.h:34</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_a7ee3885c0e4fa166c0fa59ae81800faf"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#a7ee3885c0e4fa166c0fa59ae81800faf">MQEngine::ModelManager::~ModelManager</a></div><div class="ttdeci">~ModelManager()</div><div class="ttdef"><b>定义</b> ModelManager.cpp:40</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_aa8f9f1967d0a43a78cba71dccc54839e"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#aa8f9f1967d0a43a78cba71dccc54839e">MQEngine::ModelManager::m_materialIcon</a></div><div class="ttdeci">FCT::Image * m_materialIcon</div><div class="ttdef"><b>定义</b> ModelManager.h:30</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_aa94168bab217b84a60a0f449558d44dd"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#aa94168bab217b84a60a0f449558d44dd">MQEngine::ModelManager::loadSelectedModelInfo</a></div><div class="ttdeci">void loadSelectedModelInfo(const std::filesystem::path &amp;modelDir)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:466</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_ab663b264f279c7f420dbeb5df7616fb9"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#ab663b264f279c7f420dbeb5df7616fb9">MQEngine::ModelManager::m_textureIcon</a></div><div class="ttdeci">FCT::Image * m_textureIcon</div><div class="ttdef"><b>定义</b> ModelManager.h:31</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_add5006213845fde02f6199c9e492cbc3"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#add5006213845fde02f6199c9e492cbc3">MQEngine::ModelManager::generateUuidFile</a></div><div class="ttdeci">void generateUuidFile(const std::filesystem::path &amp;targetDir, const std::string &amp;originalPath)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:110</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_ade08213bbd930d8910972f145cd029c5"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#ade08213bbd930d8910972f145cd029c5">MQEngine::ModelManager::m_supportedExtensions</a></div><div class="ttdeci">std::set&lt; std::string &gt; m_supportedExtensions</div><div class="ttdef"><b>定义</b> ModelManager.h:25</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_ae7d7ccd1458df6f6934fb8e9e42f2d48"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#ae7d7ccd1458df6f6934fb8e9e42f2d48">MQEngine::ModelManager::m_isWindowHovered</a></div><div class="ttdeci">bool m_isWindowHovered</div><div class="ttdef"><b>定义</b> ModelManager.h:33</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_af1038c4a927274a6edbfeb26fbcde7d9"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#af1038c4a927274a6edbfeb26fbcde7d9">MQEngine::ModelManager::m_selectedModelInfo</a></div><div class="ttdeci">FCT::ModelInfo::SceneInfo m_selectedModelInfo</div><div class="ttdef"><b>定义</b> ModelManager.h:27</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_af4b7b646820c36c94c58ae018b20f538"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#af4b7b646820c36c94c58ae018b20f538">MQEngine::ModelManager::render</a></div><div class="ttdeci">void render()</div><div class="ttdef"><b>定义</b> ModelManager.cpp:172</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_af522c6ba520b56cffa58ae9b0415ec0e"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#af522c6ba520b56cffa58ae9b0415ec0e">MQEngine::ModelManager::m_selectedModel</a></div><div class="ttdeci">std::string m_selectedModel</div><div class="ttdef"><b>定义</b> ModelManager.h:26</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_model_manager_html_afa513371ad7ebc484bfe030d619cb946"><div class="ttname"><a href="class_m_q_engine_1_1_model_manager.html#afa513371ad7ebc484bfe030d619cb946">MQEngine::ModelManager::saveModelTimestamp</a></div><div class="ttdeci">void saveModelTimestamp(const std::filesystem::path &amp;targetDir, const std::string &amp;modelPath)</div><div class="ttdef"><b>定义</b> ModelManager.cpp:148</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_3fe05bf57f03bb649fb5db365b213374.html">Editor</a></li><li class="navelem"><a href="dir_3a3d8eb816b60cde77cfac1e438cf069.html">src</a></li><li class="navelem"><a href="dir_061a572e3943abf0cd19179bc2ccbfec.html">AssetsManager</a></li><li class="navelem"><a href="_model_manager_8h.html">ModelManager.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

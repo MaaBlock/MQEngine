@@ -1,0 +1,14 @@
+<map id="MQEngine::EditorGlobal" name="MQEngine::EditorGlobal">
+<area shape="rect" id="Node000001" title=" " alt="" coords="123,398,298,423"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_data_manager.html" title=" " alt="" coords="16,100,184,125"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,141,90,179,86,227,91,278,106,327,122,349,142,368,185,395,183,400,139,372,118,353,102,329,85,279,81,227,84,178,91,140"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_scene.html" title=" " alt="" coords="124,195,250,219"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="123,134,178,193,174,196,119,138"/>
+<area shape="rect" id="Node000003" href="$struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="5,5,195,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,46,103,100,97,100,97,46"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_editor_camera_manager.html" title=" " alt="" coords="329,296,554,321"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="411,331,324,376,255,400,254,395,322,372,409,327"/>
+<area shape="rect" id="Node000005" href="$struct_m_q_engine_1_1_selected_entity_state.html" title=" " alt="" coords="116,289,305,328"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="213,344,213,398,208,398,208,344"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="196,234,209,288,204,289,190,235"/>
+</map>

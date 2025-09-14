@@ -1,0 +1,34 @@
+<map id="MQEngine/Engine/src/core/Tech.h" name="MQEngine/Engine/src/core/Tech.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="120,5,274,44"/>
+<area shape="rect" id="Node000002" href="$_tech_8cpp.html" title=" " alt="" coords="80,179,234,217"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,60,164,179,159,177,187,58"/>
+<area shape="rect" id="Node000003" href="$_tech_8hpp.html" title=" " alt="" coords="5,92,160,131"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,56,109,94,106,89,158,52"/>
+<area shape="rect" id="Node000005" href="$core_2engine_8h.html" title=" " alt="" coords="385,92,540,131"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="271,47,405,89,403,94,270,52"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="111,141,143,176,139,180,107,144"/>
+<area shape="rect" id="Node000004" href="$engine_8cpp.html" title=" " alt="" coords="44,439,198,477"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="76,146,70,179,69,216,71,255,83,329,101,393,116,438,111,439,95,394,78,330,65,255,63,217,65,178,71,145"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="381,138,225,181,224,176,379,133"/>
+<area shape="rect" id="Node000006" href="$enginescope_8h.html" title="Engine scope for managing the engine instance" alt="" coords="749,179,904,217"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="556,131,750,176,748,181,554,137"/>
+<area shape="rect" id="Node000012" href="$headers_8h.html" title="include all headers in this file for one who wants to use the engine" alt="" coords="635,265,789,304"/>
+<area shape="poly" id="edge16_Node000005_Node000012" title=" " alt="" coords="556,116,591,124,626,136,660,153,688,177,702,198,710,221,715,265,710,265,705,222,698,200,685,180,657,158,624,141,589,129,555,121"/>
+<area shape="rect" id="Node000013" href="$_camera_system_8cpp.html" title=" " alt="" coords="258,179,448,217"/>
+<area shape="poly" id="edge17_Node000005_Node000013" title=" " alt="" coords="428,142,379,180,376,176,425,138"/>
+<area shape="rect" id="Node000014" href="$_lighting_system_8cpp.html" title=" " alt="" coords="472,179,675,217"/>
+<area shape="poly" id="edge18_Node000005_Node000014" title=" " alt="" coords="501,138,550,176,547,180,497,142"/>
+<area shape="rect" id="Node000007" href="$engineapi_8h.html" title="include all the headers for the engine inner" alt="" coords="635,352,789,391"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="827,234,819,270,803,305,778,333,750,354,746,349,775,329,799,303,814,268,822,233"/>
+<area shape="poly" id="edge14_Node000006_Node000012" title=" " alt="" coords="790,229,739,267,736,263,787,225"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="619,389,199,448,198,443,619,383"/>
+<area shape="rect" id="Node000008" href="$_tutorial_8cpp.html" title=" " alt="" coords="941,439,1096,477"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="795,393,951,436,950,441,794,398"/>
+<area shape="rect" id="Node000009" href="$_engine_2src_2core_2entry_8cpp.html" title="The definition of entry point" alt="" coords="379,439,533,477"/>
+<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="641,399,513,441,512,436,640,394"/>
+<area shape="rect" id="Node000010" href="$imgui_8cpp.html" title=" " alt="" coords="557,439,712,477"/>
+<area shape="poly" id="edge12_Node000007_Node000010" title=" " alt="" coords="686,404,654,440,650,436,682,401"/>
+<area shape="rect" id="Node000011" href="$systemmanager_8cpp.html" title="class source for start and stop system" alt="" coords="735,439,918,477"/>
+<area shape="poly" id="edge13_Node000007_Node000011" title=" " alt="" coords="751,398,803,436,800,440,748,402"/>
+<area shape="poly" id="edge15_Node000012_Node000007" title=" " alt="" coords="714,320,714,351,709,351,709,320"/>
+</map>

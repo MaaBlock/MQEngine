@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Engine/src/system/ComponentReflection.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_component_reflection_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ComponentReflection.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_component_reflection_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef COMPONENTREFLECTION_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define COMPONENTREFLECTION_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_p_c_h_8h.html">../EnginePCH.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="_camera_8h.html">../data/Camera.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_component_8h.html">../data/Component.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_2src_2data_2_name_tag_8h.html">../data/NameTag.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;boost/describe.hpp&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;boost/mp11.hpp&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;variant&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">   18</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">ComponentValue</a> = std::variant&lt;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        bool, int, float, double, std::string,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        FCT::Vec3</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    &gt;;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_field_info.html">   23</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_component_field_info.html">ComponentFieldInfo</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_field_info.html#a4a40cb7ffae6eb805b6da8b984319a53">   24</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_component_field_info.html#a4a40cb7ffae6eb805b6da8b984319a53">name</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_field_info.html#a0822339017533fbf241526713c4e8571">   25</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_component_field_info.html#a0822339017533fbf241526713c4e8571">type</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_field_info.html#ac4e2a69e2e1d3a31abaa873781bb2be6">   26</a></span>        std::function&lt;<a class="code hl_typedef" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">ComponentValue</a>(<span class="keywordtype">void</span>*)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_field_info.html#ac4e2a69e2e1d3a31abaa873781bb2be6">getter</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_field_info.html#afe2c9190b06cbf824e9296afbbfa8b0a">   27</a></span>        std::function&lt;void(<span class="keywordtype">void</span>*, <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">ComponentValue</a>&amp;)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_field_info.html#afe2c9190b06cbf824e9296afbbfa8b0a">setter</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    };</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html">   30</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_component_info.html">ComponentInfo</a> {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#a944ff39da7328f4e01d8efc394307579">   31</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#a944ff39da7328f4e01d8efc394307579">name</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#a9d3bba5e7298ca51423b32db5fed387d">   32</a></span>        std::vector&lt;ComponentFieldInfo&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#a9d3bba5e7298ca51423b32db5fed387d">fields</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#ae7c8fcfb233f9571c96c7fd6355ff1db">   33</a></span>        std::function&lt;bool(entt::registry&amp;, entt::entity)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#ae7c8fcfb233f9571c96c7fd6355ff1db">hasComponent</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#acb5a4885006c7cf8358205815659f25e">   34</a></span>        std::function&lt;<span class="keywordtype">void</span>*(entt::registry&amp;, entt::entity)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#acb5a4885006c7cf8358205815659f25e">getComponent</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#ab1ef9a134b0de033acc23bb1c49a4389">   35</a></span>        std::function&lt;void(entt::registry&amp;, entt::entity)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#ab1ef9a134b0de033acc23bb1c49a4389">addComponent</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_component_info.html#a9b9081b0cd7cbf5474fb1357686fb462">   36</a></span>        std::function&lt;void(entt::registry&amp;, entt::entity)&gt; <a class="code hl_variable" href="struct_m_q_engine_1_1_component_info.html#a9b9081b0cd7cbf5474fb1357686fb462">removeComponent</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    };</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    </div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="};">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_component_reflection.html">   39</a></span>    <span class="keyword">class </span><a class="code hl_define" href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ae11de5ed5d055cf2ad4fb41ebd5eba2b">ComponentReflection</a> {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ae11de5ed5d055cf2ad4fb41ebd5eba2b">ComponentReflection</a>();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_component_reflection.html#ab98221b49315e3ca901dae0c13490710">   42</a></span>        <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ab98221b49315e3ca901dae0c13490710">~ComponentReflection</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="comment">// 获取所有注册的组件信息</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">const</span> std::unordered_map&lt;std::string, ComponentInfo&gt;&amp; <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a7c975936c42b718cff399b55555ebed4">getComponentInfos</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// 检查实体是否有指定组件</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ab9041d66f942761162d319b15136867f">hasComponent</a>(entt::registry&amp; registry, entt::entity entity, <span class="keyword">const</span> std::string&amp; componentName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// 获取组件字段值</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <a class="code hl_typedef" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">ComponentValue</a> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a4772fc3d64dd5eb4af994203a40dcde1">getComponentField</a>(entt::registry&amp; registry, entt::entity entity, </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                                       <span class="keyword">const</span> std::string&amp; componentName, <span class="keyword">const</span> std::string&amp; fieldName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="comment">// 设置组件字段值</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#afea2863ea09b99ba512e47569a6cea5b">setComponentField</a>(entt::registry&amp; registry, entt::entity entity, </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                             <span class="keyword">const</span> std::string&amp; componentName, <span class="keyword">const</span> std::string&amp; fieldName, </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                             <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">ComponentValue</a>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="comment">// 添加组件到实体</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a811c18f969bf3b65067ab62d8b6451cd">addComponent</a>(entt::registry&amp; registry, entt::entity entity, <span class="keyword">const</span> std::string&amp; componentName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="comment">// 从实体移除组件</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ae7a728cdb562d67bc45b981076acf088">removeComponent</a>(entt::registry&amp; registry, entt::entity entity, <span class="keyword">const</span> std::string&amp; componentName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="comment">// 获取组件字段名</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a08c74b5a4836812eba4bcbac5c038002">getComponentFieldNames</a>(<span class="keyword">const</span> std::string&amp; componentName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// 获取组件字段类型</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    std::string <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#ac41ec92221964015e3946385770ff919">getComponentFieldType</a>(<span class="keyword">const</span> std::string&amp; componentName, <span class="keyword">const</span> std::string&amp; fieldName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">// 获取所有注册的组件名</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    std::vector&lt;std::string&gt; <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a163c1b125f233eb7cab385fe00928817">getRegisteredComponentNames</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_component_reflection.html#a8d8a4aa3fe1cd9aa49a3e046df61f2d6">   75</a></span>        std::unordered_map&lt;std::string, ComponentInfo&gt; <a class="code hl_variable" href="class_m_q_engine_1_1_component_reflection.html#a8d8a4aa3fe1cd9aa49a3e046df61f2d6">m_componentInfos</a>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// 注册组件的模板函数</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_component_reflection.html#a67fd8c7f5130b837a916f609262414ba">registerComponent</a>(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    };</div>
+</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>} <span class="comment">// namespace MQEngine</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#endif </span><span class="comment">// COMPONENTREFLECTION_H</span></div>
+<div class="ttc" id="a_camera_8h_html"><div class="ttname"><a href="_camera_8h.html">Camera.h</a></div></div>
+<div class="ttc" id="a_component_8h_html"><div class="ttname"><a href="_component_8h.html">Component.h</a></div></div>
+<div class="ttc" id="a_engine_2src_2data_2_name_tag_8h_html"><div class="ttname"><a href="_engine_2src_2data_2_name_tag_8h.html">NameTag.h</a></div></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html"><div class="ttname"><a href="_engine_p_c_h_8h.html">EnginePCH.h</a></div></div>
+<div class="ttc" id="a_engine_p_c_h_8h_html_a0697ee40f69dc5dab56d13131f4c4835"><div class="ttname"><a href="_engine_p_c_h_8h.html#a0697ee40f69dc5dab56d13131f4c4835">ENGINE_API</a></div><div class="ttdeci">#define ENGINE_API</div><div class="ttdef"><b>定义</b> EnginePCH.h:14</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a08c74b5a4836812eba4bcbac5c038002"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a08c74b5a4836812eba4bcbac5c038002">MQEngine::ComponentReflection::getComponentFieldNames</a></div><div class="ttdeci">std::vector&lt; std::string &gt; getComponentFieldNames(const std::string &amp;componentName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:99</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a163c1b125f233eb7cab385fe00928817"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a163c1b125f233eb7cab385fe00928817">MQEngine::ComponentReflection::getRegisteredComponentNames</a></div><div class="ttdeci">std::vector&lt; std::string &gt; getRegisteredComponentNames() const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:126</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a4772fc3d64dd5eb4af994203a40dcde1"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a4772fc3d64dd5eb4af994203a40dcde1">MQEngine::ComponentReflection::getComponentField</a></div><div class="ttdeci">ComponentValue getComponentField(entt::registry &amp;registry, entt::entity entity, const std::string &amp;componentName, const std::string &amp;fieldName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:31</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a67fd8c7f5130b837a916f609262414ba"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a67fd8c7f5130b837a916f609262414ba">MQEngine::ComponentReflection::registerComponent</a></div><div class="ttdeci">void registerComponent(const std::string &amp;name)</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:135</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a7c975936c42b718cff399b55555ebed4"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a7c975936c42b718cff399b55555ebed4">MQEngine::ComponentReflection::getComponentInfos</a></div><div class="ttdeci">const std::unordered_map&lt; std::string, ComponentInfo &gt; &amp; getComponentInfos() const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:19</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a811c18f969bf3b65067ab62d8b6451cd"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a811c18f969bf3b65067ab62d8b6451cd">MQEngine::ComponentReflection::addComponent</a></div><div class="ttdeci">void addComponent(entt::registry &amp;registry, entt::entity entity, const std::string &amp;componentName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:83</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_a8d8a4aa3fe1cd9aa49a3e046df61f2d6"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#a8d8a4aa3fe1cd9aa49a3e046df61f2d6">MQEngine::ComponentReflection::m_componentInfos</a></div><div class="ttdeci">std::unordered_map&lt; std::string, ComponentInfo &gt; m_componentInfos</div><div class="ttdef"><b>定义</b> ComponentReflection.h:75</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_ab9041d66f942761162d319b15136867f"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#ab9041d66f942761162d319b15136867f">MQEngine::ComponentReflection::hasComponent</a></div><div class="ttdeci">bool hasComponent(entt::registry &amp;registry, entt::entity entity, const std::string &amp;componentName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:23</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_ab98221b49315e3ca901dae0c13490710"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#ab98221b49315e3ca901dae0c13490710">MQEngine::ComponentReflection::~ComponentReflection</a></div><div class="ttdeci">~ComponentReflection()=default</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_ac41ec92221964015e3946385770ff919"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#ac41ec92221964015e3946385770ff919">MQEngine::ComponentReflection::getComponentFieldType</a></div><div class="ttdeci">std::string getComponentFieldType(const std::string &amp;componentName, const std::string &amp;fieldName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:111</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_ae11de5ed5d055cf2ad4fb41ebd5eba2b"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#ae11de5ed5d055cf2ad4fb41ebd5eba2b">MQEngine::ComponentReflection::ComponentReflection</a></div><div class="ttdeci">ComponentReflection()</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:7</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_ae7a728cdb562d67bc45b981076acf088"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#ae7a728cdb562d67bc45b981076acf088">MQEngine::ComponentReflection::removeComponent</a></div><div class="ttdeci">void removeComponent(entt::registry &amp;registry, entt::entity entity, const std::string &amp;componentName) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:91</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_component_reflection_html_afea2863ea09b99ba512e47569a6cea5b"><div class="ttname"><a href="class_m_q_engine_1_1_component_reflection.html#afea2863ea09b99ba512e47569a6cea5b">MQEngine::ComponentReflection::setComponentField</a></div><div class="ttdeci">void setComponentField(entt::registry &amp;registry, entt::entity entity, const std::string &amp;componentName, const std::string &amp;fieldName, const ComponentValue &amp;value) const</div><div class="ttdef"><b>定义</b> ComponentReflection.cpp:56</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_aa94625f4bb1b75c29470fd9aa4e9e509"><div class="ttname"><a href="namespace_m_q_engine.html#aa94625f4bb1b75c29470fd9aa4e9e509">MQEngine::ComponentValue</a></div><div class="ttdeci">std::variant&lt; bool, int, float, double, std::string, FCT::Vec3 &gt; ComponentValue</div><div class="ttdef"><b>定义</b> ComponentReflection.h:18</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_field_info_html"><div class="ttname"><a href="struct_m_q_engine_1_1_component_field_info.html">MQEngine::ComponentFieldInfo</a></div><div class="ttdef"><b>定义</b> ComponentReflection.h:23</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_field_info_html_a0822339017533fbf241526713c4e8571"><div class="ttname"><a href="struct_m_q_engine_1_1_component_field_info.html#a0822339017533fbf241526713c4e8571">MQEngine::ComponentFieldInfo::type</a></div><div class="ttdeci">std::string type</div><div class="ttdef"><b>定义</b> ComponentReflection.h:25</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_field_info_html_a4a40cb7ffae6eb805b6da8b984319a53"><div class="ttname"><a href="struct_m_q_engine_1_1_component_field_info.html#a4a40cb7ffae6eb805b6da8b984319a53">MQEngine::ComponentFieldInfo::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>定义</b> ComponentReflection.h:24</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_field_info_html_ac4e2a69e2e1d3a31abaa873781bb2be6"><div class="ttname"><a href="struct_m_q_engine_1_1_component_field_info.html#ac4e2a69e2e1d3a31abaa873781bb2be6">MQEngine::ComponentFieldInfo::getter</a></div><div class="ttdeci">std::function&lt; ComponentValue(void *)&gt; getter</div><div class="ttdef"><b>定义</b> ComponentReflection.h:26</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_field_info_html_afe2c9190b06cbf824e9296afbbfa8b0a"><div class="ttname"><a href="struct_m_q_engine_1_1_component_field_info.html#afe2c9190b06cbf824e9296afbbfa8b0a">MQEngine::ComponentFieldInfo::setter</a></div><div class="ttdeci">std::function&lt; void(void *, const ComponentValue &amp;)&gt; setter</div><div class="ttdef"><b>定义</b> ComponentReflection.h:27</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html">MQEngine::ComponentInfo</a></div><div class="ttdef"><b>定义</b> ComponentReflection.h:30</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_a944ff39da7328f4e01d8efc394307579"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#a944ff39da7328f4e01d8efc394307579">MQEngine::ComponentInfo::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>定义</b> ComponentReflection.h:31</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_a9b9081b0cd7cbf5474fb1357686fb462"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#a9b9081b0cd7cbf5474fb1357686fb462">MQEngine::ComponentInfo::removeComponent</a></div><div class="ttdeci">std::function&lt; void(entt::registry &amp;, entt::entity)&gt; removeComponent</div><div class="ttdef"><b>定义</b> ComponentReflection.h:36</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_a9d3bba5e7298ca51423b32db5fed387d"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#a9d3bba5e7298ca51423b32db5fed387d">MQEngine::ComponentInfo::fields</a></div><div class="ttdeci">std::vector&lt; ComponentFieldInfo &gt; fields</div><div class="ttdef"><b>定义</b> ComponentReflection.h:32</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_ab1ef9a134b0de033acc23bb1c49a4389"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#ab1ef9a134b0de033acc23bb1c49a4389">MQEngine::ComponentInfo::addComponent</a></div><div class="ttdeci">std::function&lt; void(entt::registry &amp;, entt::entity)&gt; addComponent</div><div class="ttdef"><b>定义</b> ComponentReflection.h:35</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_acb5a4885006c7cf8358205815659f25e"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#acb5a4885006c7cf8358205815659f25e">MQEngine::ComponentInfo::getComponent</a></div><div class="ttdeci">std::function&lt; void *(entt::registry &amp;, entt::entity)&gt; getComponent</div><div class="ttdef"><b>定义</b> ComponentReflection.h:34</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_component_info_html_ae7c8fcfb233f9571c96c7fd6355ff1db"><div class="ttname"><a href="struct_m_q_engine_1_1_component_info.html#ae7c8fcfb233f9571c96c7fd6355ff1db">MQEngine::ComponentInfo::hasComponent</a></div><div class="ttdeci">std::function&lt; bool(entt::registry &amp;, entt::entity)&gt; hasComponent</div><div class="ttdef"><b>定义</b> ComponentReflection.h:33</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_16d91a1bf83637e4f81d643431060c5e.html">Engine</a></li><li class="navelem"><a href="dir_0d8398446851018dc5e44a73b067c875.html">src</a></li><li class="navelem"><a href="dir_c640981e48e180ab874903205f34c415.html">system</a></li><li class="navelem"><a href="_component_reflection_8h.html">ComponentReflection.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

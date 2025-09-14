@@ -1,0 +1,12 @@
+<map id="MQEngine::SceneEntityViewer::addDiffuseTextureComponent" name="MQEngine::SceneEntityViewer::addDiffuseTextureComponent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="780,37,998,76"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="765,74,733,78,733,72,765,69"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>

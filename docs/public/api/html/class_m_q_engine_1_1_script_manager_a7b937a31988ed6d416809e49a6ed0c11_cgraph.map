@@ -1,0 +1,9 @@
+<map id="MQEngine::ScriptManager::render" name="MQEngine::ScriptManager::render">
+<area shape="rect" id="Node000001" title="渲染脚本管理器UI界面" alt="" coords="5,44,188,83"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_script_manager.html#ac0baab48bf80dc83a7337e6312b63f52" title="刷新脚本列表和函数信息" alt="" coords="246,12,428,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,49,230,43,231,48,189,54"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_script_manager.html#ada75c50bb80ec85c362b135cf2f1954c" title="渲染脚本函数列表" alt="" coords="236,75,439,114"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,73,221,77,220,82,188,78"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_script_manager.html#aa993be77f4a9f5ae8d0b0aef66cf6a2e" title="从ScriptSystem加载函数名" alt="" coords="487,5,711,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="429,29,472,29,472,34,429,34"/>
+</map>

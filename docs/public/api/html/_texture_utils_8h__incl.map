@@ -1,0 +1,35 @@
+<map id="MQEngine/Engine/src/core/TextureUtils.h" name="MQEngine/Engine/src/core/TextureUtils.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="837,5,998,44"/>
+<area shape="rect" id="Node000002" href="$_engine_p_c_h_8h.html" title=" " alt="" coords="766,92,885,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="897,47,853,84,849,80,894,43"/>
+<area shape="rect" id="Node000003" href="$_engine_2src_2thirdparty_2thirdparty_8h.html" title="A header file containing third party libraries and macros for platform" alt="" coords="909,92,1113,117"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="942,43,987,80,984,84,939,47"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,172,97,196"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="909,118,898,119,777,127,675,130,501,130,418,131,328,137,227,148,109,167,98,170,97,164,108,162,227,143,328,131,417,126,501,124,675,124,777,121,897,114,909,113"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="120,172,176,196"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="909,118,898,119,789,126,697,127,540,124,465,125,384,131,294,144,189,167,185,168,184,163,188,162,293,139,384,126,464,120,540,119,697,122,789,120,897,114,909,113"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="200,172,299,196"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="909,118,898,119,732,130,603,134,475,143,311,167,299,170,298,165,311,162,474,138,603,129,732,125,897,114,909,113"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="323,165,470,203"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="909,119,688,142,486,167,485,162,688,137,908,113"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="495,165,642,203"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="935,120,657,167,656,162,934,115"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="666,165,820,203"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="972,120,823,162,822,157,970,115"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="844,165,999,203"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="1000,119,956,156,953,152,996,115"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1023,165,1178,203"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="1026,115,1069,152,1066,156,1022,119"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1202,172,1265,196"/>
+<area shape="poly" id="edge11_Node000003_Node000012" title=" " alt="" coords="1049,115,1191,162,1193,163,1191,168,1189,167,1048,120"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1290,172,1444,196"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="1065,115,1299,165,1298,170,1064,120"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="1469,172,1700,196"/>
+<area shape="poly" id="edge13_Node000003_Node000014" title=" " alt="" coords="1101,115,1457,162,1488,166,1487,172,1456,167,1100,120"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1725,172,1900,196"/>
+<area shape="poly" id="edge14_Node000003_Node000015" title=" " alt="" coords="1113,109,1385,128,1549,143,1713,162,1739,166,1738,171,1712,167,1548,148,1384,133,1113,114"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1924,165,2085,203"/>
+<area shape="poly" id="edge15_Node000003_Node000016" title=" " alt="" coords="1113,105,1462,121,1683,138,1909,162,1908,167,1682,143,1461,127,1113,111"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="2109,165,2270,203"/>
+<area shape="poly" id="edge16_Node000003_Node000017" title=" " alt="" coords="1113,104,1295,108,1537,117,1813,134,2094,162,2094,167,1812,139,1537,122,1295,113,1113,109"/>
+</map>

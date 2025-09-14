@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MQEngine: MQEngine/Editor/src/AssetsManager/ScriptManager.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MQEngine
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','搜索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_script_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ScriptManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_script_manager_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef SCRIPTMANAGER_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define SCRIPTMANAGER_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;../Thirdparty/thirdparty.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_global_8h.html">../core/Global.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    </div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_script_function_info.html">    8</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_m_q_engine_1_1_script_function_info.html">ScriptFunctionInfo</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_script_function_info.html#ac31762650b30d28ec3d25d15dc3bbfb3">    9</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_script_function_info.html#ac31762650b30d28ec3d25d15dc3bbfb3">functionName</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_script_function_info.html#afb22e8990cc3b8c083aa3cbac9d9f9e1">   10</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_script_function_info.html#afb22e8990cc3b8c083aa3cbac9d9f9e1">scriptPath</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_m_q_engine_1_1_script_function_info.html#a970613fa3e6f9bf631a70287698839e3">   11</a></span>        std::string <a class="code hl_variable" href="struct_m_q_engine_1_1_script_function_info.html#a970613fa3e6f9bf631a70287698839e3">description</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    };</div>
+</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html">   14</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#a5c0e2a5fd64f2153bb06db9a96b72d53">ScriptManager</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#a5c0e2a5fd64f2153bb06db9a96b72d53">ScriptManager</a>();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#acf3fad9a5e5ce145686f40a11ded3457">~ScriptManager</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#a7b937a31988ed6d416809e49a6ed0c11">render</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#ac0baab48bf80dc83a7337e6312b63f52">refreshScriptList</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">const</span> std::vector&lt;ScriptFunctionInfo&gt;&amp; <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#a1b7a27ad6f6ddf9b2a8887aac6931bd9">getScriptFunctions</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        std::optional&lt;ScriptFunctionInfo&gt; <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#a113e7d2143006bbd43be783b7153d12f">getScriptFunction</a>(<span class="keyword">const</span> std::string&amp; functionName) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#aa993be77f4a9f5ae8d0b0aef66cf6a2e">loadFunctionNamesFromScriptSystem</a>();</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_m_q_engine_1_1_script_manager.html#ada75c50bb80ec85c362b135cf2f1954c">renderScriptFunctionList</a>();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a83d396fd96b6c7cab4a8174242d5de48">   57</a></span>        std::vector&lt;ScriptFunctionInfo&gt; <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a83d396fd96b6c7cab4a8174242d5de48">m_scriptFunctions</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a66c93c2cadee128c17d0ba1c5f76b40a">   58</a></span>        std::string <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a66c93c2cadee128c17d0ba1c5f76b40a">m_selectedFunction</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a7c9c8c7b5b6b470a7b5078c0afe76698">   59</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a7c9c8c7b5b6b470a7b5078c0afe76698">m_needRefresh</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// UI状态</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a087536643fb4524a0895d8de40630a04">   62</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a087536643fb4524a0895d8de40630a04">m_isWindowHovered</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#af7dde735c9395a0a3fde24e0e8d4eeee">   63</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#af7dde735c9395a0a3fde24e0e8d4eeee">m_isWindowFocused</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a87dd65e4dc0b45075466eb15442326ee">   64</a></span>        <span class="keywordtype">char</span> <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a87dd65e4dc0b45075466eb15442326ee">m_searchBuffer</a>[256] = {0};</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_m_q_engine_1_1_script_manager.html#a68aa464781058c2ef4274c805a3f5a86">   65</a></span>        std::vector&lt;ScriptFunctionInfo&gt; <a class="code hl_variable" href="class_m_q_engine_1_1_script_manager.html#a68aa464781058c2ef4274c805a3f5a86">m_filteredFunctions</a>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    };</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>} <span class="comment">// MQEngine</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif </span><span class="comment">//SCRIPTMANAGER_H</span></div>
+<div class="ttc" id="a_global_8h_html"><div class="ttname"><a href="_global_8h.html">Global.h</a></div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a087536643fb4524a0895d8de40630a04"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a087536643fb4524a0895d8de40630a04">MQEngine::ScriptManager::m_isWindowHovered</a></div><div class="ttdeci">bool m_isWindowHovered</div><div class="ttdef"><b>定义</b> ScriptManager.h:62</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a113e7d2143006bbd43be783b7153d12f"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a113e7d2143006bbd43be783b7153d12f">MQEngine::ScriptManager::getScriptFunction</a></div><div class="ttdeci">std::optional&lt; ScriptFunctionInfo &gt; getScriptFunction(const std::string &amp;functionName) const</div><div class="ttdoc">根据函数名获取脚本函数信息</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:84</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a1b7a27ad6f6ddf9b2a8887aac6931bd9"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a1b7a27ad6f6ddf9b2a8887aac6931bd9">MQEngine::ScriptManager::getScriptFunctions</a></div><div class="ttdeci">const std::vector&lt; ScriptFunctionInfo &gt; &amp; getScriptFunctions() const</div><div class="ttdoc">获取所有可用的脚本函数</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:80</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a5c0e2a5fd64f2153bb06db9a96b72d53"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a5c0e2a5fd64f2153bb06db9a96b72d53">MQEngine::ScriptManager::ScriptManager</a></div><div class="ttdeci">ScriptManager()</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:11</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a66c93c2cadee128c17d0ba1c5f76b40a"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a66c93c2cadee128c17d0ba1c5f76b40a">MQEngine::ScriptManager::m_selectedFunction</a></div><div class="ttdeci">std::string m_selectedFunction</div><div class="ttdef"><b>定义</b> ScriptManager.h:58</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a68aa464781058c2ef4274c805a3f5a86"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a68aa464781058c2ef4274c805a3f5a86">MQEngine::ScriptManager::m_filteredFunctions</a></div><div class="ttdeci">std::vector&lt; ScriptFunctionInfo &gt; m_filteredFunctions</div><div class="ttdef"><b>定义</b> ScriptManager.h:65</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a7b937a31988ed6d416809e49a6ed0c11"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a7b937a31988ed6d416809e49a6ed0c11">MQEngine::ScriptManager::render</a></div><div class="ttdeci">void render()</div><div class="ttdoc">渲染脚本管理器UI界面</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:18</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a7c9c8c7b5b6b470a7b5078c0afe76698"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a7c9c8c7b5b6b470a7b5078c0afe76698">MQEngine::ScriptManager::m_needRefresh</a></div><div class="ttdeci">bool m_needRefresh</div><div class="ttdef"><b>定义</b> ScriptManager.h:59</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a83d396fd96b6c7cab4a8174242d5de48"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a83d396fd96b6c7cab4a8174242d5de48">MQEngine::ScriptManager::m_scriptFunctions</a></div><div class="ttdeci">std::vector&lt; ScriptFunctionInfo &gt; m_scriptFunctions</div><div class="ttdef"><b>定义</b> ScriptManager.h:57</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_a87dd65e4dc0b45075466eb15442326ee"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#a87dd65e4dc0b45075466eb15442326ee">MQEngine::ScriptManager::m_searchBuffer</a></div><div class="ttdeci">char m_searchBuffer[256]</div><div class="ttdef"><b>定义</b> ScriptManager.h:64</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_aa993be77f4a9f5ae8d0b0aef66cf6a2e"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#aa993be77f4a9f5ae8d0b0aef66cf6a2e">MQEngine::ScriptManager::loadFunctionNamesFromScriptSystem</a></div><div class="ttdeci">void loadFunctionNamesFromScriptSystem()</div><div class="ttdoc">从ScriptSystem加载函数名</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:97</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_ac0baab48bf80dc83a7337e6312b63f52"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#ac0baab48bf80dc83a7337e6312b63f52">MQEngine::ScriptManager::refreshScriptList</a></div><div class="ttdeci">void refreshScriptList()</div><div class="ttdoc">刷新脚本列表和函数信息</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:68</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_acf3fad9a5e5ce145686f40a11ded3457"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#acf3fad9a5e5ce145686f40a11ded3457">MQEngine::ScriptManager::~ScriptManager</a></div><div class="ttdeci">~ScriptManager()</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:14</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_ada75c50bb80ec85c362b135cf2f1954c"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#ada75c50bb80ec85c362b135cf2f1954c">MQEngine::ScriptManager::renderScriptFunctionList</a></div><div class="ttdeci">void renderScriptFunctionList()</div><div class="ttdoc">渲染脚本函数列表</div><div class="ttdef"><b>定义</b> ScriptManager.cpp:125</div></div>
+<div class="ttc" id="aclass_m_q_engine_1_1_script_manager_html_af7dde735c9395a0a3fde24e0e8d4eeee"><div class="ttname"><a href="class_m_q_engine_1_1_script_manager.html#af7dde735c9395a0a3fde24e0e8d4eeee">MQEngine::ScriptManager::m_isWindowFocused</a></div><div class="ttdeci">bool m_isWindowFocused</div><div class="ttdef"><b>定义</b> ScriptManager.h:63</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_script_function_info_html"><div class="ttname"><a href="struct_m_q_engine_1_1_script_function_info.html">MQEngine::ScriptFunctionInfo</a></div><div class="ttdef"><b>定义</b> ScriptManager.h:8</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_script_function_info_html_a970613fa3e6f9bf631a70287698839e3"><div class="ttname"><a href="struct_m_q_engine_1_1_script_function_info.html#a970613fa3e6f9bf631a70287698839e3">MQEngine::ScriptFunctionInfo::description</a></div><div class="ttdeci">std::string description</div><div class="ttdef"><b>定义</b> ScriptManager.h:11</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_script_function_info_html_ac31762650b30d28ec3d25d15dc3bbfb3"><div class="ttname"><a href="struct_m_q_engine_1_1_script_function_info.html#ac31762650b30d28ec3d25d15dc3bbfb3">MQEngine::ScriptFunctionInfo::functionName</a></div><div class="ttdeci">std::string functionName</div><div class="ttdef"><b>定义</b> ScriptManager.h:9</div></div>
+<div class="ttc" id="astruct_m_q_engine_1_1_script_function_info_html_afb22e8990cc3b8c083aa3cbac9d9f9e1"><div class="ttname"><a href="struct_m_q_engine_1_1_script_function_info.html#afb22e8990cc3b8c083aa3cbac9d9f9e1">MQEngine::ScriptFunctionInfo::scriptPath</a></div><div class="ttdeci">std::string scriptPath</div><div class="ttdef"><b>定义</b> ScriptManager.h:10</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_a637f877e520570f6b8e8e10e9804dc9.html">MQEngine</a></li><li class="navelem"><a href="dir_3fe05bf57f03bb649fb5db365b213374.html">Editor</a></li><li class="navelem"><a href="dir_3a3d8eb816b60cde77cfac1e438cf069.html">src</a></li><li class="navelem"><a href="dir_061a572e3943abf0cd19179bc2ccbfec.html">AssetsManager</a></li><li class="navelem"><a href="_script_manager_8h.html">ScriptManager.h</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

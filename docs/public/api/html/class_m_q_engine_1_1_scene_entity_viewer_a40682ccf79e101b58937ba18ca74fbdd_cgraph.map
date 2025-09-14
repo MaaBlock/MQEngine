@@ -1,0 +1,11 @@
+<map id="MQEngine::SceneEntityViewer::renderCreateEntityDialog" name="MQEngine::SceneEntityViewer::renderCreateEntityDialog">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22" title=" " alt="" coords="264,61,474,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="529,5,732,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="462,58,521,45,523,50,463,63"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="522,68,739,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="474,78,506,78,506,83,474,83"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="550,117,711,156"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="463,98,535,114,534,119,462,103"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="MQEngine::SceneEntityViewer::addScriptComponent" name="MQEngine::SceneEntityViewer::addScriptComponent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>

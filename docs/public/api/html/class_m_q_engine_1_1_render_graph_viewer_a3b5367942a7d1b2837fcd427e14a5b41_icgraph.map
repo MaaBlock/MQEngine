@@ -1,0 +1,52 @@
+<map id="MQEngine::RenderGraphViewer::generatePinId" name="MQEngine::RenderGraphViewer::generatePinId">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1332,287,1542,326"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_render_graph_viewer.html#a00687bd291cb1b20c2fe75d7c9063d93" title="将当前图表转换为PassDesc数组" alt="" coords="264,59,509,98"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1421,274,1401,230,1372,180,1332,131,1309,111,1283,94,1230,70,1176,50,1120,35,1062,23,945,10,830,9,720,17,619,30,462,61,461,56,618,24,719,11,830,4,946,5,1063,18,1121,29,1177,45,1232,65,1285,90,1312,107,1336,128,1376,177,1406,228,1426,272"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_render_graph_viewer.html#a9da3bfee4c611b4c1c74d417364af2f9" title=" " alt="" coords="1074,167,1284,206"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="1393,281,1341,249,1283,220,1255,209,1257,204,1285,215,1344,245,1396,276"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_render_graph_viewer.html#a45aa834f6e2ec5fb5379aa7bcd1fa1aa" title=" " alt="" coords="1074,105,1284,143"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="1410,277,1356,216,1321,184,1283,157,1261,146,1263,141,1285,152,1324,180,1360,212,1414,273"/>
+<area shape="rect" id="Node000007" href="$class_m_q_engine_1_1_render_graph_viewer.html#a4609e9fd49c4385a0f6870c8e94b8d9b" title="生成指定pass的代码" alt="" coords="1074,230,1284,269"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="1331,286,1269,272,1270,267,1332,281"/>
+<area shape="rect" id="Node000009" href="$class_m_q_engine_1_1_render_graph_viewer.html#a29978f4b79674f8e72af201192da3027" title="创建一个新的Image节点" alt="" coords="557,230,767,269"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="1316,301,1073,283,767,260,768,254,1074,277,1317,295"/>
+<area shape="rect" id="Node000011" href="$class_m_q_engine_1_1_render_graph_viewer.html#a3ea9581a7a7c148497dea4961ca09f59" title="创建一个新的Pass" alt="" coords="815,345,1026,383"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="1317,324,1284,328,1026,356,1026,351,1284,323,1316,319"/>
+<area shape="rect" id="Node000012" href="$class_m_q_engine_1_1_render_graph_viewer.html#af38e8b6cb69701e574963d9ed379ad91" title=" " alt="" coords="1074,395,1284,434"/>
+<area shape="poly" id="edge19_Node000001_Node000012" title=" " alt="" coords="1382,336,1285,378,1237,397,1235,392,1283,374,1379,331"/>
+<area shape="rect" id="Node000017" href="$class_m_q_engine_1_1_render_graph_viewer.html#ae5dad7bc49cb8636e5cfe1e4896d690a" title=" " alt="" coords="281,629,492,667"/>
+<area shape="poly" id="edge29_Node000001_Node000017" title=" " alt="" coords="1412,339,1357,395,1323,423,1285,448,1184,498,1076,538,966,571,856,597,751,617,653,631,492,646,492,641,652,625,750,611,855,592,964,566,1074,533,1181,493,1283,443,1320,419,1354,391,1408,336"/>
+<area shape="rect" id="Node000018" href="$class_m_q_engine_1_1_render_graph_viewer.html#a1c926314fadc618883f76a700eb22371" title=" " alt="" coords="281,691,492,730"/>
+<area shape="poly" id="edge31_Node000001_Node000018" title=" " alt="" coords="1426,341,1405,387,1375,441,1335,496,1312,521,1286,542,1239,573,1189,600,1084,644,975,677,865,699,758,713,658,720,492,720,492,715,657,714,757,707,864,694,974,671,1082,639,1187,595,1236,568,1282,538,1308,517,1331,493,1371,439,1401,385,1421,339"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="432,46,415,40,386,38,359,40,343,45,337,51,341,58,336,60,332,50,340,40,358,35,386,33,416,35,434,41"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_render_graph_viewer.html#a046f314e59bb0e460ec8cba7d323fee8" title=" " alt="" coords="5,287,216,326"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="298,107,265,125,219,164,179,210,125,289,121,286,175,207,215,161,262,120,295,102"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_render_graph_viewer.html#a4875b820594c79bad14cfd2f0d676f3b" title="将图表保存到文件中" alt="" coords="815,122,1026,161"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="1058,168,1026,162,1027,157,1059,163"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="800,144,685,149,549,161,405,184,334,201,265,221,229,235,195,253,140,289,137,285,193,249,227,231,263,216,332,196,404,179,549,156,685,143,800,138"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="1058,135,1026,137,1026,132,1058,129"/>
+<area shape="rect" id="Node000008" href="$class_m_q_engine_1_1_render_graph_viewer.html#a3440c07cd76170c9fee839d9e6f386f0" title=" " alt="" coords="815,207,1026,246"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="1058,241,1026,239,1027,233,1058,236"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="800,221,767,220,625,216,514,219,404,232,264,260,166,289,165,284,263,255,403,226,513,213,625,211,767,215,800,216"/>
+<area shape="poly" id="edge15_Node000009_Node000003" title=" " alt="" coords="542,263,264,291,216,296,216,291,263,285,541,257"/>
+<area shape="rect" id="Node000010" href="$class_m_q_engine_1_1_render_graph_viewer.html#a63f07ee385b8f9469c6eb2007f930ce5" title="从PassDesc创建图表" alt="" coords="281,370,492,409"/>
+<area shape="poly" id="edge13_Node000009_Node000010" title=" " alt="" coords="610,278,428,372,425,367,608,274"/>
+<area shape="poly" id="edge14_Node000010_Node000003" title=" " alt="" coords="304,368,177,329,178,324,305,362"/>
+<area shape="poly" id="edge18_Node000011_Node000003" title=" " alt="" coords="800,358,216,317,216,311,800,353"/>
+<area shape="poly" id="edge17_Node000011_Node000010" title=" " alt="" coords="800,372,492,387,492,382,800,367"/>
+<area shape="poly" id="edge28_Node000012_Node000011" title=" " alt="" coords="1061,394,1022,387,1023,381,1063,389"/>
+<area shape="rect" id="Node000013" href="$class_m_q_engine_1_1_render_graph_viewer.html#a9995fab45ecceb5c533b8b3d1d23de5b" title="添加一个 链接，从指定的pin hash 到指定的 pin hash" alt="" coords="815,458,1026,497"/>
+<area shape="poly" id="edge20_Node000012_Node000013" title=" " alt="" coords="1082,441,1004,460,1003,455,1081,436"/>
+<area shape="poly" id="edge27_Node000013_Node000003" title=" " alt="" coords="886,509,833,545,801,561,768,573,710,587,662,591,615,586,556,573,488,552,422,524,358,490,299,454,199,383,132,328,135,324,202,379,302,450,361,486,424,519,490,547,558,568,616,581,663,586,709,582,767,568,799,556,830,540,883,504"/>
+<area shape="rect" id="Node000014" href="$class_m_q_engine_1_1_render_graph_viewer.html#a2c31371a7d06345cdaa6e190d3df73ae" title=" " alt="" coords="557,521,767,559"/>
+<area shape="poly" id="edge21_Node000013_Node000014" title=" " alt="" coords="824,503,746,523,744,517,822,498"/>
+<area shape="rect" id="Node000015" href="$class_m_q_engine_1_1_render_graph_viewer.html#a258df1d776d48414e5703d59b38bf7ce" title=" " alt="" coords="557,395,767,434"/>
+<area shape="poly" id="edge23_Node000013_Node000015" title=" " alt="" coords="822,456,744,437,746,432,824,451"/>
+<area shape="rect" id="Node000016" href="$class_m_q_engine_1_1_render_graph_viewer.html#a7979f327da193ca41192bcd70c4ee72b" title=" " alt="" coords="557,458,767,497"/>
+<area shape="poly" id="edge25_Node000013_Node000016" title=" " alt="" coords="799,480,768,480,768,475,799,475"/>
+<area shape="poly" id="edge22_Node000014_Node000010" title=" " alt="" coords="571,517,556,510,513,487,473,460,409,411,412,407,476,456,516,482,558,506,573,512"/>
+<area shape="poly" id="edge24_Node000015_Node000010" title=" " alt="" coords="541,406,492,402,492,396,542,401"/>
+<area shape="poly" id="edge26_Node000016_Node000010" title=" " alt="" coords="580,455,556,448,446,412,448,407,558,443,582,450"/>
+<area shape="poly" id="edge30_Node000017_Node000003" title=" " alt="" coords="280,624,262,611,229,578,201,541,177,500,157,459,129,383,114,327,119,326,134,382,162,457,182,498,205,538,233,575,265,607,283,619"/>
+<area shape="poly" id="edge32_Node000018_Node000003" title=" " alt="" coords="267,685,262,681,223,640,192,592,167,541,147,490,122,394,111,327,116,326,127,393,152,488,172,539,196,590,228,636,265,677,271,681"/>
+</map>
