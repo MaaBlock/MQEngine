@@ -19,7 +19,7 @@ set(MQENGINE_LAUNCHER_HEADERS
 )
 
 
-add_executable(Editor
+add_executable(Launcher
         ${MQENGINE_LAUNCHER_SOURCES}
         ${MQENGINE_LAUNCHER_HEADERS}
 )
