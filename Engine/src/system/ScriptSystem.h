@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 
+#include <unordered_set>
+
 namespace MQEngine {
     class ENGINE_API ScriptSystem {
     public:
@@ -33,10 +35,20 @@ namespace MQEngine {
         std::vector<std::string> getFunctionNames() const;
         
         /**
-         * @brief 更新系统，执行所有ScriptComponent的脚本
+         * @brief 执行所有OnStart类型的脚本
+         */
+        void start();
+
+        /**
+         * @brief 更新系统，执行所有Ticker类型的脚本
          */
         void update();
         
+        /**
+         * @brief 清理已启动的实体记录
+         */
+        void cleanUp();
+
         /**
          * @brief 设置逻辑帧时间间隔
          * @param deltaTime 帧时间间隔（秒）
@@ -48,6 +60,7 @@ namespace MQEngine {
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;
         std::unique_ptr<ComponentReflection> m_componentReflection;
         float m_logicDeltaTime = 0.0f;
+        std::unordered_set<entt::entity> m_startedEntities;
         
         /**
          * 从指定目录加载所有JavaScript文件

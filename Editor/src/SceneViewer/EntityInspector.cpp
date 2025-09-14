@@ -111,9 +111,16 @@ namespace MQEngine {
                 ImGui::CloseCurrentPopup();
             }
             
-            if (ImGui::MenuItem("Script Component")) {
-                if (!registry->all_of<ScriptComponent>(selectedEntity.entity)) {
-                    registry->emplace<ScriptComponent>(selectedEntity.entity);
+            if (ImGui::MenuItem("Ticker Script Component")) {
+                if (!registry->all_of<TickerScriptComponent>(selectedEntity.entity)) {
+                    registry->emplace<TickerScriptComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("OnStart Script Component")) {
+                if (!registry->all_of<OnStartScriptComponent>(selectedEntity.entity)) {
+                    registry->emplace<OnStartScriptComponent>(selectedEntity.entity);
                 }
                 ImGui::CloseCurrentPopup();
             }
@@ -158,7 +165,8 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<CacheRotationMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CacheModelMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
-        hasComponents |= tryRenderComponent<ScriptComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<TickerScriptComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<OnStartScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DirectionalLightComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DiffuseTextureComponent>(registry, selectedEntity.entity);
 

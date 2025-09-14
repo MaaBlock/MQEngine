@@ -177,14 +177,29 @@ namespace MQEngine {
     }
 
     template<>
-    inline void renderComponent<ScriptComponent>(const ScriptComponent* component) {
-        if (ImGui::CollapsingHeader("Script", ImGuiTreeNodeFlags_DefaultOpen)) {
+    inline void renderComponent<TickerScriptComponent>(const TickerScriptComponent* component) {
+        if (ImGui::CollapsingHeader("Ticker Script", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
             ImGui::Text("函数名: %s", component->functionName.empty() ? "未设置" : component->functionName.c_str());
             
             ImGui::Spacing();
-            if (ImGui::Button("删除组件##ScriptComponent")) {
-                g_editorGlobal.componentToDelete = entt::type_hash<ScriptComponent>::value();
+            if (ImGui::Button("删除组件##TickerScriptComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<TickerScriptComponent>::value();
+            }
+            
+            ImGui::Unindent();
+        }
+    }
+
+    template<>
+    inline void renderComponent<OnStartScriptComponent>(const OnStartScriptComponent* component) {
+        if (ImGui::CollapsingHeader("OnStart Script", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("函数名: %s", component->functionName.empty() ? "未设置" : component->functionName.c_str());
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##OnStartScriptComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<OnStartScriptComponent>::value();
             }
             
             ImGui::Unindent();

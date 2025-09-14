@@ -21,4 +21,6 @@
 #include "core/TextureUtils.h"
 #include "data/DataManager.h"
 #include "system/ScriptSystem.h"
+#include "data/Scene.h"
+#include "data/Component.h"
 #endif //HEADERS_H
