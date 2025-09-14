@@ -180,6 +180,17 @@ namespace MQEngine
                     m_imguiCtx->submit(cmdBuf);
                 });
             });
+
+        callback.subscribe<RenderCallBack::WindowClose>(
+            [this](const RenderCallBack::WindowClose& event)
+            {
+                g_editorGlobal.dataManager->saveProjectSetting(g_editorGlobal.dataManager->getProjectSetting());
+                auto scene = g_editorGlobal.dataManager->getCurrentScene();
+                if (scene)
+                {
+                    scene->save();
+                }
+            });
     }
 
     void UiManager::logicTick()
@@ -281,7 +292,7 @@ namespace MQEngine
             {
                 if (ImGui::MenuItem(TEXT("保存项目设置"), "Ctrl+S"))
                 {
-                    
+                    g_editorGlobal.dataManager->saveProjectSetting(g_editorGlobal.dataManager->getProjectSetting());
                 }
                 ImGui::Separator();
                 if (ImGui::MenuItem(TEXT("退出"), "Alt+F4"))
