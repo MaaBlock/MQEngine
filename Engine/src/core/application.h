@@ -30,6 +30,9 @@ namespace MQEngine {
         {
             FCT::RenderGraph* graph;
         };
+        struct WindowClose
+        {
+        };
     }
 
     class Application {

@@ -314,6 +314,9 @@ namespace MQEngine
 
     void Engine::term()
     {
+        RenderCallBack::WindowClose callback;
+        m_application->renderCallBackDispatcher.trigger(callback);
+
         m_nodeEnv->stop();
         delete m_nodeEnv;
         m_ctx->release();
