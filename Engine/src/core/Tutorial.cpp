@@ -13,6 +13,7 @@ namespace MQEngine
         return Engine::getInstance();
     }
 
+#ifdef FCT_DEBUG
     void OutputDebugObject()
     {
         _output_object(fout);
@@ -22,4 +23,6 @@ namespace MQEngine
     {
         return fct_object_list;
     }
+#endif
+
 }

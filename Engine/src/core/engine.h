@@ -102,6 +102,8 @@ namespace MQEngine {
      */
     ENGINE_API Engine& getEngine();
     ENGINE_API void OutputDebugObject();
+#ifdef FCT_DEBUG
     ENGINE_API std::vector<FCT::_fct_object_t*> GetDebugObject();
+#endif // DEBUG
 }
 #endif //ENGINE_H
