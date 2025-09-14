@@ -1,13 +1,32 @@
 <map id="MQEngine::EditorApplication" name="MQEngine::EditorApplication">
-<area shape="rect" id="Node000001" title=" " alt="" coords="88,209,299,233"/>
-<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_application.html" title=" " alt="" coords="17,114,186,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,148,184,207,180,210,122,152"/>
-<area shape="rect" id="Node000003" href="$struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="5,5,174,44"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="96,59,103,114,98,114,91,60"/>
-<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_ui_manager.html" title=" " alt="" coords="222,114,376,139"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="276,151,208,210,205,206,272,147"/>
-<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_graph_view_insight.html" title=" " alt="" coords="197,12,400,37"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="302,52,302,114,296,114,296,52"/>
-<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_pass_generator.html" title=" " alt="" coords="425,12,607,37"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="483,47,391,92,332,116,330,111,388,88,481,42"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="1393,344,1603,369"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_application.html" title=" " alt="" coords="1105,368,1274,393"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1289,370,1392,362,1392,368,1289,376"/>
+<area shape="rect" id="Node000003" href="$struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="706,445,874,484"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="889,476,984,477,1033,471,1080,459,1109,445,1136,427,1175,392,1178,396,1139,432,1112,450,1082,464,1034,476,984,482,889,481"/>
+<area shape="rect" id="Node000004" href="$class_m_q_engine_1_1_data_manager.html" title=" " alt="" coords="363,371,531,396"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="480,402,516,422,556,439,632,455,706,462,705,467,631,460,554,444,513,427,477,407"/>
+<area shape="rect" id="Node000009" href="$class_m_q_engine_1_1_model_manager.html" title=" " alt="" coords="702,344,878,369"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="546,373,702,361,702,366,547,378"/>
+<area shape="rect" id="Node000011" href="$class_m_q_engine_1_1_scene_manager.html" title=" " alt="" coords="702,396,878,421"/>
+<area shape="poly" id="edge12_Node000011_Node000004" title=" " alt="" coords="509,397,555,405,630,410,702,410,702,416,630,416,555,411,508,402"/>
+<area shape="rect" id="Node000013" href="$class_m_q_engine_1_1_scene_entity_viewer.html" title=" " alt="" coords="685,27,895,52"/>
+<area shape="poly" id="edge15_Node000013_Node000004" title=" " alt="" coords="457,355,487,295,534,215,564,174,598,133,635,96,677,64,705,50,707,55,679,68,639,100,602,137,568,177,539,218,492,297,462,358"/>
+<area shape="rect" id="Node000005" href="$struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="5,371,195,396"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="210,381,362,381,362,386,210,386"/>
+<area shape="rect" id="Node000006" href="$class_m_q_engine_1_1_ui_manager.html" title=" " alt="" coords="1112,238,1267,262"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1243,265,1460,341,1459,346,1241,270"/>
+<area shape="rect" id="Node000007" href="$class_m_q_engine_1_1_graph_view_insight.html" title=" " alt="" coords="688,78,892,102"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="908,91,1009,100,1052,108,1083,118,1118,145,1148,178,1184,236,1180,239,1143,181,1115,149,1080,123,1050,113,1008,105,907,96"/>
+<area shape="rect" id="Node000008" href="$class_m_q_engine_1_1_render_graph_viewer.html" title=" " alt="" coords="685,131,895,156"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="911,144,996,155,1082,178,1135,205,1175,235,1172,239,1132,210,1080,183,995,161,911,149"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="893,354,986,344,1034,334,1080,320,1107,307,1133,292,1173,261,1176,265,1136,296,1110,312,1082,325,1035,340,987,349,894,359"/>
+<area shape="rect" id="Node000010" href="$class_m_q_engine_1_1_editor_camera_manager.html" title=" " alt="" coords="678,184,902,209"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="918,203,1082,223,1137,234,1136,240,1081,229,917,209"/>
+<area shape="poly" id="edge11_Node000006_Node000011" title=" " alt="" coords="893,415,939,414,987,409,1035,397,1080,379,1124,329,1177,261,1181,264,1128,333,1083,383,1037,403,988,414,940,419,894,421"/>
+<area shape="rect" id="Node000012" href="$class_m_q_engine_1_1_script_manager.html" title=" " alt="" coords="699,238,881,262"/>
+<area shape="poly" id="edge13_Node000006_Node000012" title=" " alt="" coords="897,247,1112,247,1112,253,897,253"/>
+<area shape="poly" id="edge14_Node000006_Node000013" title=" " alt="" coords="911,24,954,26,999,33,1042,45,1083,65,1106,83,1126,105,1156,154,1177,201,1188,237,1183,238,1172,203,1152,156,1121,108,1102,87,1080,70,1041,50,998,38,954,31,911,30"/>
+<area shape="rect" id="Node000014" href="$class_m_q_engine_1_1_entity_inspector.html" title=" " alt="" coords="692,291,888,316"/>
+<area shape="poly" id="edge16_Node000006_Node000014" title=" " alt="" coords="904,295,991,287,1081,275,1144,260,1145,265,1082,280,991,292,904,300"/>
 </map>

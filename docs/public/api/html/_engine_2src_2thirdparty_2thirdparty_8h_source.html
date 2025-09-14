@@ -97,7 +97,32 @@ $(function(){initNavTree('_engine_2src_2thirdparty_2thirdparty_8h_source.html','
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;FCT_Node.h&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;FCT.h&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;FCT_IMGUI.h&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#endif </span><span class="comment">//THIRDPARTY_H</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;boost/archive/text_oarchive.hpp&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;boost/archive/text_iarchive.hpp&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;boost/serialization/string.hpp&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;boost/serialization/vector.hpp&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;boost/serialization/unordered_map.hpp&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;boost/uuid/uuid.hpp&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;boost/uuid/uuid_generators.hpp&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;boost/uuid/uuid_io.hpp&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;boost/archive/binary_iarchive.hpp&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;boost/archive/binary_oarchive.hpp&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_m_q_engine.html">MQEngine</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_m_q_engine.html#a4e8c7acb96feeb40bfbc392fca8adf03">Context</a> = FCT::Context;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a4f0fd8de9b0f6b21126df43c581defaa">   26</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_m_q_engine.html#a4f0fd8de9b0f6b21126df43c581defaa">Window</a> = FCT::Window;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#ad0d236bee0a1152c06554e32a1023fe8">   27</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_m_q_engine.html#ad0d236bee0a1152c06554e32a1023fe8">Uniform</a> = FCT::Uniform;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespace_m_q_engine.html#a8ba178c1bafb1408d8731a25704c4a77">   28</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_m_q_engine.html#a8ba178c1bafb1408d8731a25704c4a77">ShaderRef</a> = FCT::ShaderRef;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="comment">//using EventPipe = FCT::EventDispatcher&lt;FCT::EventSystemConfig::TriggerOnly&gt;;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif </span><span class="comment">//THIRDPARTY_H</span></div>
+<div class="ttc" id="anamespace_m_q_engine_html"><div class="ttname"><a href="namespace_m_q_engine.html">MQEngine</a></div><div class="ttdef"><b>定义</b> application.h:5</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a4e8c7acb96feeb40bfbc392fca8adf03"><div class="ttname"><a href="namespace_m_q_engine.html#a4e8c7acb96feeb40bfbc392fca8adf03">MQEngine::Context</a></div><div class="ttdeci">FCT::Context Context</div><div class="ttdef"><b>定义</b> EngineGlobal.h:14</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a4f0fd8de9b0f6b21126df43c581defaa"><div class="ttname"><a href="namespace_m_q_engine.html#a4f0fd8de9b0f6b21126df43c581defaa">MQEngine::Window</a></div><div class="ttdeci">FCT::Window Window</div><div class="ttdef"><b>定义</b> thirdparty.h:26</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_a8ba178c1bafb1408d8731a25704c4a77"><div class="ttname"><a href="namespace_m_q_engine.html#a8ba178c1bafb1408d8731a25704c4a77">MQEngine::ShaderRef</a></div><div class="ttdeci">FCT::ShaderRef ShaderRef</div><div class="ttdef"><b>定义</b> thirdparty.h:28</div></div>
+<div class="ttc" id="anamespace_m_q_engine_html_ad0d236bee0a1152c06554e32a1023fe8"><div class="ttname"><a href="namespace_m_q_engine.html#ad0d236bee0a1152c06554e32a1023fe8">MQEngine::Uniform</a></div><div class="ttdeci">FCT::Uniform Uniform</div><div class="ttdef"><b>定义</b> thirdparty.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

@@ -97,18 +97,51 @@ $(function(){initNavTree('_engine_2src_2thirdparty_2thirdparty_8h.html','',''); 
 <div class="textblock"><code>#include &lt;FCT_Node.h&gt;</code><br />
 <code>#include &lt;FCT.h&gt;</code><br />
 <code>#include &lt;FCT_IMGUI.h&gt;</code><br />
+<code>#include &lt;boost/archive/text_oarchive.hpp&gt;</code><br />
+<code>#include &lt;boost/archive/text_iarchive.hpp&gt;</code><br />
+<code>#include &lt;boost/serialization/string.hpp&gt;</code><br />
+<code>#include &lt;boost/serialization/vector.hpp&gt;</code><br />
+<code>#include &lt;boost/serialization/unordered_map.hpp&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;boost/uuid/uuid.hpp&gt;</code><br />
+<code>#include &lt;boost/uuid/uuid_generators.hpp&gt;</code><br />
+<code>#include &lt;boost/uuid/uuid_io.hpp&gt;</code><br />
+<code>#include &lt;boost/archive/binary_iarchive.hpp&gt;</code><br />
+<code>#include &lt;boost/archive/binary_oarchive.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 thirdparty.h 的引用(Include)关系图:</div>
 <div class="dyncontent">
 <div class="center"><img src="_engine_2src_2thirdparty_2thirdparty_8h__incl.png" border="0" usemap="#a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8h" loading="lazy" alt=""/></div>
 <map name="a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8h" id="a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8h">
-<area shape="rect" title="A header file containing third party libraries and macros for platform" alt="" coords="54,5,243,44"/>
-<area shape="rect" title=" " alt="" coords="5,92,97,117"/>
-<area shape="poly" title=" " alt="" coords="126,47,79,84,76,80,123,43"/>
-<area shape="rect" title=" " alt="" coords="120,92,176,117"/>
-<area shape="poly" title=" " alt="" coords="151,45,151,76,146,76,146,45"/>
-<area shape="rect" title=" " alt="" coords="200,92,299,117"/>
-<area shape="poly" title=" " alt="" coords="174,43,224,80,221,85,171,47"/>
+<area shape="rect" title="A header file containing third party libraries and macros for platform" alt="" coords="916,5,1106,44"/>
+<area shape="rect" title=" " alt="" coords="5,99,97,124"/>
+<area shape="poly" title=" " alt="" coords="916,28,761,31,559,41,334,61,220,76,109,95,99,97,98,92,108,89,219,71,334,56,559,36,761,26,916,23"/>
+<area shape="rect" title=" " alt="" coords="120,99,176,124"/>
+<area shape="poly" title=" " alt="" coords="916,32,533,53,333,71,251,82,189,95,185,96,184,91,188,89,250,77,333,66,533,48,916,27"/>
+<area shape="rect" title=" " alt="" coords="200,99,299,124"/>
+<area shape="poly" title=" " alt="" coords="916,32,643,50,477,68,311,95,300,97,299,92,311,89,476,63,643,45,916,27"/>
+<area shape="rect" title=" " alt="" coords="323,92,470,131"/>
+<area shape="poly" title=" " alt="" coords="916,38,722,61,486,94,485,89,721,55,915,33"/>
+<area shape="rect" title=" " alt="" coords="495,92,642,131"/>
+<area shape="poly" title=" " alt="" coords="916,46,657,94,656,89,915,40"/>
+<area shape="rect" title=" " alt="" coords="666,92,820,131"/>
+<area shape="poly" title=" " alt="" coords="952,47,818,89,816,84,951,42"/>
+<area shape="rect" title=" " alt="" coords="844,92,999,131"/>
+<area shape="poly" title=" " alt="" coords="993,47,954,83,951,79,989,43"/>
+<area shape="rect" title=" " alt="" coords="1023,92,1178,131"/>
+<area shape="poly" title=" " alt="" coords="1033,43,1071,79,1068,83,1029,47"/>
+<area shape="rect" title=" " alt="" coords="1202,99,1265,124"/>
+<area shape="poly" title=" " alt="" coords="1064,42,1191,90,1193,90,1191,95,1189,94,1062,47"/>
+<area shape="rect" title=" " alt="" coords="1290,99,1444,124"/>
+<area shape="poly" title=" " alt="" coords="1091,42,1304,92,1302,97,1089,47"/>
+<area shape="rect" title=" " alt="" coords="1469,99,1700,124"/>
+<area shape="poly" title=" " alt="" coords="1107,37,1490,94,1489,99,1106,43"/>
+<area shape="rect" title=" " alt="" coords="1725,99,1900,124"/>
+<area shape="poly" title=" " alt="" coords="1106,30,1379,52,1546,69,1713,89,1739,93,1738,99,1712,95,1545,74,1379,57,1106,35"/>
+<area shape="rect" title=" " alt="" coords="1924,92,2085,131"/>
+<area shape="poly" title=" " alt="" coords="1106,27,1456,45,1679,63,1908,89,1908,94,1679,69,1455,51,1106,32"/>
+<area shape="rect" title=" " alt="" coords="2109,92,2270,131"/>
+<area shape="poly" title=" " alt="" coords="1106,25,1287,30,1531,41,1809,60,2094,89,2093,94,1809,65,1530,46,1287,35,1106,30"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -116,25 +149,125 @@ thirdparty.h 的引用(Include)关系图:</div>
 <div class="dyncontent">
 <div class="center"><img src="_engine_2src_2thirdparty_2thirdparty_8h__dep__incl.png" border="0" usemap="#a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8hdep" loading="lazy" alt=""/></div>
 <map name="a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8hdep" id="a_m_q_engine_2_engine_2src_2thirdparty_2thirdparty_8hdep">
-<area shape="rect" title="A header file containing third party libraries and macros for platform" alt="" coords="345,5,534,44"/>
-<area shape="rect" href="headers_8h.html" title="include all headers in this file for one who wants to use the engine" alt="" coords="363,92,517,131"/>
-<area shape="poly" title=" " alt="" coords="442,60,442,91,437,91,437,60"/>
-<area shape="rect" href="engineapi_8h.html" title="include all the headers for the engine inner" alt="" coords="363,179,517,217"/>
-<area shape="poly" title=" " alt="" coords="442,147,442,178,437,178,437,147"/>
-<area shape="rect" href="_tutorial_8cpp.html" title=" " alt="" coords="5,265,160,304"/>
-<area shape="poly" title=" " alt="" coords="348,224,160,268,159,263,347,218"/>
-<area shape="rect" href="engine_8cpp.html" title=" " alt="" coords="184,265,338,304"/>
-<area shape="poly" title=" " alt="" coords="387,227,302,267,300,262,385,222"/>
-<area shape="rect" href="_engine_2src_2core_2entry_8cpp.html" title="The definition of entry point" alt="" coords="363,265,517,304"/>
-<area shape="poly" title=" " alt="" coords="442,233,442,265,437,265,437,233"/>
-<area shape="rect" href="imgui_8cpp.html" title=" " alt="" coords="541,265,696,304"/>
-<area shape="poly" title=" " alt="" coords="494,222,580,262,578,267,492,227"/>
-<area shape="rect" href="systemmanager_8cpp.html" title="class source for start and stop system" alt="" coords="719,265,902,304"/>
-<area shape="poly" title=" " alt="" coords="533,218,729,262,728,267,532,223"/>
+<area shape="rect" title="A header file containing third party libraries and macros for platform" alt="" coords="372,5,561,44"/>
+<area shape="rect" href="_texture_utils_8h.html" title=" " alt="" coords="43,439,205,477"/>
+<area shape="poly" title=" " alt="" coords="358,44,289,63,256,76,225,93,199,113,178,137,165,165,160,197,160,286,157,330,150,372,133,439,127,438,145,371,152,329,155,286,155,196,160,163,174,134,195,109,222,89,254,71,288,58,356,38"/>
+<area shape="rect" href="headers_8h.html" title="include all headers in this file for one who wants to use the engine" alt="" coords="1188,699,1342,737"/>
+<area shape="poly" title=" " alt="" coords="357,47,245,71,131,105,82,125,43,147,17,171,10,184,8,197,8,546,10,556,17,566,46,585,92,603,152,619,308,647,494,669,693,686,888,698,1188,712,1188,717,887,704,693,691,494,674,307,652,151,624,90,608,44,590,14,569,6,558,3,546,3,196,5,182,13,168,39,143,79,120,129,100,244,66,356,42"/>
+<area shape="rect" href="_uniform_slots_8h.html" title=" " alt="" coords="2173,352,2334,391"/>
+<area shape="poly" title=" " alt="" coords="577,31,815,52,955,68,1094,89,1255,119,1419,154,1735,228,2005,298,2190,349,2188,354,2003,303,1734,233,1418,159,1254,125,1093,95,954,74,815,57,577,36"/>
+<area shape="rect" href="core_2engine_8h.html" title=" " alt="" coords="1546,525,1700,564"/>
+<area shape="poly" title=" " alt="" coords="413,54,374,78,336,111,320,130,307,150,299,173,296,197,296,373,295,431,302,454,322,475,339,482,375,488,493,500,848,520,1245,532,1545,539,1545,545,1245,538,848,525,493,506,375,494,338,487,318,480,298,456,290,432,291,373,291,197,294,172,302,148,315,127,332,107,370,74,411,49"/>
+<area shape="rect" href="_vertex_layouts_8h.html" title=" " alt="" coords="2694,179,2863,217"/>
+<area shape="poly" title=" " alt="" coords="577,24,951,29,1460,41,1968,60,2180,73,2340,89,2445,107,2549,130,2718,175,2717,181,2548,135,2444,112,2340,95,2180,79,1968,65,1460,46,951,35,577,30"/>
+<area shape="rect" href="_component_8h.html" title=" " alt="" coords="927,92,1081,131"/>
+<area shape="poly" title=" " alt="" coords="577,41,927,95,926,100,576,46"/>
+<area shape="rect" href="_script_system_8h.html" title=" " alt="" coords="555,352,730,391"/>
+<area shape="poly" title=" " alt="" coords="485,57,636,350,631,353,481,59"/>
+<area shape="rect" href="_texture_utils_8cpp.html" title=" " alt="" coords="43,525,218,564"/>
+<area shape="poly" title=" " alt="" coords="129,493,132,525,127,525,124,493"/>
+<area shape="poly" title=" " alt="" coords="168,483,301,562,374,593,432,615,491,631,569,648,741,677,913,696,1067,707,1188,712,1188,717,1067,712,912,701,740,682,567,653,490,636,430,620,372,598,299,566,166,488"/>
+<area shape="rect" href="_texture_cache_system_8cpp.html" title=" " alt="" coords="312,525,544,564"/>
+<area shape="poly" title=" " alt="" coords="207,479,361,522,360,527,205,485"/>
+<area shape="rect" href="engineapi_8h.html" title="include all the headers for the engine inner" alt="" coords="1538,785,1692,824"/>
+<area shape="poly" title=" " alt="" coords="1358,739,1538,782,1537,787,1357,744"/>
+<area shape="rect" href="_tutorial_8cpp.html" title=" " alt="" coords="1826,872,1980,911"/>
+<area shape="poly" title=" " alt="" coords="1694,826,1840,869,1838,874,1692,831"/>
+<area shape="rect" href="engine_8cpp.html" title=" " alt="" coords="2292,872,2446,911"/>
+<area shape="poly" title=" " alt="" coords="1707,814,2292,879,2291,884,1707,819"/>
+<area shape="rect" href="_engine_2src_2core_2entry_8cpp.html" title="The definition of entry point" alt="" coords="1263,872,1417,911"/>
+<area shape="poly" title=" " alt="" coords="1540,832,1402,874,1400,869,1539,826"/>
+<area shape="rect" href="imgui_8cpp.html" title=" " alt="" coords="1442,872,1596,911"/>
+<area shape="poly" title=" " alt="" coords="1584,836,1542,873,1538,869,1580,832"/>
+<area shape="rect" href="systemmanager_8cpp.html" title="class source for start and stop system" alt="" coords="1620,872,1802,911"/>
+<area shape="poly" title=" " alt="" coords="1649,832,1691,869,1688,873,1645,836"/>
+<area shape="poly" title=" " alt="" coords="2310,396,2338,413,2360,433,2371,456,2369,468,2361,480,2279,493,2096,510,1700,540,1700,535,2096,504,2278,487,2359,475,2364,466,2366,456,2356,436,2335,417,2307,400"/>
+<area shape="rect" href="_lighting_system_8h.html" title=" " alt="" coords="2159,439,2348,477"/>
+<area shape="poly" title=" " alt="" coords="2256,407,2256,438,2251,438,2251,407"/>
+<area shape="poly" title=" " alt="" coords="1584,575,1527,614,1501,635,1473,653,1408,681,1344,701,1342,696,1406,676,1471,648,1498,631,1524,610,1581,571"/>
+<area shape="rect" href="_tech_8cpp.html" title=" " alt="" coords="1306,612,1460,651"/>
+<area shape="poly" title=" " alt="" coords="1556,572,1437,614,1435,609,1554,567"/>
+<area shape="rect" href="enginescope_8h.html" title="Engine scope for managing the engine instance" alt="" coords="1538,612,1692,651"/>
+<area shape="poly" title=" " alt="" coords="1622,580,1619,612,1614,611,1617,579"/>
+<area shape="rect" href="_camera_system_8cpp.html" title=" " alt="" coords="1716,612,1905,651"/>
+<area shape="poly" title=" " alt="" coords="1679,568,1770,609,1768,614,1677,573"/>
+<area shape="rect" href="_lighting_system_8cpp.html" title=" " alt="" coords="2022,612,2226,651"/>
+<area shape="poly" title=" " alt="" coords="1716,559,2022,610,2021,615,1715,564"/>
+<area shape="poly" title=" " alt="" coords="1523,657,1343,701,1342,695,1522,652"/>
+<area shape="poly" title=" " alt="" coords="1617,666,1617,785,1612,785,1612,666"/>
+<area shape="poly" title=" " alt="" coords="2144,480,1897,514,1701,537,1700,532,1897,508,2143,475"/>
+<area shape="poly" title=" " alt="" coords="2233,491,2140,613,2136,610,2228,488"/>
+<area shape="rect" href="_mesh_cache_system_8cpp.html" title=" " alt="" coords="2410,525,2620,564"/>
+<area shape="poly" title=" " alt="" coords="2771,233,2751,285,2722,350,2683,417,2634,479,2599,507,2562,527,2560,522,2596,502,2630,475,2679,414,2717,347,2746,283,2766,231"/>
+<area shape="poly" title=" " alt="" coords="1097,110,1487,114,1743,122,2008,136,2256,157,2366,171,2463,187,2544,206,2606,228,2645,253,2656,268,2660,283,2660,720,2654,754,2639,785,2615,810,2585,831,2552,848,2517,862,2448,881,2446,876,2515,857,2550,844,2583,827,2611,806,2634,781,2649,753,2655,719,2655,284,2651,270,2642,257,2603,233,2542,211,2462,193,2365,176,2255,162,2007,141,1743,128,1487,120,1096,115"/>
+<area shape="poly" title=" " alt="" coords="911,117,721,127,611,137,501,153,401,174,320,203,288,220,265,239,250,260,245,284,245,373,245,405,247,431,256,453,276,475,315,484,409,500,704,541,1305,618,1305,623,704,546,409,505,314,490,273,480,252,456,242,432,240,405,240,373,240,283,245,258,261,236,285,216,317,198,400,169,500,147,610,132,721,121,911,111"/>
+<area shape="poly" title=" " alt="" coords="1087,133,2187,436,2185,441,1086,138"/>
+<area shape="rect" href="_scene_trunk_8h.html" title=" " alt="" coords="1014,179,1168,217"/>
+<area shape="poly" title=" " alt="" coords="1036,140,1073,176,1070,180,1032,144"/>
+<area shape="rect" href="_mesh_cache_system_8h.html" title=" " alt="" coords="2423,439,2620,477"/>
+<area shape="poly" title=" " alt="" coords="1096,115,1322,134,1471,151,1637,174,1813,205,1994,244,2174,292,2348,350,2391,369,2433,392,2499,436,2496,441,2430,397,2389,374,2346,354,2172,297,1992,249,1812,210,1636,180,1471,156,1322,139,1096,120"/>
+<area shape="rect" href="_texture_cache_system_8h.html" title=" " alt="" coords="331,439,549,477"/>
+<area shape="poly" title=" " alt="" coords="944,140,861,175,759,225,649,285,544,354,495,398,457,440,453,436,491,395,541,350,646,280,756,220,859,171,942,135"/>
+<area shape="rect" href="_component_reflection_8h.html" title=" " alt="" coords="762,265,987,304"/>
+<area shape="poly" title=" " alt="" coords="983,144,891,266,887,263,979,141"/>
+<area shape="rect" href="_data_manager_8h.html" title=" " alt="" coords="1188,352,1342,391"/>
+<area shape="poly" title=" " alt="" coords="1181,221,1213,239,1241,264,1254,285,1262,309,1268,351,1263,352,1257,310,1249,287,1237,267,1210,243,1178,226"/>
+<area shape="rect" href="_scene_trunk_8cpp.html" title=" " alt="" coords="889,439,1050,477"/>
+<area shape="poly" title=" " alt="" coords="1078,233,1062,266,1036,329,1008,392,982,440,978,437,1003,389,1031,327,1058,264,1073,230"/>
+<area shape="rect" href="_scene_8h.html" title=" " alt="" coords="1072,265,1226,304"/>
+<area shape="poly" title=" " alt="" coords="1114,229,1139,263,1134,266,1110,232"/>
+<area shape="poly" title=" " alt="" coords="1268,406,1268,698,1263,698,1263,406"/>
+<area shape="poly" title=" " alt="" coords="1283,403,1308,441,1324,460,1343,475,1392,501,1444,519,1497,530,1546,537,1545,542,1496,536,1443,524,1389,506,1340,480,1320,464,1303,445,1278,406"/>
+<area shape="poly" title=" " alt="" coords="1358,374,1705,395,1925,413,2147,436,2158,437,2158,443,2146,441,1925,418,1705,400,1358,379"/>
+<area shape="rect" href="application_8h.html" title=" " alt="" coords="1546,439,1700,477"/>
+<area shape="poly" title=" " alt="" coords="1358,392,1546,436,1545,441,1357,397"/>
+<area shape="rect" href="_data_manager_8cpp.html" title=" " alt="" coords="1353,439,1522,477"/>
+<area shape="poly" title=" " alt="" coords="1318,396,1400,436,1398,440,1316,400"/>
+<area shape="rect" href="_scene_8cpp.html" title=" " alt="" coords="1074,439,1228,477"/>
+<area shape="poly" title=" " alt="" coords="1229,402,1178,440,1174,436,1226,398"/>
+<area shape="poly" title=" " alt="" coords="1186,398,1036,441,1034,436,1185,393"/>
+<area shape="rect" href="_camera_system_8h.html" title=" " alt="" coords="1724,439,1900,477"/>
+<area shape="poly" title=" " alt="" coords="1358,383,1712,436,1724,438,1723,443,1712,441,1358,388"/>
+<area shape="rect" href="_matrix_cache_system_8h.html" title=" " alt="" coords="1924,439,2134,477"/>
+<area shape="poly" title=" " alt="" coords="1359,378,1609,402,1912,436,1924,438,1923,443,1912,441,1608,407,1358,383"/>
+<area shape="poly" title=" " alt="" coords="1359,374,1791,396,2074,414,2360,436,2423,442,2423,448,2360,441,2074,419,1791,402,1358,379"/>
+<area shape="rect" href="_script_system_8cpp.html" title=" " alt="" coords="675,439,864,477"/>
+<area shape="poly" title=" " alt="" coords="1173,391,865,443,864,438,1173,386"/>
+<area shape="poly" title=" " alt="" coords="1173,385,549,448,549,443,1173,379"/>
+<area shape="poly" title=" " alt="" coords="1625,493,1625,525,1620,525,1620,493"/>
+<area shape="poly" title=" " alt="" coords="1757,487,1666,527,1663,522,1755,482"/>
+<area shape="poly" title=" " alt="" coords="1814,493,1813,611,1808,611,1809,493"/>
+<area shape="poly" title=" " alt="" coords="1925,484,1701,530,1700,525,1924,478"/>
+<area shape="rect" href="_matrix_cache_system_8cpp.html" title=" " alt="" coords="1917,525,2142,564"/>
+<area shape="poly" title=" " alt="" coords="2032,493,2032,525,2027,525,2027,493"/>
+<area shape="poly" title=" " alt="" coords="2408,479,2404,480,2206,501,2009,519,1701,541,1700,536,2008,513,2205,496,2404,475,2408,474"/>
+<area shape="poly" title=" " alt="" coords="2521,493,2519,525,2513,525,2516,493"/>
+<area shape="poly" title=" " alt="" coords="438,493,433,525,428,524,433,493"/>
+<area shape="poly" title=" " alt="" coords="565,470,619,475,1545,536,1545,541,618,480,564,475"/>
+<area shape="poly" title=" " alt="" coords="1189,311,1241,349,1238,354,1185,315"/>
+<area shape="poly" title=" " alt="" coords="1152,319,1153,438,1148,438,1147,319"/>
+<area shape="poly" title=" " alt="" coords="1126,317,1054,393,996,440,993,436,1050,389,1122,314"/>
+<area shape="rect" href="_component_reflection_8cpp.html" title=" " alt="" coords="756,352,994,391"/>
+<area shape="poly" title=" " alt="" coords="877,320,877,351,872,351,872,320"/>
+<area shape="poly" title=" " alt="" coords="810,312,695,354,693,349,808,307"/>
+<area shape="poly" title=" " alt="" coords="634,406,630,442,632,460,640,476,665,508,693,538,759,588,832,627,909,658,987,680,1062,696,1188,711,1187,716,1061,701,986,685,907,663,829,632,756,592,690,542,661,512,635,479,627,461,624,442,629,405"/>
+<area shape="poly" title=" " alt="" coords="642,406,646,443,653,461,664,475,1020,501,1545,536,1545,541,1020,506,661,480,648,464,641,445,637,407"/>
+<area shape="poly" title=" " alt="" coords="685,397,743,436,740,440,682,402"/>
 </map>
 </div>
 </div>
 <p><a href="_engine_2src_2thirdparty_2thirdparty_8h_source.html">浏览该文件的源代码.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+命名空间</h2></td></tr>
+<tr class="memitem:MQEngine" id="r_MQEngine"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_q_engine.html">MQEngine</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+类型定义</h2></td></tr>
+<tr class="memitem:a4f0fd8de9b0f6b21126df43c581defaa" id="r_a4f0fd8de9b0f6b21126df43c581defaa"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_q_engine.html#a4f0fd8de9b0f6b21126df43c581defaa">MQEngine::Window</a> = FCT::Window</td></tr>
+<tr class="memitem:ad0d236bee0a1152c06554e32a1023fe8" id="r_ad0d236bee0a1152c06554e32a1023fe8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_q_engine.html#ad0d236bee0a1152c06554e32a1023fe8">MQEngine::Uniform</a> = FCT::Uniform</td></tr>
+<tr class="memitem:a8ba178c1bafb1408d8731a25704c4a77" id="r_a8ba178c1bafb1408d8731a25704c4a77"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_m_q_engine.html#a8ba178c1bafb1408d8731a25704c4a77">MQEngine::ShaderRef</a> = FCT::ShaderRef</td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">详细描述</h2>
 <div class="textblock"><p>A header file containing third party libraries and macros for platform </p>
 </div></div><!-- contents -->

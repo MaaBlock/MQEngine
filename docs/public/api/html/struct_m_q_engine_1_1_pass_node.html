@@ -92,7 +92,7 @@ $(function(){initNavTree('struct_m_q_engine_1_1_pass_node.html','','struct_m_q_e
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="_pass_generator_8h_source.html">PassGenerator.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_render_graph_viewer_8h_source.html">RenderGraphViewer.h</a>&gt;</code></p>
 <div class="dynheader">
 MQEngine::PassNode 的协作图:</div>
 <div class="dyncontent">
@@ -111,6 +111,9 @@ Public 成员函数</h2></td></tr>
 <tr class="memitem:aa80b49f93360a78a32fa514049d1c1b3" id="r_aa80b49f93360a78a32fa514049d1c1b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa80b49f93360a78a32fa514049d1c1b3">removeTexturePin</a> (int pinId)</td></tr>
 <tr class="memitem:a6c330d64cffe12e2ccaf1744d77f8c00" id="r_a6c330d64cffe12e2ccaf1744d77f8c00"><td class="memTemplParams" colspan="2">template&lt;class Archive&gt; </td></tr>
 <tr class="memitem:a6c330d64cffe12e2ccaf1744d77f8c00 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c330d64cffe12e2ccaf1744d77f8c00">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr class="memitem:abc009f5511f6a3fae183f09fb75fcbee" id="r_abc009f5511f6a3fae183f09fb75fcbee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc009f5511f6a3fae183f09fb75fcbee">lastTexturePinId</a> () const</td></tr>
+<tr class="memitem:a1559934a3b8cb3520c2506f603fb1436" id="r_a1559934a3b8cb3520c2506f603fb1436"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1559934a3b8cb3520c2506f603fb1436">targetPinId</a> (int index) const</td></tr>
+<tr class="memitem:af59fb094d330640026cd9b6259837d1a" id="r_af59fb094d330640026cd9b6259837d1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af59fb094d330640026cd9b6259837d1a">depthStencilPinId</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public 属性</h2></td></tr>
@@ -132,6 +135,48 @@ Public 属性</h2></td></tr>
 <tr class="memitem:aa565487642eb2700359884e6e77b5b03" id="r_aa565487642eb2700359884e6e77b5b03"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa565487642eb2700359884e6e77b5b03">texturePinIndex</a> = 0</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="af59fb094d330640026cd9b6259837d1a" name="af59fb094d330640026cd9b6259837d1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af59fb094d330640026cd9b6259837d1a">&#9670;&#160;</a></span>depthStencilPinId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MQEngine::PassNode::depthStencilPinId </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc009f5511f6a3fae183f09fb75fcbee" name="abc009f5511f6a3fae183f09fb75fcbee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc009f5511f6a3fae183f09fb75fcbee">&#9670;&#160;</a></span>lastTexturePinId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MQEngine::PassNode::lastTexturePinId </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa80b49f93360a78a32fa514049d1c1b3" name="aa80b49f93360a78a32fa514049d1c1b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa80b49f93360a78a32fa514049d1c1b3">&#9670;&#160;</a></span>removeTexturePin()</h2>
 
@@ -184,6 +229,23 @@ template&lt;class Archive&gt; </div>
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1559934a3b8cb3520c2506f603fb1436" name="a1559934a3b8cb3520c2506f603fb1436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1559934a3b8cb3520c2506f603fb1436">&#9670;&#160;</a></span>targetPinId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MQEngine::PassNode::targetPinId </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -414,7 +476,8 @@ template&lt;class Archive&gt; </div>
 </div>
 </div>
 <hr/>该结构体的文档由以下文件生成:<ul>
-<li>MQEngine/Editor/src/codeGenerator/<a class="el" href="_pass_generator_8h_source.html">PassGenerator.h</a></li>
+<li>MQEngine/Editor/src/RenderGraphView/<a class="el" href="_render_graph_viewer_8h_source.html">RenderGraphViewer.h</a></li>
+<li>MQEngine/Editor/src/RenderGraphView/<a class="el" href="_node_tutorials_8cpp.html">NodeTutorials.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

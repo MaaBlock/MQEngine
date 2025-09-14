@@ -1,7 +1,10 @@
 var struct_m_q_engine_1_1_pass_node =
 [
+    [ "depthStencilPinId", "struct_m_q_engine_1_1_pass_node.html#af59fb094d330640026cd9b6259837d1a", null ],
+    [ "lastTexturePinId", "struct_m_q_engine_1_1_pass_node.html#abc009f5511f6a3fae183f09fb75fcbee", null ],
     [ "removeTexturePin", "struct_m_q_engine_1_1_pass_node.html#aa80b49f93360a78a32fa514049d1c1b3", null ],
     [ "serialize", "struct_m_q_engine_1_1_pass_node.html#a6c330d64cffe12e2ccaf1744d77f8c00", null ],
+    [ "targetPinId", "struct_m_q_engine_1_1_pass_node.html#a1559934a3b8cb3520c2506f603fb1436", null ],
     [ "clearColor", "struct_m_q_engine_1_1_pass_node.html#a89368eff32e1c23f2975443645106a2a", null ],
     [ "clearDepth", "struct_m_q_engine_1_1_pass_node.html#ab8f9e933c119c257dc84dd3c5326400a", null ],
     [ "clearStencil", "struct_m_q_engine_1_1_pass_node.html#af6844792ef91957b12e98853169af5cc", null ],

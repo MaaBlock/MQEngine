@@ -1,5 +1,7 @@
 <map id="MQEngine::Application" name="MQEngine::Application">
-<area shape="rect" id="Node000001" title=" " alt="" coords="26,5,195,30"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="140,5,308,30"/>
 <area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_editor_application.html" title=" " alt="" coords="5,78,216,103"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,46,113,78,108,78,108,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,41,131,80,128,75,191,36"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_game_application.html" title=" " alt="" coords="240,78,437,103"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,36,321,75,318,80,254,41"/>
 </map>

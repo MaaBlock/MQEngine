@@ -1,13 +1,19 @@
 <map id="MQEngine/Editor/src/imgui" name="MQEngine/Editor/src/imgui">
-<area shape="rect" id="node1" href="dir_3f47aad004affd54991da634ac16cd14.html" title="thirdparty" alt="" coords="26,124,118,149"/>
-<area shape="rect" id="node2" href="dir_4cf1c4a9c089c15d95ad4613e2fbc5af.html" title="core" alt="" coords="142,124,191,149"/>
-<area shape="rect" id="node3" href="dir_9fbd67e5025830198c04634003889601.html" title="codeGenerator" alt="" coords="216,124,328,149"/>
-<area shape="rect" id="node4" href="dir_313f52b07bcfcf11e3db17df07ea8b5d.html" title="imgui" alt="" coords="138,51,195,76"/>
-<area shape="poly" id="edge1" href="dir_000006_000010.html" alt="" coords="153,79,101,117,98,113,149,74"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000006_000010.html" title="1" alt="" coords="103,113,110,127"/>
-<area shape="poly" id="edge2" href="dir_000006_000001.html" alt="" coords="169,77,169,108,164,108,164,77"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000006_000001.html" title="1" alt="" coords="172,99,179,113"/>
-<area shape="poly" id="edge3" href="dir_000006_000000.html" alt="" coords="186,74,243,113,240,117,183,79"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000006_000000.html" title="1" alt="" coords="241,99,248,113"/>
-<area shape="rect" id="clust1" href="dir_3a3d8eb816b60cde77cfac1e438cf069.html" title="src" alt="" coords="16,16,339,159"/>
+<area shape="rect" id="node1" href="dir_061a572e3943abf0cd19179bc2ccbfec.html" title="AssetsManager" alt="" coords="26,124,139,149"/>
+<area shape="rect" id="node2" href="dir_c4f137c904b9ace1e1b41f52fed966ad.html" title="RenderGraphView" alt="" coords="164,124,290,149"/>
+<area shape="rect" id="node3" href="dir_3dd5fbfc1a2c6593074c7c474def556d.html" title="SceneViewer" alt="" coords="314,124,412,149"/>
+<area shape="rect" id="node4" href="dir_3f47aad004affd54991da634ac16cd14.html" title="thirdparty" alt="" coords="436,124,527,149"/>
+<area shape="rect" id="node5" href="dir_4cf1c4a9c089c15d95ad4613e2fbc5af.html" title="core" alt="" coords="551,124,601,149"/>
+<area shape="rect" id="node6" href="dir_313f52b07bcfcf11e3db17df07ea8b5d.html" title="imgui" alt="" coords="334,51,391,76"/>
+<area shape="poly" id="edge1" href="dir_000010_000000.html" alt="" coords="335,75,145,122,143,117,334,70"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000010_000000.html" title="3" alt="" coords="145,120,152,134"/>
+<area shape="poly" id="edge5" href="dir_000010_000012.html" alt="" coords="341,79,264,119,261,114,339,74"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000010_000012.html" title="1" alt="" coords="266,116,273,130"/>
+<area shape="poly" id="edge2" href="dir_000010_000013.html" alt="" coords="365,77,365,108,360,108,360,77"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000010_000013.html" title="2" alt="" coords="368,99,375,113"/>
+<area shape="poly" id="edge3" href="dir_000010_000018.html" alt="" coords="384,74,450,113,447,118,381,79"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000010_000018.html" title="1" alt="" coords="447,100,454,114"/>
+<area shape="poly" id="edge4" href="dir_000010_000001.html" alt="" coords="392,72,537,120,536,125,391,77"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000010_000001.html" title="2" alt="" coords="533,106,540,120"/>
+<area shape="rect" id="clust1" href="dir_3a3d8eb816b60cde77cfac1e438cf069.html" title="src" alt="" coords="16,16,612,159"/>
 </map>

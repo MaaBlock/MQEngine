@@ -1,6 +1,13 @@
 <map id="MQEngine::Engine::Engine" name="MQEngine::Engine::Engine">
-<area shape="rect" id="Node000001" title=" " alt="" coords="264,29,453,54"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="402,18,389,11,358,8,332,10,318,15,315,20,322,27,318,31,309,21,314,11,331,5,358,3,390,6,405,13"/>
-<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04" title=" " alt="" coords="5,29,216,54"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="248,44,216,44,216,39,248,39"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="633,31,823,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="773,19,759,12,728,9,701,11,686,16,683,21,691,28,687,32,678,22,682,12,700,6,728,4,761,7,776,14"/>
+<area shape="rect" id="Node000002" href="$class_m_q_engine_1_1_engine.html#ab179cb6100ba6c6517016976348f10f1" title=" " alt="" coords="361,5,585,30"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="617,35,586,32,586,26,618,29"/>
+<area shape="rect" id="Node000005" href="$class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04" title=" " alt="" coords="103,55,313,79"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="618,51,313,65,313,60,618,45"/>
+<area shape="rect" id="Node000003" href="$namespace_m_q_engine.html#a93d141837772959f4af928aca48c25bb" title=" " alt="" coords="131,5,285,30"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="346,20,285,20,285,15,346,15"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="388,36,279,57,278,51,388,31"/>
+<area shape="rect" id="Node000004" href="$_editor_2src_2core_2entry_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,55,30"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="115,20,55,20,55,15,115,15"/>
 </map>

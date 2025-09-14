@@ -9,5 +9,6 @@ var class_m_q_engine_1_1_editor_application =
     [ "settingUpImgui", "class_m_q_engine_1_1_editor_application.html#ac5365eaac6350cb7259a621ae3a4f932", null ],
     [ "imguiModule", "class_m_q_engine_1_1_editor_application.html#a22b17511d2b4f55d396f90e86282f983", null ],
     [ "m_imguiCtx", "class_m_q_engine_1_1_editor_application.html#ac63d8180c62347402ae183fe906e758c", null ],
+    [ "registry", "class_m_q_engine_1_1_editor_application.html#aa66a459ec29c1654c88c3511bb9fd018", null ],
     [ "uiManager", "class_m_q_engine_1_1_editor_application.html#aecfed241e34c8868803710df700253d4", null ]
 ];

@@ -1,4 +1,4 @@
 var _editor_application_8cpp =
 [
-    [ "MQEngine::g_global", "namespace_m_q_engine.html#a41e66f55a9a7545a6b39ec69b5da0fd4", null ]
+    [ "MQEngine::g_editorGlobal", "namespace_m_q_engine.html#ad623d64ca7e5c8b0e252317c793e53ab", null ]
 ];

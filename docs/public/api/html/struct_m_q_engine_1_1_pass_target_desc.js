@@ -5,6 +5,7 @@ var struct_m_q_engine_1_1_pass_target_desc =
     [ "customWidth", "struct_m_q_engine_1_1_pass_target_desc.html#a3a43e69315611d0087928f455563b824", null ],
     [ "enabled", "struct_m_q_engine_1_1_pass_target_desc.html#a2d104ea0472eb5a6d1b4fea4bf9f97da", null ],
     [ "format", "struct_m_q_engine_1_1_pass_target_desc.html#a95cd871344e95f4ddeba26feebe70094", null ],
+    [ "isWindow", "struct_m_q_engine_1_1_pass_target_desc.html#ae142c9f927e9acc46e66651c4d003e30", null ],
     [ "useCustomFormat", "struct_m_q_engine_1_1_pass_target_desc.html#ab2a10c43dfa14d28290098d2f129d0bf", null ],
     [ "useCustomSize", "struct_m_q_engine_1_1_pass_target_desc.html#aa28c3fee43a17768f0b4f45d52e7593f", null ]
 ];

@@ -31,6 +31,7 @@ var NAVTREE =
         [ "全部", "namespacemembers.html", null ],
         [ "函数", "namespacemembers_func.html", null ],
         [ "变量", "namespacemembers_vars.html", null ],
+        [ "类型定义", "namespacemembers_type.html", null ],
         [ "枚举", "namespacemembers_enum.html", null ]
       ] ]
     ] ],
@@ -39,9 +40,9 @@ var NAVTREE =
       [ "类索引", "classes.html", null ],
       [ "类继承关系", "hierarchy.html", "hierarchy" ],
       [ "类成员", "functions.html", [
-        [ "全部", "functions.html", null ],
-        [ "函数", "functions_func.html", null ],
-        [ "变量", "functions_vars.html", null ],
+        [ "全部", "functions.html", "functions_dup" ],
+        [ "函数", "functions_func.html", "functions_func" ],
+        [ "变量", "functions_vars.html", "functions_vars" ],
         [ "相关符号", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -58,8 +59,13 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_data_manager_8cpp.html",
-"class_m_q_engine_1_1_pass_generator.html#ad3c1e94747ba5280f59754928111442f"
+"_camera_8h.html",
+"class_m_q_engine_1_1_data_manager.html#a1aea7089a5e1330f96901a08198282c8",
+"class_m_q_engine_1_1_file_data_loader.html#a024c3cc5c44263b2b72d187a060bd53d",
+"class_m_q_engine_1_1_scene.html#a722a01cd7b606bee4ef9b95d5c5204d9",
+"class_m_q_engine_1_1_tech.html#a66d0843a7f4809d99d8a7ca7e7ae0031",
+"imgui_8cpp.html#a5fc7b9645f751ccc053f6f59ab0d8924",
+"struct_m_q_engine_1_1_name_tag.html#ab0bc1a6ee29701008a4fe72bbf63e2fd"
 ];
 
 var SYNCONMSG = '点击 关闭 面板同步';

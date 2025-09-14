@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['openpassgraphfiledialog_0',['openPassGraphFileDialog',['../namespace_m_q_engine.html#a4d3651ff8fe1847f745f267e3d909567',1,'MQEngine']]],
-  ['operator_3d_1',['operator=',['../class_m_q_engine_1_1_engine.html#a6913b83232fc8242cc385a3dd770fd04',1,'MQEngine::Engine']]]
+  ['keepimage_0',['keepImage',['../class_m_q_engine_1_1_graph_view_insight.html#a2e6cb6931aff6109401833d3da658cf2',1,'MQEngine::GraphViewInsight']]]
 ];

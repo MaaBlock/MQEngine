@@ -98,9 +98,11 @@ $(function(){initNavTree('class_m_q_engine_1_1_application.html','','class_m_q_e
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_application__inherit__graph.png" border="0" usemap="#a_m_q_engine_1_1_application_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_m_q_engine_1_1_application_inherit__map" id="a_m_q_engine_1_1_application_inherit__map">
-<area shape="rect" title=" " alt="" coords="26,5,195,30"/>
+<area shape="rect" title=" " alt="" coords="140,5,308,30"/>
 <area shape="rect" href="class_m_q_engine_1_1_editor_application.html" title=" " alt="" coords="5,78,216,103"/>
-<area shape="poly" title=" " alt="" coords="113,46,113,78,108,78,108,46"/>
+<area shape="poly" title=" " alt="" coords="194,41,131,80,128,75,191,36"/>
+<area shape="rect" href="class_m_q_engine_1_1_game_application.html" title=" " alt="" coords="240,78,437,103"/>
+<area shape="poly" title=" " alt="" coords="257,36,321,75,318,80,254,41"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
 <div class="dynheader">
@@ -108,9 +110,13 @@ MQEngine::Application 的协作图:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_application__coll__graph.png" border="0" usemap="#a_m_q_engine_1_1_application_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_m_q_engine_1_1_application_coll__map" id="a_m_q_engine_1_1_application_coll__map">
-<area shape="rect" title=" " alt="" coords="5,114,174,139"/>
-<area shape="rect" href="struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="5,5,174,44"/>
-<area shape="poly" title=" " alt="" coords="92,60,92,114,87,114,87,60"/>
+<area shape="rect" title=" " alt="" coords="16,303,184,328"/>
+<area shape="rect" href="struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="16,195,184,233"/>
+<area shape="poly" title=" " alt="" coords="103,249,103,303,97,303,97,249"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html" title=" " alt="" coords="16,100,184,125"/>
+<area shape="poly" title=" " alt="" coords="103,140,103,194,97,194,97,140"/>
+<area shape="rect" href="struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="5,5,195,30"/>
+<area shape="poly" title=" " alt="" coords="103,46,103,100,97,100,97,46"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
 <table class="memberdecls">
@@ -120,6 +126,7 @@ MQEngine::Application 的协作图:</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public 成员函数</h2></td></tr>
+<tr class="memitem:a9ddef7e008d1dbd95432992c1983c599" id="r_a9ddef7e008d1dbd95432992c1983c599"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ddef7e008d1dbd95432992c1983c599">~Application</a> ()=default</td></tr>
 <tr class="memitem:aa184423560913fc3e31ac91137ddf928" id="r_aa184423560913fc3e31ac91137ddf928"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_m_q_engine_1_1_render_config.html">RenderConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa184423560913fc3e31ac91137ddf928">renderConfig</a> () const =0</td></tr>
 <tr class="memdesc:aa184423560913fc3e31ac91137ddf928"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取RenderConfig，创建窗口前调用  <br /></td></tr>
 <tr class="memitem:a444dd3e862cf8f1b5045cac08bbc4b57" id="r_a444dd3e862cf8f1b5045cac08bbc4b57"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a444dd3e862cf8f1b5045cac08bbc4b57">init</a> ()=0</td></tr>
@@ -131,6 +138,32 @@ Public 属性</h2></td></tr>
 <tr class="memitem:afb88c603623ed2306500480f2d32db86" id="r_afb88c603623ed2306500480f2d32db86"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_m_q_engine_1_1_application_1_1_global.html">MQEngine::Application::Global</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb88c603623ed2306500480f2d32db86">global</a></td></tr>
 <tr class="memitem:a590624a4a91197a86d61adb889f64487" id="r_a590624a4a91197a86d61adb889f64487"><td class="memItemLeft" align="right" valign="top">FCT::EventDispatcher&lt; FCT::EventSystemConfig::TriggerOnly &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a590624a4a91197a86d61adb889f64487">renderCallBackDispatcher</a></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
+<a id="a9ddef7e008d1dbd95432992c1983c599" name="a9ddef7e008d1dbd95432992c1983c599"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ddef7e008d1dbd95432992c1983c599">&#9670;&#160;</a></span>~Application()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual MQEngine::Application::~Application </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
 <a id="a444dd3e862cf8f1b5045cac08bbc4b57" name="a444dd3e862cf8f1b5045cac08bbc4b57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a444dd3e862cf8f1b5045cac08bbc4b57">&#9670;&#160;</a></span>init()</h2>
@@ -157,7 +190,7 @@ Public 属性</h2></td></tr>
 
 <p>创建完窗口和Context后 调用 </p>
 
-<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a4fd9f2076357d0b713165964e240bea7">MQEngine::EditorApplication</a> 内被实现.</p>
+<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a4fd9f2076357d0b713165964e240bea7">MQEngine::EditorApplication</a> , 以及 <a class="el" href="class_m_q_engine_1_1_game_application.html#a5f44efdeeb4e9271bb2585651bc59c78">MQEngine::GameApplication</a> 内被实现.</p>
 
 </div>
 </div>
@@ -184,7 +217,7 @@ Public 属性</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a1e2b00482d83610693c8e74768bf9aa1">MQEngine::EditorApplication</a> 内被实现.</p>
+<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a1e2b00482d83610693c8e74768bf9aa1">MQEngine::EditorApplication</a> , 以及 <a class="el" href="class_m_q_engine_1_1_game_application.html#a120546a89a558b7885035cee23154d91">MQEngine::GameApplication</a> 内被实现.</p>
 
 </div>
 </div>
@@ -214,7 +247,7 @@ Public 属性</h2></td></tr>
 <p>获取RenderConfig，创建窗口前调用 </p>
 <dl class="section return"><dt>返回</dt><dd></dd></dl>
 
-<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a4fb077eadabeee6b1d3ba154194f97e9">MQEngine::EditorApplication</a> 内被实现.</p>
+<p>在 <a class="el" href="class_m_q_engine_1_1_editor_application.html#a4fb077eadabeee6b1d3ba154194f97e9">MQEngine::EditorApplication</a> , 以及 <a class="el" href="class_m_q_engine_1_1_game_application.html#afa6fb3fd8e4dfdf66a95e76c19069746">MQEngine::GameApplication</a> 内被实现.</p>
 
 </div>
 </div>

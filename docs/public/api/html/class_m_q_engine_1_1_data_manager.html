@@ -62,7 +62,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('class_m_q_engine_1_1_data_manager.html','',''); });
+$(function(){initNavTree('class_m_q_engine_1_1_data_manager.html','','class_m_q_engine_1_1_data_manager-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -93,8 +93,1059 @@ $(function(){initNavTree('class_m_q_engine_1_1_data_manager.html','',''); });
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="_data_manager_8h_source.html">DataManager.h</a>&gt;</code></p>
+<div class="dynheader">
+MQEngine::DataManager 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager__coll__graph.png" border="0" usemap="#a_m_q_engine_1_1_data_manager_coll__map" loading="lazy" alt="Collaboration graph"/></div>
+<map name="a_m_q_engine_1_1_data_manager_coll__map" id="a_m_q_engine_1_1_data_manager_coll__map">
+<area shape="rect" title=" " alt="" coords="16,100,184,125"/>
+<area shape="rect" href="struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="5,5,195,30"/>
+<area shape="poly" title=" " alt="" coords="103,46,103,100,97,100,97,46"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a408d7fbcabfffda42adb554f0ee598b4" id="r_a408d7fbcabfffda42adb554f0ee598b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a408d7fbcabfffda42adb554f0ee598b4">DataManager</a> ()</td></tr>
+<tr class="memitem:a77febdfc3bc764bb5362b3460a289529" id="r_a77febdfc3bc764bb5362b3460a289529"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77febdfc3bc764bb5362b3460a289529">getModelList</a> ()</td></tr>
+<tr class="memitem:aad6420a4b72fed86550819418bc50358" id="r_aad6420a4b72fed86550819418bc50358"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad6420a4b72fed86550819418bc50358">loadRes</a> ()</td></tr>
+<tr class="memitem:ade8d0095157ca1a28d096214d3b69308" id="r_ade8d0095157ca1a28d096214d3b69308"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade8d0095157ca1a28d096214d3b69308">loadScenePathList</a> ()</td></tr>
+<tr class="memitem:a9967839d6ac4f84de421d95708954aa3" id="r_a9967839d6ac4f84de421d95708954aa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9967839d6ac4f84de421d95708954aa3">newScene</a> (const std::string &amp;sceneName)</td></tr>
+<tr class="memitem:a94aaefaf12e3fc95717a3e521240fa22" id="r_a94aaefaf12e3fc95717a3e521240fa22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94aaefaf12e3fc95717a3e521240fa22">updateModelPathList</a> ()</td></tr>
+<tr class="memitem:ae19e32fcc72073a647202a2f6719f281" id="r_ae19e32fcc72073a647202a2f6719f281"><td class="memItemLeft" align="right" valign="top">std::vector&lt; entt::registry * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae19e32fcc72073a647202a2f6719f281">currentRegistries</a> () const</td></tr>
+<tr class="memitem:aa55dc9798d380bce907283e40e3e1f7c" id="r_aa55dc9798d380bce907283e40e3e1f7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa55dc9798d380bce907283e40e3e1f7c">appendRegistry</a> (entt::registry *registry)</td></tr>
+<tr class="memitem:a50710c10265b1e05909bd5f419f901e7" id="r_a50710c10265b1e05909bd5f419f901e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50710c10265b1e05909bd5f419f901e7">removeRegistry</a> (entt::registry *registry)</td></tr>
+<tr class="memitem:ac0b81ce3977941cc3c1d54c77360f44a" id="r_ac0b81ce3977941cc3c1d54c77360f44a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0b81ce3977941cc3c1d54c77360f44a">openScene</a> (const std::string &amp;uuid)</td></tr>
+<tr class="memitem:a8f0272bc6c567ef28d7440477d067371" id="r_a8f0272bc6c567ef28d7440477d067371"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f0272bc6c567ef28d7440477d067371">closeScene</a> (const std::string &amp;uuid)</td></tr>
+<tr class="memitem:a2a2726ba4e1d5568f19a9adf1bc1a90b" id="r_a2a2726ba4e1d5568f19a9adf1bc1a90b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a2726ba4e1d5568f19a9adf1bc1a90b">loadProjectSetting</a> ()</td></tr>
+<tr class="memitem:ae95e85cc734055e63ce41ce606efa73f" id="r_ae95e85cc734055e63ce41ce606efa73f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae95e85cc734055e63ce41ce606efa73f">saveProjectSetting</a> (const <a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a> &amp;setting)</td></tr>
+<tr class="memitem:a0b424bf05c8c1b7626f4b2323ccfe04d" id="r_a0b424bf05c8c1b7626f4b2323ccfe04d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b424bf05c8c1b7626f4b2323ccfe04d">getProjectSetting</a> () const</td></tr>
+<tr class="memitem:aacca19087dbb6eb359d738dee9220431" id="r_aacca19087dbb6eb359d738dee9220431"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacca19087dbb6eb359d738dee9220431">setInitialSceneUuid</a> (const std::string &amp;uuid)</td></tr>
+<tr class="memitem:accb7adce85eb4840a81dfe3670a65381" id="r_accb7adce85eb4840a81dfe3670a65381"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#accb7adce85eb4840a81dfe3670a65381">getInitialSceneUuid</a> () const</td></tr>
+<tr class="memitem:a0ebcfeb8c49da2c56922bc943bfb4eac" id="r_a0ebcfeb8c49da2c56922bc943bfb4eac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ebcfeb8c49da2c56922bc943bfb4eac">loadScene</a> (const std::string &amp;uuid)</td></tr>
+<tr class="memitem:af52c4d9e63209b52febf19da13cbc367" id="r_af52c4d9e63209b52febf19da13cbc367"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af52c4d9e63209b52febf19da13cbc367">saveScene</a> (const std::string &amp;uuid)</td></tr>
+<tr class="memitem:a6ee749745164486172fce72cbe1be6c8" id="r_a6ee749745164486172fce72cbe1be6c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ee749745164486172fce72cbe1be6c8">getCurrentSceneUuid</a> () const</td></tr>
+<tr class="memitem:ad98727b4e48d73501cecee954426ed02" id="r_ad98727b4e48d73501cecee954426ed02"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad98727b4e48d73501cecee954426ed02">getSceneNameByUuid</a> (const std::string &amp;uuid) const</td></tr>
+<tr class="memitem:a1aea7089a5e1330f96901a08198282c8" id="r_a1aea7089a5e1330f96901a08198282c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_q_engine_1_1_data_loader.html">DataLoader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1aea7089a5e1330f96901a08198282c8">getDataLoader</a> () const</td></tr>
+<tr class="memitem:ab5c0be4580b8d7b34d2dec61bf1f3e26" id="r_ab5c0be4580b8d7b34d2dec61bf1f3e26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5c0be4580b8d7b34d2dec61bf1f3e26">setEditorMode</a> (bool isEditorMode)</td></tr>
+<tr class="memitem:ab5bdc2ba90107c06a7a53b9b5d8b3bce" id="r_ab5bdc2ba90107c06a7a53b9b5d8b3bce"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5bdc2ba90107c06a7a53b9b5d8b3bce">getModelPathByUuid</a> (const std::string &amp;uuid) const</td></tr>
+<tr class="memitem:a8c94ea9c269d1ede895c35fb4926b93a" id="r_a8c94ea9c269d1ede895c35fb4926b93a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c94ea9c269d1ede895c35fb4926b93a">getModelRelativePathByUuid</a> (const std::string &amp;uuid) const</td></tr>
+<tr class="memitem:aa91c1b80c1611fa8bc05364a0e801785" id="r_aa91c1b80c1611fa8bc05364a0e801785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa91c1b80c1611fa8bc05364a0e801785">getCurrentScene</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:aa0880313a5ae0fe0becaf4cb64363b89" id="r_aa0880313a5ae0fe0becaf4cb64363b89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0880313a5ae0fe0becaf4cb64363b89">loadModelUuidMapping</a> ()</td></tr>
+<tr class="memitem:ae682e9d48e22eb909426a8e2c943e972" id="r_ae682e9d48e22eb909426a8e2c943e972"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae682e9d48e22eb909426a8e2c943e972">loadSceneUuidMapping</a> ()</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a944e8ec26ec826ace013b23128232ed5" id="r_a944e8ec26ec826ace013b23128232ed5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a944e8ec26ec826ace013b23128232ed5">m_isEditorMode</a></td></tr>
+<tr class="memitem:add28979b375555fb1643733ef1fc9688" id="r_add28979b375555fb1643733ef1fc9688"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add28979b375555fb1643733ef1fc9688">m_currentScene</a></td></tr>
+<tr class="memitem:ae9a16c38840c39cd14803e700eec99e6" id="r_ae9a16c38840c39cd14803e700eec99e6"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9a16c38840c39cd14803e700eec99e6">m_loadScenes</a></td></tr>
+<tr class="memitem:a351862de6247d1c21e8ee71965fb8388" id="r_a351862de6247d1c21e8ee71965fb8388"><td class="memItemLeft" align="right" valign="top">std::vector&lt; entt::registry * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a351862de6247d1c21e8ee71965fb8388">m_currentRegistries</a></td></tr>
+<tr class="memitem:a833822c920e8dc2ec438182cf3d94986" id="r_a833822c920e8dc2ec438182cf3d94986"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a833822c920e8dc2ec438182cf3d94986">m_scenePathList</a></td></tr>
+<tr class="memitem:afc40ea26be577f126d2bae1d2ef3722c" id="r_afc40ea26be577f126d2bae1d2ef3722c"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc40ea26be577f126d2bae1d2ef3722c">m_uuidToModel</a></td></tr>
+<tr class="memitem:a658ceab53d63ab5915c6abf0ebeb7e1e" id="r_a658ceab53d63ab5915c6abf0ebeb7e1e"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a658ceab53d63ab5915c6abf0ebeb7e1e">m_uuidToScenePath</a></td></tr>
+<tr class="memitem:a6aeb1f40f04e9b27b455886710b9323b" id="r_a6aeb1f40f04e9b27b455886710b9323b"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6aeb1f40f04e9b27b455886710b9323b">m_uuidToSceneName</a></td></tr>
+<tr class="memitem:aa728efe67cfb9af87aa9672c7ff969fa" id="r_aa728efe67cfb9af87aa9672c7ff969fa"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa728efe67cfb9af87aa9672c7ff969fa">m_modelPathList</a></td></tr>
+<tr class="memitem:aba503d77b97e176572b4002dfc11ad8b" id="r_aba503d77b97e176572b4002dfc11ad8b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_m_q_engine_1_1_data_loader.html">DataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba503d77b97e176572b4002dfc11ad8b">m_dataLoader</a></td></tr>
+<tr class="memitem:a363a22543a0aa7ec98cb1a6d04d7d9cc" id="r_a363a22543a0aa7ec98cb1a6d04d7d9cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a363a22543a0aa7ec98cb1a6d04d7d9cc">m_projectSetting</a></td></tr>
+</table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
+<a id="a408d7fbcabfffda42adb554f0ee598b4" name="a408d7fbcabfffda42adb554f0ee598b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a408d7fbcabfffda42adb554f0ee598b4">&#9670;&#160;</a></span>DataManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MQEngine::DataManager::DataManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="aa55dc9798d380bce907283e40e3e1f7c" name="aa55dc9798d380bce907283e40e3e1f7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55dc9798d380bce907283e40e3e1f7c">&#9670;&#160;</a></span>appendRegistry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::appendRegistry </td>
+          <td>(</td>
+          <td class="paramtype">entt::registry *</td>          <td class="paramname"><span class="paramname"><em>registry</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_aa55dc9798d380bce907283e40e3e1f7c_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_aa55dc9798d380bce907283e40e3e1f7c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_aa55dc9798d380bce907283e40e3e1f7c_icgraph" id="aclass_m_q_engine_1_1_data_manager_aa55dc9798d380bce907283e40e3e1f7c_icgraph">
+<area shape="rect" title=" " alt="" coords="222,5,390,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8f0272bc6c567ef28d7440477d067371" name="a8f0272bc6c567ef28d7440477d067371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f0272bc6c567ef28d7440477d067371">&#9670;&#160;</a></span>closeScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::closeScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_cgraph" id="aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a50710c10265b1e05909bd5f419f901e7" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_icgraph" id="aclass_m_q_engine_1_1_data_manager_a8f0272bc6c567ef28d7440477d067371_icgraph">
+<area shape="rect" title=" " alt="" coords="222,5,390,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae19e32fcc72073a647202a2f6719f281" name="ae19e32fcc72073a647202a2f6719f281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae19e32fcc72073a647202a2f6719f281">&#9670;&#160;</a></span>currentRegistries()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; entt::registry * &gt; MQEngine::DataManager::currentRegistries </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa91c1b80c1611fa8bc05364a0e801785" name="aa91c1b80c1611fa8bc05364a0e801785"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa91c1b80c1611fa8bc05364a0e801785">&#9670;&#160;</a></span>getCurrentScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> * MQEngine::DataManager::getCurrentScene </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6ee749745164486172fce72cbe1be6c8" name="a6ee749745164486172fce72cbe1be6c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ee749745164486172fce72cbe1be6c8">&#9670;&#160;</a></span>getCurrentSceneUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::getCurrentSceneUuid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1aea7089a5e1330f96901a08198282c8" name="a1aea7089a5e1330f96901a08198282c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aea7089a5e1330f96901a08198282c8">&#9670;&#160;</a></span>getDataLoader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_q_engine_1_1_data_loader.html">DataLoader</a> * MQEngine::DataManager::getDataLoader </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="accb7adce85eb4840a81dfe3670a65381" name="accb7adce85eb4840a81dfe3670a65381"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accb7adce85eb4840a81dfe3670a65381">&#9670;&#160;</a></span>getInitialSceneUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::getInitialSceneUuid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77febdfc3bc764bb5362b3460a289529" name="a77febdfc3bc764bb5362b3460a289529"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77febdfc3bc764bb5362b3460a289529">&#9670;&#160;</a></span>getModelList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; MQEngine::DataManager::getModelList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a77febdfc3bc764bb5362b3460a289529_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a77febdfc3bc764bb5362b3460a289529_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a77febdfc3bc764bb5362b3460a289529_cgraph" id="aclass_m_q_engine_1_1_data_manager_a77febdfc3bc764bb5362b3460a289529_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a94aaefaf12e3fc95717a3e521240fa22" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aa0880313a5ae0fe0becaf4cb64363b89" title=" " alt="" coords="438,5,613,44"/>
+<area shape="poly" title=" " alt="" coords="391,22,423,22,423,27,391,27"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab5bdc2ba90107c06a7a53b9b5d8b3bce" name="ab5bdc2ba90107c06a7a53b9b5d8b3bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5bdc2ba90107c06a7a53b9b5d8b3bce">&#9670;&#160;</a></span>getModelPathByUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::getModelPathByUuid </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ab5bdc2ba90107c06a7a53b9b5d8b3bce_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ab5bdc2ba90107c06a7a53b9b5d8b3bce_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ab5bdc2ba90107c06a7a53b9b5d8b3bce_icgraph" id="aclass_m_q_engine_1_1_data_manager_ab5bdc2ba90107c06a7a53b9b5d8b3bce_icgraph">
+<area shape="rect" title=" " alt="" coords="271,5,439,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a8c94ea9c269d1ede895c35fb4926b93a" title=" " alt="" coords="5,5,223,44"/>
+<area shape="poly" title=" " alt="" coords="255,27,223,27,223,22,255,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8c94ea9c269d1ede895c35fb4926b93a" name="a8c94ea9c269d1ede895c35fb4926b93a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c94ea9c269d1ede895c35fb4926b93a">&#9670;&#160;</a></span>getModelRelativePathByUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::getModelRelativePathByUuid </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a8c94ea9c269d1ede895c35fb4926b93a_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a8c94ea9c269d1ede895c35fb4926b93a_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a8c94ea9c269d1ede895c35fb4926b93a_cgraph" id="aclass_m_q_engine_1_1_data_manager_a8c94ea9c269d1ede895c35fb4926b93a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,223,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ab5bdc2ba90107c06a7a53b9b5d8b3bce" title=" " alt="" coords="271,5,439,44"/>
+<area shape="poly" title=" " alt="" coords="223,22,255,22,255,27,223,27"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0b424bf05c8c1b7626f4b2323ccfe04d" name="a0b424bf05c8c1b7626f4b2323ccfe04d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b424bf05c8c1b7626f4b2323ccfe04d">&#9670;&#160;</a></span>getProjectSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a> MQEngine::DataManager::getProjectSetting </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad98727b4e48d73501cecee954426ed02" name="ad98727b4e48d73501cecee954426ed02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad98727b4e48d73501cecee954426ed02">&#9670;&#160;</a></span>getSceneNameByUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::getSceneNameByUuid </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0880313a5ae0fe0becaf4cb64363b89" name="aa0880313a5ae0fe0becaf4cb64363b89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0880313a5ae0fe0becaf4cb64363b89">&#9670;&#160;</a></span>loadModelUuidMapping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadModelUuidMapping </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_aa0880313a5ae0fe0becaf4cb64363b89_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_aa0880313a5ae0fe0becaf4cb64363b89_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_aa0880313a5ae0fe0becaf4cb64363b89_icgraph" id="aclass_m_q_engine_1_1_data_manager_aa0880313a5ae0fe0becaf4cb64363b89_icgraph">
+<area shape="rect" title=" " alt="" coords="438,37,613,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a94aaefaf12e3fc95717a3e521240fa22" title=" " alt="" coords="222,37,390,76"/>
+<area shape="poly" title=" " alt="" coords="423,59,390,59,390,54,423,54"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a77febdfc3bc764bb5362b3460a289529" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,45,174,40,175,35,207,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aad6420a4b72fed86550819418bc50358" title=" " alt="" coords="5,68,174,107"/>
+<area shape="poly" title=" " alt="" coords="207,73,175,78,174,73,206,68"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2a2726ba4e1d5568f19a9adf1bc1a90b" name="a2a2726ba4e1d5568f19a9adf1bc1a90b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a2726ba4e1d5568f19a9adf1bc1a90b">&#9670;&#160;</a></span>loadProjectSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadProjectSetting </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a2a2726ba4e1d5568f19a9adf1bc1a90b_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a2a2726ba4e1d5568f19a9adf1bc1a90b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a2a2726ba4e1d5568f19a9adf1bc1a90b_icgraph" id="aclass_m_q_engine_1_1_data_manager_a2a2726ba4e1d5568f19a9adf1bc1a90b_icgraph">
+<area shape="rect" title=" " alt="" coords="222,5,390,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aad6420a4b72fed86550819418bc50358" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aad6420a4b72fed86550819418bc50358" name="aad6420a4b72fed86550819418bc50358"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad6420a4b72fed86550819418bc50358">&#9670;&#160;</a></span>loadRes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadRes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_aad6420a4b72fed86550819418bc50358_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_aad6420a4b72fed86550819418bc50358_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_aad6420a4b72fed86550819418bc50358_cgraph" id="aclass_m_q_engine_1_1_data_manager_aad6420a4b72fed86550819418bc50358_cgraph">
+<area shape="rect" title=" " alt="" coords="5,68,174,107"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a2a2726ba4e1d5568f19a9adf1bc1a90b" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="158,65,222,46,223,51,159,70"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ade8d0095157ca1a28d096214d3b69308" title=" " alt="" coords="222,68,390,107"/>
+<area shape="poly" title=" " alt="" coords="174,85,206,85,206,90,174,90"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a94aaefaf12e3fc95717a3e521240fa22" title=" " alt="" coords="222,131,390,169"/>
+<area shape="poly" title=" " alt="" coords="159,105,223,123,222,128,158,110"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ae682e9d48e22eb909426a8e2c943e972" title=" " alt="" coords="438,68,613,107"/>
+<area shape="poly" title=" " alt="" coords="391,85,423,85,423,90,391,90"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aa0880313a5ae0fe0becaf4cb64363b89" title=" " alt="" coords="438,131,613,169"/>
+<area shape="poly" title=" " alt="" coords="391,147,423,147,423,153,391,153"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0ebcfeb8c49da2c56922bc943bfb4eac" name="a0ebcfeb8c49da2c56922bc943bfb4eac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ebcfeb8c49da2c56922bc943bfb4eac">&#9670;&#160;</a></span>loadScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_cgraph" id="aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ade8d0095157ca1a28d096214d3b69308" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ae682e9d48e22eb909426a8e2c943e972" title=" " alt="" coords="438,5,613,44"/>
+<area shape="poly" title=" " alt="" coords="391,22,423,22,423,27,391,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_icgraph" id="aclass_m_q_engine_1_1_data_manager_a0ebcfeb8c49da2c56922bc943bfb4eac_icgraph">
+<area shape="rect" title=" " alt="" coords="222,5,390,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ade8d0095157ca1a28d096214d3b69308" name="ade8d0095157ca1a28d096214d3b69308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade8d0095157ca1a28d096214d3b69308">&#9670;&#160;</a></span>loadScenePathList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadScenePathList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_cgraph" id="aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ae682e9d48e22eb909426a8e2c943e972" title=" " alt="" coords="222,5,397,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_icgraph" id="aclass_m_q_engine_1_1_data_manager_ade8d0095157ca1a28d096214d3b69308_icgraph">
+<area shape="rect" title=" " alt="" coords="438,37,606,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aad6420a4b72fed86550819418bc50358" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="422,45,390,40,391,35,423,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a0ebcfeb8c49da2c56922bc943bfb4eac" title=" " alt="" coords="222,68,390,107"/>
+<area shape="poly" title=" " alt="" coords="423,73,391,78,390,73,422,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,68,174,107"/>
+<area shape="poly" title=" " alt="" coords="206,90,174,90,174,85,206,85"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae682e9d48e22eb909426a8e2c943e972" name="ae682e9d48e22eb909426a8e2c943e972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae682e9d48e22eb909426a8e2c943e972">&#9670;&#160;</a></span>loadSceneUuidMapping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::loadSceneUuidMapping </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ae682e9d48e22eb909426a8e2c943e972_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ae682e9d48e22eb909426a8e2c943e972_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ae682e9d48e22eb909426a8e2c943e972_icgraph" id="aclass_m_q_engine_1_1_data_manager_ae682e9d48e22eb909426a8e2c943e972_icgraph">
+<area shape="rect" title=" " alt="" coords="654,37,830,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ade8d0095157ca1a28d096214d3b69308" title=" " alt="" coords="438,37,606,76"/>
+<area shape="poly" title=" " alt="" coords="639,59,607,59,607,54,639,54"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aad6420a4b72fed86550819418bc50358" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="422,45,390,40,391,35,423,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a0ebcfeb8c49da2c56922bc943bfb4eac" title=" " alt="" coords="222,68,390,107"/>
+<area shape="poly" title=" " alt="" coords="423,73,391,78,390,73,422,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,68,174,107"/>
+<area shape="poly" title=" " alt="" coords="206,90,174,90,174,85,206,85"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9967839d6ac4f84de421d95708954aa3" name="a9967839d6ac4f84de421d95708954aa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9967839d6ac4f84de421d95708954aa3">&#9670;&#160;</a></span>newScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::newScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>sceneName</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac0b81ce3977941cc3c1d54c77360f44a" name="ac0b81ce3977941cc3c1d54c77360f44a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0b81ce3977941cc3c1d54c77360f44a">&#9670;&#160;</a></span>openScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::openScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ac0b81ce3977941cc3c1d54c77360f44a_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ac0b81ce3977941cc3c1d54c77360f44a_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ac0b81ce3977941cc3c1d54c77360f44a_cgraph" id="aclass_m_q_engine_1_1_data_manager_ac0b81ce3977941cc3c1d54c77360f44a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,68,174,107"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aa55dc9798d380bce907283e40e3e1f7c" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="158,65,222,46,223,51,159,70"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a8f0272bc6c567ef28d7440477d067371" title=" " alt="" coords="222,68,390,107"/>
+<area shape="poly" title=" " alt="" coords="174,85,206,85,206,90,174,90"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a0ebcfeb8c49da2c56922bc943bfb4eac" title=" " alt="" coords="222,131,390,169"/>
+<area shape="poly" title=" " alt="" coords="159,105,223,123,222,128,158,110"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a50710c10265b1e05909bd5f419f901e7" title=" " alt="" coords="438,68,606,107"/>
+<area shape="poly" title=" " alt="" coords="390,85,422,85,422,90,390,90"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ade8d0095157ca1a28d096214d3b69308" title=" " alt="" coords="438,131,606,169"/>
+<area shape="poly" title=" " alt="" coords="390,147,422,147,422,153,390,153"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ae682e9d48e22eb909426a8e2c943e972" title=" " alt="" coords="654,131,830,169"/>
+<area shape="poly" title=" " alt="" coords="607,147,639,147,639,153,607,153"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a50710c10265b1e05909bd5f419f901e7" name="a50710c10265b1e05909bd5f419f901e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50710c10265b1e05909bd5f419f901e7">&#9670;&#160;</a></span>removeRegistry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::removeRegistry </td>
+          <td>(</td>
+          <td class="paramtype">entt::registry *</td>          <td class="paramname"><span class="paramname"><em>registry</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a50710c10265b1e05909bd5f419f901e7_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a50710c10265b1e05909bd5f419f901e7_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a50710c10265b1e05909bd5f419f901e7_icgraph" id="aclass_m_q_engine_1_1_data_manager_a50710c10265b1e05909bd5f419f901e7_icgraph">
+<area shape="rect" title=" " alt="" coords="438,5,606,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a8f0272bc6c567ef28d7440477d067371" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="423,27,391,27,391,22,423,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ac0b81ce3977941cc3c1d54c77360f44a" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae95e85cc734055e63ce41ce606efa73f" name="ae95e85cc734055e63ce41ce606efa73f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae95e85cc734055e63ce41ce606efa73f">&#9670;&#160;</a></span>saveProjectSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::saveProjectSetting </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>setting</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_ae95e85cc734055e63ce41ce606efa73f_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_ae95e85cc734055e63ce41ce606efa73f_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_ae95e85cc734055e63ce41ce606efa73f_icgraph" id="aclass_m_q_engine_1_1_data_manager_ae95e85cc734055e63ce41ce606efa73f_icgraph">
+<area shape="rect" title=" " alt="" coords="222,5,390,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aacca19087dbb6eb359d738dee9220431" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,27,174,27,174,22,206,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af52c4d9e63209b52febf19da13cbc367" name="af52c4d9e63209b52febf19da13cbc367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af52c4d9e63209b52febf19da13cbc367">&#9670;&#160;</a></span>saveScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::DataManager::saveScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab5c0be4580b8d7b34d2dec61bf1f3e26" name="ab5c0be4580b8d7b34d2dec61bf1f3e26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c0be4580b8d7b34d2dec61bf1f3e26">&#9670;&#160;</a></span>setEditorMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::setEditorMode </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isEditorMode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aacca19087dbb6eb359d738dee9220431" name="aacca19087dbb6eb359d738dee9220431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacca19087dbb6eb359d738dee9220431">&#9670;&#160;</a></span>setInitialSceneUuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::setInitialSceneUuid </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>uuid</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_aacca19087dbb6eb359d738dee9220431_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_aacca19087dbb6eb359d738dee9220431_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_aacca19087dbb6eb359d738dee9220431_cgraph" id="aclass_m_q_engine_1_1_data_manager_aacca19087dbb6eb359d738dee9220431_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#ae95e85cc734055e63ce41ce606efa73f" title=" " alt="" coords="222,5,390,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a94aaefaf12e3fc95717a3e521240fa22" name="a94aaefaf12e3fc95717a3e521240fa22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94aaefaf12e3fc95717a3e521240fa22">&#9670;&#160;</a></span>updateModelPathList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::DataManager::updateModelPathList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_cgraph" id="aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aa0880313a5ae0fe0becaf4cb64363b89" title=" " alt="" coords="222,5,397,44"/>
+<area shape="poly" title=" " alt="" coords="174,22,206,22,206,27,174,27"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_icgraph" id="aclass_m_q_engine_1_1_data_manager_a94aaefaf12e3fc95717a3e521240fa22_icgraph">
+<area shape="rect" title=" " alt="" coords="222,37,390,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#a77febdfc3bc764bb5362b3460a289529" title=" " alt="" coords="5,5,174,44"/>
+<area shape="poly" title=" " alt="" coords="206,45,174,40,175,35,207,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_data_manager.html#aad6420a4b72fed86550819418bc50358" title=" " alt="" coords="5,68,174,107"/>
+<area shape="poly" title=" " alt="" coords="207,73,175,78,174,73,206,68"/>
+</map>
+</div>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">类成员变量说明</h2>
+<a id="a351862de6247d1c21e8ee71965fb8388" name="a351862de6247d1c21e8ee71965fb8388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a351862de6247d1c21e8ee71965fb8388">&#9670;&#160;</a></span>m_currentRegistries</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;entt::registry*&gt; MQEngine::DataManager::m_currentRegistries</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="add28979b375555fb1643733ef1fc9688" name="add28979b375555fb1643733ef1fc9688"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add28979b375555fb1643733ef1fc9688">&#9670;&#160;</a></span>m_currentScene</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::DataManager::m_currentScene</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aba503d77b97e176572b4002dfc11ad8b" name="aba503d77b97e176572b4002dfc11ad8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba503d77b97e176572b4002dfc11ad8b">&#9670;&#160;</a></span>m_dataLoader</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="class_m_q_engine_1_1_data_loader.html">DataLoader</a>&gt; MQEngine::DataManager::m_dataLoader</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a944e8ec26ec826ace013b23128232ed5" name="a944e8ec26ec826ace013b23128232ed5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a944e8ec26ec826ace013b23128232ed5">&#9670;&#160;</a></span>m_isEditorMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::DataManager::m_isEditorMode</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae9a16c38840c39cd14803e700eec99e6" name="ae9a16c38840c39cd14803e700eec99e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9a16c38840c39cd14803e700eec99e6">&#9670;&#160;</a></span>m_loadScenes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a>&gt; &gt; MQEngine::DataManager::m_loadScenes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa728efe67cfb9af87aa9672c7ff969fa" name="aa728efe67cfb9af87aa9672c7ff969fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa728efe67cfb9af87aa9672c7ff969fa">&#9670;&#160;</a></span>m_modelPathList</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; MQEngine::DataManager::m_modelPathList</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a363a22543a0aa7ec98cb1a6d04d7d9cc" name="a363a22543a0aa7ec98cb1a6d04d7d9cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a363a22543a0aa7ec98cb1a6d04d7d9cc">&#9670;&#160;</a></span>m_projectSetting</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_m_q_engine_1_1_project_setting.html">ProjectSetting</a> MQEngine::DataManager::m_projectSetting</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a833822c920e8dc2ec438182cf3d94986" name="a833822c920e8dc2ec438182cf3d94986"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a833822c920e8dc2ec438182cf3d94986">&#9670;&#160;</a></span>m_scenePathList</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; MQEngine::DataManager::m_scenePathList</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc40ea26be577f126d2bae1d2ef3722c" name="afc40ea26be577f126d2bae1d2ef3722c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc40ea26be577f126d2bae1d2ef3722c">&#9670;&#160;</a></span>m_uuidToModel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string,std::string&gt; MQEngine::DataManager::m_uuidToModel</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6aeb1f40f04e9b27b455886710b9323b" name="a6aeb1f40f04e9b27b455886710b9323b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aeb1f40f04e9b27b455886710b9323b">&#9670;&#160;</a></span>m_uuidToSceneName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string,std::string&gt; MQEngine::DataManager::m_uuidToSceneName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a658ceab53d63ab5915c6abf0ebeb7e1e" name="a658ceab53d63ab5915c6abf0ebeb7e1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658ceab53d63ab5915c6abf0ebeb7e1e">&#9670;&#160;</a></span>m_uuidToScenePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string,std::string&gt; MQEngine::DataManager::m_uuidToScenePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>该类的文档由以下文件生成:<ul>
 <li>MQEngine/Engine/src/data/<a class="el" href="_data_manager_8h_source.html">DataManager.h</a></li>
+<li>MQEngine/Engine/src/data/<a class="el" href="_data_manager_8cpp.html">DataManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

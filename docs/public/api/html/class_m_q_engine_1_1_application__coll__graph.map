@@ -1,5 +1,9 @@
 <map id="MQEngine::Application" name="MQEngine::Application">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,114,174,139"/>
-<area shape="rect" id="Node000002" href="$struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="5,5,174,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,60,92,114,87,114,87,60"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="16,303,184,328"/>
+<area shape="rect" id="Node000002" href="$struct_m_q_engine_1_1_application_1_1_global.html" title=" " alt="" coords="16,195,184,233"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,249,103,303,97,303,97,249"/>
+<area shape="rect" id="Node000003" href="$class_m_q_engine_1_1_data_manager.html" title=" " alt="" coords="16,100,184,125"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,140,103,194,97,194,97,140"/>
+<area shape="rect" id="Node000004" href="$struct_m_q_engine_1_1_project_setting.html" title=" " alt="" coords="5,5,195,30"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="103,46,103,100,97,100,97,46"/>
 </map>

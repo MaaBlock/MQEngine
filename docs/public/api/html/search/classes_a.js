@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['texturedesc_0',['TextureDesc',['../struct_m_q_engine_1_1_texture_desc.html',1,'MQEngine']]]
+  ['nametag_0',['NameTag',['../struct_m_q_engine_1_1_name_tag.html',1,'MQEngine']]]
 ];
