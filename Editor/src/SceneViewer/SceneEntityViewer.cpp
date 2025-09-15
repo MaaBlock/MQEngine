@@ -25,6 +25,7 @@ namespace MQEngine {
 
         ImGui::End();
         renderScriptTypeSelectionPopup();
+        renderTextureTypeSelectionPopup();
     }
 
     void SceneEntityViewer::renderSceneEntityList(Scene* scene) {
@@ -87,7 +88,7 @@ namespace MQEngine {
                     if (separatorPos != std::string::npos) {
                         std::string modelUuid = dragData.substr(0, separatorPos);
                         std::string texturePath = dragData.substr(separatorPos + 1);
-                        addDiffuseTextureComponent(entity, modelUuid, texturePath, true, "");
+                        openTextureTypePopup(entity, modelUuid, texturePath, true, "");
                     }
                 }
                 ImGui::EndDragDropTarget();
@@ -152,7 +153,7 @@ namespace MQEngine {
                     if (separatorPos != std::string::npos) {
                         std::string modelUuid = dragData.substr(0, separatorPos);
                         std::string texturePath = dragData.substr(separatorPos + 1);
-                        addDiffuseTextureComponent(entity, modelUuid, texturePath, false, trunkName);
+                        openTextureTypePopup(entity, modelUuid, texturePath, false, trunkName);
                     }
                 }
                 ImGui::EndDragDropTarget();
@@ -323,6 +324,54 @@ namespace MQEngine {
         if (!registry) return;
 
         registry->emplace_or_replace<DiffuseTextureComponent>(entity, modelUuid, texturePath);
+    }
+
+    void SceneEntityViewer::openTextureTypePopup(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        m_showTextureTypePopup = true;
+        m_targetEntity = entity;
+        m_draggedModelUuid = modelUuid;
+        m_draggedTexturePath = texturePath;
+        m_targetIsGlobal = isGlobal;
+        m_targetTrunkName = trunkName;
+    }
+
+    void SceneEntityViewer::renderTextureTypeSelectionPopup() {
+        if (!m_showTextureTypePopup) return;
+
+        ImGui::OpenPopup(TEXT("选择贴图类型"));
+        if (ImGui::BeginPopupModal(TEXT("选择贴图类型"), &m_showTextureTypePopup, ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::Text(TEXT("为实体添加贴图 '%s'"), m_draggedTexturePath.c_str());
+            ImGui::Separator();
+
+            if (ImGui::Button(TEXT("Diffuse (漫反射)"), ImVec2(150, 0))) {
+                addDiffuseTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                m_showTextureTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine();
+            if (ImGui::Button(TEXT("Normal (法线)"), ImVec2(150, 0))) {
+                addNormalTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                m_showTextureTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::Separator();
+            if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {
+                m_showTextureTypePopup = false;
+            }
+            ImGui::EndPopup();
+        } else {
+            m_showTextureTypePopup = false;
+        }
+    }
+
+    void SceneEntityViewer::addNormalTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+        
+        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        if (!registry) return;
+
+        registry->emplace_or_replace<NormalMapComponent>(entity, modelUuid, texturePath);
     }
 
 } // namespace MQEngine

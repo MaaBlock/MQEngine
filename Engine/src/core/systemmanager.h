@@ -1,4 +1,4 @@
-/**
+﻿/**
  *@file SystemManager.h
  *@brief class header for start and stop system
  */

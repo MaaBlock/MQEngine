@@ -23,6 +23,11 @@ constexpr FCT::UniformSlot ShadowUniformSlot {
     FCT::UniformVar{FCT::UniformType::MVPMatrix,"directionalLightMvp"}
 };
 
+constexpr FCT::UniformSlot ShininessUniformSlot {
+    "ShininessUniform",
+    FCT::UniformVar{FCT::UniformType::Float,"shininess"}
+};
+
 }
 
 #endif // UNIFORMSLOTS_H

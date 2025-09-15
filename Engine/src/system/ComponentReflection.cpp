@@ -15,6 +15,8 @@ namespace MQEngine {
         registerComponent<StaticMeshInstance>("StaticMeshInstance");
         registerComponent<DirectionalLightComponent>("DirectionalLightComponent");
         registerComponent<DiffuseTextureComponent>("DiffuseTextureComponent");
+        registerComponent<NormalMapComponent>("NormalMapComponent");
+        registerComponent<ShininessComponent>("ShininessComponent");
     }
     
     const std::unordered_map<std::string, ComponentInfo>& ComponentReflection::getComponentInfos() const {

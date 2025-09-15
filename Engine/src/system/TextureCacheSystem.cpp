@@ -54,6 +54,27 @@ namespace MQEngine {
                     const_cast<DiffuseTextureComponent&>(textureComponent).texture = it->second;
                 }
             }
+
+            auto normalMapView = registry->view<NormalMapComponent>();
+
+            for (auto entity : normalMapView) {
+                auto& textureComponent = normalMapView.get<NormalMapComponent>(entity);
+
+                if (textureComponent.modelUuid.empty() || textureComponent.texturePath.empty()) {
+                    continue;
+                }
+
+                std::string textureKey = textureComponent.modelUuid + "|" + textureComponent.texturePath;
+
+                if (m_loadedTextures.find(textureKey) == m_loadedTextures.end()) {
+                    loadTexture(textureComponent.modelUuid, textureComponent.texturePath);
+                }
+
+                auto it = m_loadedTextures.find(textureKey);
+                if (it != m_loadedTextures.end()) {
+                    const_cast<NormalMapComponent&>(textureComponent).texture = it->second;
+                }
+            }
         }
     }
 

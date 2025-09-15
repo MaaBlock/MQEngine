@@ -29,20 +29,22 @@ namespace MQEngine
                 {
                     m_cameraUniform.setValue(FCT::UniformType::ProjectionMatrix,
                     FCT::Mat4::Perspective(
-                        camera.fov,
-                        800/600,
-                        camera.nearPlane,
-                        camera.farPlane
+                         camera.fov,
+                         800 / 600,
+                         camera.nearPlane,
+                         camera.farPlane
                     ));
                     m_cameraUniform.setValue(FCT::UniformType::ViewMatrix,
                         calculateViewMatrix(position, rotation));
-                    m_cameraUniform.update();
-                    
                     m_viewPosUniform.setValue("viewPosition", position.position);
-                    m_viewPosUniform.update();
                 }
             }
         }
+    }
+    void CameraSystem::updateUniforms()
+    {
+        m_cameraUniform.update();
+        m_viewPosUniform.update();
     }
 
     void CameraSystem::bind(FCT::Layout* layout)
