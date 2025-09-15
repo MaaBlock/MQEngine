@@ -15,4 +15,5 @@
 #include <boost/serialization/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/time_serialize.hpp>
+#include <chrono>
 #endif //THIRDPARTY_H
