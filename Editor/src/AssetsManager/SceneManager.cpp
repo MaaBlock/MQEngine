@@ -135,7 +135,13 @@ void SceneManager::render()
                         m_selectedSceneIndex = i;
                     }
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-                        openScene(sceneName);
+                        auto now = std::chrono::steady_clock::now();
+                        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - m_lastSceneOpenTime).count();
+                        if (elapsed > 1)
+                        {
+                            openScene(sceneName);
+                            m_lastSceneOpenTime = now;
+                        }
                     }
                     if (isSelected) {
                         ImGui::PopStyleColor();
@@ -153,7 +159,7 @@ void SceneManager::render()
                         if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
                             std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
-                            std::string command = "explorer \"" + sceneFolder.string() + "\"";
+                            std::string command = "explorer "" + sceneFolder.string() + """;
                             system(command.c_str());
 #endif
                         }

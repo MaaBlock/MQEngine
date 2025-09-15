@@ -28,6 +28,8 @@ namespace MQEngine {
 
         std::string m_errorMessage;
 
+        std::chrono::steady_clock::time_point m_lastSceneOpenTime;
+
     };
 
 } // MQEngine
