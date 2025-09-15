@@ -7,6 +7,7 @@
 #include "NameTag.h"
 #include "../thirdparty/thirdparty.h"
 #include <boost/describe.hpp>
+#include "../core/UniformSlots.h"
 namespace MQEngine {
     struct StaticMeshInstance
     {
@@ -121,6 +122,58 @@ namespace MQEngine {
         }
     };
     BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (), (modelUuid, texturePath))
+
+    struct ENGINE_API NormalMapComponent
+    {
+        std::string modelUuid;
+        std::string texturePath;
+        FCT::Image* texture = nullptr;
+        NormalMapComponent() = default;
+
+        NormalMapComponent(const std::string& uuid, const std::string& path)
+            : modelUuid(uuid), texturePath(path)
+        {
+        }
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & modelUuid;
+            ar & texturePath;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(NormalMapComponent, (), (modelUuid, texturePath))
+
+    struct ENGINE_API ShininessComponent
+    {
+        float shininess = 32.0f;
+        ShininessComponent() = default;
+
+        ShininessComponent(float shininess)
+            : shininess(shininess)
+        {
+        }
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & shininess;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(ShininessComponent, (), (shininess))
+
+    struct ENGINE_API CacheShininess
+    {
+        FCT::UniquePtr<FCT::Uniform> uniform;
+        bool init = false;
+
+        CacheShininess(FCT::Context* ctx)
+        {
+            uniform = FCT::makeUnique<FCT::Uniform>(ctx, ShininessUniformSlot);
+        }
+    };
 }
 
 #endif //COMPONENT_H

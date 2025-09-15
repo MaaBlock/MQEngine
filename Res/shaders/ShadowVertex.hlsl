@@ -3,6 +3,8 @@ ShaderOut main(ShaderIn sIn) {
     sOut.color = sIn.color;
     sOut.position = directionalLightMvp * modelMatrix * sIn.position ;
     sOut.texCoord = sIn.texCoord;
+    sOut.tangent = sIn.tangent;
+    sOut.bitangent = sIn.bitangent;
     sOut.normal = sIn.normal;
     return sOut;
 }

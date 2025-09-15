@@ -1,22 +1,24 @@
-/*
+﻿/*
  *@file engine.h
  */
 
 #ifndef ENGINE_H
 #define ENGINE_H
-#include "../thirdparty/thirdparty.h"
-#include "application.h"
-#include "systemmanager.h"
-#include "layout.h"
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
+#include "../system/LightingSystem.h"
+#include "../system/MatrixCacheSystem.h"
 #include "../system/MeshCacheSystem.h"
 #include "../system/ScriptSystem.h"
-#include "../system/MatrixCacheSystem.h"
-#include "../system/LightingSystem.h"
 #include "../system/TextureCacheSystem.h"
+#include "../system/ShininessSystem.h"
+#include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
+#include "VertexLayouts.h"
+#include "application.h"
+#include "layout.h"
+#include "systemmanager.h"
 
 namespace FCT
 {
@@ -56,18 +58,14 @@ namespace MQEngine {
         SystemManager m_systemManager;
         FCT::Window* m_wnd;
         FCT::Context* m_ctx;
-        FCT::VertexLayout vertexLayout = {
-            FCT::VertexElement{FCT::VtxType::Color4f,"color"},
-            FCT::VertexElement{FCT::VtxType::Position4f,"position"},
-            FCT::VertexElement{FCT::VtxType::TexCoord2f,"texCoord"},
-            FCT::VertexElement{FCT::VtxType::Normal3f,"normal"},
-        };
+        FCT::VertexLayout vertexLayout = StandardMeshVertexLayout;
         FCT::PixelLayout pixelLayout = {
             FCT::VertexElement{FCT::VtxType::Custom,"srcpos",FCT::Format::R32G32B32A32_SFLOAT},
             FCT::VertexElement{FCT::VtxType::Custom,"shadowPos",FCT::Format::R32G32B32A32_SFLOAT},
             vertexLayout
         };
         FCT::Sampler* m_shadowSampler;
+        FCT::Sampler* m_diffuseSampler;
         FCT::ShaderRef m_vs;
         FCT::ShaderRef m_ps;
         FCT::ShaderRef m_vsShadow;
@@ -85,6 +83,7 @@ namespace MQEngine {
         FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
         FCT::UniquePtr<LightingSystem> m_lightingSystem;
         FCT::UniquePtr<TextureCacheSystem> m_textureRenderSystem;
+        FCT::UniquePtr<ShininessSystem> m_shininessSystem;
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::Uniform m_floorModelUniform;
         

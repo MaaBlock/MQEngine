@@ -34,12 +34,20 @@ namespace MQEngine {
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
         void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "");
         void addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
+        void addNormalTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
+
         void renderScriptTypeSelectionPopup();
+        void renderTextureTypeSelectionPopup();
+        void openTextureTypePopup(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
 
         bool m_showScriptTypePopup = false;
         std::string m_draggedFunctionName;
         entt::entity m_targetEntity;
         bool m_targetIsGlobal;
+
+        bool m_showTextureTypePopup = false;
+        std::string m_draggedTexturePath;
+        std::string m_draggedModelUuid;
     };
 
 } // MQEngine

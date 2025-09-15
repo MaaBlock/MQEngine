@@ -1,4 +1,4 @@
-#ifndef TECH_H
+﻿#ifndef TECH_H
 #define TECH_H
 #pragma once
 

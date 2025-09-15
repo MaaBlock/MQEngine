@@ -136,3 +136,13 @@ fct_embed_resource(
         FILES "${CMAKE_SOURCE_DIR}/Res/shaders/DiffuseObjectPixel.hlsl"
         PREFIX "g_engineShader"
 )
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/NormalMapObjectVertex.hlsl"
+        PREFIX "g_engineShader"
+)
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/NormalMapObjectPixel.hlsl"
+        PREFIX "g_engineShader"
+)

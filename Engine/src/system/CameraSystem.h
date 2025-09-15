@@ -11,6 +11,7 @@ namespace MQEngine {
     public:
         CameraSystem(FCT::Context* ctx,DataManager* dataManager);
         void update();
+        void updateUniforms();
         void bind(FCT::Layout* layout);
         void setActiveCamera(entt::registry* registry, entt::entity cameraEntity);
     private:
