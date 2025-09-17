@@ -52,8 +52,18 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::renderGlobalEntityList(Scene* scene) {
-        ImGui::BeginGroup();
-        
+        ImGui::BeginChild("GlobalEntitiesChild", ImVec2(0, 150), ImGuiChildFlags_Border);
+
+        if (ImGui::BeginPopupContextWindow("GlobalEntityContextMenu")) {
+            if (ImGui::MenuItem(TEXT("创建实体"))) {
+                showCreateEntityDialog("", true);
+            }
+            if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null && g_editorGlobal.selectedEntity.isGlobal)) {
+                deleteEntity(g_editorGlobal.selectedEntity.entity, "", true);
+            }
+            ImGui::EndPopup();
+        }
+
         auto& registry = scene->getRegistry();
         registry.view<entt::entity>().each([&](auto entity) {
             std::string displayName;
@@ -94,87 +104,68 @@ namespace MQEngine {
                 ImGui::EndDragDropTarget();
             }
         });
-        ImGui::EndGroup();
-
-        if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
-            ImGui::OpenPopup("GlobalEntityContextMenu");
-        }
-
-        if (ImGui::BeginPopup("GlobalEntityContextMenu")) {
-            if (ImGui::MenuItem(TEXT("创建实体"))) {
-                showCreateEntityDialog("", true);
-            }
-            if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null)) {
-                deleteEntity(g_editorGlobal.selectedEntity.entity, "", true);
-            }
-            ImGui::EndPopup();
-        }
+        ImGui::EndChild();
     }
 
     void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkName) {
-        ImGui::BeginGroup();
-        SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
-        if (!trunk) {
-            ImGui::EndGroup();
-            return;
-        }
-        auto& registry = trunk->getRegistry();
-        
-        registry.view<entt::entity>().each([&](auto entity) {
-            std::string displayName;
-            if (auto nameTag = registry.try_get<NameTag>(entity)) {
-                displayName = nameTag->name;
-            } else {
-                displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
-            }
-
-            bool isSelected = (g_editorGlobal.selectedEntity.entity == entity && !g_editorGlobal.selectedEntity.isGlobal && g_editorGlobal.selectedEntity.trunkName == trunkName);
-            if (ImGui::Selectable(displayName.c_str(), isSelected)) {
-                selectEntity(entity, trunkName, false);
-            }
-
-            if (ImGui::BeginDragDropTarget()) {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
-                    std::string functionName = static_cast<const char*>(payload->Data);
-                    addScriptComponent(entity, functionName, false, trunkName);
-                }
-                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
-                    std::string dragData = static_cast<const char*>(payload->Data);
-                    size_t separatorPos = dragData.find('|');
-                    if (separatorPos != std::string::npos) {
-                        std::string modelUuid = dragData.substr(0, separatorPos);
-                        std::string meshName = dragData.substr(separatorPos + 1);
-                        addStaticMeshComponent(entity, modelUuid, meshName, false, trunkName);
-                    }
-                }
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_TEXTURE_FROM_MODEL")) {
-                    std::string dragData = static_cast<const char*>(payload->Data);
-                    size_t separatorPos = dragData.find('|');
-                    if (separatorPos != std::string::npos) {
-                        std::string modelUuid = dragData.substr(0, separatorPos);
-                        std::string texturePath = dragData.substr(separatorPos + 1);
-                        openTextureTypePopup(entity, modelUuid, texturePath, false, trunkName);
-                    }
-                }
-                ImGui::EndDragDropTarget();
-            }
-        });
-        ImGui::EndGroup();
+        std::string childId = "TrunkChild_" + trunkName;
+        ImGui::BeginChild(childId.c_str(), ImVec2(0, 150), ImGuiChildFlags_Border);
 
         std::string popupId = "TrunkEntityContextMenu_" + trunkName;
-        if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
-            ImGui::OpenPopup(popupId.c_str());
-        }
-
-        if (ImGui::BeginPopup(popupId.c_str())) {
+        if (ImGui::BeginPopupContextWindow(popupId.c_str())) {
             if (ImGui::MenuItem(TEXT("在Trunk中创建实体"))) {
                 showCreateEntityDialog(trunkName, false);
             }
-            if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null)) {
+            if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null && !g_editorGlobal.selectedEntity.isGlobal && g_editorGlobal.selectedEntity.trunkName == trunkName)) {
                 deleteEntity(g_editorGlobal.selectedEntity.entity, trunkName, false);
             }
             ImGui::EndPopup();
         }
+
+        SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
+        if (trunk) {
+            auto& registry = trunk->getRegistry();
+            registry.view<entt::entity>().each([&](auto entity) {
+                std::string displayName;
+                if (auto nameTag = registry.try_get<NameTag>(entity)) {
+                    displayName = nameTag->name;
+                } else {
+                    displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
+                }
+
+                bool isSelected = (g_editorGlobal.selectedEntity.entity == entity && !g_editorGlobal.selectedEntity.isGlobal && g_editorGlobal.selectedEntity.trunkName == trunkName);
+                if (ImGui::Selectable(displayName.c_str(), isSelected)) {
+                    selectEntity(entity, trunkName, false);
+                }
+
+                if (ImGui::BeginDragDropTarget()) {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
+                        std::string functionName = static_cast<const char*>(payload->Data);
+                        addScriptComponent(entity, functionName, false, trunkName);
+                    }
+                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
+                        std::string dragData = static_cast<const char*>(payload->Data);
+                        size_t separatorPos = dragData.find('|');
+                        if (separatorPos != std::string::npos) {
+                            std::string modelUuid = dragData.substr(0, separatorPos);
+                            std::string meshName = dragData.substr(separatorPos + 1);
+                            addStaticMeshComponent(entity, modelUuid, meshName, false, trunkName);
+                        }
+                    }
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_TEXTURE_FROM_MODEL")) {
+                        std::string dragData = static_cast<const char*>(payload->Data);
+                        size_t separatorPos = dragData.find('|');
+                        if (separatorPos != std::string::npos) {
+                            std::string modelUuid = dragData.substr(0, separatorPos);
+                            std::string texturePath = dragData.substr(separatorPos + 1);
+                            openTextureTypePopup(entity, modelUuid, texturePath, false, trunkName);
+                        }
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+            });
+        }
+        ImGui::EndChild();
     }
 
     void SceneEntityViewer::selectEntity(entt::entity entity, const std::string& trunkName, bool isGlobal) {
