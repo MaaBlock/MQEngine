@@ -42,12 +42,12 @@ async function aiJokeDemo_getProgrammerJoke() {
   }
 
   try {
-    console.log('正在向 DeepSeek AI 请求一个程序员笑话...');
+    console.log('正在向 DeepSeek AI 请求一个图形程序员笑话...');
     
     const response = await aiJokeDemo_client.chat.completions.create({
       model: 'deepseek-chat',
       messages: [
-        { role: 'user', content: '请给我讲一个关于程序员的简短笑话。' },
+        { role: 'user', content: '请给我讲一个关于图形程序员的简短笑话。' },
       ],
       stream: false,
     });
