@@ -13,6 +13,8 @@ namespace MQEngine {
         , m_nodeEnv(std::make_unique<FCT::NodeEnvironment>())
         , m_componentReflection(std::make_unique<ComponentReflection>())
     {
+        //todo:要从DataLoader里读包
+        m_nodeEnv->addModulePath("./res/scripts/node_modules");
         if (!m_nodeEnv->setup()) {
             std::cerr << "Failed to setup NodeEnvironment" << std::endl;
         }
