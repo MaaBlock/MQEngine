@@ -137,7 +137,7 @@ void SceneManager::render()
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                         auto now = std::chrono::steady_clock::now();
                         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - m_lastSceneOpenTime).count();
-                        if (elapsed > 1)
+                        if (elapsed > 2)
                         {
                             openScene(sceneName);
                             m_lastSceneOpenTime = now;
