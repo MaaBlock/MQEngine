@@ -43,7 +43,6 @@ namespace MQEngine
         g_engineGlobal.ctx = m_ctx;
         g_engineGlobal.rt = &m_rt;
         g_engineGlobal.dataManager = m_dataManager;
-        m_application->init();
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
@@ -57,6 +56,7 @@ namespace MQEngine
         g_engineGlobal.matrixCacheSystem = m_matrixCacheSystem.get();
         g_engineGlobal.textureRenderSystem = m_textureRenderSystem.get();
         g_engineGlobal.shininessSystem = m_shininessSystem.get();
+        m_application->init();
         m_techManager = makeUnique<TechManager>();
     }
 
