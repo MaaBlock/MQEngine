@@ -25,7 +25,8 @@ namespace MQEngine
     {
         m_systemManager.init();
         m_nodeEnv = new NodeEnvironment;
-        m_nodeEnv->addModulePath("./node_modules");
+        //todo:要从DataLoader里读包
+        m_nodeEnv->addModulePath("./res/scripts/node_modules");
         m_nodeEnv->setup();
         m_dataManager = new DataManager();
         g_engineGlobal.dataManager = m_dataManager;
