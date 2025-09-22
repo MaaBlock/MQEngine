@@ -21,7 +21,7 @@ namespace MQEngine
         {
             return RenderConfig{
                 .target = RenderTarget::Texture,
-                .windowTitle = "MQEngine Editor",
+                .windowTitle = "NexusEngine Editor",
             };
         }
         void init() override;

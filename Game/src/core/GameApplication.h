@@ -9,7 +9,7 @@ namespace MQEngine {
         {
             return RenderConfig{
                 .target = RenderTarget::Window,
-                .windowTitle = "MQEngine SandBox",
+                .windowTitle = "NexusEngine SandBox",
             };
         }
 
