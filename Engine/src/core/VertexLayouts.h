@@ -5,7 +5,6 @@
 
 namespace MQEngine
 {
-    
     constexpr FCT::VertexLayout StandardMeshVertexLayout {
             FCT::VertexElement{FCT::VtxType::Tangent3f,"tangent"},
             FCT::VertexElement{FCT::VtxType::Bitangent3f,"bitangent"},
