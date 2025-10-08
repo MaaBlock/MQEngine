@@ -5,6 +5,12 @@
     "assimp",
     "boost",
     {
+      "name": "bullet3",
+      "features": [
+        "multithreading"
+      ]
+    },
+    {
       "name": "freeimage",
       "platform": "linux"
     },
@@ -39,11 +45,6 @@
       "name": "vulkan",
       "platform": "windows"
     },
-    {
-      "name": "bullet3",
-      "features": [
-        "multithreading"
-      ]
-    }
+    "fruit"
   ]
 }

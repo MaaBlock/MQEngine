@@ -1,5 +1,12 @@
 ﻿#include "../engineapi.h"
+#include "CreateApplication.h"
 #include "Tech.hpp"
+
+namespace MQEngine
+{
+    CreateApplicationFn GCreateApplication = nullptr;
+}
+
 #include "g_engineShaderObjectPixel.h"
 #include "g_engineShaderObjectVertex.h"
 #include "g_engineShaderShadowVertex.h"
@@ -9,14 +16,13 @@
 #include "g_engineShaderNormalMapObjectVertex.h"
 #include "../data/Component.h"
 #include "../data/Camera.h"
+#include "./GraphicsEnv.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
     {
         return std::string(reinterpret_cast<const char*>(resource), size);
     }
-
-
 }
 namespace MQEngine
 {
@@ -363,6 +369,7 @@ namespace MQEngine
 
     void Engine::init(Application* application)
     {
+        s_instance = this;
         m_application = application;
         settingUpEnv();
         settingUpPass();
@@ -400,9 +407,23 @@ namespace MQEngine
         m_wnd->release();
         m_systemManager.term();
         NodeCommon::Term();
+        s_instance = nullptr;
     }
 
     Engine& Engine::getInstance() {
         return *s_instance;
+    }
+
+    Engine::Engine() {
+        //s_instance = this;
+    }
+
+    Engine::~Engine() {
+        //s_instance = nullptr;
+    }
+
+    void Engine::RegisterApplicationFactory(CreateApplicationFn fn)
+    {
+        GCreateApplication = fn;
     }
 }

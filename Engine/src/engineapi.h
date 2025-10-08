@@ -6,6 +6,5 @@
 #define ENGINEAPI_H
 #define BUILD_ENGINE
 #include "headers.h"
-#include "core/enginescope.h"
 using namespace FCT;
 #endif //ENGINEAPI_H

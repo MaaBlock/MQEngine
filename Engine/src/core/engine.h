@@ -4,6 +4,7 @@
 
 #ifndef ENGINE_H
 #define ENGINE_H
+#include "CreateApplication.h"
 #include "../data/DataManager.h"
 #include "../system/CameraSystem.h"
 #include "../system/LightingSystem.h"
@@ -28,20 +29,21 @@ namespace FCT
 #include "UniformSlots.h"
 
 namespace MQEngine {
-    class EngineScope;
     class ENGINE_API Engine
     {
     public:
+        Engine();
+        ~Engine();
         Engine(const Engine&) = delete;
         Engine& operator=(const Engine&) = delete;
-        void loop();
-        static Engine& getInstance();
-        friend class EngineScope;
-
-        
-    private:
         void init(Application* application);
         void term();
+        void loop();
+        static Engine& getInstance();
+        static void RegisterApplicationFactory(CreateApplicationFn fn);
+
+        static Engine* s_instance;
+    private:
         void settingUpEnv();
         void settingUpTechs();
         void settingUpPass();
@@ -50,9 +52,6 @@ namespace MQEngine {
         void settingUpSubmitTicker();
         void initUniformValue();
         void logicTick();
-        Engine() = default;
-        ~Engine() = default;
-        static Engine* s_instance;
         Application* m_application;
         FCT::Runtime m_rt;
         SystemManager m_systemManager;
