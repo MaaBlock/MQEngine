@@ -5,6 +5,7 @@
 namespace MQEngine
 {
     Engine* Engine::s_instance = nullptr;
+    //Engine* Engine::s_instance = nullptr;
     const char* getEngineVersion()
     {
         return "0.0.1";
