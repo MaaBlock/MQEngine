@@ -1,0 +1,19 @@
+﻿运行.\load.bat来生成cmake配置
+运行.\build.bat target来编译target
+Engine是个dll，Editor才是可执行的
+include相同项目使用相对路径（不要引用include文件夹里的引用src文件夹的），include不同项目直接include 本项目的thirdparty.h
+比如Editor不需要直接include Engine的某个具体的头文件，直接include Editor的thirdparty.h即可
+include里的文件是构建时，从src收集头文件按照src的目录结构复制过去的
+include里的文件不应该修改，因为是编译时生成的
+使用宏来避免头文件重复包含(不要使用#pragma once)
+如果出现编译器堆空间不够的错误，请叫我清理内存
+启动要到工作目录要到对应的exe在的位置启动
+遇到更改没生效的时候，可以试试 ./build.bat copy_FCT_Node_headers
+(copy_Taret_headers(包含FCT FCT_Node Engine))
+修改着色器以后，需要执行load.bat重新加载配置,使得着色器的代码可以转换成头文件
+在engine目标里，不要使用engine对象，各种系统的获取，应该通过存在gloabl里来获取
+写完代码可以进行构建测试一下是否成功了
+回答说中文最好
+把你学到的部分内容写入GEMINI_NEW.md，
+以便我添加进GEMINI.md,
+使得我可以节省token让你去读取部分项目信息
