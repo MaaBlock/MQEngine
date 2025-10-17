@@ -14,6 +14,7 @@
 #include "../AssetsManager/ScriptManager.h"
 #include "../SceneViewer/SceneEntityViewer.h"
 #include "../SceneViewer/EntityInspector.h"
+#include "../ShaderEditor/ShaderEditor.h"
 
 namespace MQEngine {
     class UiManager {
@@ -36,6 +37,7 @@ namespace MQEngine {
         ScriptManager* m_scriptManager;
         SceneEntityViewer* m_sceneEntityViewer;
         EntityInspector* m_entityInspector;
+        ShaderEditor* m_shaderEditor;
     };
 }
 

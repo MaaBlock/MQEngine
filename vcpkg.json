@@ -19,6 +19,7 @@
       "platform": "windows"
     },
     "freetype",
+    "fruit",
     {
       "name": "glfw3",
       "platform": "linux"
@@ -45,6 +46,6 @@
       "name": "vulkan",
       "platform": "windows"
     },
-    "fruit"
+    "spdlog"
   ]
 }

@@ -12,6 +12,15 @@ constexpr FCT::UniformSlot DirectionalLightUniformSlot {
     FCT::UniformVar{FCT::UniformType::Float,"directionalLightIntensity"},
     FCT::UniformVar{FCT::UniformType::Bool,"directionalLightEnable"}
 };
+constexpr FCT::UniformSlot PointLightUniformSlot {
+    "PointLightUniformSlot",
+    FCT::UniformVar{FCT::UniformType::Vec3,"pointLightPosition"},
+    FCT::UniformVar{FCT::UniformType::Vec3,"pointLightColor"},
+    FCT::UniformVar{FCT::UniformType::Float,"pointLightConstant"},
+    FCT::UniformVar{FCT::UniformType::Float,"pointLightLinear"},
+    FCT::UniformVar{FCT::UniformType::Float,"pointLightQuadratic"},
+    FCT::UniformVar{FCT::UniformType::Bool,"pointLightEnable"}
+};
 
 constexpr FCT::UniformSlot ViewPosUniformSlot {
     "ViewPosUniform",

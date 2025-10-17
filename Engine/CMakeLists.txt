@@ -77,6 +77,9 @@ set(ALL_HEADERS
 
 add_copy_target_headers(Engine "${ALL_HEADERS}")
 
+
+find_package(spdlog CONFIG REQUIRED)
+target_link_libraries(Engine spdlog::spdlog)
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
 target_link_fct_imgui_libraries(Engine)

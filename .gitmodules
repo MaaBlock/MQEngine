@@ -10,3 +10,6 @@
 [submodule "FCT_Phys"]
 	path = FCT_Phys
 	url = https://github.com/MaaBlock/FCT_Phys
+[submodule "ThirdParty/ImGuiColorTextEdit"]
+	path = ThirdParty/ImGuiColorTextEdit
+	url = https://github.com/MaaBlock/ImGuiColorTextEdit

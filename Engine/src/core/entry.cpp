@@ -18,6 +18,7 @@ namespace MQEngine
 
 int ENGINE_API main()
 {
+    spdlog::info("main函数启动");
     std::locale::global(std::locale("zh_CN.UTF-8"));
     std::wcout.imbue(std::locale("zh_CN.UTF-8"));
     std::cout.imbue(std::locale("zh_CN.UTF-8"));
