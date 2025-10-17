@@ -58,10 +58,23 @@ file(GLOB TYPE_MODULE_HEADERS
         "./src/type/*.h"
         "./src/type/*.hpp"
 )
+
+file(GLOB SHADEREDITOR_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/ShaderEditor/*.h"
+        "./src/ShaderEditor/*.hpp"
+)
 file(GLOB TYPE_MODULE_SOURCES
         LIST_DIRECTORIES false
         CONFIGURE_DEPENDS
         "./src/type/*.cpp"
+)
+
+file(GLOB SHADEREDITOR_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/ShaderEditor/*.cpp"
 )
 
 
@@ -72,11 +85,14 @@ set(MQENGINE_EDITOR_SOURCES
         ${ASSETSMANAGER_MODULE_SOURCES}
         ${SCENEVIEWER_MODULE_SOURCES}
         ${DATA_MODULE_SOURCES}
+        ${SHADEREDITOR_MODULE_SOURCES}
+        "${CMAKE_SOURCE_DIR}/ThirdParty/tinyfiledialogs/tinyfiledialogs.c"
 )
 set(MQENGINE_EDITOR_HEADERS
         ${RENDERGRAPHVIEW_MODULE_HEADERS}
         ${SCENEVIEWER_MODULE_HEADERS}
         ${DATA_MODULE_HEADERS}
+        ${SHADEREDITOR_MODULE_HEADERS}
 )
 
 
@@ -84,8 +100,12 @@ add_executable(Editor
         ${MQENGINE_EDITOR_SOURCES}
         ${MQENGINE_EDITOR_HEADERS}
 )
+target_include_directories(Editor PUBLIC
+        "${CMAKE_SOURCE_DIR}/ThirdParty/tinyfiledialogs"
+        )
 target_link_libraries(Editor
     FCT_IMGUI
+    ImGuiColorTextEdit
 )
 target_link_fct_libraries(Editor)
 target_link_fct_node_libraries(Editor)
