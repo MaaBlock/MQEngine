@@ -91,6 +91,23 @@ namespace MQEngine
     class Tech
     {
     public:
+        struct ImageLinked
+        {
+            struct Source
+            {
+                enum class Type
+                {
+                    FromPass
+                };
+                std::string name;
+            } source;
+            struct Slot
+            {
+                std::string name;
+            };
+        };
+    public:
+
         /** @name 构造与配置
          *  @{
          */
@@ -112,8 +129,8 @@ namespace MQEngine
         const std::vector<FCT::SamplerSlot>& getSamplerSlots() const { return m_samplerSlots; }
         const std::vector<FCT::TextureSlot>& getTextureSlots() const { return m_textureSlots; }
         const std::string& getPassName() const { return m_passName; }
-        const ShaderRef& getVertexShaderRef() const { return m_vs_ref; }
-        const ShaderRef& getPixelShaderRef() const { return m_ps_ref; }
+        const ShaderRef& getVertexShaderRef() const { return m_vsRef; }
+        const ShaderRef& getPixelShaderRef() const { return m_psRef; }
         const ComponentFilter& getComponentFilter() const { return m_componentFilter; }
         /** @} */
 
@@ -132,8 +149,8 @@ namespace MQEngine
          *  @{
          */
         void setPassName(const std::string& passName) { m_passName = passName; }
-        void setVertexShaderRef(const ShaderRef& ref) { m_vs_ref = ref; }
-        void setPixelShaderRef(const ShaderRef& ref) { m_ps_ref = ref; }
+        void setVertexShaderRef(const ShaderRef& ref) { m_vsRef = ref; }
+        void setPixelShaderRef(const ShaderRef& ref) { m_psRef = ref; }
         void setBindCallback(const TechBindCallback& callback) { m_bindCallback = callback; }
         void setEntityOperationCallback(const EntityOperationCallback& callback) { m_entityOperationCallback = callback; }
         /** @} */
@@ -197,6 +214,13 @@ namespace MQEngine
         template<typename... Args>
         void processArgs(const EntityOperationCallback& callback, Args... args);
 
+
+        template<typename... Args>
+        void processArgs(const ImageLinked& linked, Args... args);
+
+        template<typename... Args>
+        void processArgs(const std::vector<ImageLinked>& linked, Args... args);
+
         // --- 成员变量 ---
         std::string m_name;
         std::string m_vs_source;
@@ -206,8 +230,9 @@ namespace MQEngine
         std::vector<FCT::UniformSlot> m_uniformSlots;
         std::vector<FCT::SamplerSlot> m_samplerSlots;
         std::vector<FCT::TextureSlot> m_textureSlots;
-        ShaderRef m_vs_ref;
-        ShaderRef m_ps_ref;
+        std::vector<ImageLinked> m_imageLinks;
+        ShaderRef m_vsRef;
+        ShaderRef m_psRef;
         std::string m_passName;
         ComponentFilter m_componentFilter;
         TechBindCallback m_bindCallback;  // Tech绑定回调函数

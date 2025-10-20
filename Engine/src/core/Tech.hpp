@@ -122,13 +122,26 @@ namespace MQEngine
         processArgs(args...);
     }
 
-    template<typename... Args>
+    template <typename... Args>
     void Tech::processArgs(const EntityOperationCallback& callback, Args... args)
     {
         m_entityOperationCallback = callback;
         processArgs(args...);
     }
+    template <typename... Args>
+    void Tech::processArgs(const ImageLinked& linked, Args... args)
+    {
+        m_imageLinks.push_back(linked);
+    }
+    template <typename... Args>
+    void Tech::processArgs(const std::vector<ImageLinked>& linked, Args... args)
+    {
+        for (const auto& link : linked)
+        {
+            m_imageLinks.push_back(link);
+        }
+    }
 
-}
+} // namespace MQEngine
 
 #endif // TECH_HPP

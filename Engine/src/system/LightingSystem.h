@@ -11,7 +11,6 @@
 #include "../core/UniformSlots.h"
 
 namespace MQEngine {
-    // Forward declarations
     class ENGINE_API LightingSystem {
     public:
         LightingSystem(FCT::Context* ctx, DataManager* dataManager);
