@@ -11,4 +11,7 @@
 build.bat
 load.bat
 run.bat
-.trae
+build-vs2022-debug
+build-vs2022-release
+build-windows-release
+build-windows-debug
