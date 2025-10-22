@@ -1,7 +1,7 @@
 #ifndef UNIFORMSLOTS_H
 #define UNIFORMSLOTS_H
 
-#include "../thirdparty/ThirdParty.h"
+#include "../thirdparty/thirdparty.h"
 
 namespace MQEngine {
 

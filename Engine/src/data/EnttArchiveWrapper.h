@@ -1,7 +1,7 @@
 
 #ifndef MQENINE_ENTT_ARCHIVE_WRAPPER_H
 #define MQENINE_ENTT_ARCHIVE_WRAPPER_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 
 namespace MQEngine {
 

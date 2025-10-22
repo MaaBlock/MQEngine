@@ -1,13 +1,12 @@
 ﻿#include "RenderGraphViewer.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include <fstream>
 #include <functional>
 #include <iostream>
 #define NOMINMAX
+#ifdef _WIN32
 #include <Windows.h>
-
-#define TEXT(str) (const char*)u8##str
-
+#endif
 using namespace FCT;
 namespace MQEngine {
     static int HashPin(int nodeId, const std::string& pinType, int index)

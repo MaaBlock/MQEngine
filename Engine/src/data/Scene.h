@@ -6,7 +6,7 @@
 #define SCENE_H
 
 #include "../EnginePCH.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "DataError.h"
 #include "SceneTrunk.h"
 #include <string>

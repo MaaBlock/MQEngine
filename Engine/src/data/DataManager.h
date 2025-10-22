@@ -6,7 +6,7 @@
 #define DATAMANAGER_H
 
 #include "../EnginePCH.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "DataError.h"
 #include "Scene.h"
 #include "SceneTrunk.h"

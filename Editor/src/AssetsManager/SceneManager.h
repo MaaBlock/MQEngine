@@ -4,7 +4,7 @@
 
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 namespace MQEngine {
 
     class SceneManager {

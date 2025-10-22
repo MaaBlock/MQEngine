@@ -1,7 +1,7 @@
 #ifndef ENGINE_VERTEX_LAYOUTS_H
 #define ENGINE_VERTEX_LAYOUTS_H
 
-#include "../thirdparty/ThirdParty.h"
+#include "../thirdparty/thirdparty.h"
 
 namespace MQEngine
 {

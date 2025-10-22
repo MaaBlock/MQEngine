@@ -8,7 +8,7 @@
 #include <functional>
 #include <set>
 #include <algorithm>
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 
 namespace MQEngine
 {

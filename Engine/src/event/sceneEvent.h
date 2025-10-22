@@ -4,7 +4,7 @@
 
 #ifndef SCENEEVENT_H
 #define SCENEEVENT_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 namespace MQEngine
 {
     class Scene;
