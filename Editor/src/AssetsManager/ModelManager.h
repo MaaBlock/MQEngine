@@ -4,7 +4,7 @@
 
 #ifndef MODELMANAGER_H
 #define MODELMANAGER_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "../core/Global.h"
 namespace MQEngine {
     class ModelManager {

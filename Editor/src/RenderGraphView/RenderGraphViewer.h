@@ -14,7 +14,7 @@
 #include <functional>
 #include <map>
 #include <set>
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 namespace FCT
 {
     struct PassDesc;

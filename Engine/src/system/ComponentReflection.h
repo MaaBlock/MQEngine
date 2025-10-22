@@ -2,7 +2,7 @@
 #define COMPONENTREFLECTION_H
 
 #include "../EnginePCH.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "../data/Camera.h"
 #include "../data/Component.h"
 #include "../data/NameTag.h"

@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include "../EnginePCH.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "./DataError.h"
 namespace MQEngine
 {

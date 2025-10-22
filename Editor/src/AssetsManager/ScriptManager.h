@@ -1,6 +1,6 @@
 #ifndef SCRIPTMANAGER_H
 #define SCRIPTMANAGER_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include "../core/Global.h"
 
 namespace MQEngine {

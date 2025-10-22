@@ -4,7 +4,7 @@
 
 #ifndef GLOBAL_H
 #define GLOBAL_H
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 
 namespace MQEngine
 {

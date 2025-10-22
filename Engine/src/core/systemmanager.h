@@ -7,6 +7,10 @@
 namespace MQEngine {
     class SystemManager {
     public:
+        SystemManager()
+        {
+            FCT::fout << "SystemManager::SystemManager()\n";
+        }
         void init();
         void term();
     private:

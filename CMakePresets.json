@@ -12,6 +12,11 @@
       "description": "Configures a Debug build using Ninja generator and MSVC x64 compiler.",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-windows-debug",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
       "architecture": {
         "value": "x64",
         "strategy": "external"
@@ -29,16 +34,10 @@
     {
       "name": "windows-ninja-release-x64",
       "displayName": "Windows x64 Ninja Release",
-      "description": "Configures a Release build using Ninja generator and MSVC x64 compiler.",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-windows-release",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
@@ -49,33 +48,48 @@
     {
       "name": "vs2022-debug-x64",
       "displayName": "Windows x64 VS 2022 Debug",
-      "description": "Generates a Visual Studio 2022 solution for Debug x64.",
-      "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build-vs2022-debug",
-      "architecture": {
-        "value": "x64",
-        "strategy": "set"
-      },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "set"
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
       },
       "cacheVariables": {}
+    },
+    {
+      "name": "linux-clang-debug",
+      "displayName": "Linux Clang Debug",
+      "description": "Configures a Debug build using Ninja generator and Clang.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-linux-debug",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "build-ninja-debug",
+      "name": "build-ninja-debug-win",
       "configurePreset": "windows-ninja-debug-x64"
     },
     {
-      "name": "build-ninja-release",
+      "name": "build-ninja-release-win",
       "configurePreset": "windows-ninja-release-x64"
     },
     {
       "name": "build-vs2022-debug",
       "configurePreset": "vs2022-debug-x64",
       "configuration": "Debug"
+    },
+    {
+      "name": "build-linux-debug",
+      "configurePreset": "linux-clang-debug"
     }
   ]
 }

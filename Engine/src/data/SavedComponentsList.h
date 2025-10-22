@@ -8,15 +8,16 @@ namespace MQEngine {
     template<typename SnapshotType, typename WrapperType>
     void SerializeComponents(SnapshotType&& snapshot, WrapperType& wrapper) {
         snapshot
-        .get<entt::entity>(wrapper)
-        .get<NameTag>(wrapper)
-        .get<StaticMeshInstance>(wrapper)
-        .get<DirectionalLightComponent>(wrapper)
-        .get<DiffuseTextureComponent>(wrapper)
-        .get<PositionComponent>(wrapper)
-        .get<RotationComponent>(wrapper)
-        .get<ScaleComponent>(wrapper)
-        .get<CameraComponent>(wrapper);
+        .template get<entt::entity>(wrapper)
+        .template get<NameTag>(wrapper)
+        .template get<StaticMeshInstance>(wrapper)
+        .template get<DirectionalLightComponent>(wrapper)
+        .template get<DiffuseTextureComponent>(wrapper)
+        .template get<NormalMapComponent>(wrapper)
+        .template get<PositionComponent>(wrapper)
+        .template get<RotationComponent>(wrapper)
+        .template get<ScaleComponent>(wrapper)
+        .template get<CameraComponent>(wrapper);
     }
 }
 #endif //SAVEDCOMPONENTSLIST_H

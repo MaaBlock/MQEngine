@@ -5,7 +5,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 #include "../EnginePCH.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include <boost/describe.hpp>
 namespace MQEngine {
     constexpr FCT::UniformSlot CameraUniformSlot {

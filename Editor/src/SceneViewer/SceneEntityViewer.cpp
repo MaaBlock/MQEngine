@@ -228,7 +228,7 @@ namespace MQEngine {
         m_showCreateEntityDialog = true;
         m_targetTrunkName = targetTrunk;
         m_createInGlobal = isGlobal;
-        strcpy_s(m_newEntityName, sizeof(m_newEntityName), "新实体");
+        snprintf(m_newEntityName, sizeof(m_newEntityName), "%s", "新实体");
     }
 
     void SceneEntityViewer::renderCreateEntityDialog(Scene* scene) {

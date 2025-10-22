@@ -1,10 +1,12 @@
 ﻿#include "RenderGraphViewer.h"
-#include "../Thirdparty/thirdparty.h"
+#include "../thirdparty/thirdparty.h"
 #include <fstream>
 #include <functional>
 #include <iostream>
 #define NOMINMAX
+#ifdef _WIN32
 #include <Windows.h>
+#endif
 
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
@@ -952,7 +954,8 @@ namespace MQEngine
 
         ImNodes::BeginNodeTitleBar();
         char nameBuffer[256];
-        strcpy_s(nameBuffer, pass.name.c_str());
+        snprintf(nameBuffer, sizeof(nameBuffer), "%s", pass.name.c_str());
+
 
         float currentTextWidth = ImGui::CalcTextSize(nameBuffer).x;
         float inputWidth = std::max(currentTextWidth + 30.0f, 120.0f); // 最小120px
@@ -1177,7 +1180,7 @@ namespace MQEngine
 
         ImNodes::BeginNodeTitleBar();
         char nameBuffer[256];
-        strcpy_s(nameBuffer, image.name.c_str());
+        snprintf(nameBuffer, sizeof(nameBuffer), "%s", image.name.c_str());
 
         // 计算标题宽度
         float titleWidth = ImGui::CalcTextSize(nameBuffer).x + 30.0f;
