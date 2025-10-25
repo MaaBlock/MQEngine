@@ -10,17 +10,53 @@
 #include <vector>
 
 namespace MQEngine {
-
+    struct TextureCacheKey
+    {
+        std::string modelUuid;
+        std::string texturePath;
+        FCT::Format format;
+    };
+    enum EngineTextureType
+    {
+        albedoTexture = entt::type_hash<AlbedoTextureComponent>::value(),
+        normalTexture = entt::type_hash<NormalTextureComponent>::value(),
+        emissiveTexture = entt::type_hash<EmissiveTextureComponent>::value(),
+        ormTexture = entt::type_hash<OrmTextureComponent>::value()
+    };
+    inline FCT::Format getTextureFormat(uint32_t channels,EngineTextureType type)
+    {
+        switch (type)
+        {
+            // 颜色数据，srgb
+        case albedoTexture:
+            return FCT::Format::R8G8B8A8_SRGB;
+        case emissiveTexture:
+            return FCT::Format::R8G8B8A8_SRGB;
+            // 非颜色数据,unorm
+        case normalTexture:
+            return FCT::Format::R8G8B8A8_UNORM;
+        case ormTexture:
+            if (channels == 4)
+            {
+                return FCT::Format::R8G8B8A8_UNORM;
+            }
+            if (channels == 3)
+            {
+                return FCT::Format::R8G8B8_UNORM;
+            }
+            FCT::ferr << "纹理通道数与纹理类型不匹配" << std::endl;
+            return FCT::Format::R8G8B8A8_UNORM;
+        default:
+            return FCT::Format::UNDEFINED;
+        }
+    }
     class ENGINE_API TextureCacheSystem {
     public:
         TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         ~TextureCacheSystem();
-        
-        void update();
+        void updateLogic();
         void collectTextures();
         void loadTexture(const std::string& modelUuid, const std::string& texturePath);
-
-        
     private:
         FCT::Context* m_ctx;
         DataManager* m_dataManager;

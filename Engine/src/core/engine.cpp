@@ -358,7 +358,7 @@ namespace MQEngine
         m_matrixCacheSystem->update();
         m_cameraSystem->update();
         m_meshRenderSystem->update();
-        m_textureRenderSystem->update();
+        m_textureRenderSystem->updateLogic();
         m_lightingSystem->update();
         m_shininessSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
