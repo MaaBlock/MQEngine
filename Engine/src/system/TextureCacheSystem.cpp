@@ -25,7 +25,7 @@ namespace MQEngine {
         FCT::fout << "TextureRenderSystem 销毁" << std::endl;
     }
 
-    void TextureCacheSystem::update() {
+    void TextureCacheSystem::updateLogic() {
         collectTextures();
     }
 
@@ -34,13 +34,10 @@ namespace MQEngine {
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
-            auto view = registry->view<DiffuseTextureComponent>();
-            
-            for (auto entity : view) {
-                auto& textureComponent = view.get<DiffuseTextureComponent>(entity);
-                
+            registry->view<DiffuseTextureComponent>().each([this](DiffuseTextureComponent& textureComponent)
+            {
                 if (textureComponent.modelUuid.empty() || textureComponent.texturePath.empty()) {
-                    continue;
+                    return;
                 }
 
                 std::string textureKey = textureComponent.modelUuid + "|" + textureComponent.texturePath;
@@ -53,15 +50,11 @@ namespace MQEngine {
                 if (it != m_loadedTextures.end()) {
                     const_cast<DiffuseTextureComponent&>(textureComponent).texture = it->second;
                 }
-            }
-
-            auto normalMapView = registry->view<NormalMapComponent>();
-
-            for (auto entity : normalMapView) {
-                auto& textureComponent = normalMapView.get<NormalMapComponent>(entity);
-
+            });
+            registry->view<NormalMapComponent>().each([this](NormalMapComponent& textureComponent)
+            {
                 if (textureComponent.modelUuid.empty() || textureComponent.texturePath.empty()) {
-                    continue;
+                    return;
                 }
 
                 std::string textureKey = textureComponent.modelUuid + "|" + textureComponent.texturePath;
@@ -74,7 +67,7 @@ namespace MQEngine {
                 if (it != m_loadedTextures.end()) {
                     const_cast<NormalMapComponent&>(textureComponent).texture = it->second;
                 }
-            }
+            });
         }
     }
 

@@ -122,7 +122,6 @@ namespace MQEngine {
         }
     };
     BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (), (modelUuid, texturePath))
-
     struct ENGINE_API NormalMapComponent
     {
         std::string modelUuid;
@@ -173,6 +172,44 @@ namespace MQEngine {
         {
             uniform = FCT::makeUnique<FCT::Uniform>(ctx, ShininessUniformSlot);
         }
+    };
+    struct ENGINE_API CacheResource
+    {
+        /*
+         * @brief 在render线程中是否可见
+         */
+        bool visible = false;
+    };
+    struct ENGINE_API TextureComponent : CacheResource
+    {
+        /*
+         * @brief 用于定位模型
+         */
+        std::string modelUuid;
+        /*
+         * @brief 相对模型的相对路径
+         */
+        std::string texturePath;
+        /*
+         * @brief 缓存的图片对象
+         */
+        FCT::Image* texture = nullptr;
+    };
+    struct ENGINE_API AlbedoTextureComponent : TextureComponent
+    {
+
+    };
+    struct ENGINE_API NormalTextureComponent : TextureComponent
+    {
+
+    };
+    struct ENGINE_API EmissiveTextureComponent : TextureComponent
+    {
+
+    };
+    struct ENGINE_API OrmTextureComponent : TextureComponent
+    {
+
     };
 }
 
