@@ -182,6 +182,7 @@ namespace MQEngine {
     };
     struct ENGINE_API TextureComponent : CacheResource
     {
+        TextureComponent(std::string uuid, std::string path) : modelUuid(uuid), texturePath(path) {}
         /*
          * @brief 用于定位模型
          */
@@ -199,7 +200,10 @@ namespace MQEngine {
 
     struct ENGINE_API AlbedoTextureComponent : TextureComponent
     {
+        AlbedoTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
+        {
 
+        }
     };
     BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
 

@@ -185,6 +185,7 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<DiffuseTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<NormalMapComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ShininessComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<AlbedoTextureComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);

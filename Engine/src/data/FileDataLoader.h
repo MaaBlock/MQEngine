@@ -15,7 +15,6 @@ std::vector<std::string> getSubDirectoriesName(const std::string& dir) const ove
         std::unique_ptr<std::ofstream> openBinaryOutputStream(const std::string& filePath) const override;
         std::vector<std::string> getFileNamesWithExtension(const std::string& dir, const std::string& extension) const override;
         std::vector<std::string> getFilePathsWithExtension(const std::string& dir, const std::string& extension) const override;
-
         bool directoryExists(const std::string& string) override;
     };
 } // MQEngine

@@ -140,7 +140,7 @@ namespace MQEngine
         std::string getModelRelativePathByUuid(const std::string& uuid) const;
         Scene* getCurrentScene() const;
     private:
-        StatusOr<std::string> locateModel(const std::string& modelUuid) const;
+        StatusOr<std::string> locateModelFile(const std::string& modelUuid) const;
         bool m_isEditorMode;
         std::string m_currentScene;
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;

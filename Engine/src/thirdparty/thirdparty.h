@@ -58,6 +58,7 @@ namespace MQEngine
     using absl::UnimplementedError;
     using absl::OutOfRangeError;
     using absl::NotFoundError;
+    using absl::InternalError;
     using absl::UnknownError;
     using absl::OkStatus;
     using absl::StrCat;

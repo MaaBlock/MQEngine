@@ -4,6 +4,7 @@
 
 namespace MQEngine
 {
+    namespace fs = std::filesystem;
     void DataManager::loadRes()
     {
         m_dataLoader->ensureDirectory("./res");
@@ -158,12 +159,28 @@ namespace MQEngine
         }
         return it->second.get();
     }
-    StatusOr<std::string> DataManager::locateModel(const std::string& modelUuid) const
+
+    StatusOr<std::string> DataManager::locateModelFile(const std::string& modelUuid) const
     {
-        if (m_uuidToModel.count(modelUuid)) {
-            return m_uuidToModel.at(modelUuid);
+        auto it = m_uuidToModel.find(modelUuid);
+        if (it == m_uuidToModel.end())
+            return NotFoundError("模型UUID不存在: " + modelUuid);
+        const fs::path modelPath = it->second;
+        const fs::path modelUuidFilePath = modelPath / "model.uuid";
+        std::ifstream file(modelUuidFilePath, std::ios::binary);
+        if (!file.is_open())
+                return NotFoundError("无法打开模型元数据文件: " + modelUuidFilePath.string());
+        try {
+            boost::archive::binary_iarchive ia(file);
+            ModelUuidFile modelUuidFile;
+            ia >> modelUuidFile;
+            if (modelUuidFile.modelRelativePath.empty())
+                return InternalError("模型元数据文件中的相对路径为空: " + modelUuidFilePath.string());
+            fs::path finalModelPath = modelPath / modelUuidFile.modelRelativePath;
+            return finalModelPath.string();
+        } catch (const std::exception& e) {
+            return InternalError("读取或解析模型元数据文件失败: " + std::string(e.what()));
         }
-        return NotFoundError("模型UUID不存在: " + modelUuid);
     }
 
     std::string DataManager::getModelPathByUuid(const std::string& uuid) const
@@ -289,9 +306,9 @@ namespace MQEngine
         if (texturePath[0] == '*')
         {
             std::vector<unsigned char> ret;
-            auto path = locateModel(modelUuid);
+            auto path = locateModelFile(modelUuid);
             CHECK_STATUS(path);
-            auto index = ParseEmbeddedTextureIndex(path.value());
+            auto index = ParseEmbeddedTextureIndex(texturePath);
             CHECK_STATUS(index);
             if (m_modelLoader->getEmbeddedTextureData(path.value(), index.value(), ret))
             {
@@ -306,7 +323,7 @@ namespace MQEngine
     {
         if (texturePath[0] == '*')
             return InvalidArgumentError("错误的传递了内嵌纹理路径，此函数仅用于处理外部文件纹理。");
-        auto modelPathResult = locateModel(modelUuid);
+        auto modelPathResult = locateModelFile(modelUuid);
         CHECK_STATUS(modelPathResult);
         const std::string& modelFilePath = modelPathResult.value();
         namespace fs = std::filesystem;

@@ -345,6 +345,11 @@ namespace MQEngine {
                 m_showTextureTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
+            if (ImGui::Button(TEXT("Albedo (反照率)"), ImVec2(150, 0))) {
+                addAlbedoTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                m_showTextureTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
             ImGui::Separator();
             if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {
                 m_showTextureTypePopup = false;
@@ -363,6 +368,16 @@ namespace MQEngine {
         if (!registry) return;
 
         registry->emplace_or_replace<NormalMapComponent>(entity, modelUuid, texturePath);
+    }
+
+    void SceneEntityViewer::addAlbedoTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+        
+        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        if (!registry) return;
+
+        registry->emplace_or_replace<AlbedoTextureComponent>(entity, modelUuid, texturePath);
     }
 
 } // namespace MQEngine
