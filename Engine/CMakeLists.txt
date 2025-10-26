@@ -79,7 +79,11 @@ add_copy_target_headers(Engine "${ALL_HEADERS}")
 
 
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(Engine spdlog::spdlog)
+find_package(absl CONFIG REQUIRED)
+target_link_libraries(Engine
+        spdlog::spdlog
+        absl::any absl::log absl::base absl::bits
+)
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
 target_link_fct_imgui_libraries(Engine)

@@ -37,6 +37,7 @@
       "platform": "windows"
     },
     "shaderc",
+    "spdlog",
     "spirv-cross",
     {
       "name": "vulkan",
@@ -46,6 +47,6 @@
       "name": "vulkan",
       "platform": "windows"
     },
-    "spdlog"
+    "abseil"
   ]
 }

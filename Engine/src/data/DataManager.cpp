@@ -147,14 +147,23 @@ namespace MQEngine
 
     Scene* DataManager::getCurrentScene() const
     {
-        if (m_currentScene.empty()) {
+        if (m_currentScene.empty())
+        {
             return nullptr;
         }
         auto it = m_loadScenes.find(m_currentScene);
-        if (it == m_loadScenes.end()) {
+        if (it == m_loadScenes.end())
+        {
             return nullptr;
         }
         return it->second.get();
+    }
+    StatusOr<std::string> DataManager::locateModel(const std::string& modelUuid) const
+    {
+        if (m_uuidToModel.count(modelUuid)) {
+            return m_uuidToModel.at(modelUuid);
+        }
+        return NotFoundError("模型UUID不存在: " + modelUuid);
     }
 
     std::string DataManager::getModelPathByUuid(const std::string& uuid) const
@@ -238,8 +247,72 @@ namespace MQEngine
         saveProjectSetting(m_projectSetting);
     }
 
-    std::string DataManager::getInitialSceneUuid() const
+    std::string DataManager::getInitialSceneUuid() const { return m_projectSetting.initialSceneUuid; }
+    StatusOr<int> ParseEmbeddedTextureIndex(std::string_view texturePath)
     {
-        return m_projectSetting.initialSceneUuid;
+        if (texturePath.empty() || texturePath.front() != '*')
+            return InvalidArgumentError(
+                StrCat(
+                    "无效的内嵌纹理路径 '",
+                    texturePath,
+                    "'：必须以 '*' 开头。"));
+        std::string_view indexSv = texturePath.substr(1);
+        if (indexSv.empty())
+            return InvalidArgumentError(
+                StrCat(
+                    "不完整的内嵌纹理路径 '",
+                    texturePath,
+                     "'：'*' 后面缺少索引数字。"));
+        std::string indexStr(indexSv);
+        int textureIndex;
+        std::size_t pos;
+        try {
+            textureIndex = std::stoi(indexStr, &pos);
+        } catch (const std::invalid_argument&) {
+            return InvalidArgumentError(
+                StrCat("无效的纹理索引 '", indexStr, "'：无法解析为数字。"));
+        } catch (const std::out_of_range&) {
+            return OutOfRangeError(
+               StrCat("纹理索引 '", indexStr, "' 超出有效范围。"));
+        }
+        if (pos != indexStr.length())
+            return InvalidArgumentError(
+                StrCat("纹理索引 '", indexStr, "' 后包含无效字符。"));
+        if (textureIndex < 0)
+            return InvalidArgumentError(
+                StrCat("纹理索引不能为负数：", textureIndex));
+        return textureIndex;
     }
-}
+    StatusOr<std::vector<unsigned char>> DataManager::extractImage(const std::string& modelUuid,
+                                                                   const std::string& texturePath)
+    {
+        if (texturePath[0] == '*')
+        {
+            std::vector<unsigned char> ret;
+            auto path = locateModel(modelUuid);
+            CHECK_STATUS(path);
+            auto index = ParseEmbeddedTextureIndex(path.value());
+            CHECK_STATUS(index);
+            if (m_modelLoader->getEmbeddedTextureData(path.value(), index.value(), ret))
+            {
+                return ret;
+            }
+            return UnknownError("未能成功从模型" + path.value() + "找到内嵌纹理:" + texturePath);
+        }
+        assert(false && "目前仅支持内嵌纹理。");
+        return UnimplementedError("目前仅支持内嵌纹理。");
+    }
+    StatusOr<std::string> DataManager::getModelTexturePath(const std::string& modelUuid, const std::string& texturePath)
+    {
+        if (texturePath[0] == '*')
+            return InvalidArgumentError("错误的传递了内嵌纹理路径，此函数仅用于处理外部文件纹理。");
+        auto modelPathResult = locateModel(modelUuid);
+        CHECK_STATUS(modelPathResult);
+        const std::string& modelFilePath = modelPathResult.value();
+        namespace fs = std::filesystem;
+        fs::path fullModelPath(modelFilePath);
+        fs::path modelDirectory = fullModelPath.parent_path();
+        fs::path combinedTexturePath = modelDirectory / texturePath;
+        return combinedTexturePath.generic_string();
+    }
+} // namespace MQEngine

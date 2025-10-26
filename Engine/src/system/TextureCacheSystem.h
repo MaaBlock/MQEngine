@@ -8,14 +8,8 @@
 #include "../data/Component.h"
 #include <unordered_map>
 #include <vector>
-
-namespace MQEngine {
-    struct TextureCacheKey
-    {
-        std::string modelUuid;
-        std::string texturePath;
-        FCT::Format format;
-    };
+namespace MQEngine
+{
     enum EngineTextureType
     {
         albedoTexture = entt::type_hash<AlbedoTextureComponent>::value(),
@@ -23,7 +17,33 @@ namespace MQEngine {
         emissiveTexture = entt::type_hash<EmissiveTextureComponent>::value(),
         ormTexture = entt::type_hash<OrmTextureComponent>::value()
     };
-    inline FCT::Format getTextureFormat(uint32_t channels,EngineTextureType type)
+    struct TextureCacheKey
+    {
+        std::string modelUuid;
+        std::string texturePath;
+        EngineTextureType format;
+        bool operator==(const TextureCacheKey& key) const
+        {
+            return modelUuid == key.modelUuid && texturePath == key.texturePath && format == key.format;
+        }
+    };
+}
+namespace std
+{
+    template<>
+    struct hash<MQEngine::TextureCacheKey> {
+        size_t operator()(const MQEngine::TextureCacheKey& key) const
+        {
+            std::size_t seed = 0;
+            boost::hash_combine(seed, std::hash<std::string>{}(key.modelUuid));
+            boost::hash_combine(seed, std::hash<std::string>{}(key.texturePath));
+            boost::hash_combine(seed, std::hash<uint32_t>{}(static_cast<uint32_t>(key.format)));
+            return seed;
+        }
+    };
+}
+namespace MQEngine {
+    inline FCT::Format GetTextureFormat(uint32_t channels,EngineTextureType type)
     {
         switch (type)
         {
@@ -58,11 +78,20 @@ namespace MQEngine {
         void collectTextures();
         void loadTexture(const std::string& modelUuid, const std::string& texturePath);
     private:
+        /*
+         * @brief 缓存某个texture到m_newTextureCache
+         */
+        Status cacheTexture(const std::string& modelUuid, const std::string& texturePath, EngineTextureType format);
+        /*
+         * @brief 获取缓存的Texture，如果未缓存就加载
+         */
+        StatusOr<FCT::Image*> getOrLoadTexture(const TextureCacheKey& key);
         FCT::Context* m_ctx;
         DataManager* m_dataManager;
         FCT::ModelLoader* m_modelLoader;
-
+        UniquePtr<FCT::ImageLoader> m_imageLoader;
         std::unordered_map<std::string, FCT::Image*> m_loadedTextures; // key: modelUuid + "|" + texturePath
+        std::unordered_map<TextureCacheKey, FCT::Image*> m_newTextureCache;
     };
 }
 

@@ -13,6 +13,7 @@ namespace MQEngine
     class TextureCacheSystem;
     class ShininessSystem;
     using Context = FCT::Context;
+
     struct ENGINE_API EngineGlobal
     {
         Context* ctx;

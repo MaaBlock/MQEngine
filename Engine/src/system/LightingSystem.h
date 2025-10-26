@@ -1,7 +1,3 @@
-//
-// Created by Administrator on 2025/1/22.
-//
-
 #ifndef LIGHTINGSYSTEM_H
 #define LIGHTINGSYSTEM_H
 #include "../data/DataManager.h"

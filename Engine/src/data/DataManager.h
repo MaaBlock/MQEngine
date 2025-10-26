@@ -14,9 +14,10 @@
 #include <memory>
 #include <functional>
 
+#include "./Camera.h"
+#include "../core/EngineGlobal.h"
 #include "./DataLoader.h"
 #include "./FileDataLoader.h"
-#include "./Camera.h"
 
 namespace MQEngine
 {
@@ -60,6 +61,7 @@ namespace MQEngine
         DataManager()
         {
             m_dataLoader = std::make_unique<FileDataLoader>();
+            m_modelLoader = UniquePtr(g_engineGlobal.rt->createModelLoader());
         }
         std::vector<std::string> getModelList()
         {
@@ -80,8 +82,14 @@ namespace MQEngine
         ProjectSetting getProjectSetting() const;
         void setInitialSceneUuid(const std::string& uuid);
         std::string getInitialSceneUuid() const;
-
-
+        /*
+         * @brief 从模型里获取 内嵌 Image数据
+         */
+        StatusOr<std::vector<unsigned char>> extractImage(const std::string& modelUuid, const std::string& texturePath);
+        /**
+         * @brief 从纹理相对模型的路径转换为纹理相对路径
+         */
+        StatusOr<std::string> getModelTexturePath(const std::string& modelUuid, const std::string& texturePath);
         void loadScene(const std::string& uuid)
         {
             try {
@@ -132,6 +140,7 @@ namespace MQEngine
         std::string getModelRelativePathByUuid(const std::string& uuid) const;
         Scene* getCurrentScene() const;
     private:
+        StatusOr<std::string> locateModel(const std::string& modelUuid) const;
         bool m_isEditorMode;
         std::string m_currentScene;
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;
@@ -142,7 +151,9 @@ namespace MQEngine
         std::unordered_map<std::string,std::string> m_uuidToSceneName;
         std::vector<std::string> m_modelPathList;
         std::unique_ptr<DataLoader> m_dataLoader;
+        UniquePtr<ModelLoader> m_modelLoader;
         ProjectSetting m_projectSetting;
+
         void loadModelUuidMapping() {
             m_uuidToModel.clear();
 

@@ -34,6 +34,7 @@ namespace MQEngine
         //todo:要从DataLoader里读包
         m_nodeEnv->addModulePath("./res/scripts/node_modules");
         m_nodeEnv->setup();
+        g_engineGlobal.rt = &m_rt;
         m_dataManager = new DataManager();
         g_engineGlobal.dataManager = m_dataManager;
         m_wnd = m_rt.createWindow(800,600,m_application->renderConfig().windowTitle);
@@ -47,7 +48,6 @@ namespace MQEngine
         m_application->global.dataManager = m_dataManager;
         m_application->global.runtime = &m_rt;
         g_engineGlobal.ctx = m_ctx;
-        g_engineGlobal.rt = &m_rt;
         g_engineGlobal.dataManager = m_dataManager;
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
