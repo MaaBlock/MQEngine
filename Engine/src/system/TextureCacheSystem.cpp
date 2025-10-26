@@ -82,6 +82,7 @@ namespace MQEngine {
                 });
                 if (!texture.ok())
                 {
+                    FCT::ferr << texture.status().message() << std::endl;
                     return;
                 }
                 component.texture = texture.value();

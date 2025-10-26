@@ -195,10 +195,14 @@ namespace MQEngine {
          */
         FCT::Image* texture = nullptr;
     };
+    BOOST_DESCRIBE_STRUCT(TextureComponent, (CacheResource), (modelUuid, texturePath))
+
     struct ENGINE_API AlbedoTextureComponent : TextureComponent
     {
 
     };
+    BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
+
     struct ENGINE_API NormalTextureComponent : TextureComponent
     {
 
