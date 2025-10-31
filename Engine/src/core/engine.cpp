@@ -115,7 +115,10 @@ namespace MQEngine
             },
             ComponentFilter{
                 .include_types = {entt::type_id<StaticMeshInstance>()},
-                .exclude_types = {entt::type_id<DiffuseTextureComponent>()}
+                .exclude_types = {
+                    entt::type_id<DiffuseTextureComponent>(),
+                    entt::type_id<AlbedoTextureComponent>()
+                }
             },
             baseObjectPassCallback,
             universalEntityCallback
@@ -240,6 +243,12 @@ namespace MQEngine
             shadowPassCallback,
             universalEntityCallback
         ));
+
+        m_techManager->addTech("ObjectPass", Tech(
+                TechName("PBRTech"),
+                vertexLayout,
+                pixelLayout
+            ));
     }
 
     void Engine::settingUpPass()

@@ -15,7 +15,27 @@ namespace MQEngine {
         m_imageLoader = UniquePtr(g_engineGlobal.rt->createImageLoader());
         FCT::fout << "TextureRenderSystem 初始化" << std::endl;
     }
+    template<typename TextureComponent>
+       void TextureCacheSystem::processTextureComponent(TextureComponent& component, EngineTextureType format)
+    {
+        if (component.texture)
+            return;
 
+        auto texture = getOrLoadTexture({
+            .modelUuid = component.modelUuid,
+            .texturePath = component.texturePath,
+            .format = format,
+        });
+
+        if (!texture.ok())
+        {
+            FCT::ferr << texture.status().message() << std::endl;
+            return;
+        }
+
+        component.texture = texture.value();
+        //todo: 使用ResourceActiveSystem在渲染帧激活texture
+    }
     TextureCacheSystem::~TextureCacheSystem() {
         for (auto& pair : m_loadedTextures) {
             if (pair.second) {
@@ -71,22 +91,21 @@ namespace MQEngine {
             });
             registry->view<AlbedoTextureComponent>().each([this](AlbedoTextureComponent& component)
             {
-                if (component.texture)
-                {
-                    return;
-                }
-                auto texture = getOrLoadTexture({
-                    .modelUuid = component.modelUuid,
-                    .texturePath = component.texturePath,
-                    .format = albedoTexture,
-                });
-                if (!texture.ok())
-                {
-                    FCT::ferr << texture.status().message() << std::endl;
-                    return;
-                }
-                component.texture = texture.value();
-                //todo: 使用ResourceActiveSystem在渲染帧激活texture
+                processTextureComponent(component, albedoTexture);
+            });
+            registry->view<NormalTextureComponent>().each([this](NormalTextureComponent& component)
+            {
+                processTextureComponent(component, normalTexture);
+            });
+
+            registry->view<EmissiveTextureComponent>().each([this](EmissiveTextureComponent& component)
+            {
+                processTextureComponent(component, emissiveTexture);
+            });
+
+            registry->view<OrmTextureComponent>().each([this](OrmTextureComponent& component)
+            {
+                processTextureComponent(component, ormTexture);
             });
         }
     }

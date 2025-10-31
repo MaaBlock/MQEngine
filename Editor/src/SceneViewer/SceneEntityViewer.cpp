@@ -350,6 +350,16 @@ namespace MQEngine {
                 m_showTextureTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
+			if (ImGui::Button(TEXT("Emissive (自发光)"), ImVec2(150, 0))) {
+				addEmissiveTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+				m_showTextureTypePopup = false;
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::Button(TEXT("Orm (环境光遮蔽/粗糙度/金属)"), ImVec2(150, 0))) {
+				addOrmTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+				m_showTextureTypePopup = false;
+				ImGui::CloseCurrentPopup();
+			}
             ImGui::Separator();
             if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {
                 m_showTextureTypePopup = false;
@@ -367,7 +377,7 @@ namespace MQEngine {
         entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
-        registry->emplace_or_replace<NormalMapComponent>(entity, modelUuid, texturePath);
+        registry->emplace_or_replace<NormalTextureComponent>(entity, modelUuid, texturePath);
     }
 
     void SceneEntityViewer::addAlbedoTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
@@ -379,5 +389,25 @@ namespace MQEngine {
 
         registry->emplace_or_replace<AlbedoTextureComponent>(entity, modelUuid, texturePath);
     }
+
+	void SceneEntityViewer::addEmissiveTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+		Scene* scene = m_dataManager->getCurrentScene();
+		if (!scene) return;
+
+		entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+		if (!registry) return;
+
+		registry->emplace_or_replace<EmissiveTextureComponent>(entity, modelUuid, texturePath);
+	}
+
+	void SceneEntityViewer::addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+		Scene* scene = m_dataManager->getCurrentScene();
+		if (!scene) return;
+
+		entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+		if (!registry) return;
+
+		registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);
+	}
 
 } // namespace MQEngine

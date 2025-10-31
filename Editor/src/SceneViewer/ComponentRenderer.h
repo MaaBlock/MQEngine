@@ -445,6 +445,63 @@ namespace MQEngine {
             ImGui::Unindent();
         }
     }
+
+    template<>
+    inline void renderComponent<NormalTextureComponent>(const NormalTextureComponent* component) {
+        if (ImGui::CollapsingHeader("Normal 纹理##NormalTexture", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
+            ImGui::Text("纹理路径: %s", component->texturePath.empty() ? "未设置" : component->texturePath.c_str());
+            ImGui::Text("纹理状态: %s", component->texture ? "已加载" : "未加载");
+            ImGui::Text("纹理启用: %s", component->visible ? "已启用" : "未启用");
+
+            ImGui::Spacing();
+
+            if (ImGui::Button("删除组件##NormalTextureComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<NormalTextureComponent>::value();
+            }
+
+            ImGui::Unindent(); 
+        }
+    }
+
+    template<>
+    inline void renderComponent<EmissiveTextureComponent>(const EmissiveTextureComponent* component) {
+        if (ImGui::CollapsingHeader("Emissive 纹理##EmissiveTexture", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
+            ImGui::Text("纹理路径: %s", component->texturePath.empty() ? "未设置" : component->texturePath.c_str());
+            ImGui::Text("纹理状态: %s", component->texture ? "已加载" : "未加载");
+            ImGui::Text("纹理启用: %s", component->visible ? "已启用" : "未启用");
+
+            ImGui::Spacing();
+
+            if (ImGui::Button("删除组件##EmissiveTextureComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<EmissiveTextureComponent>::value();
+            }
+
+            ImGui::Unindent(); 
+        }
+    }
+
+    template<>
+    inline void renderComponent<OrmTextureComponent>(const OrmTextureComponent* component) {
+        if (ImGui::CollapsingHeader("Orm 纹理##OrmTexture", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
+            ImGui::Text("纹理路径: %s", component->texturePath.empty() ? "未设置" : component->texturePath.c_str());
+            ImGui::Text("纹理状态: %s", component->texture ? "已加载" : "未加载");
+            ImGui::Text("纹理启用: %s", component->visible ? "已启用" : "未启用");
+
+            ImGui::Spacing();
+
+            if (ImGui::Button("删除组件##OrmTextureComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<OrmTextureComponent>::value();
+            }
+
+            ImGui::Unindent(); 
+        }
+    }
     
 } // MQEngine
 

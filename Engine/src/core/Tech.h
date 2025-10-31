@@ -121,8 +121,8 @@ namespace MQEngine
          *  @{
          */
         const std::string& getName() const { return m_name; }
-        const std::string& getVertexShaderSource() const { return m_vs_source; }
-        const std::string& getPixelShaderSource() const { return m_ps_source; }
+        const std::string& getVertexShaderSource() const { return m_vsSource; }
+        const std::string& getPixelShaderSource() const { return m_psSource; }
         const std::vector<FCT::VertexLayout>& getVertexLayouts() const { return m_vertexLayouts; }
         const FCT::PixelLayout& getPixelLayout() const { return m_pixelLayout; }
         const std::vector<FCT::UniformSlot>& getUniformSlots() const { return m_uniformSlots; }
@@ -223,8 +223,8 @@ namespace MQEngine
 
         // --- 成员变量 ---
         std::string m_name;
-        std::string m_vs_source;
-        std::string m_ps_source;
+        std::string m_vsSource;
+        std::string m_psSource;
         std::vector<FCT::VertexLayout> m_vertexLayouts;
         FCT::PixelLayout m_pixelLayout;
         std::vector<FCT::UniformSlot> m_uniformSlots;

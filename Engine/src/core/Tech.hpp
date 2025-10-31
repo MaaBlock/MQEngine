@@ -22,14 +22,14 @@ namespace MQEngine
     template<typename... Args>
     void Tech::processArgs(const VertexShaderSource& vs, Args... args)
     {
-        m_vs_source = vs.source;
+        m_vsSource = vs.source;
         processArgs(args...);
     }
 
     template<typename... Args>
     void Tech::processArgs(const PixelShaderSource& ps, Args... args)
     {
-        m_ps_source = ps.source;
+        m_psSource = ps.source;
         processArgs(args...);
     }
 

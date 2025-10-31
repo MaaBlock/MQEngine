@@ -209,16 +209,30 @@ namespace MQEngine {
 
     struct ENGINE_API NormalTextureComponent : TextureComponent
     {
+        NormalTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
+        {
 
+        }
     };
+    BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
+
     struct ENGINE_API EmissiveTextureComponent : TextureComponent
     {
+        EmissiveTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
+        {
 
+        }
     };
+    BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
+
     struct ENGINE_API OrmTextureComponent : TextureComponent
     {
+        OrmTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
+        {
 
+        }
     };
+    BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
 }
 
 #endif //COMPONENT_H

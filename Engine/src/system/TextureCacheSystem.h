@@ -73,6 +73,8 @@ namespace MQEngine {
     class ENGINE_API TextureCacheSystem {
     public:
         TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager);
+        template <class TextureComponent>
+        void processTextureComponent(TextureComponent& component, EngineTextureType format);
         ~TextureCacheSystem();
         void updateLogic();
         void collectTextures();

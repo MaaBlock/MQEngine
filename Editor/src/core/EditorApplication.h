@@ -29,7 +29,6 @@ namespace MQEngine
         void logicTick() override;
         void settingUpImgui();
         void imguiLogicTick();
-
     private:
         FCT::ImguiContext* m_imguiCtx;
         FCT::ImguiModule imguiModule;

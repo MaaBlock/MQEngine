@@ -145,6 +145,27 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
+
+            if (ImGui::MenuItem("NormalTextureComponent")) {
+                if (!registry->all_of<NormalTextureComponent>(selectedEntity.entity)) {
+                    registry->emplace<NormalTextureComponent>(selectedEntity.entity, "", "");
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("EmissiveTextureComponent")) {
+                if (!registry->all_of<EmissiveTextureComponent>(selectedEntity.entity)) {
+                    registry->emplace<EmissiveTextureComponent>(selectedEntity.entity, "", "");
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("OrmTextureComponent")) {
+                if (!registry->all_of<OrmTextureComponent>(selectedEntity.entity)) {
+                    registry->emplace<OrmTextureComponent>(selectedEntity.entity, "", "");
+                }
+                ImGui::CloseCurrentPopup();
+            }
             
             ImGui::EndPopup();
         }
@@ -186,6 +207,9 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<NormalMapComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ShininessComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<AlbedoTextureComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<NormalTextureComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<EmissiveTextureComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<OrmTextureComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);
