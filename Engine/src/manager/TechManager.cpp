@@ -19,6 +19,7 @@ namespace MQEngine
 
     void TechManager::addTech(const std::string& passName, Tech&& tech)
     {
+        // todo: 代码显然不稳定，修改
         tech.setPassName(passName);
         auto techName = tech.getName();
         auto it = m_techs.find(techName);

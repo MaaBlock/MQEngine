@@ -86,8 +86,6 @@ namespace MQEngine
             return *this;
         }
     };
-
-
     class Tech
     {
     public:

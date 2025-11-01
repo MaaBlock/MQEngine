@@ -16,7 +16,6 @@ namespace MQEngine
         const std::vector<Tech*>& getTechsForPass(const std::string& passName);
 
         FCT::Layout* getLayoutForTech(const std::string& techName);
-
         /**
          * @brief 为指定Pass订阅渲染事件和PassInfo更新
          * @param passName Pass名称

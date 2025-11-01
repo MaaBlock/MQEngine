@@ -195,13 +195,8 @@ namespace MQEngine
                 TextureSlot{"diffuseTexture"},
                 TextureSlot{"normalTexture"}
             },
-            ComponentFilter{
-                {
-                    entt::type_id<DiffuseTextureComponent>(),
-                    entt::type_id<NormalMapComponent>(),
-                    entt::type_id<StaticMeshInstance>()
-                }
-            },
+            ComponentFilter()
+            .include<DiffuseTextureComponent,NormalMapComponent,StaticMeshInstance>(),
             diffuseObjectPassCallback,
             EntityOperationCallback(
                 [](const EntityRenderContext& context)
