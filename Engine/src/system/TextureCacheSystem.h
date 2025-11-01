@@ -6,6 +6,7 @@
 #define TEXTURERENDERYSTEM_H
 #include "../data/DataManager.h"
 #include "../data/Component.h"
+#include "./CacheSystem.h"
 #include <unordered_map>
 #include <vector>
 namespace MQEngine
@@ -70,7 +71,7 @@ namespace MQEngine {
             return FCT::Format::UNDEFINED;
         }
     }
-    class ENGINE_API TextureCacheSystem {
+    class ENGINE_API TextureCacheSystem : public CacheSystem {
     public:
         TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         template <class TextureComponent>

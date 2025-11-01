@@ -14,15 +14,21 @@ namespace MQEngine
         m_shadowUniform = FCT::Uniform(m_ctx, ShadowUniformSlot);
     }
 
-    void LightingSystem::update()
+    void LightingSystem::updateLogic()
     {
         m_hasDirectionalLight = false;
         updateDirectionalLight();
         updateShadowMatrix();
 
-        if (!m_hasDirectionalLight) {
+        if (!m_hasDirectionalLight)
+        {
             bindDefaultDirectionalLight();
         }
+    }
+    void LightingSystem::updateRender()
+    {
+        m_directionalLightUniform.update();
+        m_shadowUniform.update();
     }
 
     void LightingSystem::updateDirectionalLight()
@@ -36,19 +42,7 @@ namespace MQEngine
                 auto& light = view.get<DirectionalLightComponent>(entity);
 
                 if (light.enabled) {
-                    FCT::Vec3 normalizedDirection = light.direction;
-                    normalizedDirection.normalize();
-
-                    m_directionalLightUniform.setValue("directionalLightDirection",
-                        FCT::Vec4(normalizedDirection.x, normalizedDirection.y, normalizedDirection.z, 0.0f));
-                    
-                    m_directionalLightUniform.setValue("directionalLightColor", light.color);
-                    
-                    m_directionalLightUniform.setValue("directionalLightIntensity", light.intensity);
-                    
-                    m_directionalLightUniform.setValue("directionalLightEnable", true);
-                    
-                    m_directionalLightUniform.update();
+                    setDirectionalLightUniformValues(light);
                     m_hasDirectionalLight = true;
                     return; // 只使用第一个启用的方向光
                 }
@@ -58,6 +52,26 @@ namespace MQEngine
 
     void LightingSystem::bindDefaultDirectionalLight()
     {
+        setDefaultDirectionalLightUniformValues();
+    }
+
+    void LightingSystem::setDirectionalLightUniformValues(const DirectionalLightComponent& light)
+    {
+        FCT::Vec3 normalizedDirection = light.direction;
+        normalizedDirection.normalize();
+
+        m_directionalLightUniform.setValue("directionalLightDirection",
+            FCT::Vec4(normalizedDirection.x, normalizedDirection.y, normalizedDirection.z, 0.0f));
+        
+        m_directionalLightUniform.setValue("directionalLightColor", light.color);
+        
+        m_directionalLightUniform.setValue("directionalLightIntensity", light.intensity);
+        
+        m_directionalLightUniform.setValue("directionalLightEnable", true);
+    }
+
+    void LightingSystem::setDefaultDirectionalLightUniformValues()
+    {
         m_directionalLightUniform.setValue("directionalLightDirection",
             FCT::Vec4(0.0f, -1.0f, 0.0f, 0.0f));
         
@@ -66,16 +80,26 @@ namespace MQEngine
         m_directionalLightUniform.setValue("directionalLightIntensity", 1.0f);
         
         m_directionalLightUniform.setValue("directionalLightEnable", false);
-        
-        m_directionalLightUniform.update();
     }
 
-    void LightingSystem::bind(FCT::Layout* layout)
+    void LightingSystem::setShadowUniformValues(const FCT::Mat4& directionalLightMvp)
+    {
+        m_shadowUniform.setValue("directionalLightMvp", directionalLightMvp);
+    }
+
+    void LightingSystem::bindUniforms(FCT::Layout* layout)
     {
         layout->bindUniform(m_directionalLightUniform);
         layout->bindUniform(m_shadowUniform);
     }
-    
+    std::vector<FCT::UniformSlot> LightingSystem::getUniformSlots()
+    {
+        return {
+            DirectionalLightUniformSlot,
+            ShadowUniformSlot
+        };
+    }
+
     void LightingSystem::updateShadowMatrix()
     {
         FCT::Vec3 lightDirection(0.0f, -1.0f, 0.0f);
@@ -110,7 +134,6 @@ namespace MQEngine
 
         FCT::Mat4 directionalLightMvp = lightProjection * lightView;
 
-        m_shadowUniform.setValue("directionalLightMvp", directionalLightMvp);
-        m_shadowUniform.update();
+        setShadowUniformValues(directionalLightMvp);
     }
 }

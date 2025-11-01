@@ -70,19 +70,19 @@ namespace MQEngine
     {
         TechBindCallback baseObjectPassCallback = [this](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
             layout->bindSampler("shadowSampler", m_shadowSampler);
-            g_engineGlobal.cameraSystem->bind(layout);
-            g_engineGlobal.lightingSystem->bind(layout);
+            g_engineGlobal.cameraSystem->bindUniforms(layout);
+            g_engineGlobal.lightingSystem->bindUniforms(layout);
         };
 
         TechBindCallback diffuseObjectPassCallback = [this](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
             layout->bindSampler("shadowSampler", m_shadowSampler);
             layout->bindSampler("diffuseSampler", m_diffuseSampler);
-            g_engineGlobal.cameraSystem->bind(layout);
-            g_engineGlobal.lightingSystem->bind(layout);
+            g_engineGlobal.cameraSystem->bindUniforms(layout);
+            g_engineGlobal.lightingSystem->bindUniforms(layout);
         };
 
         TechBindCallback shadowPassCallback = [](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
-            g_engineGlobal.lightingSystem->bind(layout);
+            g_engineGlobal.lightingSystem->bindUniforms(layout);
         };
         
         EntityOperationCallback universalEntityCallback = [](const EntityRenderContext& context) {
@@ -338,8 +338,9 @@ namespace MQEngine
         submitTickers["MatrixCacheSystemUpdateTicker"] = {
             [this]() {
                 m_matrixCacheSystem->updateUniforms();
-                m_cameraSystem->updateUniforms();
+                m_cameraSystem->updateRender();
                 m_shininessSystem->updateUniforms();
+                m_lightingSystem->updateRender();
             },
             {},
             {RenderGraphTickers::RenderGraphSubmit}
@@ -365,14 +366,15 @@ namespace MQEngine
         lastFrameTime = currentTime;
         m_application->logicTick();
         m_matrixCacheSystem->update();
-        m_cameraSystem->update();
+        m_cameraSystem->updateLogic();
         m_meshRenderSystem->update();
         m_textureRenderSystem->updateLogic();
-        m_lightingSystem->update();
+        m_lightingSystem->updateLogic();
         m_shininessSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_scriptSystem->update();
-        
+
+
         m_ctx->flush();
     }
 

@@ -14,7 +14,7 @@ namespace MQEngine
         m_viewPosUniform = FCT::Uniform(m_ctx, ViewPosUniformSlot);
     }
 
-    void CameraSystem::update()
+    void CameraSystem::updateLogic()
     {
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
@@ -41,16 +41,23 @@ namespace MQEngine
             }
         }
     }
-    void CameraSystem::updateUniforms()
+    void CameraSystem::updateRender()
     {
         m_cameraUniform.update();
         m_viewPosUniform.update();
     }
 
-    void CameraSystem::bind(FCT::Layout* layout)
+    void CameraSystem::bindUniforms(FCT::Layout* layout)
     {
         layout->bindUniform(m_cameraUniform);
         layout->bindUniform(m_viewPosUniform);
+    }
+    std::vector<FCT::UniformSlot> CameraSystem::getUniformSlots()
+    {
+        return {
+            CameraUniformSlot,
+            ViewPosUniformSlot
+        };
     }
 
     FCT::Vec3 CameraSystem::calculateForward(const RotationComponent& rotation)

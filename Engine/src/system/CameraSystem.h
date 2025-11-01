@@ -5,14 +5,15 @@
 #ifndef CAMERASYSTEM_H
 #define CAMERASYSTEM_H
 #include "../data/DataManager.h"
-
+#include "./BindedSystem.h"
 namespace MQEngine {
-    class ENGINE_API CameraSystem {
+    class ENGINE_API CameraSystem : public BindedSystem {
     public:
         CameraSystem(FCT::Context* ctx,DataManager* dataManager);
-        void update();
-        void updateUniforms();
-        void bind(FCT::Layout* layout);
+        void updateLogic() override;
+        void updateRender() override;
+        void bindUniforms(FCT::Layout* layout) override;
+        std::vector<FCT::UniformSlot> getUniformSlots() override;
         void setActiveCamera(entt::registry* registry, entt::entity cameraEntity);
     private:
         FCT::Mat4 calculateViewMatrix(const PositionComponent& position, const RotationComponent& rotation);

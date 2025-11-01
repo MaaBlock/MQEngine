@@ -36,11 +36,22 @@ file(GLOB SYSTEM_MODULE_SOURCES
         CONFIGURE_DEPENDS
         "./src/system/*.cpp"
 )
+file(GLOB MANAGER_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/manager/*.cpp"
+)
 file(GLOB SYSTEM_MODULE_HEADERS
         LIST_DIRECTORIES false
         CONFIGURE_DEPENDS
         "./src/system/*.h"
         "./src/system/*.hpp"
+)
+file(GLOB MANAGER_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/manager/*.h"
+        "./src/manager/*.hpp"
 )
 file(GLOB EVENE_MODULE_HEADERS
         LIST_DIRECTORIES false
@@ -55,6 +66,7 @@ set(ENGINE_HEADERS
         ${THIRDPARTY_MODULE_HEADERS}
         ${SYSTEM_MODULE_HEADERS}
         ${EVENE_MODULE_HEADERS}
+        ${MANAGER_MODULE_HEADERS}
 )
 set(ENGINE_OTHERS_HEADERS
         "./src/headers.h"
@@ -67,6 +79,7 @@ add_library(Engine SHARED
     ${ENGINE_HEADERS}
     ${ENGINE_OTHERS_HEADERS}
     ${SYSTEM_MODULE_SOURCES}
+    ${MANAGER_MODULE_SOURCES}
 )
 target_compile_definitions(Engine PRIVATE BUILD_ENGINE)
 

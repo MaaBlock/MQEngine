@@ -14,7 +14,7 @@ namespace MQEngine {
         void update();
         void updateUniforms();
         void bindShininess(entt::registry* registry, entt::entity entity, FCT::Layout* layout);
-        
+
     private:
         void processEntity(entt::registry* registry, entt::entity entity);
         void cleanupCacheComponents(entt::registry* registry);

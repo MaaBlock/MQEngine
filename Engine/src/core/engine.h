@@ -16,6 +16,7 @@
 #include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
 #include "Tech.h"
+#include "../manager/TechManager.h"
 #include "VertexLayouts.h"
 #include "application.h"
 #include "layout.h"
