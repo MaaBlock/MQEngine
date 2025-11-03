@@ -10,8 +10,6 @@ namespace MQEngine
         processArgs(args...);
     }
 
-
-
     template<typename... Args>
     void Tech::processArgs(const TechName& name, Args... args)
     {

@@ -101,49 +101,6 @@ namespace MQEngine {
     };
     BOOST_DESCRIBE_STRUCT(DirectionalLightComponent, (), (direction, color, intensity, enabled))
 
-    struct ENGINE_API DiffuseTextureComponent
-    {
-        std::string modelUuid;          
-        std::string texturePath;       
-        FCT::Image* texture = nullptr;
-        DiffuseTextureComponent() = default;
-        
-        DiffuseTextureComponent(const std::string& uuid, const std::string& path) 
-            : modelUuid(uuid), texturePath(path)
-        {
-        }
-        
-        friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive & ar, const unsigned int version)
-        {
-            ar & modelUuid;
-            ar & texturePath;
-        }
-    };
-    BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (), (modelUuid, texturePath))
-    struct ENGINE_API NormalMapComponent
-    {
-        std::string modelUuid;
-        std::string texturePath;
-        FCT::Image* texture = nullptr;
-        NormalMapComponent() = default;
-
-        NormalMapComponent(const std::string& uuid, const std::string& path)
-            : modelUuid(uuid), texturePath(path)
-        {
-        }
-
-        friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive & ar, const unsigned int version)
-        {
-            ar & modelUuid;
-            ar & texturePath;
-        }
-    };
-    BOOST_DESCRIBE_STRUCT(NormalMapComponent, (), (modelUuid, texturePath))
-
     struct ENGINE_API ShininessComponent
     {
         float shininess = 32.0f;
@@ -173,16 +130,26 @@ namespace MQEngine {
             uniform = FCT::makeUnique<FCT::Uniform>(ctx, ShininessUniformSlot);
         }
     };
-    struct ENGINE_API CacheResource
+    struct CacheResource
     {
         /*
          * @brief 在render线程中是否可见
          */
         bool visible = false;
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+
+        }
     };
-    struct ENGINE_API TextureComponent : CacheResource
+    struct TextureComponent : CacheResource
     {
         TextureComponent(std::string uuid, std::string path) : modelUuid(uuid), texturePath(path) {}
+        TextureComponent() : modelUuid(), texturePath(),texture(nullptr)
+        {
+
+        }
         /*
          * @brief 用于定位模型
          */
@@ -195,44 +162,92 @@ namespace MQEngine {
          * @brief 缓存的图片对象
          */
         FCT::Image* texture = nullptr;
-    };
-    BOOST_DESCRIBE_STRUCT(TextureComponent, (CacheResource), (modelUuid, texturePath))
 
-    struct ENGINE_API AlbedoTextureComponent : TextureComponent
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<CacheResource>(*this);
+            ar & modelUuid;
+            ar & texturePath;
+        }
+    };
+    //BOOST_DESCRIBE_STRUCT(TextureComponent, (CacheResource), (modelUuid, texturePath))
+
+    
+    struct DiffuseTextureComponent : public TextureComponent
+    {
+        DiffuseTextureComponent() : TextureComponent()
+        {
+
+        }
+        DiffuseTextureComponent(std::string uuid, std::string path)
+            : TextureComponent(uuid, path)
+        {
+        }
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<TextureComponent>(*this);
+        }
+    };
+    //BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (TextureComponent), ())
+    struct NormalMapComponent : public TextureComponent
+    {
+        NormalMapComponent()
+        {
+
+        }
+        NormalMapComponent(std::string uuid, std::string path)
+            : TextureComponent(uuid, path)
+        {
+        }
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<TextureComponent>(*this);
+        }
+    };
+    //BOOST_DESCRIBE_STRUCT(NormalMapComponent, (TextureComponent), ())
+
+    struct AlbedoTextureComponent : TextureComponent
     {
         AlbedoTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
         }
     };
-    BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
+    //BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
 
-    struct ENGINE_API NormalTextureComponent : TextureComponent
+    struct NormalTextureComponent : TextureComponent
     {
         NormalTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
         }
     };
-    BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
+    //BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
 
-    struct ENGINE_API EmissiveTextureComponent : TextureComponent
+    struct EmissiveTextureComponent : TextureComponent
     {
         EmissiveTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
         }
     };
-    BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
+    //BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
 
-    struct ENGINE_API OrmTextureComponent : TextureComponent
+    struct OrmTextureComponent : TextureComponent
     {
         OrmTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
         }
     };
-    BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
+    //BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
 }
 
 #endif //COMPONENT_H

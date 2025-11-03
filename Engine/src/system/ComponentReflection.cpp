@@ -14,8 +14,8 @@ namespace MQEngine {
         registerComponent<OnStartScriptComponent>("OnStartScriptComponent");
         registerComponent<StaticMeshInstance>("StaticMeshInstance");
         registerComponent<DirectionalLightComponent>("DirectionalLightComponent");
-        registerComponent<DiffuseTextureComponent>("DiffuseTextureComponent");
-        registerComponent<NormalMapComponent>("NormalMapComponent");
+        //registerComponent<DiffuseTextureComponent>("DiffuseTextureComponent");
+        //registerComponent<NormalMapComponent>("NormalMapComponent");
         registerComponent<ShininessComponent>("ShininessComponent");
     }
     
