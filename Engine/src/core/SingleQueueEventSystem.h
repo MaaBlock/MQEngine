@@ -29,17 +29,17 @@ namespace MQEngine
         // 事件处理器接口
         struct IEventHandler {
             virtual ~IEventHandler() = default;
-            virtual Status handle(const void* event) = 0;
+            virtual Status handle(void* event) = 0;
         };
 
         template<typename Event>
         struct EventHandler : IEventHandler {
-            std::function<Status(const Event&)> handler;
+            std::function<Status(Event&)> handler;
 
-            EventHandler(std::function<Status(const Event&)> h) : handler(std::move(h)) {}
+            EventHandler(std::function<Status(Event&)> h) : handler(std::move(h)) {}
 
-            Status handle(const void* event) override {
-                return handler(*static_cast<const Event*>(event));
+            Status handle(void* event) override {
+                return handler(*static_cast<Event*>(event));
             }
         };
 
@@ -81,7 +81,7 @@ namespace MQEngine
 
         // 内部触发函数（仅在消费者线程中调用）
         // 返回所有处理器的状态，如果有任何失败则返回第一个失败状态
-        Status triggerInternal(entt::id_type type_id, const void* event) {
+        Status triggerInternal(entt::id_type type_id, void* event) {
             auto it = m_handlers.find(type_id);
             if (it != m_handlers.end()) {
                 for (const auto& [id, handler] : it->second) {
@@ -271,7 +271,7 @@ namespace MQEngine
             op->event_type_id = eventTypeId;
             op->subscribe_id = subscribeId;
             op->handler = std::make_unique<EventHandler<Event>>(
-                std::function<Status(const Event&)>(std::forward<Func>(func))
+                std::function<Status(Event&)>(std::forward<Func>(func))
             );
 
             while (!m_subscribeQueue.push(op)) {

@@ -5,4 +5,8 @@
 #include "SceneSystem.h"
 
 namespace MQEngine {
+    void SceneSystem::updateLogic()
+    {
+
+    }
 } // MQEngine

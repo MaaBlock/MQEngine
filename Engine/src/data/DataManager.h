@@ -144,7 +144,6 @@ namespace MQEngine
         bool m_isEditorMode;
         std::string m_currentScene;
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;
-        std::vector<entt::registry*> m_currentRegistries;
         std::vector<std::string> m_scenePathList;
         std::unordered_map<std::string,std::string> m_uuidToModel;
         std::unordered_map<std::string,std::string> m_uuidToScenePath;

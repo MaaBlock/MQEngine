@@ -2,6 +2,7 @@
 
 #include "../core/EngineGlobal.h"
 
+#include "../manager/RegistriesManager.h"
 namespace MQEngine
 {
     namespace fs = std::filesystem;
@@ -34,17 +35,17 @@ namespace MQEngine
 
     std::vector<entt::registry*> DataManager::currentRegistries() const
     {
-        return m_currentRegistries;
+        return g_engineGlobal.registriesManager->currentRegistries();
     }
 
     void DataManager::appendRegistry(entt::registry* registry)
     {
-        m_currentRegistries.push_back(registry);
+        g_engineGlobal.registriesManager->requestAddRegistries(boost::make_ready_future(registry));
     }
 
     void DataManager::removeRegistry(entt::registry* registry)
     {
-        m_currentRegistries.erase(std::remove(m_currentRegistries.begin(), m_currentRegistries.end(), registry), m_currentRegistries.end());
+        g_engineGlobal.registriesManager->requestRemoveRegistries(registry);
     }
 
     void DataManager::openScene(const std::string& uuid)

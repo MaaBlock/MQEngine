@@ -4,19 +4,20 @@
 
 #ifndef ENGINE_H
 #define ENGINE_H
-#include "CreateApplication.h"
 #include "../data/DataManager.h"
+#include "../manager/RegistriesManager.h"
+#include "../manager/TechManager.h"
 #include "../system/CameraSystem.h"
 #include "../system/LightingSystem.h"
 #include "../system/MatrixCacheSystem.h"
 #include "../system/MeshCacheSystem.h"
 #include "../system/ScriptSystem.h"
-#include "../system/TextureCacheSystem.h"
 #include "../system/ShininessSystem.h"
+#include "../system/TextureCacheSystem.h"
 #include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
+#include "CreateApplication.h"
 #include "Tech.h"
-#include "../manager/TechManager.h"
 #include "VertexLayouts.h"
 #include "application.h"
 #include "layout.h"
@@ -85,6 +86,7 @@ namespace MQEngine {
         FCT::UniquePtr<TextureCacheSystem> m_textureRenderSystem;
         FCT::UniquePtr<ShininessSystem> m_shininessSystem;
         FCT::UniquePtr<TechManager> m_techManager;
+        FCT::UniquePtr<RegistriesManager> m_registriesManager;
         FCT::Uniform m_floorModelUniform;
         
         // OutputInfo for passes

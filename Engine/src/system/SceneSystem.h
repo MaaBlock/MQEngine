@@ -1,14 +1,11 @@
-﻿//
-// Created by MaaBlock on 2025/11/3.
-//
-
-#ifndef SCENESYSTEM_H
+﻿#ifndef SCENESYSTEM_H
 #define SCENESYSTEM_H
-
+#include "./ISystem.h"
 namespace MQEngine {
-
-    class SceneSystem {
+    class SceneSystem : public ISystem {
     public:
+        void updateLogic() override;
+        void updateRender() override;
 
     private:
 

@@ -11,8 +11,8 @@ namespace MQEngine {
     class ENGINE_API MatrixCacheSystem {
     public:
         MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager);
-        void update();
-        void updateUniforms();
+        void updateLogic();
+        void updateRender();
         void bindModelMatrix(entt::registry* registry, entt::entity entity, FCT::Layout* layout);
         
     private:

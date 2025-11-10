@@ -7,6 +7,9 @@
 #include "./ISystem.h"
 namespace MQEngine {
     class SystemManager {
+    public:
+
+    private:
 
     };
 } // MQEngine
