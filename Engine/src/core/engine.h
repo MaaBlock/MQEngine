@@ -88,7 +88,6 @@ namespace MQEngine {
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::UniquePtr<RegistriesManager> m_registriesManager;
         FCT::Uniform m_floorModelUniform;
-        
         // OutputInfo for passes
         FCT::OutputInfo m_shadowPassOutputInfo;
         FCT::OutputInfo m_objectPassOutputInfo;

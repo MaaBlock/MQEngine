@@ -18,7 +18,6 @@ namespace MQEngine {
 
     void MatrixCacheSystem::updateLogic()
     {
-
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {

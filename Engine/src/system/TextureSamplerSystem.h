@@ -6,6 +6,9 @@
 #define TEXTURESAMPLERSYSTEM_H
 #include "BindedSystem.h"
 namespace MQEngine {
+    /**
+     * @brief
+     */
     class TextureSamplerSystem : public BindedSystem {
     public:
         std::vector<FCT::ResourceLayout> getResourceSlots() override;

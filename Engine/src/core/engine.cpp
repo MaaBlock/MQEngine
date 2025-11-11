@@ -399,7 +399,6 @@ namespace MQEngine
         m_shininessSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_scriptSystem->update();
-
         m_ctx->flush();
     }
 

@@ -6,9 +6,9 @@
 #define MATRIXCACHESYSTEM_H
 #include "../data/DataManager.h"
 #include "../data/Camera.h"
-
+#include "./ISystem.h"
 namespace MQEngine {
-    class ENGINE_API MatrixCacheSystem {
+    class ENGINE_API MatrixCacheSystem : public ISystem {
     public:
         MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         void updateLogic();
