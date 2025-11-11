@@ -10,6 +10,7 @@ namespace MQEngine {
     class ENGINE_API ISystem
     {
     public:
+        virtual ~ISystem() = default;
         /**
          * @brief 获取后继系统
          * @return 后继系统

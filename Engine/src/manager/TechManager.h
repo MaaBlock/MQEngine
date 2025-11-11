@@ -3,6 +3,8 @@
 #include "../core/EngineGlobal.h"
 #include "../core/tech.h"
 #include "../data/DataManager.h"
+#include <unordered_map>
+#include <memory>
 
 namespace MQEngine
 {
@@ -11,7 +13,7 @@ namespace MQEngine
     public:
         TechManager();
 
-        void addTech(const std::string& passName, Tech&& tech);
+        Status addTech(const std::string& passName, Tech&& tech);
 
         const std::vector<Tech*>& getTechsForPass(const std::string& passName);
 
@@ -20,7 +22,7 @@ namespace MQEngine
          * @brief 为指定Pass订阅渲染事件和PassInfo更新
          * @param passName Pass名称
          */
-        void subscribeToPass(const std::string& passName);
+        Status subscribeToPass(const std::string& passName);
 
 
 
@@ -42,7 +44,7 @@ namespace MQEngine
         };
 
         Context* m_ctx;
-        std::map<std::string, Tech> m_techs;
+        std::unordered_map<std::string, std::unique_ptr<Tech>> m_techs;
         std::map<std::string, std::vector<Tech*>> m_passTechs;
         std::map<LayoutKey, std::unique_ptr<FCT::Layout>> m_layouts;
         std::map<std::string, FCT::Layout*> m_techToLayoutMap;

@@ -17,11 +17,10 @@ namespace MQEngine {
 
     }
 
-    void SceneTrunk::save()
+    Status SceneTrunk::save()
     {
-        if (!m_scene || !m_scene->getDataManager()) {
-            throw DataError("Scene或DataManager为空，无法保存场景块");
-        }
+        if (!m_scene || !m_scene->getDataManager())
+            return InternalError("Scene或DataManager为空，场景保存失败");
 
         try {
             std::string sceneName = m_scene->getName();
@@ -56,6 +55,7 @@ namespace MQEngine {
         } catch (const std::exception& e) {
             throw DataError("保存场景块 '" + m_name + "' 失败: " + std::string(e.what()));
         }
+        return OkStatus();
     }
 
     void SceneTrunk::load()

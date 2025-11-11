@@ -24,7 +24,7 @@ namespace MQEngine {
     public:
         SceneTrunk(std::string name,Scene* scene);
         void init();
-        void save();
+        Status save();
         void load();
         entt::registry& getRegistry() { return m_registry; }
     private:

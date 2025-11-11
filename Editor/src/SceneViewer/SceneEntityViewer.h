@@ -38,6 +38,7 @@ namespace MQEngine {
         void addAlbedoTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
         void addEmissiveTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
         void addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
+        void addNormalMapComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
 
         void renderScriptTypeSelectionPopup();
         void renderTextureTypeSelectionPopup();

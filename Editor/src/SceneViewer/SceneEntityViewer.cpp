@@ -341,7 +341,7 @@ namespace MQEngine {
             }
             ImGui::SameLine();
             if (ImGui::Button(TEXT("Normal (法线)"), ImVec2(150, 0))) {
-                addNormalTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                addNormalMapComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
                 m_showTextureTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
@@ -400,14 +400,24 @@ namespace MQEngine {
 		registry->emplace_or_replace<EmissiveTextureComponent>(entity, modelUuid, texturePath);
 	}
 
-	void SceneEntityViewer::addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-		Scene* scene = m_dataManager->getCurrentScene();
-		if (!scene) return;
-
-		entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
-		if (!registry) return;
-
-		registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);
-	}
-
-} // namespace MQEngine
+	    void SceneEntityViewer::addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+			Scene* scene = m_dataManager->getCurrentScene();
+			if (!scene) return;
+	
+			entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+			if (!registry) return;
+	
+			registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);
+		}
+	
+	    void SceneEntityViewer::addNormalMapComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+	        Scene* scene = m_dataManager->getCurrentScene();
+	        if (!scene) return;
+	        
+	        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+	        if (!registry) return;
+	
+	        registry->emplace_or_replace<NormalMapComponent>(entity, modelUuid, texturePath);
+	    }
+	
+	} // namespace MQEngine

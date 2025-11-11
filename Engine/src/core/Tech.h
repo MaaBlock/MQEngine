@@ -162,6 +162,17 @@ namespace MQEngine
             }
         }
         /** @} */
+        Status valid()
+        {
+            if (m_passName.empty())
+                return InvalidArgumentError("Tech的pass名称为空");
+            if (m_vsSource.empty())
+                return InvalidArgumentError("Tech的顶点着色器为空");
+            if (m_vertexLayouts.empty())
+                return InvalidArgumentError("Tech的顶点布局为空");
+
+            return OkStatus();
+        }
 
     private:
         // --- 构造函数参数处理 ---

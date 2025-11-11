@@ -17,19 +17,21 @@ namespace MQEngine
         m_dataManager = g_engineGlobal.dataManager;
     }
 
-    void TechManager::addTech(const std::string& passName, Tech&& tech)
+    Status TechManager::addTech(const std::string& passName, Tech&& tech)
     {
-        // todo: 代码显然不稳定，修改
+        const std::string techName = tech.getName();
+        if (techName.empty())
+            return InvalidArgumentError("Tech名字不能为空");
         tech.setPassName(passName);
-        auto techName = tech.getName();
-        auto it = m_techs.find(techName);
-        if (it == m_techs.end())
-        {
-            it = m_techs.emplace(techName, std::move(tech)).first;
-        }
-        m_passTechs[passName].push_back(&it->second);
-
-        subscribeToPass(passName);
+        auto valid = tech.valid();
+        CHECK_STATUS(valid);
+        auto techUniquePtr = std::make_unique<Tech>(std::move(tech));
+        Tech* techRawPtr = techUniquePtr.get();
+        m_techs[techName] = std::move(techUniquePtr);
+        m_passTechs[passName].push_back(techRawPtr);
+        auto ret = subscribeToPass(passName);
+        CHECK_STATUS(ret);
+        return OkStatus();
     }
 
     const std::vector<Tech*>& TechManager::getTechsForPass(const std::string& passName)
@@ -56,7 +58,7 @@ namespace MQEngine
         {
             return nullptr;
         }
-        Tech& tech = techIt->second;
+        Tech& tech = *techIt->second;
 
         size_t vertexLayoutsHash = 0;
         for (const auto& vl : tech.getVertexLayouts())
@@ -99,12 +101,10 @@ namespace MQEngine
         return layout;
     }
 
-    void TechManager::subscribeToPass(const std::string& passName)
+    Status TechManager::subscribeToPass(const std::string& passName)
     {
         if (m_subscribedPasses.find(passName) != m_subscribedPasses.end())
-        {
-            return;
-        }
+            return OkStatus();
         m_subscribedPasses.insert(passName);
 
         auto ctx = g_engineGlobal.ctx;
@@ -194,6 +194,7 @@ namespace MQEngine
                 layout->end();
             }
         });
+        return OkStatus();
     }
 
 

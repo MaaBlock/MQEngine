@@ -124,7 +124,7 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
-            
+
             if (ImGui::MenuItem("Directional Light Component")) {
                 if (!registry->all_of<DirectionalLightComponent>(selectedEntity.entity)) {
                     registry->emplace<DirectionalLightComponent>(selectedEntity.entity);
@@ -132,9 +132,17 @@ namespace MQEngine {
                 ImGui::CloseCurrentPopup();
             }
 
+            if (ImGui::MenuItem("Diffuse Texture Component")) {
+                if (!registry->all_of<DiffuseTextureComponent>(selectedEntity.entity)) {
+                    registry->emplace<DiffuseTextureComponent>(selectedEntity.entity, "", "");
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+
             if (ImGui::MenuItem("Normal Map Component")) {
                 if (!registry->all_of<NormalMapComponent>(selectedEntity.entity)) {
-                    registry->emplace<NormalMapComponent>(selectedEntity.entity);
+                    registry->emplace<NormalMapComponent>(selectedEntity.entity, "", "");
                 }
                 ImGui::CloseCurrentPopup();
             }

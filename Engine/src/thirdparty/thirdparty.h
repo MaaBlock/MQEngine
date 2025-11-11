@@ -20,6 +20,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/thread/future.hpp>
 #include <spdlog/spdlog.h>
 #include <absl/status/status.h>
 #include <absl/status/statusor.h>

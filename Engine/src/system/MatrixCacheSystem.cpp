@@ -5,6 +5,8 @@
 #include "./MatrixCacheSystem.h"
 #include <set>
 
+#include "../manager/RegistriesManager.h"
+
 namespace MQEngine {
     MatrixCacheSystem::MatrixCacheSystem(FCT::Context* ctx, DataManager* dataManager)
         : m_ctx(ctx), m_dataManager(dataManager), m_defaultModelUniform(ctx, ModelUniformSlot)
@@ -14,9 +16,8 @@ namespace MQEngine {
         m_defaultModelUniform.update();
     }
 
-    void MatrixCacheSystem::update()
+    void MatrixCacheSystem::updateLogic()
     {
-
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -84,21 +85,25 @@ namespace MQEngine {
         cacheModel->init = true;
     }
 
-    void MatrixCacheSystem::updateUniforms()
+    void MatrixCacheSystem::updateRender()
     {
 
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
-            auto modelCacheView = registry->view<CacheModelMatrix>();
-            for (auto entity : modelCacheView)
+            registry->view<CacheModelMatrix>().each([](CacheModelMatrix& cacheModel)
             {
-                auto& cacheModel = registry->get<CacheModelMatrix>(entity);
                 if (cacheModel.init)
                 {
                     cacheModel.uniform->update();
                 }
-            }
+            });
+            /*
+            for (auto entity : modelCacheView)
+            {
+                auto& cacheModel = registry->get<CacheModelMatrix>(entity);
+
+            }*/
         }
     }
 
@@ -144,7 +149,8 @@ namespace MQEngine {
         {
             if (!registry->all_of<RotationComponent>(entity))
             {
-                registry->remove<CacheRotationMatrix>(entity);
+                g_engineGlobal.registriesManager->requestRemoveComponent<CacheRotationMatrix>(registry,entity);
+                //registry->remove<CacheRotationMatrix>(entity);
             }
         }
         
@@ -157,7 +163,8 @@ namespace MQEngine {
             
             if (!hasPosition && !hasRotation && !hasScale)
             {
-                registry->remove<CacheModelMatrix>(entity);
+                g_engineGlobal.registriesManager->requestRemoveComponent<CacheModelMatrix>(registry,entity);
+                //registry->remove<CacheModelMatrix>(entity);
             }
         }
     }
