@@ -145,7 +145,12 @@ namespace MQEngine
                 auto layout = this->getLayoutForTech(tech->getName());
                 layout->begin();
 
-                tech->executeBindCallback(layout);
+                auto bindedSystem = tech->getSystems();
+                for (auto* system : bindedSystem)
+                {
+                    system->bindUniforms(layout);
+                    system->bindResources(layout);
+                }
                 
                 layout->bindVertexShader(tech->getVertexShaderRef());
                 if (!tech->getPixelShaderSource().empty())

@@ -17,14 +17,23 @@ namespace MQEngine {
         {
 
         }
-        virtual std::vector<FCT::UniformSlot> getUniformSlots()
+        virtual std::vector<FCT::UniformSlot> getUniformSlots() const
         {
             return {};
         }
-        virtual std::vector<FCT::ResourceLayout> getResourceSlots()
+        virtual std::vector<FCT::SamplerSlot> getSamplerSlots() const
         {
             return {};
         }
+        virtual std::vector<FCT::TextureSlot> getTextureSlots() const
+        {
+            return {};
+        }
+        /*
+        virtual std::vector<FCT::ResourceLayout> getResourceSlots() const
+        {
+            return {};
+        }*/
     };
 
 } // MQEngine

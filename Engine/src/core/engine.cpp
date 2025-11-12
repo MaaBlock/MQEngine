@@ -60,6 +60,7 @@ namespace MQEngine
         m_textureRenderSystem = makeUnique<TextureCacheSystem>(m_ctx,m_dataManager);
         m_shininessSystem = makeUnique<ShininessSystem>(m_ctx, m_dataManager);
         m_registriesManager = makeUnique<RegistriesManager>();
+        m_textureSamplerSystem = makeUnique<TextureSamplerSystem>(m_ctx);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         g_engineGlobal.cameraSystem = m_cameraSystem.get();
         g_engineGlobal.lightingSystem = m_lightingSystem.get();
@@ -73,22 +74,6 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
-        TechBindCallback baseObjectPassCallback = [this](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
-            layout->bindSampler("shadowSampler", m_shadowSampler);
-            g_engineGlobal.cameraSystem->bindUniforms(layout);
-            g_engineGlobal.lightingSystem->bindUniforms(layout);
-        };
-
-        TechBindCallback diffuseObjectPassCallback = [this](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
-            layout->bindSampler("shadowSampler", m_shadowSampler);
-            layout->bindSampler("diffuseSampler", m_diffuseSampler);
-            g_engineGlobal.cameraSystem->bindUniforms(layout);
-            g_engineGlobal.lightingSystem->bindUniforms(layout);
-        };
-
-        TechBindCallback shadowPassCallback = [](FCT::Layout* layout, const std::string& techName, const std::string& passName) {
-            g_engineGlobal.lightingSystem->bindUniforms(layout);
-        };
         
         EntityOperationCallback universalEntityCallback = [](const EntityRenderContext& context) {
             if (context.registry.all_of<StaticMeshInstance>(context.entity))
@@ -110,15 +95,18 @@ namespace MQEngine
                 vertexLayout,
                 pixelLayout,
                 std::vector<FCT::UniformSlot>{
-                    DirectionalLightUniformSlot,
-                    CameraUniformSlot,
-                    ViewPosUniformSlot,
-                    ShadowUniformSlot,
+                    //DirectionalLightUniformSlot,
+                    //CameraUniformSlot,
+                    //ViewPosUniformSlot,
+                    //ShadowUniformSlot,
                     ModelUniformSlot,
                 },
+                m_cameraSystem.get(),
+                m_lightingSystem.get(),
+                /*
                 std::vector<FCT::SamplerSlot>{
                     SamplerSlot{"shadowSampler"}
-                },
+                },*/
                 ComponentFilter{
                     .include_types = {entt::type_id<StaticMeshInstance>()},
                     .exclude_types = {
@@ -126,7 +114,6 @@ namespace MQEngine
                         entt::type_id<AlbedoTextureComponent>()
                     }
                 },
-                baseObjectPassCallback,
                 universalEntityCallback
             ));
             if (!ret.ok())
@@ -146,10 +133,6 @@ namespace MQEngine
                      ShadowUniformSlot,
                      ModelUniformSlot,
                  },
-                 std::vector<FCT::SamplerSlot>{
-                     SamplerSlot{"shadowSampler"},
-                     SamplerSlot{"diffuseSampler"}
-                 },
                  std::vector<FCT::TextureSlot>{
                      TextureSlot{"diffuseTexture"}
                  },
@@ -162,7 +145,9 @@ namespace MQEngine
                          entt::type_id<NormalMapComponent>()
                      }
                  },
-                 diffuseObjectPassCallback,
+                 m_lightingSystem.get(),
+                 m_cameraSystem.get(),
+                 m_textureSamplerSystem.get(),
                  EntityOperationCallback(
                      [](const EntityRenderContext& context)
                      {
@@ -200,17 +185,19 @@ namespace MQEngine
                     ShininessUniformSlot
                 },
                 std::vector<FCT::SamplerSlot>{
-                    SamplerSlot{"shadowSampler"},
-                    SamplerSlot{"diffuseSampler"},
-                    SamplerSlot{"normalSampler"}
+                    //SamplerSlot{"shadowSampler"},
+                    //SamplerSlot{"diffuseSampler"},
+                    //SamplerSlot{"normalSampler"}
                 },
                 std::vector<FCT::TextureSlot>{
                     TextureSlot{"diffuseTexture"},
                     TextureSlot{"normalTexture"}
                 },
+                m_textureSamplerSystem.get(),
+                m_lightingSystem.get(),
+                m_cameraSystem.get(),
                 ComponentFilter()
                 .include<DiffuseTextureComponent,NormalMapComponent,StaticMeshInstance>(),
-                diffuseObjectPassCallback,
                 EntityOperationCallback(
                     [](const EntityRenderContext& context)
                     {
@@ -246,13 +233,13 @@ namespace MQEngine
                 vertexLayout,
                 pixelLayout,
                 std::vector<FCT::UniformSlot>{
-                    ShadowUniformSlot,
+                    //ShadowUniformSlot,
                     ModelUniformSlot
                 },
                 ComponentFilter{
                     {entt::type_id<StaticMeshInstance>()}
                 },
-                shadowPassCallback,
+                m_lightingSystem.get(),
                 universalEntityCallback
                 ));
             if (!ret.ok())

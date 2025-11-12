@@ -32,7 +32,7 @@ float calculateShadow(float4 shadowPos, float3 normal, float3 directionalLightDi
 ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
 
-    float4 diffuseColor = diffuseTexture.Sample(diffuseSampler, sIn.texCoord);
+    float4 diffuseColor = diffuseTexture.Sample(textureSampler, sIn.texCoord);
     
     float3 ambient = float3(0.2, 0.2, 0.2);
     float3 finalColor = sIn.color.xyz * diffuseColor.xyz * ambient;

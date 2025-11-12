@@ -1,5 +1,6 @@
 #ifndef LIGHTINGSYSTEM_H
 #define LIGHTINGSYSTEM_H
+#include "../thirdparty/thirdparty.h"
 #include "../data/DataManager.h"
 #include "../data/Component.h"
 #include "../core/Uniform.h"
@@ -15,7 +16,9 @@ namespace MQEngine {
         void updateLogic() override;
         void updateRender() override;
         void bindUniforms(FCT::Layout* layout) override;
-        std::vector<FCT::UniformSlot> getUniformSlots() override;
+        void bindResources(FCT::Layout* layout) override;
+        std::vector<FCT::UniformSlot> getUniformSlots() const override;
+        std::vector<FCT::SamplerSlot> getSamplerSlots() const override;
     private:
         void updateDirectionalLight();
         void bindDefaultDirectionalLight();
@@ -25,6 +28,8 @@ namespace MQEngine {
         
         FCT::Context* m_ctx;
         DataManager* m_dataManager;
+
+        FCT::Sampler* m_shadowSampler;
         FCT::Uniform m_directionalLightUniform;
         FCT::Uniform m_shadowUniform;
 

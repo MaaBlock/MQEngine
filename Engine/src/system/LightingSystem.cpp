@@ -12,6 +12,9 @@ namespace MQEngine
     {
         m_directionalLightUniform = FCT::Uniform(m_ctx, DirectionalLightUniformSlot);
         m_shadowUniform = FCT::Uniform(m_ctx, ShadowUniformSlot);
+        m_shadowSampler = m_ctx->createResource<Sampler>();
+        m_shadowSampler->setShadowMap();
+        m_shadowSampler->create();
     }
 
     void LightingSystem::updateLogic()
@@ -92,11 +95,18 @@ namespace MQEngine
         layout->bindUniform(m_directionalLightUniform);
         layout->bindUniform(m_shadowUniform);
     }
-    std::vector<FCT::UniformSlot> LightingSystem::getUniformSlots()
+    void LightingSystem::bindResources(FCT::Layout* layout)
+    {
+        layout->bindSampler("shadowSampler",m_shadowSampler);
+    }
+    std::vector<FCT::UniformSlot> LightingSystem::getUniformSlots() const
+    {
+        return {DirectionalLightUniformSlot, ShadowUniformSlot};
+    }
+    std::vector<FCT::SamplerSlot> LightingSystem::getSamplerSlots() const
     {
         return {
-            DirectionalLightUniformSlot,
-            ShadowUniformSlot
+            {"shadowSampler"}
         };
     }
 

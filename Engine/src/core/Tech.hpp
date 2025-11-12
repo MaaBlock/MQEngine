@@ -113,13 +113,6 @@ namespace MQEngine
         processArgs(args...);
     }
     
-    template<typename... Args>
-    void Tech::processArgs(const TechBindCallback& callback, Args... args)
-    {
-        m_bindCallback = callback;
-        processArgs(args...);
-    }
-
     template <typename... Args>
     void Tech::processArgs(const EntityOperationCallback& callback, Args... args)
     {
@@ -130,6 +123,7 @@ namespace MQEngine
     void Tech::processArgs(const ImageLinked& linked, Args... args)
     {
         m_imageLinks.push_back(linked);
+        processArgs(args...);
     }
     template <typename... Args>
     void Tech::processArgs(const std::vector<ImageLinked>& linked, Args... args)
@@ -138,6 +132,17 @@ namespace MQEngine
         {
             m_imageLinks.push_back(link);
         }
+        processArgs(args...);
+    }
+    template <typename... Args>
+    void Tech::processArgs(BindedSystem* system, Args... args)
+    {
+        //processArgs(system->getResourceSlots());
+        processArgs(system->getUniformSlots());
+        processArgs(system->getSamplerSlots());
+
+        m_bindedSystems.push_back(system);
+        processArgs(args...);
     }
 
 } // namespace MQEngine

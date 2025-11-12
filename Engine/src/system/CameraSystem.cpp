@@ -52,7 +52,7 @@ namespace MQEngine
         layout->bindUniform(m_cameraUniform);
         layout->bindUniform(m_viewPosUniform);
     }
-    std::vector<FCT::UniformSlot> CameraSystem::getUniformSlots()
+    std::vector<FCT::UniformSlot> CameraSystem::getUniformSlots() const
     {
         return {
             CameraUniformSlot,

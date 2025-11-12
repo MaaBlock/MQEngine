@@ -63,12 +63,13 @@ namespace MQEngine
     using absl::UnknownError;
     using absl::OkStatus;
     using absl::StrCat;
-    using Context = FCT::Context;
-    using Window = FCT::Window;
-    using Uniform = FCT::Uniform;
-    using ShaderRef = FCT::ShaderRef;
+    using FCT::Context;
+    using FCT::Window;
+    using FCT::Uniform;
+    using FCT::ShaderRef;
     using FCT::UniquePtr;
-    using ModelLoader = FCT::ModelLoader;
+    using FCT::ModelLoader;
+    using FCT::Sampler;
     //using EventPipe = FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>;
 }
 #endif //THIRDPARTY_H

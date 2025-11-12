@@ -9,22 +9,12 @@
 #include <set>
 #include <algorithm>
 #include "../thirdparty/thirdparty.h"
+#include "../system/BindedSystem.h"
 
 namespace MQEngine
 {
     class DataManager;
     
-    /**
-     * @brief Tech绑定回调函数类型
-     * @param layout 当前的Layout对象
-     * @param techName Tech名称
-     * @param passName Pass名称
-     */
-    using TechBindCallback = std::function<void(FCT::Layout* layout, const std::string& techName, const std::string& passName)>;
-
-    /**
-     * @brief 实体渲染上下文结构体
-     */
     struct EntityRenderContext {
         entt::registry& registry;
         entt::entity entity;
@@ -149,18 +139,12 @@ namespace MQEngine
         void setPassName(const std::string& passName) { m_passName = passName; }
         void setVertexShaderRef(const ShaderRef& ref) { m_vsRef = ref; }
         void setPixelShaderRef(const ShaderRef& ref) { m_psRef = ref; }
-        void setBindCallback(const TechBindCallback& callback) { m_bindCallback = callback; }
         void setEntityOperationCallback(const EntityOperationCallback& callback) { m_entityOperationCallback = callback; }
         /** @} */
         
         /** @name 回调执行
          *  @{
          */
-        void executeBindCallback(FCT::Layout* layout) const {
-            if (m_bindCallback) {
-                m_bindCallback(layout, m_name, m_passName);
-            }
-        }
         /** @} */
         Status valid()
         {
@@ -173,7 +157,10 @@ namespace MQEngine
 
             return OkStatus();
         }
-
+        std::vector<BindedSystem*> getSystems() const
+        {
+            return m_bindedSystems;
+        }
     private:
         // --- 构造函数参数处理 ---
         void processArgs() {} // 终止递归
@@ -218,9 +205,6 @@ namespace MQEngine
         void processArgs(const ComponentFilter& filter, Args... args);
         
         template<typename... Args>
-        void processArgs(const TechBindCallback& callback, Args... args);
-        
-        template<typename... Args>
         void processArgs(const EntityOperationCallback& callback, Args... args);
 
 
@@ -229,6 +213,10 @@ namespace MQEngine
 
         template<typename... Args>
         void processArgs(const std::vector<ImageLinked>& linked, Args... args);
+
+        template<typename... Args>
+        void processArgs(BindedSystem* system, Args... args);
+
 
         // --- 成员变量 ---
         std::string m_name;
@@ -244,8 +232,11 @@ namespace MQEngine
         ShaderRef m_psRef;
         std::string m_passName;
         ComponentFilter m_componentFilter;
-        TechBindCallback m_bindCallback;  // Tech绑定回调函数
         EntityOperationCallback m_entityOperationCallback;  // 实体操作回调函数
+        /**
+         * @brief 绑定的 系统，会从这里面获取slot，和对应的bindable
+         */
+        std::vector<BindedSystem*> m_bindedSystems;
     };
 }
 #include "./Tech.hpp"

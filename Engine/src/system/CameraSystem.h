@@ -13,7 +13,7 @@ namespace MQEngine {
         void updateLogic() override;
         void updateRender() override;
         void bindUniforms(FCT::Layout* layout) override;
-        std::vector<FCT::UniformSlot> getUniformSlots() override;
+        std::vector<FCT::UniformSlot> getUniformSlots() const override;
         void setActiveCamera(entt::registry* registry, entt::entity cameraEntity);
     private:
         FCT::Mat4 calculateViewMatrix(const PositionComponent& position, const RotationComponent& rotation);

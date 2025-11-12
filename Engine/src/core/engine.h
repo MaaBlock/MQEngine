@@ -14,6 +14,7 @@
 #include "../system/ScriptSystem.h"
 #include "../system/ShininessSystem.h"
 #include "../system/TextureCacheSystem.h"
+#include "../system/TextureSamplerSystem.h"
 #include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
 #include "CreateApplication.h"
@@ -31,6 +32,7 @@ namespace FCT
 #include "UniformSlots.h"
 
 namespace MQEngine {
+    //class TextureSamplerSystem;
     class ENGINE_API Engine
     {
     public:
@@ -87,6 +89,7 @@ namespace MQEngine {
         FCT::UniquePtr<ShininessSystem> m_shininessSystem;
         FCT::UniquePtr<TechManager> m_techManager;
         FCT::UniquePtr<RegistriesManager> m_registriesManager;
+        FCT::UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
         FCT::Uniform m_floorModelUniform;
         // OutputInfo for passes
         FCT::OutputInfo m_shadowPassOutputInfo;
