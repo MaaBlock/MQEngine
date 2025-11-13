@@ -14,6 +14,8 @@ namespace MQEngine
 #include "g_engineShaderDiffuseObjectVertex.h"
 #include "g_engineShaderNormalMapObjectPixel.h"
 #include "g_engineShaderNormalMapObjectVertex.h"
+#include "g_engineShaderPBRVertex.h"
+#include "g_engineShaderPBRPixel.h"
 #include "../data/Component.h"
 #include "../data/Camera.h"
 #include "./GraphicsEnv.h"
@@ -290,10 +292,58 @@ namespace MQEngine
         }
         {
             auto ret = m_techManager->addTech("ObjectPass", Tech(
-                    TechName("PBRTech"),
-                    vertexLayout,
-                    pixelLayout
-                ));
+                TechName{"PBRTech"},
+                VertexShaderSource{LoadStringFromStringResource(g_engineShaderPBRVertex,g_engineShaderPBRVertexSize)},
+                PixelShaderSource{LoadStringFromStringResource(g_engineShaderPBRPixel,g_engineShaderPBRPixelSize)},
+                vertexLayout,
+                pixelLayout,
+                std::vector<FCT::UniformSlot>{
+                    DirectionalLightUniformSlot,
+                    CameraUniformSlot,
+                    ViewPosUniformSlot,
+                    ShadowUniformSlot,
+                    ModelUniformSlot,
+                },
+                std::vector<FCT::TextureSlot>{
+                    TextureSlot{"albedoTexture"},
+                    TextureSlot{"normalTexture"},
+                    TextureSlot{"ormTexture"}
+                },
+                m_lightingSystem.get(),
+                m_cameraSystem.get(),
+                m_textureSamplerSystem.get(),
+                ComponentFilter()
+                .include<
+                    StaticMeshInstance,
+                    AlbedoTextureComponent,
+                    NormalTextureComponent,
+                    OrmTextureComponent
+                >(),
+                EntityOperationCallback(
+                    [](const EntityRenderContext& context)
+                    {
+                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
+                        {
+                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
+                            const auto& albedoTexture = context.registry.get<AlbedoTextureComponent>(context.entity);
+                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
+                            const auto& ormTexture = context.registry.get<OrmTextureComponent>(context.entity);
+
+                            if (albedoTexture.texture)
+                                context.layout->bindTexture("albedoTexture", albedoTexture.texture);
+                            if (normalMap.texture)
+                                context.layout->bindTexture("normalTexture", normalMap.texture);
+                            if (ormTexture.texture)
+                                context.layout->bindTexture("ormTexture", ormTexture.texture);
+
+                            if (meshInstance.mesh)
+                            {
+                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                            }
+                        }
+                    })
+            ));
             if (!ret.ok())
                 spdlog::error("Failed to add tech: {}", ret.message());
         }

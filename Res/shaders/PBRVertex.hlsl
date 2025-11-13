@@ -1,4 +1,4 @@
-﻿ShaderOut main(ShaderIn sIn) {
+ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
     sOut.color = sIn.color;
     sOut.position = projectionMatrix * viewMatrix * modelMatrix * sIn.position;

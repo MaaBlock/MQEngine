@@ -1,4 +1,4 @@
-﻿static const float PI = 3.14159265359;
+static const float PI = 3.14159265359;
 
 float DistributionGGX(float3 N, float3 H, float roughness)
 {
@@ -46,10 +46,10 @@ ShaderOut main(ShaderIn sIn) {
     ShaderOut sOut;
 
     float3 albedo     = albedoTexture.Sample(textureSampler, sIn.texCoord).rgb;
-    float3 armSample  = armTexture.Sample(textureSampler, sIn.texCoord).rgb;
-    float  ao         = armSample.r;
-    float  roughness  = armSample.g;
-    float  metallic   = armSample.b;
+    float3 ormSample  = ormTexture.Sample(textureSampler, sIn.texCoord).rgb;
+    float  ao         = ormSample.r;
+    float  roughness  = ormSample.g;
+    float  metallic   = ormSample.b;
 
     float3 normalSample = normalTexture.Sample(textureSampler, sIn.texCoord).xyz;
     normalSample = normalize(normalSample * 2.0 - 1.0);
@@ -65,7 +65,7 @@ ShaderOut main(ShaderIn sIn) {
     float3 F0 = lerp(float3(0.04, 0.04, 0.04), albedo, metallic);
 
 
-    float3 L = normalize(directionalLightDirection);
+    float3 L = normalize(-directionalLightDirection);
     float3 H = normalize(V + L);
 
     float3 radiance = directionalLightColor;
@@ -88,7 +88,7 @@ ShaderOut main(ShaderIn sIn) {
     float3 ambient = float3(0.03, 0.03, 0.03) * albedo * ao;
     float3 finalColor = Lo + ambient;
 
-    finalColor = finalColor / (finalColor + float3(1.0, 1.0, 1.0));
+    //finalColor = finalColor / (finalColor + float3(1.0, 1.0, 1.0));
 
     sOut.target0 = float4(finalColor, 1.0);
 

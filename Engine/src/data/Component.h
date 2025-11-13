@@ -215,9 +215,16 @@ namespace MQEngine {
 
     struct AlbedoTextureComponent : TextureComponent
     {
+        AlbedoTextureComponent() = default;
         AlbedoTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
+        }
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
     //BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
@@ -226,18 +233,32 @@ namespace MQEngine {
 
     struct EmissiveTextureComponent : TextureComponent
     {
+        EmissiveTextureComponent() = default;
         EmissiveTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
+        }
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
     //BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
 
     struct OrmTextureComponent : TextureComponent
     {
+        OrmTextureComponent() = default;
         OrmTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
         {
 
+        }
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
     //BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
