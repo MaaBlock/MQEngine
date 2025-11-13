@@ -273,7 +273,7 @@ namespace MQEngine
             if (offsetX > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
             if (offsetY > 0) ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offsetY);
 
-            ImGui::Image(sceneTextureId, ImVec2(imageWidth, imageHeight));
+            ImGui::Image(ImTextureRef(sceneTextureId), ImVec2(imageWidth, imageHeight));
 
             // 显示一些场景信息
             ImGui::Separator();

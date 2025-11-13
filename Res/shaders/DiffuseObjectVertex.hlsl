@@ -3,9 +3,9 @@ ShaderOut main(ShaderIn sIn) {
     sOut.color = sIn.color;
     sOut.position = projectionMatrix * viewMatrix * modelMatrix * sIn.position;
     sOut.texCoord = sIn.texCoord;
-    sOut.normal = sIn.normal;
-    sOut.tangent = float3(0.0, 0.0, 0.0);
-    sOut.bitangent = float3(0.0, 0.0, 0.0);
+    sOut.normal = modelInverseTransposeMatrix * float4(sIn.normal.xyz, 0.0f);
+    sOut.tangent = modelMatrix * float4(sIn.tangent.xyz, 0.0f);
+    sOut.bitangent = float4(cross(sOut.normal.xyz, sOut.tangent.xyz), 0.0f);
     sOut.srcpos = modelMatrix * sIn.position;
     sOut.shadowPos = directionalLightMvp * modelMatrix * sIn.position;
     return sOut;

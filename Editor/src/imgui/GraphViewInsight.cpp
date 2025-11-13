@@ -51,7 +51,7 @@ namespace MQEngine
                         displayWidth = displayHeight * aspectRatio;
                     }
 
-                    ImGui::Image(textureId, ImVec2(displayWidth, displayHeight));
+                    ImGui::Image(ImTextureRef(textureId), ImVec2(displayWidth, displayHeight));
 
                     if (ImGui::IsItemHovered()) {
                         ImGui::SetTooltip("贴图: %s\n分辨率: %.0fx%.0f", textureName.c_str(), imageWidth, imageHeight);

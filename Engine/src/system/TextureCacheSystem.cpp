@@ -72,6 +72,7 @@ namespace MQEngine {
                     const_cast<DiffuseTextureComponent&>(textureComponent).texture = it->second;
                 }
             });
+            /*
             registry->view<NormalMapComponent>().each([this](NormalMapComponent& textureComponent)
             {
                 if (textureComponent.modelUuid.empty() || textureComponent.texturePath.empty()) {
@@ -88,7 +89,7 @@ namespace MQEngine {
                 if (it != m_loadedTextures.end()) {
                     const_cast<NormalMapComponent&>(textureComponent).texture = it->second;
                 }
-            });
+            });*/
             registry->view<AlbedoTextureComponent>().each([this](AlbedoTextureComponent& component)
             {
                 processTextureComponent(component, albedoTexture);

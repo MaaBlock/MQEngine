@@ -265,7 +265,7 @@ namespace MQEngine
                             {
                                 // 图标按钮，支持拖拽
                                 ImGui::PushID((int)i);
-                                if (ImGui::ImageButton(("mesh_" + std::to_string(i)).c_str(), meshIconID, ImVec2(iconSize, iconSize))) {
+                                if (ImGui::ImageButton(("mesh_" + std::to_string(i)).c_str(), ImTextureRef(meshIconID), ImVec2(iconSize, iconSize))) {
                                     // 点击事件
                                     fout << "选中网格: " << meshInfo.name << std::endl;
                                 }
@@ -276,7 +276,7 @@ namespace MQEngine
                                     std::string dragData = modelUuid + "|" + meshInfo.name;
                                     ImGui::SetDragDropPayload("ASSET_MESH_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
 
-                                    ImGui::Image(meshIconID, ImVec2(32, 32));
+                                    ImGui::Image(ImTextureRef(meshIconID), ImVec2(32, 32));
                                     ImGui::SameLine();
                                     ImGui::Text("%s", meshInfo.name.c_str());
 
@@ -326,7 +326,7 @@ namespace MQEngine
                             ImGui::BeginGroup();
                             {
                                 ImGui::PushID((int)(1000 + i));
-                                if (ImGui::ImageButton(("texture_" + std::to_string(i)).c_str(), textureIconID, ImVec2(iconSize, iconSize))) {
+                                if (ImGui::ImageButton(("texture_" + std::to_string(i)).c_str(), ImTextureRef(textureIconID), ImVec2(iconSize, iconSize))) {
                                     fout << "选中纹理: " << textureInfo.path << std::endl;
                                 }
 
@@ -335,7 +335,7 @@ namespace MQEngine
                                     std::string dragData = modelUuid + "|" + textureInfo.path;
                                     ImGui::SetDragDropPayload("ASSET_TEXTURE_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
 
-                                    ImGui::Image(textureIconID, ImVec2(32, 32));
+                                    ImGui::Image(ImTextureRef(textureIconID), ImVec2(32, 32));
                                     ImGui::SameLine();
                                     ImGui::Text("%s", std::filesystem::path(textureInfo.path).filename().string().c_str());
 
@@ -397,7 +397,7 @@ namespace MQEngine
                             ImGui::BeginGroup();
                             {
                                 ImGui::PushID((int)(2000 + i));
-                                if (ImGui::ImageButton(("material_" + std::to_string(i)).c_str(), materialIconID, ImVec2(iconSize, iconSize))) {
+                                if (ImGui::ImageButton(("material_" + std::to_string(i)).c_str(), ImTextureRef(materialIconID), ImVec2(iconSize, iconSize))) {
                                     fout << "选中材质: " << i << std::endl;
                                 }
 
@@ -406,7 +406,7 @@ namespace MQEngine
                                     std::string dragData = modelUuid + "|" + std::to_string(i);
                                     ImGui::SetDragDropPayload("ASSET_MATERIAL_FROM_MODEL", dragData.c_str(), dragData.size() + 1);
 
-                                    ImGui::Image(materialIconID, ImVec2(32, 32));
+                                    ImGui::Image(ImTextureRef(materialIconID), ImVec2(32, 32));
                                     ImGui::SameLine();
                                     ImGui::Text("材质 %zu", i);
 

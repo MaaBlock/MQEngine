@@ -139,14 +139,6 @@ namespace MQEngine {
                 ImGui::CloseCurrentPopup();
             }
 
-
-            if (ImGui::MenuItem("Normal Map Component")) {
-                if (!registry->all_of<NormalMapComponent>(selectedEntity.entity)) {
-                    registry->emplace<NormalMapComponent>(selectedEntity.entity, "", "");
-                }
-                ImGui::CloseCurrentPopup();
-            }
-
             if (ImGui::MenuItem("Shininess Component")) {
                 if (!registry->all_of<ShininessComponent>(selectedEntity.entity)) {
                     registry->emplace<ShininessComponent>(selectedEntity.entity);
@@ -212,7 +204,6 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<OnStartScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DirectionalLightComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DiffuseTextureComponent>(registry, selectedEntity.entity);
-        hasComponents |= tryRenderComponent<NormalMapComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ShininessComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<AlbedoTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<NormalTextureComponent>(registry, selectedEntity.entity);

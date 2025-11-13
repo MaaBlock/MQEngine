@@ -13,7 +13,7 @@ namespace MQEngine {
         .template get<StaticMeshInstance>(wrapper)
         .template get<DirectionalLightComponent>(wrapper)
         .template get<DiffuseTextureComponent>(wrapper)
-        .template get<NormalMapComponent>(wrapper)
+        .template get<NormalTextureComponent>(wrapper)
         .template get<PositionComponent>(wrapper)
         .template get<RotationComponent>(wrapper)
         .template get<ScaleComponent>(wrapper)

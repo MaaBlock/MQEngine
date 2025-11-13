@@ -193,13 +193,13 @@ namespace MQEngine {
         }
     };
     //BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (TextureComponent), ())
-    struct NormalMapComponent : public TextureComponent
+    struct NormalTextureComponent : public TextureComponent
     {
-        NormalMapComponent()
+        NormalTextureComponent()
         {
 
         }
-        NormalMapComponent(std::string uuid, std::string path)
+        NormalTextureComponent(std::string uuid, std::string path)
             : TextureComponent(uuid, path)
         {
         }
@@ -222,13 +222,6 @@ namespace MQEngine {
     };
     //BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
 
-    struct NormalTextureComponent : TextureComponent
-    {
-        NormalTextureComponent(std::string uuid, std::string path) : TextureComponent(uuid, path)
-        {
-
-        }
-    };
     //BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
 
     struct EmissiveTextureComponent : TextureComponent

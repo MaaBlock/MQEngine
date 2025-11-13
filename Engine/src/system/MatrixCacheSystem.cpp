@@ -13,6 +13,7 @@ namespace MQEngine {
     {
         // 初始化默认模型矩阵为单位矩阵
         m_defaultModelUniform.setValue("modelMatrix", FCT::Mat4());
+        m_defaultModelUniform.setValue("modelInverseTransposeMatrix", FCT::Mat4());
         m_defaultModelUniform.update();
     }
 
@@ -85,6 +86,13 @@ namespace MQEngine {
         cacheModel->init = true;
     }
 
+    FCT::Mat4 MatrixCacheSystem::calculateModelInverseTransposeMatrix(const FCT::Mat4& modelMatrix)
+    {
+        FCT::Mat4 inverseMatrix = modelMatrix.inverse();
+        FCT::Mat4 inverseTransposeMatrix = inverseMatrix.transpose();
+
+        return inverseTransposeMatrix;
+    }
     void MatrixCacheSystem::updateRender()
     {
 

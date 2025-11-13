@@ -95,25 +95,18 @@ namespace MQEngine
                 vertexLayout,
                 pixelLayout,
                 std::vector<FCT::UniformSlot>{
-                    //DirectionalLightUniformSlot,
-                    //CameraUniformSlot,
-                    //ViewPosUniformSlot,
-                    //ShadowUniformSlot,
                     ModelUniformSlot,
                 },
                 m_cameraSystem.get(),
                 m_lightingSystem.get(),
-                /*
-                std::vector<FCT::SamplerSlot>{
-                    SamplerSlot{"shadowSampler"}
-                },*/
                 ComponentFilter{
                     .include_types = {entt::type_id<StaticMeshInstance>()},
                     .exclude_types = {
                         entt::type_id<DiffuseTextureComponent>(),
                         entt::type_id<AlbedoTextureComponent>()
                     }
-                },
+                }
+                .exclude<AlbedoTextureComponent>(),
                 universalEntityCallback
             ));
             if (!ret.ok())
@@ -142,9 +135,10 @@ namespace MQEngine
                          entt::type_id<StaticMeshInstance>()
                      },
                      .exclude_types = {
-                         entt::type_id<NormalMapComponent>()
+                         entt::type_id<NormalTextureComponent>()
                      }
-                 },
+                 }
+                 .exclude<AlbedoTextureComponent>(),
                  m_lightingSystem.get(),
                  m_cameraSystem.get(),
                  m_textureSamplerSystem.get(),
@@ -177,10 +171,6 @@ namespace MQEngine
                 vertexLayout,
                 pixelLayout,
                 std::vector<FCT::UniformSlot>{
-                    DirectionalLightUniformSlot,
-                    CameraUniformSlot,
-                    ViewPosUniformSlot,
-                    ShadowUniformSlot,
                     ModelUniformSlot,
                     ShininessUniformSlot
                 },
@@ -197,7 +187,8 @@ namespace MQEngine
                 m_lightingSystem.get(),
                 m_cameraSystem.get(),
                 ComponentFilter()
-                .include<DiffuseTextureComponent,NormalMapComponent,StaticMeshInstance>(),
+                .include<DiffuseTextureComponent,NormalTextureComponent,StaticMeshInstance>()
+                .exclude<AlbedoTextureComponent>(),
                 EntityOperationCallback(
                     [](const EntityRenderContext& context)
                     {
@@ -205,7 +196,7 @@ namespace MQEngine
                         {
                             const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
                             const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
-                            const auto& normalMap = context.registry.get<NormalMapComponent>(context.entity);
+                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
                             if (diffuseTexture.texture)
                                 context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
                             if (normalMap.texture)
@@ -222,6 +213,58 @@ namespace MQEngine
                     })
             ));
 
+            if (!ret.ok())
+                spdlog::error("Failed to add tech: {}", ret.message());
+        }
+        {
+            auto ret = m_techManager->addTech("ObjectPass", Tech(
+                TechName{"NormalMapTech"},
+                //VertexShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectVertex,g_engineShaderNormalMapObjectVertexSize)},
+                //PixelShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectPixel,g_engineShaderNormalMapObjectPixelSize)},
+                vertexLayout,
+                pixelLayout,
+                std::vector<FCT::UniformSlot>{
+                    ModelUniformSlot,
+                },
+                std::vector<FCT::TextureSlot>{
+                    TextureSlot{"diffuseTexture"},
+                    TextureSlot{"normalTexture"}
+                },
+                m_textureSamplerSystem.get(),
+                m_lightingSystem.get(),
+                m_cameraSystem.get(),
+                ComponentFilter()
+                .include<
+                DiffuseTextureComponent,
+                StaticMeshInstance,
+                AlbedoTextureComponent,
+                NormalTextureComponent,
+                OrmTextureComponent
+                >()
+                .exclude<AlbedoTextureComponent>(),
+                EntityOperationCallback(
+                    [](const EntityRenderContext& context)
+                    {
+                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
+                        {
+                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
+                            const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
+                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
+                            if (diffuseTexture.texture)
+                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
+                            if (normalMap.texture)
+                                context.layout->bindTexture("normalTexture", normalMap.texture);
+
+                            g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
+
+                            if (meshInstance.mesh)
+                            {
+                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                            }
+                        }
+                    })
+            ));
             if (!ret.ok())
                 spdlog::error("Failed to add tech: {}", ret.message());
         }
@@ -278,7 +321,7 @@ namespace MQEngine
         else if (m_application->renderConfig().target == RenderTarget::Texture)
         {
             SceenColorTarget =
-                Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_UNORM);
+                Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_SRGB);
             SceenDepthTarget =
                 DepthStencil("SceneDepthTarget",Format::D32_SFLOAT);
         }

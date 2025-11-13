@@ -17,6 +17,7 @@ namespace MQEngine {
         
     private:
         void processEntity(entt::registry* registry, entt::entity entity);
+        FCT::Mat4 calculateModelInverseTransposeMatrix(const FCT::Mat4& modelMatrix);
         void cleanupCacheComponents(entt::registry* registry);
         FCT::Mat4 calculateRotationMatrix(const RotationComponent& rotation);
         FCT::Mat4 calculateModelMatrix(const PositionComponent& position, const RotationComponent& rotation, const ScaleComponent& scale);

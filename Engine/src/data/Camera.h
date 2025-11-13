@@ -61,7 +61,8 @@ namespace MQEngine {
 
     constexpr FCT::UniformSlot ModelUniformSlot {
         "ModelUniform",
-        FCT::UniformVar{FCT::UniformType::ModelMatrix,"modelMatrix"}
+        FCT::UniformVar{FCT::UniformType::ModelMatrix,"modelMatrix"},
+        FCT::UniformVar{FCT::UniformType::Mat4,"modelInverseTransposeMatrix"}
     };
 
     struct ENGINE_API CacheModelMatrix {

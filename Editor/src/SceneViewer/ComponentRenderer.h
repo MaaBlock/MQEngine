@@ -392,23 +392,6 @@ namespace MQEngine {
     }
 
     template<>
-    inline void renderComponent<NormalMapComponent>(const NormalMapComponent* component) {
-        if (ImGui::CollapsingHeader("Normal Map", ImGuiTreeNodeFlags_DefaultOpen)) {
-            ImGui::Indent();
-            ImGui::Text("模型UUID: %s", component->modelUuid.empty() ? "未设置" : component->modelUuid.c_str());
-            ImGui::Text("纹理路径: %s", component->texturePath.empty() ? "未设置" : component->texturePath.c_str());
-            ImGui::Text("纹理状态: %s", component->texture ? "已加载" : "未加载");
-
-            ImGui::Spacing();
-            if (ImGui::Button("删除组件##NormalMapComponent")) {
-                g_editorGlobal.componentToDelete = entt::type_hash<NormalMapComponent>::value();
-            }
-
-            ImGui::Unindent();
-        }
-    }
-
-    template<>
     inline void renderComponent<ShininessComponent>(const ShininessComponent* component) {
         if (ImGui::CollapsingHeader("Shininess", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::Indent();
