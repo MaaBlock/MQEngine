@@ -88,7 +88,7 @@ ShaderOut main(ShaderIn sIn) {
     float3 ambient = float3(0.03, 0.03, 0.03) * albedo * ao;
     float3 finalColor = Lo + ambient;
 
-    //finalColor = finalColor / (finalColor + float3(1.0, 1.0, 1.0));
+    finalColor = finalColor / (finalColor + float3(1.0, 1.0, 1.0));
 
     sOut.target0 = float4(finalColor, 1.0);
 
