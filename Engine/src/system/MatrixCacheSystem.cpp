@@ -70,20 +70,25 @@ namespace MQEngine {
             CacheRotationMatrix* cacheRotation = registry->try_get<CacheRotationMatrix>(entity);
             if (!cacheRotation)
             {
-                cacheRotation = &registry->emplace<CacheRotationMatrix>(entity);
+                g_engineGlobal.registriesManager->requestEmplaceComponent<CacheRotationMatrix>(registry, entity);
             }
-            cacheRotation->rotationMatrix = calculateRotationMatrix(rot);
+            else
+            {
+                cacheRotation->rotationMatrix = calculateRotationMatrix(rot);
+            }
         }
 
         CacheModelMatrix* cacheModel = registry->try_get<CacheModelMatrix>(entity);
         if (!cacheModel)
         {
-            cacheModel = &registry->emplace<CacheModelMatrix>(entity, m_ctx);
+            g_engineGlobal.registriesManager->requestEmplaceComponent<CacheModelMatrix>(registry, entity, m_ctx);
         }
-
-        FCT::Mat4 modelMatrix = calculateModelMatrix(pos, rot, scl);
-        cacheModel->uniform->setValue(FCT::UniformType::ModelMatrix, modelMatrix);
-        cacheModel->init = true;
+        else
+        {
+            FCT::Mat4 modelMatrix = calculateModelMatrix(pos, rot, scl);
+            cacheModel->uniform->setValue(FCT::UniformType::ModelMatrix, modelMatrix);
+            cacheModel->init = true;
+        }
     }
 
     FCT::Mat4 MatrixCacheSystem::calculateModelInverseTransposeMatrix(const FCT::Mat4& modelMatrix)

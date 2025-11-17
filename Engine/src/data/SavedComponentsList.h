@@ -1,9 +1,6 @@
-﻿//
-// Created by Administrator on 2025/9/12.
-//
-
-#ifndef SAVEDCOMPONENTSLIST_H
+﻿#ifndef SAVEDCOMPONENTSLIST_H
 #define SAVEDCOMPONENTSLIST_H
+#include "Component.h"
 namespace MQEngine {
     template<typename SnapshotType, typename WrapperType>
     void SerializeComponents(SnapshotType&& snapshot, WrapperType& wrapper) {
@@ -11,9 +8,11 @@ namespace MQEngine {
         .template get<entt::entity>(wrapper)
         .template get<NameTag>(wrapper)
         .template get<StaticMeshInstance>(wrapper)
+        .template get<OrmTextureComponent>(wrapper)
+        .template get<AlbedoTextureComponent>(wrapper)
+        .template get<NormalTextureComponent>(wrapper)
         .template get<DirectionalLightComponent>(wrapper)
         .template get<DiffuseTextureComponent>(wrapper)
-        .template get<NormalTextureComponent>(wrapper)
         .template get<PositionComponent>(wrapper)
         .template get<RotationComponent>(wrapper)
         .template get<ScaleComponent>(wrapper)

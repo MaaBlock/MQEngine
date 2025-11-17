@@ -5,6 +5,8 @@
 #include "ShininessSystem.h"
 #include "../core/UniformSlots.h"
 #include <set>
+#include "../core/EngineGlobal.h"
+#include "../manager/RegistriesManager.h"
 
 namespace MQEngine {
     ShininessSystem::ShininessSystem(FCT::Context* ctx, DataManager* dataManager)
@@ -37,11 +39,13 @@ namespace MQEngine {
         auto* cache = registry->try_get<CacheShininess>(entity);
         if (!cache)
         {
-            cache = &registry->emplace<CacheShininess>(entity, m_ctx);
+            g_engineGlobal.registriesManager->requestEmplaceComponent<CacheShininess>(registry, entity, m_ctx);
         }
-
-        cache->uniform->setValue("shininess", shininess->shininess);
-        cache->init = true;
+        else
+        {
+            cache->uniform->setValue("shininess", shininess->shininess);
+            cache->init = true;
+        }
     }
 
     void ShininessSystem::updateUniforms()
@@ -81,7 +85,7 @@ namespace MQEngine {
         {
             if (!registry->all_of<ShininessComponent>(entity))
             {
-                registry->remove<CacheShininess>(entity);
+                g_engineGlobal.registriesManager->requestRemoveComponent<CacheShininess>(registry, entity);
             }
         }
     }

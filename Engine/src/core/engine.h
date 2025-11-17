@@ -48,6 +48,10 @@ namespace MQEngine {
 
         static Engine* s_instance;
     private:
+        /**
+         * @brief 提前让entt的hash表里拥有这些组件，防止后续再添加导致线程冲突
+         */
+        void registerEnttComponents();
         void settingUpEnv();
         void settingUpTechs();
         void settingUpPass();

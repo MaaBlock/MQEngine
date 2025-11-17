@@ -72,24 +72,6 @@ namespace MQEngine {
                     const_cast<DiffuseTextureComponent&>(textureComponent).texture = it->second;
                 }
             });
-            /*
-            registry->view<NormalMapComponent>().each([this](NormalMapComponent& textureComponent)
-            {
-                if (textureComponent.modelUuid.empty() || textureComponent.texturePath.empty()) {
-                    return;
-                }
-
-                std::string textureKey = textureComponent.modelUuid + "|" + textureComponent.texturePath;
-
-                if (m_loadedTextures.find(textureKey) == m_loadedTextures.end()) {
-                    loadTexture(textureComponent.modelUuid, textureComponent.texturePath);
-                }
-
-                auto it = m_loadedTextures.find(textureKey);
-                if (it != m_loadedTextures.end()) {
-                    const_cast<NormalMapComponent&>(textureComponent).texture = it->second;
-                }
-            });*/
             registry->view<AlbedoTextureComponent>().each([this](AlbedoTextureComponent& component)
             {
                 processTextureComponent(component, albedoTexture);

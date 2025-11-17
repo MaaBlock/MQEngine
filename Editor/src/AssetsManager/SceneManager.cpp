@@ -76,7 +76,7 @@ namespace MQEngine {
         try {
             std::string uuid = getSceneUuid(sceneName);
             m_dataManager->loadScenePathList();
-             m_dataManager->openScene(uuid);
+            m_dataManager->openScene(uuid);
             g_editorGlobal.cameraManager->hookCamera();
         } catch (const std::exception& e) {
             fout << "打开场景时发生错误: " << e.what() << std::endl;

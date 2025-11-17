@@ -4,6 +4,7 @@
 
 #include "RegistriesManager.h"
 #include "../data/Camera.h"
+#include "../data/Component.h"
 namespace MQEngine {
     struct CacheModelMatrix;
     struct CacheRotationMatrix;
@@ -110,8 +111,13 @@ namespace MQEngine {
     entt::registry* RegistriesManager::createRegistry()
     {
         auto registry = FCT_NEW(entt::registry);
-        registry->storage<CacheRotationMatrix>();
-        registry->storage<CacheModelMatrix>();
+
+        [&]<typename... Components>(std::tuple<Components...>)
+        {
+            (registry->storage<Components>(), ...);
+
+        }(AllComponentsList{});
+
         return registry;
     }
 } // MQEngine

@@ -30,6 +30,14 @@ namespace FCT
 namespace MQEngine
 {
     EngineGlobal g_engineGlobal;
+    void Engine::registerEnttComponents()
+    {
+        entt::registry dummyRegistry;
+        [&]<typename... Components>(std::tuple<Components...>)
+        {
+            (dummyRegistry.storage<Components>(), ...);
+        }(AllComponentsList{});
+    }
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
@@ -486,6 +494,7 @@ namespace MQEngine
     {
         s_instance = this;
         m_application = application;
+        registerEnttComponents();
         settingUpEnv();
         settingUpPass();
         settingUpTechs();

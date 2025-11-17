@@ -4,10 +4,12 @@
 
 #ifndef COMPONENT_H
 #define COMPONENT_H
-#include "NameTag.h"
-#include "../thirdparty/thirdparty.h"
 #include <boost/describe.hpp>
+#include "../thirdparty/thirdparty.h"
+#include "NameTag.h"
+
 #include "../core/UniformSlots.h"
+#include "Camera.h"
 namespace MQEngine {
     struct StaticMeshInstance
     {
@@ -124,7 +126,10 @@ namespace MQEngine {
     {
         FCT::UniquePtr<FCT::Uniform> uniform;
         bool init = false;
+        CacheShininess()
+        {
 
+        }
         CacheShininess(FCT::Context* ctx)
         {
             uniform = FCT::makeUnique<FCT::Uniform>(ctx, ShininessUniformSlot);
@@ -172,7 +177,7 @@ namespace MQEngine {
             ar & texturePath;
         }
     };
-    //BOOST_DESCRIBE_STRUCT(TextureComponent, (CacheResource), (modelUuid, texturePath))
+    BOOST_DESCRIBE_STRUCT(TextureComponent, (CacheResource), (modelUuid, texturePath))
 
     
     struct DiffuseTextureComponent : public TextureComponent
@@ -192,7 +197,7 @@ namespace MQEngine {
             ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
-    //BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (TextureComponent), ())
+    BOOST_DESCRIBE_STRUCT(DiffuseTextureComponent, (TextureComponent), ())
     struct NormalTextureComponent : public TextureComponent
     {
         NormalTextureComponent()
@@ -211,7 +216,7 @@ namespace MQEngine {
             ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
-    //BOOST_DESCRIBE_STRUCT(NormalMapComponent, (TextureComponent), ())
+    BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
 
     struct AlbedoTextureComponent : TextureComponent
     {
@@ -227,9 +232,7 @@ namespace MQEngine {
             ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
-    //BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
-
-    //BOOST_DESCRIBE_STRUCT(NormalTextureComponent, (TextureComponent), ())
+    BOOST_DESCRIBE_STRUCT(AlbedoTextureComponent, (TextureComponent), ())
 
     struct EmissiveTextureComponent : TextureComponent
     {
@@ -245,7 +248,7 @@ namespace MQEngine {
             ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
-    //BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
+    BOOST_DESCRIBE_STRUCT(EmissiveTextureComponent, (TextureComponent), ())
 
     struct OrmTextureComponent : TextureComponent
     {
@@ -261,7 +264,27 @@ namespace MQEngine {
             ar & boost::serialization::base_object<TextureComponent>(*this);
         }
     };
-    //BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
+    BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
+    using AllComponentsList = std::tuple<
+        StaticMeshInstance,
+        TickerScriptComponent,
+        OnStartScriptComponent,
+        DirectionalLightComponent,
+        ShininessComponent,
+        DiffuseTextureComponent,
+        NormalTextureComponent,
+        AlbedoTextureComponent,
+        EmissiveTextureComponent,
+        OrmTextureComponent,
+        NameTag,
+        CacheShininess,
+        CacheRotationMatrix,
+        CacheModelMatrix,
+        PositionComponent,
+        RotationComponent,
+        ScaleComponent,
+        CameraComponent
+    >;
 }
 
 #endif //COMPONENT_H

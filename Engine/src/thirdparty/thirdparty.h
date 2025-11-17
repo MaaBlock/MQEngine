@@ -70,6 +70,7 @@ namespace MQEngine
     using FCT::UniquePtr;
     using FCT::ModelLoader;
     using FCT::Sampler;
+    using FCT::Runtime;
     //using EventPipe = FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>;
 }
 #endif //THIRDPARTY_H

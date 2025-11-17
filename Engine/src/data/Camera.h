@@ -70,7 +70,10 @@ namespace MQEngine {
         bool init = false;
         bool ownsUniform = true;  // 标记是否拥有uniform的所有权
         
-        CacheModelMatrix() = delete;
+        CacheModelMatrix()
+        {
+
+        }
         explicit CacheModelMatrix(FCT::Context* ctx) :  init(false), ownsUniform(true)
         {
             uniform = new FCT::Uniform(ctx, ModelUniformSlot);
