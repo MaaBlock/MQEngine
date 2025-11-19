@@ -159,7 +159,7 @@ namespace MQEngine {
                 fieldInfo.type = "double";
             } else if constexpr (std::is_same_v<FieldType, std::string>) {
                 fieldInfo.type = "string";
-            } else if constexpr (std::is_same_v<FieldType, FCT::Vec3>) {
+            } else if constexpr (std::is_same_v<FieldType, Vec3>) {
                 fieldInfo.type = "Vec3";
             } else {
                 fieldInfo.type = "unknown";

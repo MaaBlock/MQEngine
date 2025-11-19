@@ -16,8 +16,7 @@
 namespace MQEngine {
 
     using ComponentValue = std::variant<
-        bool, int, float, double, std::string,
-        FCT::Vec3
+        bool, int, float, double, std::string, Vec3
     >;
 
     struct ComponentFieldInfo {

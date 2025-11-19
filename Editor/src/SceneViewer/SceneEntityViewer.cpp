@@ -64,10 +64,10 @@ namespace MQEngine {
             ImGui::EndPopup();
         }
 
-        auto& registry = scene->getRegistry();
-        registry.view<entt::entity>().each([&](auto entity) {
+        auto* registry = scene->getRegistry();
+        registry->view<entt::entity>().each([&](auto entity) {
             std::string displayName;
-            if (auto nameTag = registry.try_get<NameTag>(entity)) {
+            if (auto nameTag = registry->try_get<NameTag>(entity)) {
                 displayName = nameTag->name;
             } else {
                 displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
@@ -124,10 +124,10 @@ namespace MQEngine {
 
         SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
         if (trunk) {
-            auto& registry = trunk->getRegistry();
-            registry.view<entt::entity>().each([&](auto entity) {
+            auto* registry = trunk->getRegistry();
+            registry->view<entt::entity>().each([&](auto entity) {
                 std::string displayName;
-                if (auto nameTag = registry.try_get<NameTag>(entity)) {
+                if (auto nameTag = registry->try_get<NameTag>(entity)) {
                     displayName = nameTag->name;
                 } else {
                     displayName = "entity " + std::to_string(static_cast<uint32_t>(entity));
@@ -187,14 +187,21 @@ namespace MQEngine {
         if (!m_showScriptTypePopup) return;
 
         ImGui::OpenPopup(TEXT("选择脚本类型"));
+        // Increase default size to accommodate two columns
+        ImGui::SetNextWindowSize(ImVec2(400, 200), ImGuiCond_FirstUseEver); 
         if (ImGui::BeginPopupModal(TEXT("选择脚本类型"), &m_showScriptTypePopup, ImGuiWindowFlags_AlwaysAutoResize)) {
             ImGui::Text(TEXT("为实体添加脚本 '%s'"), m_draggedFunctionName.c_str());
             ImGui::Separator();
 
-            if (ImGui::Button(TEXT("Ticker (每帧执行)"), ImVec2(150, 0))) {
+            ImGui::Columns(2, nullptr, true);
+
+            // Left Column: Old Component Style
+            ImGui::Text("独立组件模式");
+            ImGui::Separator();
+            if (ImGui::Button(TEXT("Ticker (每帧执行)"), ImVec2(-1, 0))) {
                 Scene* scene = m_dataManager->getCurrentScene();
                 if (scene) {
-                    entt::registry* registry = m_targetIsGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                     if (registry) {
                         registry->emplace_or_replace<TickerScriptComponent>(m_targetEntity, m_draggedFunctionName);
                     }
@@ -202,11 +209,10 @@ namespace MQEngine {
                 m_showScriptTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
-            ImGui::SameLine();
-            if (ImGui::Button(TEXT("OnStart (启动时执行)"), ImVec2(150, 0))) {
+            if (ImGui::Button(TEXT("OnStart (启动时执行)"), ImVec2(-1, 0))) {
                 Scene* scene = m_dataManager->getCurrentScene();
                 if (scene) {
-                    entt::registry* registry = m_targetIsGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                     if (registry) {
                         registry->emplace_or_replace<OnStartScriptComponent>(m_targetEntity, m_draggedFunctionName);
                     }
@@ -214,6 +220,36 @@ namespace MQEngine {
                 m_showScriptTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
+
+            ImGui::NextColumn();
+
+            // Right Column: New Function Table Style
+            ImGui::Text("函数表模式");
+            ImGui::Separator();
+            if (ImGui::Button(TEXT("添加到函数表"), ImVec2(-1, 0))) {
+                Scene* scene = m_dataManager->getCurrentScene();
+                if (scene) {
+                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                    if (registry) {
+                         auto& component = registry->get_or_emplace<ScriptFunctionTableComponent>(m_targetEntity);
+                         bool exists = false;
+                         for(const auto& func : component.onTicker) {
+                             if(func == m_draggedFunctionName) {
+                                 exists = true;
+                                 break;
+                             }
+                         }
+                         if(!exists) {
+                             component.onTicker.push_back(m_draggedFunctionName);
+                         }
+                    }
+                }
+                m_showScriptTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::Columns(1);
+
             ImGui::Separator();
             if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {
                 m_showScriptTypePopup = false;
@@ -258,11 +294,11 @@ namespace MQEngine {
     void SceneEntityViewer::createEntity(Scene* scene, const std::string& name, const std::string& trunkName, bool isGlobal) {
         entt::registry* registry = nullptr;
         if (isGlobal) {
-            registry = &scene->getRegistry();
+            registry = scene->getRegistry();
         } else {
             SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
             if (trunk) {
-                registry = &trunk->getRegistry();
+                registry = trunk->getRegistry();
             }
         }
 
@@ -278,11 +314,11 @@ namespace MQEngine {
 
         entt::registry* registry = nullptr;
         if (isGlobal) {
-            registry = &scene->getRegistry();
+            registry = scene->getRegistry();
         } else {
             SceneTrunk* trunk = scene->getLoadedTrunk(trunkName);
             if (trunk) {
-                registry = &trunk->getRegistry();
+                registry = trunk->getRegistry();
             }
         }
 
@@ -301,7 +337,7 @@ namespace MQEngine {
         Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
-        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
         registry->emplace_or_replace<StaticMeshInstance>(entity, modelUuid, meshName);
@@ -311,7 +347,7 @@ namespace MQEngine {
         Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
-        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
         registry->emplace_or_replace<DiffuseTextureComponent>(entity, modelUuid, texturePath);
@@ -374,7 +410,7 @@ namespace MQEngine {
         Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
-        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
         registry->emplace_or_replace<NormalTextureComponent>(entity, modelUuid, texturePath);
@@ -384,7 +420,7 @@ namespace MQEngine {
         Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
-        entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
         registry->emplace_or_replace<AlbedoTextureComponent>(entity, modelUuid, texturePath);
@@ -394,7 +430,7 @@ namespace MQEngine {
 		Scene* scene = m_dataManager->getCurrentScene();
 		if (!scene) return;
 
-		entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+		entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
 		if (!registry) return;
 
 		registry->emplace_or_replace<EmissiveTextureComponent>(entity, modelUuid, texturePath);
@@ -404,7 +440,7 @@ namespace MQEngine {
 			Scene* scene = m_dataManager->getCurrentScene();
 			if (!scene) return;
 	
-			entt::registry* registry = isGlobal ? &scene->getRegistry() : &scene->getLoadedTrunk(trunkName)->getRegistry();
+			entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
 			if (!registry) return;
 	
 			registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);

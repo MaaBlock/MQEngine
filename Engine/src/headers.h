@@ -16,7 +16,7 @@
 #include "thirdparty/thirdparty.h"
 #include "core/engine.h"
 #include "core/entry.h"
-#include "core/systemmanager.h"
+#include "manager/SystemManager.h"
 #include "core/TextureUtils.h"
 #include "data/DataManager.h"
 #include "system/ScriptSystem.h"

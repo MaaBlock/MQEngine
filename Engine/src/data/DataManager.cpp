@@ -71,13 +71,13 @@ namespace MQEngine
 
             auto scenePtr = m_loadScenes[uuid];
             if (scenePtr) {
-                appendRegistry(&scenePtr->getRegistry());
+                appendRegistry(scenePtr->getRegistry());
 
                 for (const auto& trunkName : scenePtr->getTrunkList()) {
                     if (scenePtr->isLoad(trunkName)) {
                         auto trunk = scenePtr->getLoadedTrunk(trunkName);
                         if (trunk) {
-                            appendRegistry(&trunk->getRegistry());
+                            appendRegistry(trunk->getRegistry());
                         }
                     }
                 }
@@ -99,12 +99,12 @@ namespace MQEngine
         if (m_loadScenes.find(uuid) != m_loadScenes.end()) {
             auto scenePtr = m_loadScenes[uuid];
             if (scenePtr) {
-                removeRegistry(&scenePtr->getRegistry());
+                removeRegistry(scenePtr->getRegistry());
                 for (const auto& trunkName : scenePtr->getTrunkList()) {
                     if (scenePtr->isLoad(trunkName)) {
                         auto trunk = scenePtr->getLoadedTrunk(trunkName);
                         if (trunk) {
-                            removeRegistry(&trunk->getRegistry());
+                            removeRegistry(trunk->getRegistry());
                         }
                     }
                 }

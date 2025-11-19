@@ -4,11 +4,27 @@
 
 #ifndef RESOURCEACTIVESYSTEM_H
 #define RESOURCEACTIVESYSTEM_H
-#include "../core/EngineGlobal.h"
-namespace MQEngine {
 
-    class ENGINE_API ResourceActiveSystem {
-        
+#include "ISystem.h"
+#include <FCT_Node/concurrentqueue.h>
+
+namespace MQEngine {
+    class DataManager;
+    struct CacheResource;
+
+    class ENGINE_API ResourceActiveSystem final : public ISystem {
+    public:
+        explicit ResourceActiveSystem(DataManager* dataManager);
+
+        void updateLogic() override;
+
+        void updateRender() override;
+
+        void requestActive(CacheResource* resource);
+
+    private:
+        moodycamel::ConcurrentQueue<CacheResource*> m_activeQueue;
+        DataManager* m_dataManager;
     };
 
 } // MQEngine

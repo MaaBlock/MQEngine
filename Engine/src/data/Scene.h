@@ -49,7 +49,7 @@ namespace MQEngine {
         {
             return m_loadedSceneTrunks.find(trunkName)!= m_loadedSceneTrunks.end();
         }
-        entt::registry& getRegistry() { return m_registry; }
+        entt::registry* getRegistry() { return m_registry.get(); }
         SceneTrunk* getLoadedTrunk(const std::string& trunkName)
         {
             auto it = m_loadedSceneTrunks.find(trunkName);
@@ -69,7 +69,7 @@ namespace MQEngine {
         bool m_isChunked = false;
         std::vector<std::string> m_sceneTrunk;
         std::map<std::string,std::unique_ptr<SceneTrunk>> m_loadedSceneTrunks;
-        entt::registry m_registry;
+        UniquePtr<entt::registry> m_registry;
         std::string m_uuid;
     };
 

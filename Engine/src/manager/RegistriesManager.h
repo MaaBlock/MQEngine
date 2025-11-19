@@ -35,6 +35,12 @@ namespace MQEngine {
                 entt::entity entity;
                 std::function<void(entt::registry&, entt::entity)> remover;
             };
+            struct Patch
+            {
+                entt::registry* registry;
+                entt::entity entity;
+                std::function<void(entt::registry&, entt::entity)> patcher;
+            };
         };
 
         RegistriesManager();
@@ -49,6 +55,8 @@ namespace MQEngine {
         void requestEmplaceComponent(entt::registry* registry, entt::entity entity, Args&&... args);
         template <typename T>
         void requestRemoveComponent(entt::registry* registry, entt::entity entity);
+        template <typename T, typename Func>
+        void requestGetOrEmplace(entt::registry* registry, entt::entity entity, Func&& func);
         /**
          * @param path 表路径
          * @return 读表的future对象
@@ -64,6 +72,7 @@ namespace MQEngine {
          */
         std::vector<entt::registry*> currentRegistries() const;
         entt::registry* createRegistry();
+        void storage(entt::registry* registry);
     private:
         std::vector<entt::registry*> m_registries;
         SingleQueueEventSystem m_requestQueue;

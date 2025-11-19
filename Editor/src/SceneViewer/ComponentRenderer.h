@@ -32,11 +32,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -74,11 +74,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -116,11 +116,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -252,11 +252,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -280,11 +280,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -306,11 +306,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -330,11 +330,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -404,11 +404,11 @@ namespace MQEngine {
                 if (selectedEntity.scene) {
                     entt::registry* registry;
                     if (selectedEntity.isGlobal) {
-                        registry = &selectedEntity.scene->getRegistry();
+                        registry = selectedEntity.scene->getRegistry();
                     } else {
                         SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
                         if (!trunk) return;
-                        registry = &trunk->getRegistry();
+                        registry = trunk->getRegistry();
                     }
                     
                     if (registry->valid(selectedEntity.entity)) {
@@ -483,6 +483,87 @@ namespace MQEngine {
             }
 
             ImGui::Unindent(); 
+        }
+    }
+
+    template<>
+    inline void renderComponent<ScriptFunctionTableComponent>(const ScriptFunctionTableComponent* component) {
+        if (ImGui::CollapsingHeader("Script Function Table", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            
+            auto& selectedEntity = g_editorGlobal.selectedEntity;
+            ScriptFunctionTableComponent* mutableComponent = nullptr;
+            if (selectedEntity.scene) {
+                entt::registry* registry = nullptr;
+                if (selectedEntity.isGlobal) {
+                    registry = selectedEntity.scene->getRegistry();
+                } else {
+                    SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                    if (trunk) registry = trunk->getRegistry();
+                }
+                if (registry && registry->valid(selectedEntity.entity)) {
+                    mutableComponent = registry->try_get<ScriptFunctionTableComponent>(selectedEntity.entity);
+                }
+            }
+
+            ImGui::Text("OnTicker Functions:");
+            if (mutableComponent) {
+                for (int i = 0; i < mutableComponent->onTicker.size(); ++i) {
+                    ImGui::PushID(i);
+                    
+                    char buffer[128];
+                    strncpy(buffer, mutableComponent->onTicker[i].c_str(), sizeof(buffer));
+                    buffer[sizeof(buffer) - 1] = '\0'; // Ensure null termination
+
+                    if (ImGui::InputText("##func", buffer, sizeof(buffer))) {
+                         mutableComponent->onTicker[i] = buffer;
+                    }
+                    ImGui::SameLine();
+                    if (ImGui::Button("Remove")) {
+                         mutableComponent->onTicker.erase(mutableComponent->onTicker.begin() + i);
+                         i--; 
+                    }
+                    
+                    ImGui::PopID();
+                }
+
+                if (ImGui::Button("Add Function")) {
+                    mutableComponent->onTicker.push_back("NewFunction");
+                }
+            } else {
+                 for (const auto& func : component->onTicker) {
+                     ImGui::Text("- %s", func.c_str());
+                 }
+            }
+
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##ScriptFunctionTableComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<ScriptFunctionTableComponent>::value();
+            }
+            
+            ImGui::Unindent();
+        }
+    }
+
+    template<>
+    inline void renderComponent<CacheScriptComponent>(const CacheScriptComponent* component) {
+        if (ImGui::CollapsingHeader("Cache Script (Runtime)", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            
+            if (component->m_jsObject) {
+                ImGui::Text("JS Object: Valid (%p)", component->m_jsObject);
+            } else {
+                ImGui::Text("JS Object: Null");
+            }
+            
+            ImGui::Text("Note: Runtime cache, not editable.");
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##CacheScriptComponent")) {
+                 g_editorGlobal.componentToDelete = entt::type_hash<CacheScriptComponent>::value();
+            }
+
+            ImGui::Unindent();
         }
     }
     

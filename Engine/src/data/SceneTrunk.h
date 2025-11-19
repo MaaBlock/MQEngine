@@ -26,7 +26,7 @@ namespace MQEngine {
         void init();
         Status save();
         void load();
-        entt::registry& getRegistry() { return m_registry; }
+        entt::registry* getRegistry() { return m_registry.get(); }
     private:
         friend class boost::serialization::access;
 
@@ -35,7 +35,7 @@ namespace MQEngine {
         {
             ar & m_name;
         }
-        entt::registry m_registry;
+        UniquePtr<entt::registry> m_registry;
         std::string m_name;
         Scene* m_scene;
     };

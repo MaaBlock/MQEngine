@@ -304,6 +304,23 @@ namespace MQEngine
                 }
                 ImGui::EndMenu();
             }
+            if (g_engineGlobal.isRunning)
+            {
+                if (ImGui::MenuItem(TEXT("停止运行")))
+                {
+                    g_engineGlobal.isRunning = false;
+                    g_engineGlobal.systemManager->requestSetSystemEnabled("ScriptCacheSystem", false);
+                }
+            }
+            else
+            {
+                if (ImGui::MenuItem(TEXT("开始运行")))
+                {
+                    g_engineGlobal.isRunning = true;
+                    g_engineGlobal.systemManager->requestSetSystemEnabled("ScriptCacheSystem", true);
+                }
+            }
+
             ImGui::EndMainMenuBar();
         }
     }

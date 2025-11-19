@@ -265,6 +265,26 @@ namespace MQEngine {
         }
     };
     BOOST_DESCRIBE_STRUCT(OrmTextureComponent, (TextureComponent), ())
+
+    struct ENGINE_API CacheScriptComponent
+    {
+        FCT::JSObject* m_jsObject = nullptr;
+    };
+    BOOST_DESCRIBE_STRUCT(CacheScriptComponent, (), (m_jsObject))
+
+    struct ENGINE_API ScriptFunctionTableComponent
+    {
+        std::vector<std::string> onTicker;
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & onTicker;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(ScriptFunctionTableComponent, (), (onTicker))
+
     using AllComponentsList = std::tuple<
         StaticMeshInstance,
         TickerScriptComponent,
@@ -283,7 +303,9 @@ namespace MQEngine {
         PositionComponent,
         RotationComponent,
         ScaleComponent,
-        CameraComponent
+        CameraComponent,
+        CacheScriptComponent,
+        ScriptFunctionTableComponent
     >;
 }
 

@@ -4,6 +4,7 @@
 
 #include "DataManager.h"
 #include "SavedComponentsList.h"
+#include "../manager/RegistriesManager.h"
 namespace MQEngine
 {
 
@@ -15,6 +16,7 @@ namespace MQEngine
 
     void Scene::init()
     {
+        m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
         m_loadedSceneTrunks["default"] = std::make_unique<SceneTrunk>("default",this);
         auto trunk = m_loadedSceneTrunks["default"].get();
         trunk->init();
@@ -60,7 +62,7 @@ namespace MQEngine
             m_loadedSceneTrunks[trunkName] = std::move(trunk);
 
             if (m_dataManager->getCurrentSceneUuid() == m_uuid) {
-                m_dataManager->appendRegistry(&m_loadedSceneTrunks[trunkName]->getRegistry());
+                m_dataManager->appendRegistry(m_loadedSceneTrunks[trunkName]->getRegistry());
             }
 
         } catch (const DataError& e) {
@@ -97,7 +99,7 @@ namespace MQEngine
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
                 EnttOutputArchiveWrapper wrapper(archive);
-                SerializeComponents(entt::snapshot{m_registry}, wrapper);
+                SerializeComponents(entt::snapshot{*m_registry}, wrapper);
             } else {
                 throw DataError("无法创建registry文件: " + registryDataPath);
             }
@@ -140,14 +142,17 @@ namespace MQEngine
                 m_sceneTrunk.push_back("default");
             }
 
-            m_registry.clear();
+            // Use RegistriesManager to create registry
+            m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
+
             if (m_dataManager->getDataLoader()->fileExists(registryDataPath)) {
                 auto registryStream = m_dataManager->getDataLoader()->openBinaryInputStream(registryDataPath);
                 if (registryStream && registryStream->is_open()) {
+                    m_registry->clear();
                     boost::archive::binary_iarchive archive(*registryStream);
                     EnttInputArchiveWrapper wrapper(archive);
-                    SerializeComponents(entt::snapshot_loader{m_registry}, wrapper);
-
+                    SerializeComponents(entt::snapshot_loader{*m_registry}, wrapper);
+                    g_engineGlobal.registriesManager->storage(m_registry.get());
                 }
             }
 

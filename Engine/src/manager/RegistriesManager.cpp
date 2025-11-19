@@ -69,6 +69,16 @@ namespace MQEngine {
                 }
                 return InvalidArgumentError("移除组件失败：registry 为空。");
             });
+
+        m_requestQueue.subscribe<Request::Patch>(
+            [](Request::Patch& request)
+            {
+                if (request.registry) {
+                    request.patcher(*request.registry, request.entity);
+                    return OkStatus();
+                }
+                return InvalidArgumentError("修改组件失败：registry 为空。");
+            });
     }
     void RegistriesManager::requestSaveRegistries(std::string path, entt::registry* registry)
     {
@@ -111,13 +121,16 @@ namespace MQEngine {
     entt::registry* RegistriesManager::createRegistry()
     {
         auto registry = FCT_NEW(entt::registry);
+        storage(registry);
+        return registry;
+    }
 
+    void RegistriesManager::storage(entt::registry* registry)
+    {
         [&]<typename... Components>(std::tuple<Components...>)
         {
             (registry->storage<Components>(), ...);
 
         }(AllComponentsList{});
-
-        return registry;
     }
 } // MQEngine

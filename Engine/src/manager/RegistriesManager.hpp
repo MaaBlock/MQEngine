@@ -20,5 +20,16 @@ namespace MQEngine
         m_requestQueue.enqueue(Request::RemoveComponent{registry, entity, [](entt::registry& reg, entt::entity ent)
                                                         { reg.template remove<T>(ent); }});
     }
+
+    template <typename T, typename Func>
+    void RegistriesManager::requestGetOrEmplace(entt::registry* registry, entt::entity entity, Func&& func)
+    {
+        m_requestQueue.enqueue(Request::Patch{
+            registry, entity, [func = std::forward<Func>(func)](entt::registry& reg, entt::entity ent)
+            {
+                auto& component = reg.get_or_emplace<T>(ent);
+                func(component);
+            }});
+    }
 } // namespace MQEngine
 #endif // REGISTRIESMANAGER_HPP

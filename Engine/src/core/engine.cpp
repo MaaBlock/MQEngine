@@ -20,6 +20,7 @@ namespace MQEngine
 #include "../data/Camera.h"
 #include "./GraphicsEnv.h"
 #include "../manager/RegistriesManager.h"
+#include "../system/ScriptCacheSystem.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
@@ -41,6 +42,7 @@ namespace MQEngine
     void Engine::settingUpEnv()
     {
         m_systemManager.init();
+        g_engineGlobal.systemManager = &m_systemManager;
         m_nodeEnv = new NodeEnvironment;
         //todo:要从DataLoader里读包
         m_nodeEnv->addModulePath("./res/scripts/node_modules");
@@ -65,6 +67,7 @@ namespace MQEngine
         m_cameraSystem = makeUnique<CameraSystem>(m_ctx,m_dataManager);
         m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
+        m_scriptCacheSystem = makeUnique<ScriptCacheSystem>(m_dataManager, m_scriptSystem.get());
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
         m_textureRenderSystem = makeUnique<TextureCacheSystem>(m_ctx,m_dataManager);
@@ -72,12 +75,17 @@ namespace MQEngine
         m_registriesManager = makeUnique<RegistriesManager>();
         m_textureSamplerSystem = makeUnique<TextureSamplerSystem>(m_ctx);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
+        g_engineGlobal.scriptCacheSystem = m_scriptCacheSystem.get();
         g_engineGlobal.cameraSystem = m_cameraSystem.get();
         g_engineGlobal.lightingSystem = m_lightingSystem.get();
         g_engineGlobal.matrixCacheSystem = m_matrixCacheSystem.get();
         g_engineGlobal.textureRenderSystem = m_textureRenderSystem.get();
         g_engineGlobal.shininessSystem = m_shininessSystem.get();
         g_engineGlobal.registriesManager = m_registriesManager.get();
+        
+        m_systemManager.requestAddSystem("ScriptCacheSystem", m_scriptCacheSystem.get());
+        m_systemManager.requestSetSystemEnabled("ScriptCacheSystem", false);
+        
         m_application->init();
         m_techManager = makeUnique<TechManager>();
     }
@@ -486,6 +494,7 @@ namespace MQEngine
         m_lightingSystem->updateLogic();
         m_shininessSystem->update();
         m_scriptSystem->setLogicDeltaTime(deltaTime);
+        m_systemManager.logicTick();
         m_scriptSystem->update();
         m_ctx->flush();
     }

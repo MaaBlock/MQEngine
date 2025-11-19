@@ -12,6 +12,7 @@
 #include "../system/MatrixCacheSystem.h"
 #include "../system/MeshCacheSystem.h"
 #include "../system/ScriptSystem.h"
+#include "../system/ScriptCacheSystem.h"
 #include "../system/ShininessSystem.h"
 #include "../system/TextureCacheSystem.h"
 #include "../system/TextureSamplerSystem.h"
@@ -22,7 +23,7 @@
 #include "VertexLayouts.h"
 #include "application.h"
 #include "layout.h"
-#include "systemmanager.h"
+#include "../manager/SystemManager.h"
 
 namespace FCT
 {
@@ -45,6 +46,8 @@ namespace MQEngine {
         void loop();
         static Engine& getInstance();
         static void RegisterApplicationFactory(CreateApplicationFn fn);
+        
+        SystemManager& getSystemManager() { return m_systemManager; }
 
         static Engine* s_instance;
     private:
@@ -87,6 +90,7 @@ namespace MQEngine {
         FCT::UniquePtr<CameraSystem> m_cameraSystem;
         FCT::UniquePtr<MeshCacheSystem> m_meshRenderSystem;
         FCT::UniquePtr<ScriptSystem> m_scriptSystem;
+        FCT::UniquePtr<ScriptCacheSystem> m_scriptCacheSystem;
         FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
         FCT::UniquePtr<LightingSystem> m_lightingSystem;
         FCT::UniquePtr<TextureCacheSystem> m_textureRenderSystem;

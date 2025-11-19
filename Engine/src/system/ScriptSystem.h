@@ -55,6 +55,8 @@ namespace MQEngine {
          */
         void setLogicDeltaTime(float deltaTime);
         
+        FCT::NodeEnvironment* getNodeEnvironment() const { return m_nodeEnv.get(); }
+        
     private:
         DataManager* m_dataManager;
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;

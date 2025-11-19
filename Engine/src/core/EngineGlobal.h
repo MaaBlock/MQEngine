@@ -13,11 +13,13 @@ namespace MQEngine
     class TextureCacheSystem;
     class ShininessSystem;
     class RegistriesManager;
+    class ScriptCacheSystem;
+    class SystemManager;
 
     struct ENGINE_API EngineGlobal
     {
         Context* ctx;
-        FCT::Runtime* rt;
+        Runtime* rt;
         DataManager* dataManager;
         ScriptSystem* scriptSystem;
         CameraSystem* cameraSystem;
@@ -26,7 +28,10 @@ namespace MQEngine
         TextureCacheSystem* textureRenderSystem;
         ShininessSystem* shininessSystem;
         RegistriesManager* registriesManager;
+        ScriptCacheSystem* scriptCacheSystem;
+        SystemManager* systemManager;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
+        bool isRunning = false;
         EngineGlobal() = default;
         EngineGlobal(const EngineGlobal&) = delete;
         EngineGlobal& operator=(const EngineGlobal&) = delete;

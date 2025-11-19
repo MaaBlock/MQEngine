@@ -4,6 +4,7 @@
 #include "EnttArchiveWrapper.h"
 #include "SavedComponentsList.h"
 #include "Scene.h"
+#include "../manager/RegistriesManager.h"
 
 namespace MQEngine {
     SceneTrunk::SceneTrunk(std::string name, Scene* scene)
@@ -14,7 +15,7 @@ namespace MQEngine {
 
     void SceneTrunk::init()
     {
-
+        m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
     }
 
     Status SceneTrunk::save()
@@ -44,7 +45,7 @@ namespace MQEngine {
             if (registryStream && registryStream->is_open()) {
                 boost::archive::binary_oarchive archive(*registryStream);
                 EnttOutputArchiveWrapper wrapper(archive);
-                SerializeComponents(entt::snapshot{m_registry}, wrapper);
+                SerializeComponents(entt::snapshot{*m_registry}, wrapper);
 
             } else {
                 throw DataError("无法创建场景块registry文件: " + trunkRegistryPath);
@@ -73,7 +74,7 @@ namespace MQEngine {
 
             auto dataManager = m_scene->getDataManager();
 
-            m_registry.clear();
+            m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
 
             if (dataManager->getDataLoader()->fileExists(trunkDataPath)) {
                 auto trunkStream = dataManager->getDataLoader()->openBinaryInputStream(trunkDataPath);
@@ -86,9 +87,11 @@ namespace MQEngine {
             if (dataManager->getDataLoader()->fileExists(trunkRegistryPath)) {
                 auto registryStream = dataManager->getDataLoader()->openBinaryInputStream(trunkRegistryPath);
                 if (registryStream && registryStream->is_open()) {
+                    m_registry->clear();
                     boost::archive::binary_iarchive archive(*registryStream);
                     EnttInputArchiveWrapper wrapper(archive);
-                    SerializeComponents(entt::snapshot_loader{m_registry}, wrapper);
+                    SerializeComponents(entt::snapshot_loader{*m_registry}, wrapper);
+                    g_engineGlobal.registriesManager->storage(m_registry.get());
                 }
             }
 

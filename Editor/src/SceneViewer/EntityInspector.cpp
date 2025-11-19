@@ -43,11 +43,11 @@ namespace MQEngine {
 
         entt::registry* registry = nullptr;
         if (selectedEntity.isGlobal) {
-            registry = &selectedEntity.scene->getRegistry();
+            registry = selectedEntity.scene->getRegistry();
         } else {
             SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
             if (trunk) {
-                registry = &trunk->getRegistry();
+                registry = trunk->getRegistry();
             }
         }
         
@@ -166,6 +166,13 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
+
+            if (ImGui::MenuItem("Script Function Table")) {
+                if (!registry->all_of<ScriptFunctionTableComponent>(selectedEntity.entity)) {
+                    registry->emplace<ScriptFunctionTableComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
             
             ImGui::EndPopup();
         }
@@ -209,6 +216,8 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<NormalTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<EmissiveTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<OrmTextureComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<ScriptFunctionTableComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<CacheScriptComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);
