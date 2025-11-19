@@ -52,14 +52,51 @@ namespace MQEngine {
             auto creationView = registry->view<ScriptFunctionTableComponent>(entt::exclude<CacheScriptComponent>);
             for (auto entity : creationView)
             {
-                auto* jsObject = new FCT::JSObject(nodeEnv->createJSObject());
+                auto& table = registry->get<ScriptFunctionTableComponent>(entity);
+
+                auto* jsObject = new FCT::JSObject(nodeEnv->callFunction<FCT::JSObject>("createEntityObject"));
+
+                for (const auto& funcName : table.onTicker) {
+                    nodeEnv->callFunction("assignGlobalFunction", *jsObject, funcName);
+                }
+                
                 g_engineGlobal.registriesManager->requestEmplaceComponent<CacheScriptComponent>(registry, entity, jsObject);
+            }
+
+            auto executionView = registry->view<CacheScriptComponent>();
+            for (auto entity : executionView)
+            {
+                auto& cache = executionView.get<CacheScriptComponent>(entity);
+                if (cache.m_jsObject)
+                {
+                    cache.m_jsObject->call("_onTicker");
+                }
             }
         }
     }
 
     void ScriptCacheSystem::updateRender()
     {
+    }
+
+    void ScriptCacheSystem::onDeactivate()
+    {
+        if (!m_dataManager) return;
+        auto registries = m_dataManager->currentRegistries();
+        for (auto* registry : registries)
+        {
+            if (!registry) continue;
+            auto view = registry->view<CacheScriptComponent>();
+            for (auto entity : view)
+            {
+                auto& cache = view.get<CacheScriptComponent>(entity);
+                if (cache.m_jsObject) {
+                    delete cache.m_jsObject;
+                    cache.m_jsObject = nullptr;
+                }
+            }
+            g_engineGlobal.registriesManager->requestClearComponent<CacheScriptComponent>(registry);
+        }
     }
 
 } // MQEngine

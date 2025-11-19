@@ -23,6 +23,10 @@ namespace MQEngine
             
             m_systemGraph.addNode(req.name, req.system, req.pre, req.succ);
             m_dirty = true;
+            
+            if (req.system) {
+                req.system->onActivate();
+            }
             return OkStatus();
         });
 
@@ -33,8 +37,10 @@ namespace MQEngine
                     it->second.enabled = req.enabled;
                     if (req.enabled) {
                         m_systemGraph.addNode(it->second.name, it->second.system, it->second.pre, it->second.succ);
+                        if (it->second.system) it->second.system->onActivate();
                     } else {
                         m_systemGraph.removeNode(req.name);
+                        if (it->second.system) it->second.system->onDeactivate();
                     }
                     m_dirty = true;
                 }

@@ -43,6 +43,25 @@ namespace MQEngine {
                 globalThis.engine = {
                     logicDealt: 0.0
                 };
+                globalThis.createEntityObject = function() {
+                    return {
+                        _tickers: {},
+                        _onTicker: function() {
+                            const tickers = this._tickers;
+                            for (let key in tickers) {
+                                if (typeof tickers[key] === 'function') {
+                                    tickers[key].call(this);
+                                }
+                            }
+                        }
+                    };
+                };
+                globalThis.assignGlobalFunction = function(obj, name) {
+                     if (typeof globalThis[name] === 'function') {
+                         if (!obj._tickers) obj._tickers = {};
+                         obj._tickers[name] = globalThis[name];
+                     }
+                };
             )");
 
             registerEntityFunctions();

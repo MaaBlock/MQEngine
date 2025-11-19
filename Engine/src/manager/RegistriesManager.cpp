@@ -70,6 +70,16 @@ namespace MQEngine {
                 return InvalidArgumentError("移除组件失败：registry 为空。");
             });
 
+        m_requestQueue.subscribe<Request::ClearComponent>(
+            [](Request::ClearComponent& request)
+            {
+                if (request.registry) {
+                    request.clearer(*request.registry);
+                    return OkStatus();
+                }
+                return InvalidArgumentError("清空组件失败：registry 为空。");
+            });
+
         m_requestQueue.subscribe<Request::Patch>(
             [](Request::Patch& request)
             {

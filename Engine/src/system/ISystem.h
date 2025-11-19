@@ -35,6 +35,14 @@ namespace MQEngine {
          * @brief 渲染线程更新
          */
         virtual void updateRender() = 0;
+        /**
+         * @brief 系统激活时调用
+         */
+        virtual void onActivate() {}
+        /**
+         * @brief 系统停用时调用
+         */
+        virtual void onDeactivate() {}
     };
 } // MQEngine
 

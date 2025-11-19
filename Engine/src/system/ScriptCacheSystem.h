@@ -19,6 +19,7 @@ namespace MQEngine {
 
         void updateLogic() override;
         void updateRender() override;
+        void onDeactivate() override;
 
     private:
         DataManager* m_dataManager;

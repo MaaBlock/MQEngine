@@ -21,6 +21,13 @@ namespace MQEngine
                                                         { reg.template remove<T>(ent); }});
     }
 
+    template <typename T>
+    void RegistriesManager::requestClearComponent(entt::registry* registry)
+    {
+        m_requestQueue.enqueue(Request::ClearComponent{registry, [](entt::registry& reg)
+                                                       { reg.template clear<T>(); }});
+    }
+
     template <typename T, typename Func>
     void RegistriesManager::requestGetOrEmplace(entt::registry* registry, entt::entity entity, Func&& func)
     {

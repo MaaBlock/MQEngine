@@ -35,6 +35,11 @@ namespace MQEngine {
                 entt::entity entity;
                 std::function<void(entt::registry&, entt::entity)> remover;
             };
+            struct ClearComponent
+            {
+                entt::registry* registry;
+                std::function<void(entt::registry&)> clearer;
+            };
             struct Patch
             {
                 entt::registry* registry;
@@ -55,6 +60,8 @@ namespace MQEngine {
         void requestEmplaceComponent(entt::registry* registry, entt::entity entity, Args&&... args);
         template <typename T>
         void requestRemoveComponent(entt::registry* registry, entt::entity entity);
+        template <typename T>
+        void requestClearComponent(entt::registry* registry);
         template <typename T, typename Func>
         void requestGetOrEmplace(entt::registry* registry, entt::entity entity, Func&& func);
         /**
