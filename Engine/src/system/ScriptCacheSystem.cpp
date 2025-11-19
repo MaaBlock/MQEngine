@@ -54,7 +54,10 @@ namespace MQEngine {
             {
                 auto& table = registry->get<ScriptFunctionTableComponent>(entity);
 
-                auto* jsObject = new FCT::JSObject(nodeEnv->callFunction<FCT::JSObject>("createEntityObject"));
+                auto* jsObject = new FCT::JSObject(
+                        nodeEnv->callFunction<FCT::JSObject>("createEntityObject",
+                        static_cast<uint32_t>(entity),
+                        reinterpret_cast<uint64_t>(registry)));
 
                 for (const auto& funcName : table.onTicker) {
                     nodeEnv->callFunction("assignGlobalFunction", *jsObject, funcName);

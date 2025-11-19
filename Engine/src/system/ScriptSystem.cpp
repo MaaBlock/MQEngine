@@ -43,8 +43,12 @@ namespace MQEngine {
                 globalThis.engine = {
                     logicDealt: 0.0
                 };
-                globalThis.createEntityObject = function() {
-                    return {
+                globalThis.createEntityObject = function(entityId, registryPtr) {
+                    let obj = {
+                        entity: {
+                            id: entityId,
+                            registry: registryPtr
+                        },
                         _tickers: {},
                         _onTicker: function() {
                             const tickers = this._tickers;
@@ -55,6 +59,15 @@ namespace MQEngine {
                             }
                         }
                     };
+                    obj.components = new Proxy({}, {
+                        get: function(target, prop) {
+                            return globalThis.entityInfo.getComponentById(obj.entity.registry, obj.entity.id, prop);
+                        },
+                        set: function(target, prop, value) {
+                            return globalThis.entityInfo.setComponentById(obj.entity.registry, obj.entity.id, prop, value);
+                        }
+                    });
+                    return obj;
                 };
                 globalThis.assignGlobalFunction = function(obj, name) {
                      if (typeof globalThis[name] === 'function') {
@@ -556,6 +569,74 @@ namespace MQEngine {
                 }
             } catch (const std::exception& e) {
                 std::cerr << "Error in entityInfo.removeComponent: " << e.what() << std::endl;
+            }
+            return false;
+        };
+
+        entityInfo["getComponentById"] = [this](double registryPtrDouble, uint32_t entityId, std::string componentName) -> v8::Local<v8::Value> {
+            try {
+                uint64_t registryPtr = static_cast<uint64_t>(registryPtrDouble);
+                auto registries = m_dataManager->currentRegistries();
+                if (registries.empty()) return v8::Undefined(m_nodeEnv->isolate());
+
+                entt::registry* targetRegistry = reinterpret_cast<entt::registry*>(registryPtr);
+                auto it = std::find(registries.begin(), registries.end(), targetRegistry);
+                if (it != registries.end()) {
+                    entt::entity entity = static_cast<entt::entity>(entityId);
+                    
+                    if (!m_componentReflection->hasComponent(*targetRegistry, entity, componentName)) {
+                        return v8::Undefined(m_nodeEnv->isolate());
+                    }
+
+                    v8::Local<v8::Object> jsObject = v8::Object::New(m_nodeEnv->isolate());
+                    auto fieldNames = m_componentReflection->getComponentFieldNames(componentName);
+
+                    for (const auto& fieldName : fieldNames) {
+                        try {
+                            auto value = m_componentReflection->getComponentField(*targetRegistry, entity, componentName, fieldName);
+                            v8::Local<v8::Value> jsValue = convertComponentValueToJS(value);
+                            jsObject->Set(m_nodeEnv->context(), convertToJS(*m_nodeEnv, fieldName).As<v8::String>(), jsValue);
+                        } catch (const std::exception& e) {
+                            // Suppress individual field errors or log them
+                        }
+                    }
+                    return jsObject;
+                }
+            } catch (const std::exception& e) {
+                std::cerr << "Error in entityInfo.getComponentById: " << e.what() << std::endl;
+            }
+            return v8::Undefined(m_nodeEnv->isolate());
+        };
+
+        entityInfo["setComponentById"] = [this](double registryPtrDouble, uint32_t entityId, std::string componentName, FCT::JSObject componentObj) -> bool {
+            try {
+                uint64_t registryPtr = static_cast<uint64_t>(registryPtrDouble);
+                auto registries = m_dataManager->currentRegistries();
+                if (registries.empty()) return false;
+
+                entt::registry* targetRegistry = reinterpret_cast<entt::registry*>(registryPtr);
+                auto it = std::find(registries.begin(), registries.end(), targetRegistry);
+                if (it != registries.end()) {
+                    entt::entity entity = static_cast<entt::entity>(entityId);
+
+                    auto fieldNames = m_componentReflection->getComponentFieldNames(componentName);
+
+                    for (const auto& fieldName : fieldNames) {
+                        if (componentObj.hasProperty(fieldName)) {
+                            std::string fieldType = m_componentReflection->getComponentFieldType(componentName, fieldName);
+                            try {
+                                FCT::JSAny fieldValue = componentObj.get<FCT::JSAny>(fieldName);
+                                ComponentValue componentValue = convertJSObjectToComponentValue(fieldType, fieldValue, fieldName);
+                                m_componentReflection->setComponentField(*targetRegistry, entity, componentName, fieldName, componentValue);
+                            } catch (const std::exception& e) {
+                                // Suppress error
+                            }
+                        }
+                    }
+                    return true;
+                }
+            } catch (const std::exception& e) {
+                std::cerr << "Error in entityInfo.setComponentById: " << e.what() << std::endl;
             }
             return false;
         };
