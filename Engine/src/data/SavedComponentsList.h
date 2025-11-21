@@ -16,7 +16,9 @@ namespace MQEngine {
         .template get<PositionComponent>(wrapper)
         .template get<RotationComponent>(wrapper)
         .template get<ScaleComponent>(wrapper)
-        .template get<CameraComponent>(wrapper);
+        .template get<CameraComponent>(wrapper)
+        .template get<SkyboxComponent>(wrapper)
+        .template get<ScriptFunctionTableComponent>(wrapper);
     }
 }
 #endif //SAVEDCOMPONENTSLIST_H

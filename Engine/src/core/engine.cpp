@@ -16,6 +16,8 @@ namespace MQEngine
 #include "g_engineShaderNormalMapObjectVertex.h"
 #include "g_engineShaderPBRVertex.h"
 #include "g_engineShaderPBRPixel.h"
+#include "g_engineShaderSkyboxVertex.h"
+#include "g_engineShaderSkyboxPixel.h"
 #include "../data/Component.h"
 #include "../data/Camera.h"
 #include "./GraphicsEnv.h"
@@ -68,6 +70,7 @@ namespace MQEngine
         m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
         m_scriptCacheSystem = makeUnique<ScriptCacheSystem>(m_dataManager, m_scriptSystem.get());
+        m_skyboxCacheSystem = makeUnique<SkyboxCacheSystem>(m_ctx, m_dataManager);
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
         m_textureRenderSystem = makeUnique<TextureCacheSystem>(m_ctx,m_dataManager);
@@ -363,6 +366,48 @@ namespace MQEngine
             if (!ret.ok())
                 spdlog::error("Failed to add tech: {}", ret.message());
         }
+        {
+            auto ret = m_techManager->addTech("ObjectPass", Tech(
+                TechName{"SkyboxTech"},
+                VertexShaderSource{LoadStringFromStringResource(g_engineShaderSkyboxVertex, g_engineShaderSkyboxVertexSize)},
+                PixelShaderSource{LoadStringFromStringResource(g_engineShaderSkyboxPixel, g_engineShaderSkyboxPixelSize)},
+                vertexLayout,
+                pixelLayout,
+                std::vector<FCT::UniformSlot>{
+                    CameraUniformSlot,
+                    ModelUniformSlot 
+                },
+                std::vector<FCT::TextureSlot>{
+                    TextureSlot{"skyboxTexture", FCT::TextureType::TextureCube}
+                },
+                m_cameraSystem.get(),
+                m_textureSamplerSystem.get(),
+                ComponentFilter()
+                .include<CacheSkyboxComponent>(),
+                EntityOperationCallback(
+                    [this](const EntityRenderContext& context)
+                    {
+                        if (context.registry.all_of<CacheSkyboxComponent>(context.entity))
+                        {
+                            const auto& skyboxComp = context.registry.get<CacheSkyboxComponent>(context.entity);
+                            
+                            if (skyboxComp.texture) {
+                                context.layout->bindTexture("skyboxTexture", skyboxComp.texture);
+                            }
+
+                            // Bind model matrix
+                            g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+
+                            if (m_skyboxMesh)
+                            {
+                                context.layout->drawMesh(context.cmdBuf, m_skyboxMesh);
+                            }
+                        }
+                    })
+            ));
+            if (!ret.ok())
+                spdlog::error("Failed to add tech: {}", ret.message());
+        }
     }
 
     void Engine::settingUpPass()
@@ -424,6 +469,36 @@ namespace MQEngine
         m_diffuseSampler->setFilter(FCT::FilterMode::Linear, FCT::FilterMode::Linear, FCT::FilterMode::Nearest);
         m_diffuseSampler->setAddressMode(FCT::AddressMode::Repeat, FCT::AddressMode::Repeat, FCT::AddressMode::Repeat);
         m_diffuseSampler->create();
+        
+        m_skyboxMesh = new FCT::StaticMesh<uint32_t>(m_ctx, vertexLayout);
+        
+        std::vector<FCT::Vec3> positions = {
+            {-1, -1,  1}, { 1, -1,  1}, { 1,  1,  1}, {-1,  1,  1}, // Front
+            {-1, -1, -1}, { 1, -1, -1}, { 1,  1, -1}, {-1,  1, -1}  // Back
+        };
+        
+        for(const auto& pos : positions) {
+            m_skyboxMesh->addVertex(
+                FCT::Vec4(1.0f, 1.0f, 1.0f, 1.0f),     // Color
+                FCT::Vec4(pos.x, pos.y, pos.z, 1.0f),  // Position
+                FCT::Vec2(0.0f, 0.0f),                 // TexCoord
+                FCT::Vec3(0.0f, 0.0f, 1.0f),           // Normal
+                FCT::Vec3(1.0f, 0.0f, 0.0f),           // Tangent
+                FCT::Vec3(0.0f, 1.0f, 0.0f)            // Bitangent
+            );
+        }
+
+        std::vector<uint32_t> indices = {
+            0, 2, 1, 0, 3, 2, // Front
+            5, 7, 6, 5, 4, 7, // Back
+            3, 6, 2, 3, 7, 6, // Top
+            4, 1, 5, 4, 0, 1, // Bottom
+            1, 6, 5, 1, 2, 6, // Right
+            4, 3, 0, 4, 7, 3  // Left
+        };
+        
+        m_skyboxMesh->setIndices(indices);
+        m_skyboxMesh->create();
     }
 
 
@@ -489,6 +564,7 @@ namespace MQEngine
         m_application->logicTick();
         m_matrixCacheSystem->updateLogic();
         m_cameraSystem->updateLogic();
+        m_skyboxCacheSystem->updateLogic();
         m_meshRenderSystem->update();
         m_textureRenderSystem->updateLogic();
         m_lightingSystem->updateLogic();

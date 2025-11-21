@@ -176,3 +176,13 @@ fct_embed_resource(
         FILES "${CMAKE_SOURCE_DIR}/Res/shaders/PBRPixel.hlsl"
         PREFIX "g_engineShader"
 )
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/SkyboxVertex.hlsl"
+        PREFIX "g_engineShader"
+)
+fct_embed_resource(
+        TARGET Engine
+        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/SkyboxPixel.hlsl"
+        PREFIX "g_engineShader"
+)

@@ -25,6 +25,8 @@ namespace MQEngine {
         }
         
         ImGui::End();
+
+        m_inputPopup.render();
     }
     
     void EntityInspector::renderEntityDetails()
@@ -173,6 +175,18 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
+
+            if (ImGui::MenuItem("Skybox Component")) {
+                if (!registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
+                    m_inputPopup.open("设置 Skybox 路径", "Skybox 路径", "Res/textures/skybox/",
+                    [registry, selectedEntity](const std::string& path) {
+                        if (registry->valid(selectedEntity.entity) && !registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
+                            registry->emplace<SkyboxComponent>(selectedEntity.entity, path);
+                        }
+                    }, "路径应包含6个面: right.jpg, left.jpg, ...");
+                }
+                ImGui::CloseCurrentPopup();
+            }
             
             ImGui::EndPopup();
         }
@@ -218,6 +232,8 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<OrmTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ScriptFunctionTableComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CacheScriptComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<SkyboxComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<CacheSkyboxComponent>(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);

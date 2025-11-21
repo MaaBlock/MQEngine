@@ -2,6 +2,8 @@
 #define ENTITYINSPECTOR_H
 #include "../thirdparty/thirdparty.h"
 #include "../core/Global.h"
+#include "../imgui/GenericInputPopup.h"
+
 namespace MQEngine {
 
     class EntityInspector {
@@ -15,6 +17,8 @@ namespace MQEngine {
         
         template<typename ComponentType>
         bool tryRenderComponent(entt::registry* registry, entt::entity entity);
+
+        GenericInputPopup m_inputPopup;
     };
 
 } // MQEngine

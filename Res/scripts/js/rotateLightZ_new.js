@@ -1,7 +1,6 @@
 function newRotateLightZ() {
     if (this.components.DirectionalLightComponent) {
         let lightComponent = this.components.DirectionalLightComponent;
-        
         let deltaTime = engine.logicDealt;
         let rotationSpeed = 1.0;
         let rotationAngle = rotationSpeed * deltaTime;

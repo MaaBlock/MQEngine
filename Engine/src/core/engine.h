@@ -13,6 +13,7 @@
 #include "../system/MeshCacheSystem.h"
 #include "../system/ScriptSystem.h"
 #include "../system/ScriptCacheSystem.h"
+#include "../system/SkyboxCacheSystem.h"
 #include "../system/ShininessSystem.h"
 #include "../system/TextureCacheSystem.h"
 #include "../system/TextureSamplerSystem.h"
@@ -76,6 +77,7 @@ namespace MQEngine {
         };
         FCT::Sampler* m_shadowSampler;
         FCT::Sampler* m_diffuseSampler;
+        FCT::StaticMesh<uint32_t>* m_skyboxMesh = nullptr;
         FCT::ShaderRef m_vs;
         FCT::ShaderRef m_ps;
         FCT::ShaderRef m_vsShadow;
@@ -87,18 +89,19 @@ namespace MQEngine {
         FCT::Layout* m_layout;
         FCT::Layout* m_shadowLayout;
         DataManager* m_dataManager;
-        FCT::UniquePtr<CameraSystem> m_cameraSystem;
-        FCT::UniquePtr<MeshCacheSystem> m_meshRenderSystem;
-        FCT::UniquePtr<ScriptSystem> m_scriptSystem;
-        FCT::UniquePtr<ScriptCacheSystem> m_scriptCacheSystem;
-        FCT::UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
-        FCT::UniquePtr<LightingSystem> m_lightingSystem;
-        FCT::UniquePtr<TextureCacheSystem> m_textureRenderSystem;
-        FCT::UniquePtr<ShininessSystem> m_shininessSystem;
-        FCT::UniquePtr<TechManager> m_techManager;
-        FCT::UniquePtr<RegistriesManager> m_registriesManager;
-        FCT::UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
-        FCT::Uniform m_floorModelUniform;
+        UniquePtr<CameraSystem> m_cameraSystem;
+        UniquePtr<MeshCacheSystem> m_meshRenderSystem;
+        UniquePtr<ScriptSystem> m_scriptSystem;
+        UniquePtr<ScriptCacheSystem> m_scriptCacheSystem;
+        UniquePtr<SkyboxCacheSystem> m_skyboxCacheSystem;
+        UniquePtr<MatrixCacheSystem> m_matrixCacheSystem;
+        UniquePtr<LightingSystem> m_lightingSystem;
+        UniquePtr<TextureCacheSystem> m_textureRenderSystem;
+        UniquePtr<ShininessSystem> m_shininessSystem;
+        UniquePtr<TechManager> m_techManager;
+        UniquePtr<RegistriesManager> m_registriesManager;
+        UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
+        Uniform m_floorModelUniform;
         // OutputInfo for passes
         FCT::OutputInfo m_shadowPassOutputInfo;
         FCT::OutputInfo m_objectPassOutputInfo;

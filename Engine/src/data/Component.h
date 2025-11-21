@@ -285,6 +285,35 @@ namespace MQEngine {
     };
     BOOST_DESCRIBE_STRUCT(ScriptFunctionTableComponent, (), (onTicker))
 
+    struct ENGINE_API SkyboxComponent
+    {
+        std::string texturePath;
+        
+        SkyboxComponent() = default;
+        SkyboxComponent(const std::string& path) : texturePath(path) {}
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & texturePath;
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(SkyboxComponent, (), (texturePath))
+
+    struct CacheSkyboxComponent : public CacheResource
+    {
+        FCT::Image* texture = nullptr;
+        
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & boost::serialization::base_object<CacheResource>(*this);
+        }
+    };
+    BOOST_DESCRIBE_STRUCT(CacheSkyboxComponent, (CacheResource), ())
+
     using AllComponentsList = std::tuple<
         StaticMeshInstance,
         TickerScriptComponent,
@@ -305,7 +334,9 @@ namespace MQEngine {
         ScaleComponent,
         CameraComponent,
         CacheScriptComponent,
-        ScriptFunctionTableComponent
+        ScriptFunctionTableComponent,
+        SkyboxComponent,
+        CacheSkyboxComponent
     >;
 }
 

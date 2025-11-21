@@ -567,6 +567,54 @@ namespace MQEngine {
         }
     }
     
+    template<>
+    inline void renderComponent<SkyboxComponent>(const SkyboxComponent* component) {
+        if (ImGui::CollapsingHeader("Skybox Config", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            
+            char buffer[256];
+            strncpy(buffer, component->texturePath.c_str(), sizeof(buffer));
+            buffer[sizeof(buffer) - 1] = '\0';
+            
+            ImGui::Text("Texture Path (Directory):");
+            if (ImGui::InputText("##skyboxPath", buffer, sizeof(buffer))) {
+                auto& selectedEntity = g_editorGlobal.selectedEntity;
+                if (selectedEntity.scene) {
+                    entt::registry* registry = nullptr;
+                    if (selectedEntity.isGlobal) {
+                        registry = selectedEntity.scene->getRegistry();
+                    } else {
+                        SceneTrunk* trunk = selectedEntity.scene->getLoadedTrunk(selectedEntity.trunkName);
+                        if (trunk) registry = trunk->getRegistry();
+                    }
+                    
+                    if (registry && registry->valid(selectedEntity.entity)) {
+                        auto* mutableComponent = registry->try_get<SkyboxComponent>(selectedEntity.entity);
+                        if (mutableComponent) {
+                            mutableComponent->texturePath = buffer;
+                        }
+                    }
+                }
+            }
+            
+            ImGui::Spacing();
+            if (ImGui::Button("删除组件##SkyboxComponent")) {
+                g_editorGlobal.componentToDelete = entt::type_hash<SkyboxComponent>::value();
+            }
+            
+            ImGui::Unindent();
+        }
+    }
+
+    template<>
+    inline void renderComponent<CacheSkyboxComponent>(const CacheSkyboxComponent* component) {
+        if (ImGui::CollapsingHeader("Skybox Cache (Runtime)", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Indent();
+            ImGui::Text("Texture Loaded: %s", component->texture ? "Yes" : "No");
+            ImGui::Unindent();
+        }
+    }
+
 } // MQEngine
 
 #endif //COMPONENTRENDERER_H

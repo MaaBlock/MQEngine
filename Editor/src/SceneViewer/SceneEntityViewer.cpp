@@ -18,7 +18,7 @@ namespace MQEngine {
         if (m_dataManager && m_dataManager->getCurrentScene()) {
             Scene* scene = m_dataManager->getCurrentScene();
             renderSceneEntityList(scene);
-            renderCreateEntityDialog(scene);
+            m_inputPopup.render();
         } else {
             ImGui::Text(TEXT("未选择场景"));
         }
@@ -56,7 +56,10 @@ namespace MQEngine {
 
         if (ImGui::BeginPopupContextWindow("GlobalEntityContextMenu")) {
             if (ImGui::MenuItem(TEXT("创建实体"))) {
-                showCreateEntityDialog("", true);
+                m_inputPopup.open(TEXT("创建实体"), TEXT("实体名称"), TEXT("新实体"),
+                    [this, scene](const std::string& name) {
+                        createEntity(scene, name, "", true);
+                    }, TEXT("创建位置: 场景全局"));
             }
             if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null && g_editorGlobal.selectedEntity.isGlobal)) {
                 deleteEntity(g_editorGlobal.selectedEntity.entity, "", true);
@@ -114,7 +117,10 @@ namespace MQEngine {
         std::string popupId = "TrunkEntityContextMenu_" + trunkName;
         if (ImGui::BeginPopupContextWindow(popupId.c_str())) {
             if (ImGui::MenuItem(TEXT("在Trunk中创建实体"))) {
-                showCreateEntityDialog(trunkName, false);
+                m_inputPopup.open(TEXT("创建实体"), TEXT("实体名称"), TEXT("新实体"),
+                    [this, scene, trunkName](const std::string& name) {
+                        createEntity(scene, name, trunkName, false);
+                    }, std::string("创建位置: ") + trunkName);
             }
             if (ImGui::MenuItem(TEXT("删除实体"), nullptr, false, g_editorGlobal.selectedEntity.entity != entt::null && !g_editorGlobal.selectedEntity.isGlobal && g_editorGlobal.selectedEntity.trunkName == trunkName)) {
                 deleteEntity(g_editorGlobal.selectedEntity.entity, trunkName, false);
@@ -258,37 +264,6 @@ namespace MQEngine {
         } else {
             m_showScriptTypePopup = false;
         }
-    }
-
-    void SceneEntityViewer::showCreateEntityDialog(const std::string& targetTrunk, bool isGlobal) {
-        m_showCreateEntityDialog = true;
-        m_targetTrunkName = targetTrunk;
-        m_createInGlobal = isGlobal;
-        snprintf(m_newEntityName, sizeof(m_newEntityName), "%s", "新实体");
-    }
-
-    void SceneEntityViewer::renderCreateEntityDialog(Scene* scene) {
-        if (!m_showCreateEntityDialog) return;
-
-        ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
-        if (ImGui::Begin(TEXT("创建实体"), &m_showCreateEntityDialog, ImGuiWindowFlags_Modal | ImGuiWindowFlags_NoResize)) {
-            ImGui::Text(TEXT("创建位置: %s"), m_createInGlobal ? TEXT("场景全局") : m_targetTrunkName.c_str());
-            ImGui::Separator();
-            ImGui::InputText(TEXT("实体名称"), m_newEntityName, sizeof(m_newEntityName));
-            ImGui::Separator();
-
-            if (ImGui::Button(TEXT("创建"))) {
-                if (strlen(m_newEntityName) > 0) {
-                    createEntity(scene, m_newEntityName, m_targetTrunkName, m_createInGlobal);
-                    m_showCreateEntityDialog = false;
-                }
-            }
-            ImGui::SameLine();
-            if (ImGui::Button(TEXT("取消"))) {
-                m_showCreateEntityDialog = false;
-            }
-        }
-        ImGui::End();
     }
 
     void SceneEntityViewer::createEntity(Scene* scene, const std::string& name, const std::string& trunkName, bool isGlobal) {

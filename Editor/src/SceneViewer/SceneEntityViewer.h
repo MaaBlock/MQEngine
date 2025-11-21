@@ -5,6 +5,7 @@
 #ifndef SCENEENTITYVIEWER_H
 #define SCENEENTITYVIEWER_H
 #include "../thirdparty/thirdparty.h"
+#include "../imgui/GenericInputPopup.h"
 
 namespace MQEngine {
 
@@ -18,17 +19,13 @@ namespace MQEngine {
         void selectEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
     private:
         DataManager* m_dataManager;
+        GenericInputPopup m_inputPopup;
 
-        bool m_showCreateEntityDialog = false;
-        char m_newEntityName[256] = "entity";
         std::string m_targetTrunkName;
-        bool m_createInGlobal = true;
-
+        
         bool m_showContextMenu = false;
         std::string m_contextMenuTarget;
 
-        void renderCreateEntityDialog(Scene* scene);
-        void showCreateEntityDialog(const std::string& targetTrunk = "", bool isGlobal = true);
         void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
         void deleteEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
@@ -52,6 +49,8 @@ namespace MQEngine {
         bool m_showTextureTypePopup = false;
         std::string m_draggedTexturePath;
         std::string m_draggedModelUuid;
+        
+        // Removed: m_showAddSkyboxDialog, m_skyboxPath, renderAddSkyboxDialog, showAddSkyboxDialog
     };
 
 } // MQEngine
