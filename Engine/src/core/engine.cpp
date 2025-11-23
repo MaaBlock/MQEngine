@@ -70,6 +70,7 @@ namespace MQEngine
         m_meshRenderSystem = makeUnique<MeshCacheSystem>(m_ctx,m_dataManager);
         m_scriptSystem = makeUnique<ScriptSystem>();
         m_scriptCacheSystem = makeUnique<ScriptCacheSystem>(m_dataManager, m_scriptSystem.get());
+        m_inputSystem = new InputSystem();
         m_skyboxCacheSystem = makeUnique<SkyboxCacheSystem>(m_ctx, m_dataManager);
         m_matrixCacheSystem = makeUnique<MatrixCacheSystem>(m_ctx,m_dataManager);
         m_lightingSystem = makeUnique<LightingSystem>(m_ctx,m_dataManager);
@@ -79,6 +80,7 @@ namespace MQEngine
         m_textureSamplerSystem = makeUnique<TextureSamplerSystem>(m_ctx);
         g_engineGlobal.scriptSystem = m_scriptSystem.get();
         g_engineGlobal.scriptCacheSystem = m_scriptCacheSystem.get();
+        g_engineGlobal.inputSystem = m_inputSystem;
         g_engineGlobal.cameraSystem = m_cameraSystem.get();
         g_engineGlobal.lightingSystem = m_lightingSystem.get();
         g_engineGlobal.matrixCacheSystem = m_matrixCacheSystem.get();
@@ -88,6 +90,7 @@ namespace MQEngine
         
         m_systemManager.requestAddSystem("ScriptCacheSystem", m_scriptCacheSystem.get());
         m_systemManager.requestSetSystemEnabled("ScriptCacheSystem", false);
+        m_systemManager.requestAddSystem("InputSystem", m_inputSystem);
         
         m_application->init();
         m_techManager = makeUnique<TechManager>();
@@ -606,6 +609,16 @@ namespace MQEngine
     {
         if (m_scriptSystem) {
             m_scriptSystem->cleanUp();
+        }
+        if (m_inputSystem) {
+            // InputSystem inherits from RefCount, but we manage its lifecycle here as a system
+            // Ensure it's unregistered
+            m_inputSystem->onDeactivate();
+            // Assuming initial ref count allows us to delete or release. 
+            // If RefCount is strict, we might need m_inputSystem->release();
+            // For now, using delete as we used 'new'.
+            m_inputSystem->release();
+            m_inputSystem = nullptr;
         }
         RenderCallBack::WindowClose callback;
         m_application->renderCallBackDispatcher.trigger(callback);

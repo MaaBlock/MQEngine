@@ -17,6 +17,7 @@
 #include "../system/ShininessSystem.h"
 #include "../system/TextureCacheSystem.h"
 #include "../system/TextureSamplerSystem.h"
+#include "../system/InputSystem.h"
 #include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
 #include "CreateApplication.h"
@@ -101,6 +102,7 @@ namespace MQEngine {
         UniquePtr<TechManager> m_techManager;
         UniquePtr<RegistriesManager> m_registriesManager;
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
+        InputSystem* m_inputSystem = nullptr;
         Uniform m_floorModelUniform;
         // OutputInfo for passes
         FCT::OutputInfo m_shadowPassOutputInfo;

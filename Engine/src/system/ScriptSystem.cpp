@@ -1,4 +1,5 @@
 #include "ScriptSystem.h"
+#include "../system/InputSystem.h"
 #include "../data/DataError.h"
 #include "../data/DataLoader.h"
 #include "../data/DataManager.h"
@@ -45,6 +46,13 @@ namespace MQEngine {
                 globalThis.engine = {
                     logicDealt: 0.0
                 };
+                
+                // Input System
+                globalThis.Input = {
+                    isKeyPressed: function(key) { return false; }, // Placeholder, will be overwritten by C++
+                    getMousePosition: function() { return {x: 0, y: 0}; }
+                };
+
                 globalThis.createEntityObject = function(entityId, registryPtr) {
                     let obj = {
                         entity: {
@@ -142,6 +150,27 @@ namespace MQEngine {
 
             registerEntityFunctions();
 
+            // Bind Input functions
+            FCT::JSObject globalObj = m_nodeEnv->global();
+            FCT::JSObject inputObj = globalObj["Input"];
+            
+            inputObj["isKeyPressed"] = [](int key) -> bool {
+                if (g_engineGlobal.inputSystem) {
+                    return g_engineGlobal.inputSystem->isKeyPressed(key);
+                }
+                return false;
+            };
+
+            inputObj["getMousePosition"] = [this]() -> v8::Local<v8::Value> {
+                if (g_engineGlobal.inputSystem) {
+                    FCT::Vec2 pos = g_engineGlobal.inputSystem->getMousePosition();
+                    v8::Local<v8::Object> posObj = v8::Object::New(m_nodeEnv->isolate());
+                    posObj->Set(m_nodeEnv->context(), convertToJS(*m_nodeEnv, "x").As<v8::String>(), convertToJS(*m_nodeEnv, pos.x));
+                    posObj->Set(m_nodeEnv->context(), convertToJS(*m_nodeEnv, "y").As<v8::String>(), convertToJS(*m_nodeEnv, pos.y));
+                    return posObj;
+                }
+                return v8::Undefined(m_nodeEnv->isolate());
+            };
             
             std::vector<std::string> distFiles = loadJSFilesFromDirectory("./res/scripts/dist/");
             std::vector<std::string> jsFiles = loadJSFilesFromDirectory("./res/scripts/js/");
