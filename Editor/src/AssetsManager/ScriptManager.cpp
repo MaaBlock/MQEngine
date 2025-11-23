@@ -51,15 +51,22 @@ namespace MQEngine {
         
         ImGui::Separator();
 
-        ImGui::Text(TEXT("可用函数数量: %zu"), m_scriptFunctions.size());
-        
-        if (strlen(m_searchBuffer) > 0) {
-            ImGui::Text(TEXT("过滤后函数数量: %zu"), m_filteredFunctions.size());
+        if (ImGui::BeginTabBar("ScriptManagerTabs")) {
+            if (ImGui::BeginTabItem(TEXT("函数"))) {
+                ImGui::Text(TEXT("可用函数数量: %zu"), m_scriptFunctions.size());
+                if (strlen(m_searchBuffer) > 0) {
+                    ImGui::Text(TEXT("过滤后函数数量: %zu"), m_filteredFunctions.size());
+                }
+                renderScriptFunctionList();
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem(TEXT("类"))) {
+                ImGui::Text(TEXT("可用类数量: %zu"), m_scriptClasses.size());
+                renderScriptClassList();
+                ImGui::EndTabItem();
+            }
+            ImGui::EndTabBar();
         }
-        
-        ImGui::Separator();
-
-        renderScriptFunctionList();
 
         
         ImGui::End();
@@ -68,9 +75,11 @@ namespace MQEngine {
     void ScriptManager::refreshScriptList() {
         m_scriptFunctions.clear();
         m_filteredFunctions.clear();
+        m_scriptClasses.clear();
 
 
         loadFunctionNamesFromScriptSystem();
+        loadClassNamesFromScriptSystem();
 
         m_filteredFunctions = m_scriptFunctions;
         
@@ -148,6 +157,44 @@ namespace MQEngine {
                 ImGui::Text(TEXT("脚本路径: %s"), func.scriptPath.c_str());
                 ImGui::Text(TEXT("描述: %s"), func.description.c_str());
                 ImGui::EndTooltip();
+            }
+        }
+        
+        ImGui::EndChild();
+    }
+
+    void ScriptManager::loadClassNamesFromScriptSystem() {
+        m_scriptClasses.clear();
+        if (g_engineGlobal.scriptSystem) {
+             m_scriptClasses = g_engineGlobal.scriptSystem->getClassNames();
+             fout << TEXT("从ScriptSystem加载了 ") << m_scriptClasses.size() << TEXT(" 个脚本类") << std::endl;
+        }
+    }
+
+    void ScriptManager::renderScriptClassList() {
+        ImGui::BeginChild("ScriptClassList", ImVec2(0, -10), true);
+        
+        std::string searchTerm = m_searchBuffer;
+        std::transform(searchTerm.begin(), searchTerm.end(), searchTerm.begin(), ::tolower);
+
+        for (const auto& className : m_scriptClasses) {
+            if (!searchTerm.empty()) {
+                std::string nameLower = className;
+                std::transform(nameLower.begin(), nameLower.end(), nameLower.begin(), ::tolower);
+                if (nameLower.find(searchTerm) == std::string::npos) {
+                    continue;
+                }
+            }
+
+            bool isSelected = (m_selectedClass == className);
+            if (ImGui::Selectable(className.c_str(), isSelected)) {
+                m_selectedClass = className;
+            }
+
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                ImGui::SetDragDropPayload("SCRIPT_CLASS", className.c_str(), className.size() + 1);
+                ImGui::Text(TEXT("拖拽脚本类: %s"), className.c_str());
+                ImGui::EndDragDropSource();
             }
         }
         

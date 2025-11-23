@@ -81,13 +81,16 @@ namespace MQEngine {
                 selectEntity(entity, "", true);
             }
 
-            if (ImGui::BeginDragDropTarget()) {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
-                    std::string functionName = static_cast<const char*>(payload->Data);
-                    addScriptComponent(entity, functionName, true, "");
-                }
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
-                    std::string dragData = static_cast<const char*>(payload->Data);
+                            if (ImGui::BeginDragDropTarget()) {
+                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
+                                    std::string functionName = static_cast<const char*>(payload->Data);
+                                    addScriptComponent(entity, functionName, true, "");
+                                }
+                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_CLASS")) {
+                                    std::string className = static_cast<const char*>(payload->Data);
+                                    addScriptComponent(entity, className, true, "", true);
+                                }
+                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {                    std::string dragData = static_cast<const char*>(payload->Data);
                     size_t separatorPos = dragData.find('|');
                     if (separatorPos != std::string::npos) {
                         std::string modelUuid = dragData.substr(0, separatorPos);
@@ -149,6 +152,10 @@ namespace MQEngine {
                         std::string functionName = static_cast<const char*>(payload->Data);
                         addScriptComponent(entity, functionName, false, trunkName);
                     }
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_CLASS")) {
+                        std::string className = static_cast<const char*>(payload->Data);
+                        addScriptComponent(entity, className, false, trunkName, true);
+                    }
                      if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
                         std::string dragData = static_cast<const char*>(payload->Data);
                         size_t separatorPos = dragData.find('|');
@@ -181,12 +188,13 @@ namespace MQEngine {
         g_editorGlobal.selectedEntity.scene = m_dataManager->getCurrentScene();
     }
 
-    void SceneEntityViewer::addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName) {
+    void SceneEntityViewer::addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName, bool isClass) {
         m_showScriptTypePopup = true;
         m_draggedFunctionName = functionName;
         m_targetEntity = entity;
         m_targetTrunkName = trunkName;
         m_targetIsGlobal = isGlobal;
+        m_isDraggedScriptClass = isClass;
     }
 
     void SceneEntityViewer::renderScriptTypeSelectionPopup() {
@@ -196,65 +204,85 @@ namespace MQEngine {
         // Increase default size to accommodate two columns
         ImGui::SetNextWindowSize(ImVec2(400, 200), ImGuiCond_FirstUseEver); 
         if (ImGui::BeginPopupModal(TEXT("选择脚本类型"), &m_showScriptTypePopup, ImGuiWindowFlags_AlwaysAutoResize)) {
-            ImGui::Text(TEXT("为实体添加脚本 '%s'"), m_draggedFunctionName.c_str());
-            ImGui::Separator();
-
-            ImGui::Columns(2, nullptr, true);
-
-            // Left Column: Old Component Style
-            ImGui::Text("独立组件模式");
-            ImGui::Separator();
-            if (ImGui::Button(TEXT("Ticker (每帧执行)"), ImVec2(-1, 0))) {
-                Scene* scene = m_dataManager->getCurrentScene();
-                if (scene) {
-                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
-                    if (registry) {
-                        registry->emplace_or_replace<TickerScriptComponent>(m_targetEntity, m_draggedFunctionName);
+            
+            if (m_isDraggedScriptClass) {
+                ImGui::Text(TEXT("将脚本类 '%s' 绑定到实体"), m_draggedFunctionName.c_str());
+                ImGui::Separator();
+                
+                if (ImGui::Button(TEXT("绑定类"), ImVec2(-1, 0))) {
+                    Scene* scene = m_dataManager->getCurrentScene();
+                    if (scene) {
+                        entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                        if (registry) {
+                             // Add ScriptFunctionTableComponent and set className
+                             auto& component = registry->get_or_emplace<ScriptFunctionTableComponent>(m_targetEntity);
+                             component.className = m_draggedFunctionName;
+                        }
                     }
+                    m_showScriptTypePopup = false;
+                    ImGui::CloseCurrentPopup();
                 }
-                m_showScriptTypePopup = false;
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::Button(TEXT("OnStart (启动时执行)"), ImVec2(-1, 0))) {
-                Scene* scene = m_dataManager->getCurrentScene();
-                if (scene) {
-                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
-                    if (registry) {
-                        registry->emplace_or_replace<OnStartScriptComponent>(m_targetEntity, m_draggedFunctionName);
+            } else {
+                ImGui::Text(TEXT("为实体添加脚本 '%s'"), m_draggedFunctionName.c_str());
+                ImGui::Separator();
+
+                ImGui::Columns(2, nullptr, true);
+
+                // Left Column: Old Component Style
+                ImGui::Text("独立组件模式");
+                ImGui::Separator();
+                if (ImGui::Button(TEXT("Ticker (每帧执行)"), ImVec2(-1, 0))) {
+                    Scene* scene = m_dataManager->getCurrentScene();
+                    if (scene) {
+                        entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                        if (registry) {
+                            registry->emplace_or_replace<TickerScriptComponent>(m_targetEntity, m_draggedFunctionName);
+                        }
                     }
+                    m_showScriptTypePopup = false;
+                    ImGui::CloseCurrentPopup();
                 }
-                m_showScriptTypePopup = false;
-                ImGui::CloseCurrentPopup();
-            }
+                if (ImGui::Button(TEXT("OnStart (启动时执行)"), ImVec2(-1, 0))) {
+                    Scene* scene = m_dataManager->getCurrentScene();
+                    if (scene) {
+                        entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                        if (registry) {
+                            registry->emplace_or_replace<OnStartScriptComponent>(m_targetEntity, m_draggedFunctionName);
+                        }
+                    }
+                    m_showScriptTypePopup = false;
+                    ImGui::CloseCurrentPopup();
+                }
 
-            ImGui::NextColumn();
+                ImGui::NextColumn();
 
-            // Right Column: New Function Table Style
-            ImGui::Text("函数表模式");
-            ImGui::Separator();
-            if (ImGui::Button(TEXT("添加到函数表"), ImVec2(-1, 0))) {
-                Scene* scene = m_dataManager->getCurrentScene();
-                if (scene) {
-                    entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
-                    if (registry) {
-                         auto& component = registry->get_or_emplace<ScriptFunctionTableComponent>(m_targetEntity);
-                         bool exists = false;
-                         for(const auto& func : component.onTicker) {
-                             if(func == m_draggedFunctionName) {
-                                 exists = true;
-                                 break;
+                // Right Column: New Function Table Style
+                ImGui::Text("函数表模式");
+                ImGui::Separator();
+                if (ImGui::Button(TEXT("添加到函数表"), ImVec2(-1, 0))) {
+                    Scene* scene = m_dataManager->getCurrentScene();
+                    if (scene) {
+                        entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
+                        if (registry) {
+                             auto& component = registry->get_or_emplace<ScriptFunctionTableComponent>(m_targetEntity);
+                             bool exists = false;
+                             for(const auto& func : component.onTicker) {
+                                 if(func == m_draggedFunctionName) {
+                                     exists = true;
+                                     break;
+                                 }
                              }
-                         }
-                         if(!exists) {
-                             component.onTicker.push_back(m_draggedFunctionName);
-                         }
+                             if(!exists) {
+                                 component.onTicker.push_back(m_draggedFunctionName);
+                             }
+                        }
                     }
+                    m_showScriptTypePopup = false;
+                    ImGui::CloseCurrentPopup();
                 }
-                m_showScriptTypePopup = false;
-                ImGui::CloseCurrentPopup();
-            }
 
-            ImGui::Columns(1);
+                ImGui::Columns(1);
+            }
 
             ImGui::Separator();
             if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {

@@ -27,6 +27,8 @@ namespace MQEngine {
     }
     
     void ScriptSystem::loadScripts() {
+        if (m_isScriptsLoaded) return;
+
         if (!m_dataManager) {
             std::cerr << "DataManager not available." << std::endl;
             return;
@@ -75,6 +77,67 @@ namespace MQEngine {
                          obj._tickers[name] = globalThis[name];
                      }
                 };
+
+                // 新增：用于实例化脚本类的函数
+                globalThis.createScriptClassInstance = function(className, entityId, registryPtr) {
+                    const ClassConstructor = globalThis[className];
+                    if (typeof ClassConstructor === 'function' && ClassConstructor.prototype.constructor === ClassConstructor) {
+                        const instance = new ClassConstructor();
+                        
+                        // Debug logging
+                        console.log("Created instance of " + className);
+                        console.log("Has onTicker?", typeof instance.onTicker);
+
+                        // 注入 entity 和 components
+                        instance.entity = {
+                            id: entityId,
+                            registry: registryPtr
+                        };
+                        instance.components = new Proxy({}, {
+                            get: function(target, prop) {
+                                return globalThis.entityInfo.getComponentById(instance.entity.registry, instance.entity.id, prop);
+                            },
+                            set: function(target, prop, value) {
+                                return globalThis.entityInfo.setComponentById(instance.entity.registry, instance.entity.id, prop, value);
+                            }
+                        });
+
+                        if (!instance._tickers) instance._tickers = {};
+                        instance._onTicker = function() {
+                            const tickers = this._tickers;
+                            for (let key in tickers) {
+                                if (typeof tickers[key] === 'function') {
+                                    tickers[key].call(this);
+                                }
+                            }
+                        };
+                        
+                        return instance;
+                    } else {
+                        console.error('Class not found or not a valid constructor:', className);
+                        return null;
+                    }
+                };
+
+                globalThis.getGlobalClassNames = function() {
+                    console.log(globalThis);
+                    const ignored = new Set(['globalThis', 'console', 'process', 'entityInfo', 'engine', 'createEntityObject', 'assignGlobalFunction', 'createScriptClassInstance', 'getGlobalClassNames', 'getComponent', 'setComponent', 'hasComponent', 'addComponent', 'removeComponent']);
+                    return Object.getOwnPropertyNames(globalThis).filter(prop => {
+                        if (ignored.has(prop)) return false;
+                        try {
+                            const val = globalThis[prop];
+                            if (typeof val !== 'function') return false;
+                            const str = val.toString();
+                            // 排除原生代码，保留用户定义的函数和类
+                            // 排除箭头函数 (通常没有 prototype 或者 prototype 不可写) - 虽然有些环境箭头函数也有 prototype，但通常不能 new
+                            if (str.includes('[native code]')) return false;
+                            
+                            // 简单的过滤：只要不是箭头函数（通常包含 =>），就认为是潜在的构造函数
+                            // 注意：这里无法完美区分普通函数和构造函数，但在JS中它们本就界限模糊
+                            return true;
+                        } catch (e) { return false; }
+                    });
+                };
             )");
 
             registerEntityFunctions();
@@ -101,6 +164,7 @@ namespace MQEngine {
             }
             
             std::cout << "Loaded and executed " << allJSFiles.size() << " JavaScript files." << std::endl;
+            m_isScriptsLoaded = true;
             
         } catch (const DataError& e) {
             std::cerr << "DataError in loadScripts: " << e.what() << std::endl;
@@ -111,6 +175,10 @@ namespace MQEngine {
         for (const std::string& name : ref) {
             std::cout << "Function Name: " << name << std::endl;
         }
+    }
+
+    void ScriptSystem::reloadScripts() {
+
     }
     
     std::vector<std::string> ScriptSystem::loadJSFilesFromDirectory(const std::string& directory) {
@@ -180,6 +248,29 @@ namespace MQEngine {
             return {};
         }
     }
+
+    std::vector<std::string> ScriptSystem::getClassNames() const {
+        if (!m_nodeEnv) {
+            return {};
+        }
+
+        try {
+            FCT::JSArray resultArray = const_cast<FCT::NodeEnvironment*>(m_nodeEnv.get())
+                                        ->callFunction<FCT::JSArray>("getGlobalClassNames");
+            
+            std::vector<std::string> names;
+            uint32_t length = resultArray.length();
+            names.reserve(length);
+
+            for (uint32_t i = 0; i < length; ++i) {
+                names.push_back(resultArray.get<std::string>(i));
+            }
+            return names;
+        } catch (const std::exception& e) {
+            std::cerr << "Error getting class names: " << e.what() << std::endl;
+            return {};
+        }
+    }
     
     void ScriptSystem::setLogicDeltaTime(float deltaTime) {
         m_logicDeltaTime = deltaTime;
@@ -226,6 +317,23 @@ namespace MQEngine {
                         m_nodeEnv->excuteScript(callCode);
                     } catch (const std::exception& e) {
                         std::cerr << "Error executing script function '" << scriptComponent.functionName << "': " << e.what() << std::endl;
+                    }
+                }
+            }
+            
+            auto cacheView = registry->view<CacheScriptComponent>();
+            for (auto entity : cacheView) {
+                auto& cache = cacheView.get<CacheScriptComponent>(entity);
+                if (cache.m_jsObject) {
+                    try {
+                        if (cache.m_jsObject->hasProperty("onTicker")) {
+                            cache.m_jsObject->call("onTicker");
+                        }
+                        if (cache.m_jsObject->hasProperty("_onTicker")) {
+                            cache.m_jsObject->call("_onTicker");
+                        }
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error calling script ticker: " << e.what() << std::endl;
                     }
                 }
             }

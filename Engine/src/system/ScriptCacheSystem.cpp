@@ -53,11 +53,29 @@ namespace MQEngine {
             for (auto entity : creationView)
             {
                 auto& table = registry->get<ScriptFunctionTableComponent>(entity);
+                FCT::JSObject* jsObject = nullptr;
 
-                auto* jsObject = new FCT::JSObject(
-                        nodeEnv->callFunction<FCT::JSObject>("createEntityObject",
-                        static_cast<uint32_t>(entity),
-                        reinterpret_cast<uint64_t>(registry)));
+                                if (!table.className.empty()) {
+                                    try {
+                                        FCT::JSObject result = nodeEnv->callFunction<FCT::JSObject>("createScriptClassInstance", 
+                                            table.className,
+                                            static_cast<uint32_t>(entity),
+                                            reinterpret_cast<uint64_t>(registry)
+                                        );
+                                        
+                                        if (!result.isNull()) {
+                                            jsObject = new FCT::JSObject(std::move(result));
+                                        } else {
+                                        }
+                                    } catch (const std::exception& e) {
+                                    }
+                                }
+                if (!jsObject) {
+                     jsObject = new FCT::JSObject(
+                            nodeEnv->callFunction<FCT::JSObject>("createEntityObject",
+                            static_cast<uint32_t>(entity),
+                            reinterpret_cast<uint64_t>(registry)));
+                }
 
                 for (const auto& funcName : table.onTicker) {
                     nodeEnv->callFunction("assignGlobalFunction", *jsObject, funcName);
@@ -65,16 +83,7 @@ namespace MQEngine {
                 
                 g_engineGlobal.registriesManager->requestEmplaceComponent<CacheScriptComponent>(registry, entity, jsObject);
             }
-
-            auto executionView = registry->view<CacheScriptComponent>();
-            for (auto entity : executionView)
-            {
-                auto& cache = executionView.get<CacheScriptComponent>(entity);
-                if (cache.m_jsObject)
-                {
-                    cache.m_jsObject->call("_onTicker");
-                }
-            }
+            
         }
     }
 

@@ -27,12 +27,23 @@ namespace MQEngine {
          *          然后使用NodeEnvironment执行所有的js文件
          */
         void loadScripts();
+
+        /**
+         * @brief 强制重新加载脚本（会重置JS环境）
+         */
+        void reloadScripts();
         
         /**
          * @brief 获取当前JavaScript环境中的所有函数名
          * @return JavaScript函数名列表
          */
         std::vector<std::string> getFunctionNames() const;
+
+        /**
+         * @brief 获取当前JavaScript环境中的所有类名
+         * @return JavaScript类名列表
+         */
+        std::vector<std::string> getClassNames() const;
         
         /**
          * @brief 执行所有OnStart类型的脚本
@@ -62,6 +73,7 @@ namespace MQEngine {
         std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;
         std::unique_ptr<ComponentReflection> m_componentReflection;
         float m_logicDeltaTime = 0.0f;
+        bool m_isScriptsLoaded = false;
         std::unordered_set<entt::entity> m_startedEntities;
         
         /**

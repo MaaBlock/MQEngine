@@ -53,9 +53,21 @@ namespace MQEngine {
          */
         void renderScriptFunctionList();
 
+        /**
+         * @brief 从ScriptSystem加载类名
+         */
+        void loadClassNamesFromScriptSystem();
+
+        /**
+         * @brief 渲染脚本类列表
+         */
+        void renderScriptClassList();
+
     private:
         std::vector<ScriptFunctionInfo> m_scriptFunctions;
+        std::vector<std::string> m_scriptClasses; // 新增：存储类名
         std::string m_selectedFunction;
+        std::string m_selectedClass; // 新增：选中的类名
         bool m_needRefresh = true;
         
         // UI状态

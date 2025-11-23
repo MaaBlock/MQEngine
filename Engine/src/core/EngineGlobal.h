@@ -15,6 +15,7 @@ namespace MQEngine
     class RegistriesManager;
     class ScriptCacheSystem;
     class SystemManager;
+    class InputSystem;
 
     struct ENGINE_API EngineGlobal
     {
@@ -22,6 +23,7 @@ namespace MQEngine
         Runtime* rt;
         DataManager* dataManager;
         ScriptSystem* scriptSystem;
+        InputSystem* inputSystem; // 新增
         CameraSystem* cameraSystem;
         LightingSystem* lightingSystem;
         MatrixCacheSystem* matrixCacheSystem;

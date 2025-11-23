@@ -29,7 +29,7 @@ namespace MQEngine {
         void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
         void deleteEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
-        void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "");
+        void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "", bool isClass = false);
         void addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
         void addNormalTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName = "");
         void addAlbedoTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName);
@@ -43,6 +43,7 @@ namespace MQEngine {
 
         bool m_showScriptTypePopup = false;
         std::string m_draggedFunctionName;
+        bool m_isDraggedScriptClass = false;
         entt::entity m_targetEntity;
         bool m_targetIsGlobal;
 

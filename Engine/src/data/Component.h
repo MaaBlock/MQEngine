@@ -275,15 +275,23 @@ namespace MQEngine {
     struct ENGINE_API ScriptFunctionTableComponent
     {
         std::vector<std::string> onTicker;
+        std::string className;
+
+        ScriptFunctionTableComponent() = default;
+        ScriptFunctionTableComponent(const std::string& name) : className(name) {}
 
         friend class boost::serialization::access;
+
         template<class Archive>
         void serialize(Archive & ar, const unsigned int version)
         {
             ar & onTicker;
+            if (version > 0) {
+                ar & className;
+            }
         }
     };
-    BOOST_DESCRIBE_STRUCT(ScriptFunctionTableComponent, (), (onTicker))
+    BOOST_DESCRIBE_STRUCT(ScriptFunctionTableComponent, (), (onTicker, className))
 
     struct ENGINE_API SkyboxComponent
     {
@@ -340,4 +348,5 @@ namespace MQEngine {
     >;
 }
 
+BOOST_CLASS_VERSION(MQEngine::ScriptFunctionTableComponent, 1)
 #endif //COMPONENT_H
