@@ -15,6 +15,7 @@ namespace MQEngine
     enum EngineTextureType
     {
         albedoTexture = entt::type_hash<AlbedoTextureComponent>::value(),
+        diffuseTexture = entt::type_hash<DiffuseTextureComponent>::value(),
         normalTexture = entt::type_hash<NormalTextureComponent>::value(),
         emissiveTexture = entt::type_hash<EmissiveTextureComponent>::value(),
         ormTexture = entt::type_hash<OrmTextureComponent>::value()
@@ -56,6 +57,7 @@ namespace MQEngine {
         {
             // 颜色数据，srgb
         case albedoTexture:
+        case diffuseTexture:
             return FCT::Format::R8G8B8A8_SRGB;
         case emissiveTexture:
             return FCT::Format::R8G8B8A8_SRGB;
@@ -85,7 +87,6 @@ namespace MQEngine {
         ~TextureCacheSystem();
         void updateLogic();
         void collectTextures();
-        void loadTexture(const std::string& modelUuid, const std::string& texturePath);
     private:
         /*
          * @brief 异步加载纹理数据，完成后放入队列
@@ -101,12 +102,7 @@ namespace MQEngine {
          * @brief 主线程处理加载完成的队列，创建GPU资源
          */
         void processLoadedTextures();
-        
-        /*
-         * @brief 缓存某个texture到m_newTextureCache (Old synchronous method, kept if needed or refactored)
-         */
-        //Status cacheTexture(const std::string& modelUuid, const std::string& texturePath, EngineTextureType format);
-        
+
         /*
          * @brief 获取缓存的Texture，如果未缓存就加载
          */
@@ -115,7 +111,6 @@ namespace MQEngine {
         DataManager* m_dataManager;
         FCT::ModelLoader* m_modelLoader;
         UniquePtr<FCT::ImageLoader> m_imageLoader;
-        std::unordered_map<std::string, FCT::Image*> m_loadedTextures; // key: modelUuid + "|" + texturePath
         std::unordered_map<TextureCacheKey, FCT::Image*> m_newTextureCache;
         boost::lockfree::queue<TextureLoadResult*>* m_resultsQueue;
     };
