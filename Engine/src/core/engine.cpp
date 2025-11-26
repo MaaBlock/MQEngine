@@ -18,6 +18,8 @@ namespace MQEngine
 #include "g_engineShaderPBRPixel.h"
 #include "g_engineShaderSkyboxVertex.h"
 #include "g_engineShaderSkyboxPixel.h"
+#include "g_engineShaderToneMappingVertex.h"
+#include "g_engineShaderToneMappingPixel.h"
 #include "../data/Component.h"
 #include "../data/Camera.h"
 #include "./GraphicsEnv.h"
@@ -411,6 +413,36 @@ namespace MQEngine
             if (!ret.ok())
                 spdlog::error("Failed to add tech: {}", ret.message());
         }
+        {
+            auto ret = m_techManager->addTech("ToneMappingPass", Tech(
+                TechName{"ToneMappingTech"},
+                VertexShaderSource{LoadStringFromStringResource(g_engineShaderToneMappingVertex, g_engineShaderToneMappingVertexSize)},
+                PixelShaderSource{LoadStringFromStringResource(g_engineShaderToneMappingPixel, g_engineShaderToneMappingPixelSize)},
+                vertexLayout,
+                pixelLayout,
+                std::vector<FCT::UniformSlot>{
+                },
+                std::vector<FCT::TextureSlot>{
+                },
+                m_textureSamplerSystem.get(),
+                ComponentFilter()
+                .include<CameraComponent>(),
+                EntityOperationCallback(
+                    [this](const EntityRenderContext& context)
+                    {
+                        if (context.registry.all_of<CameraComponent>(context.entity))
+                        {
+                            const auto& cameraComp = context.registry.get<CameraComponent>(context.entity);
+                            if (cameraComp.active && m_fullScreenMesh)
+                            {
+                                context.layout->drawMesh(context.cmdBuf, m_fullScreenMesh);
+                            }
+                        }
+                    })
+            ));
+            if (!ret.ok())
+                spdlog::error("Failed to add tech: {}", ret.message());
+        }
     }
 
     void Engine::settingUpPass()
@@ -444,11 +476,18 @@ namespace MQEngine
             Texture("DepthFromLigth0Image"),
             EnablePassClear(ClearType::color | ClearType::depthStencil,
                 Vec4(0,0,0,1)),
-            SceenColorTarget,
+            Target("SceneHDRColor", Format::R16G16B16A16_SFLOAT),
             Target("PosTarget"),
             Target("RetTarget"),
             SceenDepthTarget
             );
+        
+        graph->addPass(
+            "ToneMappingPass",
+            Texture("SceneHDRColor"),
+            SceenColorTarget
+            );
+
         {
             RenderCallBack::SettingUpPass callback;
             callback.graph = graph;
@@ -502,6 +541,26 @@ namespace MQEngine
         
         m_skyboxMesh->setIndices(indices);
         m_skyboxMesh->create();
+
+        m_fullScreenMesh = new FCT::StaticMesh<uint32_t>(m_ctx, vertexLayout);
+        std::vector<FCT::Vec3> fullScreenQuadPositions = {
+            {-1, -1, 0}, { 1, -1, 0}, { 1,  1, 0}, {-1,  1, 0}
+        };
+        for(const auto& pos : fullScreenQuadPositions) {
+            m_fullScreenMesh->addVertex(
+                FCT::Vec4(1.0f, 1.0f, 1.0f, 1.0f),     // Color
+                FCT::Vec4(pos.x, pos.y, pos.z, 1.0f),  // Position
+                FCT::Vec2(pos.x * 0.5f + 0.5f, 1.0f - (pos.y * 0.5f + 0.5f)), // TexCoord
+                FCT::Vec3(0.0f, 0.0f, 1.0f),           // Normal
+                FCT::Vec3(1.0f, 0.0f, 0.0f),           // Tangent
+                FCT::Vec3(0.0f, 1.0f, 0.0f)            // Bitangent
+            );
+        }
+        std::vector<uint32_t> fullScreenQuadIndices = {
+            0, 2, 1, 0, 3, 2
+        };
+        m_fullScreenMesh->setIndices(fullScreenQuadIndices);
+        m_fullScreenMesh->create();
     }
 
 

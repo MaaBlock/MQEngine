@@ -4,11 +4,12 @@
 
 #ifndef TEXTURERENDERYSTEM_H
 #define TEXTURERENDERYSTEM_H
-#include "../data/DataManager.h"
 #include "../data/Component.h"
 #include "./CacheSystem.h"
 #include <unordered_map>
 #include <vector>
+#include <boost/lockfree/queue.hpp>
+
 namespace MQEngine
 {
     enum EngineTextureType
@@ -27,6 +28,11 @@ namespace MQEngine
         {
             return modelUuid == key.modelUuid && texturePath == key.texturePath && format == key.format;
         }
+    };
+    
+    struct TextureLoadResult {
+        TextureCacheKey key;
+        StatusOr<FCT::Image*> result;
     };
 }
 namespace std
@@ -82,9 +88,25 @@ namespace MQEngine {
         void loadTexture(const std::string& modelUuid, const std::string& texturePath);
     private:
         /*
-         * @brief 缓存某个texture到m_newTextureCache
+         * @brief 异步加载纹理数据，完成后放入队列
          */
-        Status cacheTexture(const std::string& modelUuid, const std::string& texturePath, EngineTextureType format);
+        void cacheTextureAsync(const TextureCacheKey& key);
+        
+        /*
+         * @brief 同步加载纹理 (在异步线程中调用，复用旧逻辑)
+         */
+        StatusOr<FCT::Image*> loadTextureSync(const TextureCacheKey& key);
+
+        /*
+         * @brief 主线程处理加载完成的队列，创建GPU资源
+         */
+        void processLoadedTextures();
+        
+        /*
+         * @brief 缓存某个texture到m_newTextureCache (Old synchronous method, kept if needed or refactored)
+         */
+        //Status cacheTexture(const std::string& modelUuid, const std::string& texturePath, EngineTextureType format);
+        
         /*
          * @brief 获取缓存的Texture，如果未缓存就加载
          */
@@ -95,6 +117,7 @@ namespace MQEngine {
         UniquePtr<FCT::ImageLoader> m_imageLoader;
         std::unordered_map<std::string, FCT::Image*> m_loadedTextures; // key: modelUuid + "|" + texturePath
         std::unordered_map<TextureCacheKey, FCT::Image*> m_newTextureCache;
+        boost::lockfree::queue<TextureLoadResult*>* m_resultsQueue;
     };
 }
 

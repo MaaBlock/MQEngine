@@ -4,7 +4,10 @@
 #include "TextureCacheSystem.h"
 #include "../core/EngineGlobal.h"
 #include "../core/TextureUtils.h"
+#include "../data/DataManager.h"
 #include <filesystem>
+#include <thread>
+#include <fstream>
 
 namespace MQEngine {
 
@@ -13,6 +16,7 @@ namespace MQEngine {
     {
         m_modelLoader = g_engineGlobal.rt->createModelLoader();
         m_imageLoader = UniquePtr(g_engineGlobal.rt->createImageLoader());
+        m_resultsQueue = new boost::lockfree::queue<TextureLoadResult*>(1024);
         FCT::fout << "TextureRenderSystem 初始化" << std::endl;
     }
     template<typename TextureComponent>
@@ -21,20 +25,24 @@ namespace MQEngine {
         if (component.texture)
             return;
 
-        auto texture = getOrLoadTexture({
+        TextureCacheKey key = {
             .modelUuid = component.modelUuid,
             .texturePath = component.texturePath,
             .format = format,
-        });
+        };
 
-        if (!texture.ok())
+        if (m_newTextureCache.count(key))
         {
-            FCT::ferr << texture.status().message() << std::endl;
+            auto* texture = m_newTextureCache[key];
+            if (texture)
+            {
+                component.texture = texture;
+            }
             return;
         }
 
-        component.texture = texture.value();
-        //todo: 使用ResourceActiveSystem在渲染帧激活texture
+        m_newTextureCache[key] = nullptr;
+        cacheTextureAsync(key);
     }
     TextureCacheSystem::~TextureCacheSystem() {
         for (auto& pair : m_loadedTextures) {
@@ -43,10 +51,18 @@ namespace MQEngine {
             }
         }
         m_loadedTextures.clear();
+        
+        if (m_resultsQueue) {
+            m_resultsQueue->consume_all([](TextureLoadResult* res) {
+                delete res;
+            });
+            delete m_resultsQueue;
+        }
         FCT::fout << "TextureRenderSystem 销毁" << std::endl;
     }
 
     void TextureCacheSystem::updateLogic() {
+        processLoadedTextures();
         collectTextures();
     }
 
@@ -218,47 +234,72 @@ namespace MQEngine {
             m_loadedTextures[textureKey] = nullptr;
         }
     }
-    Status TextureCacheSystem::cacheTexture(const std::string& modelUuid,
-                                         const std::string& texturePath,
-                                         EngineTextureType format)
+
+
+    void TextureCacheSystem::processLoadedTextures()
     {
-        if (texturePath[0] == '*')
+        TextureLoadResult* res;
+        while (m_resultsQueue->pop(res))
         {
-            //内嵌纹理
-            auto data = m_dataManager->extractImage(modelUuid,texturePath);
+            if (res->result.ok())
+            {
+                FCT::Image* texture = res->result.value();
+                if (texture)
+                {
+                    m_newTextureCache[res->key] = texture;
+                }
+                else
+                {
+                    FCT::ferr << "异步加载纹理 " << res->key.texturePath << "为NULL" << std::endl;
+                    m_newTextureCache.erase(res->key);
+                }
+            }
+            else
+            {
+                FCT::ferr << "异步加载纹理失败: " << res->key.texturePath << " " << res->result.status().message() << std::endl;
+                m_newTextureCache.erase(res->key);
+            }
+            delete res;
+        }
+    }
+
+    void TextureCacheSystem::cacheTextureAsync(const TextureCacheKey& key)
+    {
+        std::thread([this, key]() {
+            TextureLoadResult* result = new TextureLoadResult();
+            result->key = key;
+            result->result = loadTextureSync(key);
+            while (!m_resultsQueue->push(result)) {
+                std::this_thread::yield();
+            }
+        }).detach();
+    }
+    StatusOr<FCT::Image*> TextureCacheSystem::loadTextureSync(const TextureCacheKey& key)
+    {
+        if (!key.texturePath.empty() && key.texturePath[0] == '*')
+        {
+            auto data = m_dataManager->extractImage(key.modelUuid, key.texturePath);
             CHECK_STATUS(data);
-            auto dstFormat = GetTextureFormat(4,format);
-            FCT::Image* texture = m_ctx->loadTexture(data.value(),dstFormat);
+            auto dstFormat = GetTextureFormat(4, key.format);
+            FCT::Image* texture = m_ctx->loadTexture(data.value(), dstFormat);
             if (!texture)
                 return UnknownError("纹理读取失败");
-            TextureCacheKey key = {
-                .modelUuid = modelUuid,
-                .texturePath = texturePath,
-                .format = format
-            };
-            m_newTextureCache[key] = texture;
-            return OkStatus();
+            return texture;
         }
-        auto path = m_dataManager->getModelTexturePath(modelUuid,texturePath);
+        auto path = m_dataManager->getModelTexturePath(key.modelUuid, key.texturePath);
         CHECK_STATUS(path);
-        auto dstFormat = GetTextureFormat(4, format);
+        auto dstFormat = GetTextureFormat(4, key.format);
         FCT::Image* texture = m_ctx->loadTexture(path.value(), dstFormat);
         if (!texture)
             return UnknownError("从纹理路径 " + path.value() + " 读取失败");
-        TextureCacheKey key = {
-            .modelUuid = modelUuid,
-            .texturePath = texturePath,
-            .format = format
-        };
-        m_newTextureCache[key] = texture;
-        return OkStatus();
+        return texture;
     }
     StatusOr<FCT::Image*> TextureCacheSystem::getOrLoadTexture(const TextureCacheKey& key)
     {
         if (m_newTextureCache.count(key))
             return m_newTextureCache[key];
-        auto status = cacheTexture(key.modelUuid, key.texturePath, key.format);
-        CHECK_STATUS(status);
+        m_newTextureCache[key] = nullptr;
+        cacheTextureAsync(key);
         return m_newTextureCache[key];
     }
 } // namespace MQEngine

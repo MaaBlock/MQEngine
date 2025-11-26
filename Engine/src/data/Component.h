@@ -166,6 +166,7 @@ namespace MQEngine {
         /*
          * @brief 缓存的图片对象
          */
+        //boost::unique_future<>
         FCT::Image* texture = nullptr;
 
         friend class boost::serialization::access;

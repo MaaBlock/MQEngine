@@ -79,6 +79,7 @@ namespace MQEngine {
         FCT::Sampler* m_shadowSampler;
         FCT::Sampler* m_diffuseSampler;
         FCT::StaticMesh<uint32_t>* m_skyboxMesh = nullptr;
+        FCT::StaticMesh<uint32_t>* m_fullScreenMesh = nullptr;
         FCT::ShaderRef m_vs;
         FCT::ShaderRef m_ps;
         FCT::ShaderRef m_vsShadow;
