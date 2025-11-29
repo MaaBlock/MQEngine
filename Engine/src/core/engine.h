@@ -27,6 +27,7 @@
 #include "application.h"
 #include "layout.h"
 #include "../manager/SystemManager.h"
+#include "../manager/ShaderSnippetManager.h"
 
 namespace FCT
 {
@@ -103,6 +104,7 @@ namespace MQEngine {
         UniquePtr<ShininessSystem> m_shininessSystem;
         UniquePtr<TechManager> m_techManager;
         UniquePtr<RegistriesManager> m_registriesManager;
+        UniquePtr<ShaderSnippetManager> m_shaderSnippetManager;
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
         UniquePtr<ResourceActiveSystem> m_resourceActiveSystem;
         InputSystem* m_inputSystem = nullptr;

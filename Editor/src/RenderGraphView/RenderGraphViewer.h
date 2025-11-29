@@ -186,6 +186,7 @@ namespace MQEngine {
         /** @} */
     public:
         RenderGraphViewer(FCT::Context* ctx,FCT::Window* wnd);
+        ~RenderGraphViewer();
         void removePassPin(int pinHash);
         void removeImagePin(int pinHash);
         void render();
@@ -257,6 +258,7 @@ namespace MQEngine {
         std::string m_generatedCode;
         FCT::Context* m_ctx;
         FCT::Window* m_wnd;
+        ImNodesEditorContext* m_context = nullptr;
     };
 
 }

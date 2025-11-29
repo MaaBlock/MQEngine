@@ -2,6 +2,7 @@
   "name": "mqengine",
   "version": "0.0.1",
   "dependencies": [
+    "abseil",
     "assimp",
     "boost",
     {
@@ -47,6 +48,6 @@
       "name": "vulkan",
       "platform": "windows"
     },
-    "abseil"
+    "ctre"
   ]
 }

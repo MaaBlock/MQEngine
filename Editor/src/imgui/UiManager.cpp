@@ -29,7 +29,9 @@ namespace MQEngine
         m_scriptManager = new ScriptManager();
         m_sceneEntityViewer = new SceneEntityViewer();
         m_entityInspector = new EntityInspector();
+        m_inspector = new Inspector();
         m_shaderEditor = new ShaderEditor();
+        m_shaderGraph = new ShaderGraph();
     }
 
     void UiManager::setupCustomDarkTheme()
@@ -127,7 +129,9 @@ namespace MQEngine
         delete m_scriptManager;
         delete m_sceneEntityViewer;
         delete m_entityInspector;
+        delete m_inspector;
         delete m_shaderEditor;
+        delete m_shaderGraph;
         ImNodes::DestroyContext();
     }
 
@@ -238,7 +242,9 @@ namespace MQEngine
             m_scriptManager->render();
             m_sceneEntityViewer->render();
             m_entityInspector->render();
+            m_inspector->render();
             m_shaderEditor->render();
+            m_shaderGraph->render();
         });
     }
 
