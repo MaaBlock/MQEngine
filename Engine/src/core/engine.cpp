@@ -175,12 +175,15 @@ namespace MQEngine
                         {
                             const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
                             const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
-                            if (diffuseTexture.texture)
-                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
-                            if (meshInstance.mesh)
+                            
+                            if (diffuseTexture.texture && diffuseTexture.visible)
                             {
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
+                                if (meshInstance.mesh)
+                                {
+                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                }
                             }
                         }
                     })
@@ -223,17 +226,19 @@ namespace MQEngine
                             const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
                             const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
                             const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
-                            if (diffuseTexture.texture)
+                            
+                            if (diffuseTexture.texture && diffuseTexture.visible && normalMap.texture && normalMap.visible)
+                            {
                                 context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
-                            if (normalMap.texture)
                                 context.layout->bindTexture("normalTexture", normalMap.texture);
 
-                            g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
+                                g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
 
-                            if (meshInstance.mesh)
-                            {
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                if (meshInstance.mesh)
+                                {
+                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                }
                             }
                         }
                     })
@@ -353,17 +358,19 @@ namespace MQEngine
                             const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
                             const auto& ormTexture = context.registry.get<OrmTextureComponent>(context.entity);
 
-                            if (albedoTexture.texture)
+                            if (albedoTexture.texture && albedoTexture.visible &&
+                                normalMap.texture && normalMap.visible &&
+                                ormTexture.texture && ormTexture.visible)
+                            {
                                 context.layout->bindTexture("albedoTexture", albedoTexture.texture);
-                            if (normalMap.texture)
                                 context.layout->bindTexture("normalTexture", normalMap.texture);
-                            if (ormTexture.texture)
                                 context.layout->bindTexture("ormTexture", ormTexture.texture);
 
-                            if (meshInstance.mesh)
-                            {
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                if (meshInstance.mesh)
+                                {
+                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
+                                }
                             }
                         }
                     })
@@ -396,16 +403,16 @@ namespace MQEngine
                         {
                             const auto& skyboxComp = context.registry.get<CacheSkyboxComponent>(context.entity);
                             
-                            if (skyboxComp.texture) {
+                            if (skyboxComp.texture && skyboxComp.visible) {
                                 context.layout->bindTexture("skyboxTexture", skyboxComp.texture);
-                            }
 
-                            // Bind model matrix
-                            g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
+                                // Bind model matrix
+                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
 
-                            if (m_skyboxMesh)
-                            {
-                                context.layout->drawMesh(context.cmdBuf, m_skyboxMesh);
+                                if (m_skyboxMesh)
+                                {
+                                    context.layout->drawMesh(context.cmdBuf, m_skyboxMesh);
+                                }
                             }
                         }
                     })
@@ -512,6 +519,10 @@ namespace MQEngine
         m_diffuseSampler->setAddressMode(FCT::AddressMode::Repeat, FCT::AddressMode::Repeat, FCT::AddressMode::Repeat);
         m_diffuseSampler->create();
         
+        m_resourceActiveSystem = makeUnique<ResourceActiveSystem>(m_dataManager);
+        g_engineGlobal.resourceActiveSystem = m_resourceActiveSystem.get();
+        m_systemManager.requestAddSystem("ResourceActiveSystem", m_resourceActiveSystem.get());
+        
         m_skyboxMesh = new FCT::StaticMesh<uint32_t>(m_ctx, vertexLayout);
         
         std::vector<FCT::Vec3> positions = {
@@ -596,6 +607,8 @@ namespace MQEngine
         auto& submitTickers = m_ctx->submitTickers();
         submitTickers["MatrixCacheSystemUpdateTicker"] = {
             [this]() {
+                m_resourceActiveSystem->updateRender();
+                m_textureRenderSystem->updateRender(); // Added: Process Acquire Barriers
                 m_matrixCacheSystem->updateRender();
                 m_cameraSystem->updateRender();
                 m_shininessSystem->updateUniforms();

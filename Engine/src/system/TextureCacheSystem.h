@@ -84,36 +84,39 @@ namespace MQEngine {
         TextureCacheSystem(FCT::Context* ctx, DataManager* dataManager);
         template <class TextureComponent>
         void processTextureComponent(TextureComponent& component, EngineTextureType format);
-        ~TextureCacheSystem();
-        void updateLogic();
-        void collectTextures();
-    private:
-        /*
-         * @brief 异步加载纹理数据，完成后放入队列
-         */
-        void cacheTextureAsync(const TextureCacheKey& key);
+                ~TextureCacheSystem();
+                void updateLogic();
+                void updateRender(); // Added
+                void collectTextures();
+                // void loadTexture(const std::string& modelUuid, const std::string& texturePath); // Removed
+            private:
+                /*
+                 * @brief 异步加载纹理数据，完成后放入队列
+                 */
+                void cacheTextureAsync(const TextureCacheKey& key);
+                
+                /*
+                 * @brief 同步加载纹理 (在异步线程中调用，复用旧逻辑)
+                 */
+                StatusOr<FCT::Image*> loadTextureSync(const TextureCacheKey& key);
         
-        /*
-         * @brief 同步加载纹理 (在异步线程中调用，复用旧逻辑)
-         */
-        StatusOr<FCT::Image*> loadTextureSync(const TextureCacheKey& key);
-
-        /*
-         * @brief 主线程处理加载完成的队列，创建GPU资源
-         */
-        void processLoadedTextures();
-
-        /*
-         * @brief 获取缓存的Texture，如果未缓存就加载
-         */
-        StatusOr<FCT::Image*> getOrLoadTexture(const TextureCacheKey& key);
-        FCT::Context* m_ctx;
-        DataManager* m_dataManager;
-        FCT::ModelLoader* m_modelLoader;
-        UniquePtr<FCT::ImageLoader> m_imageLoader;
-        std::unordered_map<TextureCacheKey, FCT::Image*> m_newTextureCache;
-        boost::lockfree::queue<TextureLoadResult*>* m_resultsQueue;
-    };
-}
-
+                /*
+                 * @brief 主线程处理加载完成的队列，创建GPU资源
+                 */
+                void processLoadedTextures();
+                
+                /*
+                 * @brief 获取缓存的Texture，如果未缓存就加载
+                 */
+                StatusOr<FCT::Image*> getOrLoadTexture(const TextureCacheKey& key);
+                FCT::Context* m_ctx;
+                DataManager* m_dataManager;
+                FCT::ModelLoader* m_modelLoader;
+                UniquePtr<FCT::ImageLoader> m_imageLoader;
+                // std::unordered_map<std::string, FCT::Image*> m_loadedTextures; // Removed
+                std::unordered_map<TextureCacheKey, FCT::Image*> m_newTextureCache;
+                boost::lockfree::queue<TextureLoadResult*>* m_resultsQueue; // Render -> Logic
+                boost::lockfree::queue<TextureLoadResult*>* m_acquireQueue; // Transfer -> Render
+            };
+        }
 #endif //TEXTURERENDERYSTEM_H

@@ -16,6 +16,7 @@ namespace MQEngine
     class ScriptCacheSystem;
     class SystemManager;
     class InputSystem;
+    class ResourceActiveSystem;
 
     struct ENGINE_API EngineGlobal
     {
@@ -23,7 +24,7 @@ namespace MQEngine
         Runtime* rt;
         DataManager* dataManager;
         ScriptSystem* scriptSystem;
-        InputSystem* inputSystem; // 新增
+        InputSystem* inputSystem;
         CameraSystem* cameraSystem;
         LightingSystem* lightingSystem;
         MatrixCacheSystem* matrixCacheSystem;
@@ -32,6 +33,7 @@ namespace MQEngine
         RegistriesManager* registriesManager;
         ScriptCacheSystem* scriptCacheSystem;
         SystemManager* systemManager;
+        ResourceActiveSystem* resourceActiveSystem;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
         bool isRunning = false;
         EngineGlobal() = default;

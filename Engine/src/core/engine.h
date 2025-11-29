@@ -18,6 +18,7 @@
 #include "../system/TextureCacheSystem.h"
 #include "../system/TextureSamplerSystem.h"
 #include "../system/InputSystem.h"
+#include "../system/ResourceActiveSystem.h"
 #include "../thirdparty/thirdparty.h"
 #include "./EngineGlobal.h"
 #include "CreateApplication.h"
@@ -103,6 +104,7 @@ namespace MQEngine {
         UniquePtr<TechManager> m_techManager;
         UniquePtr<RegistriesManager> m_registriesManager;
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
+        UniquePtr<ResourceActiveSystem> m_resourceActiveSystem;
         InputSystem* m_inputSystem = nullptr;
         Uniform m_floorModelUniform;
         // OutputInfo for passes

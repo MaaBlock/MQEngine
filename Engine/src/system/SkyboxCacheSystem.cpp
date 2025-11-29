@@ -1,6 +1,8 @@
 #include "SkyboxCacheSystem.h"
 #include "../data/Component.h"
 #include "../data/DataManager.h"
+#include "../core/EngineGlobal.h"
+#include "../system/ResourceActiveSystem.h"
 #include <vector>
 #include <string>
 
@@ -36,7 +38,11 @@ namespace MQEngine {
                     if (texture) {
                         auto& cache = registry->emplace<CacheSkyboxComponent>(entity);
                         cache.texture = texture;
-                        cache.visible = true;
+                        if (g_engineGlobal.resourceActiveSystem) {
+                            g_engineGlobal.resourceActiveSystem->requestActive(&cache);
+                        } else {
+                            cache.visible = true; // Fallback
+                        }
                     } else {
 
                     }
