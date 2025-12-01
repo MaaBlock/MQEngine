@@ -6,7 +6,7 @@ ShaderOut main(ShaderIn sIn) {
     sOut.normal = float4(0,0,0,0);
     sOut.tangent = float4(0,0,0,0);
     sOut.bitangent = float4(0,0,0,0);
-    sOut.srcpos = sIn.position;
+    sOut.worldPos = sIn.position;
     sOut.shadowPos = float4(0,0,0,0);
     return sOut;
 }

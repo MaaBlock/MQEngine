@@ -6,7 +6,7 @@ ShaderOut main(ShaderIn sIn) {
     sOut.normal = sIn.normal;
     sOut.tangent = sIn.tangent;
     sOut.bitangent = sIn.bitangent;
-    sOut.srcpos = modelMatrix * sIn.position;
+    sOut.worldPos = modelMatrix * sIn.position;
     sOut.shadowPos = directionalLightMvp * modelMatrix * sIn.position;
     return sOut;
 }

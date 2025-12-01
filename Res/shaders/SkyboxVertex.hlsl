@@ -7,7 +7,7 @@ ShaderOut main(ShaderIn sIn) {
 
     sOut.position = clipPos.xyww;
 
-    sOut.srcpos = float4(sIn.position.xyz, 1.0);
+    sOut.worldPos = float4(sIn.position.xyz, 1.0);
 
     sOut.color = float4(1,1,1,1);
     sOut.texCoord = float2(0,0);

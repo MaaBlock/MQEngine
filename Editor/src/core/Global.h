@@ -9,6 +9,8 @@
 namespace MQEngine
 {
     class EditorCameraManager;
+    class Inspector;
+    class ContentBrowser;
 }
 
 namespace MQEngine{
@@ -32,6 +34,8 @@ namespace MQEngine{
         FCT::ImguiContext* imguiContext;
         SelectedEntityState selectedEntity;
         entt::id_type componentToDelete = 0;
+        Inspector* inspector = nullptr;
+        ContentBrowser* contentBrowser = nullptr;
     };
     extern EditorGlobal g_editorGlobal;
 }

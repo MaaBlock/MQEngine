@@ -59,6 +59,7 @@ namespace MQEngine {
          * @brief 提前让entt的hash表里拥有这些组件，防止后续再添加导致线程冲突
          */
         void registerEnttComponents();
+        void registerShaderSnippets();
         void settingUpEnv();
         void settingUpTechs();
         void settingUpPass();
@@ -74,7 +75,7 @@ namespace MQEngine {
         FCT::Context* m_ctx;
         FCT::VertexLayout vertexLayout = StandardMeshVertexLayout;
         FCT::PixelLayout pixelLayout = {
-            FCT::VertexElement{FCT::VtxType::Custom,"srcpos",FCT::Format::R32G32B32A32_SFLOAT},
+            FCT::VertexElement{FCT::VtxType::Custom,"worldPos",FCT::Format::R32G32B32A32_SFLOAT},
             FCT::VertexElement{FCT::VtxType::Custom,"shadowPos",FCT::Format::R32G32B32A32_SFLOAT},
             vertexLayout
         };

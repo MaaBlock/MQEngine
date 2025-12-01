@@ -61,7 +61,7 @@ ShaderOut main(ShaderIn sIn) {
 
     float3 N = normalize(mul(normalSample, TBN));
 
-    float3 V = normalize(viewPosition - sIn.srcpos.xyz);
+    float3 V = normalize(viewPosition - sIn.worldPos.xyz);
     float3 F0 = lerp(float3(0.04, 0.04, 0.04), albedo, metallic);
 
 

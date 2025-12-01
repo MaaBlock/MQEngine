@@ -11,7 +11,7 @@ namespace MQEngine {
         Inspector();
         void render();
         void setTarget(InspectorObject* target) { m_currentObject = target; }
-
+        InspectorObject* getCurrentObject() const { return m_currentObject; }
     private:
         InspectorObject* m_currentObject = nullptr;
     };

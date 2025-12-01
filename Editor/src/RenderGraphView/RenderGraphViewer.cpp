@@ -168,7 +168,7 @@ namespace MQEngine
     void RenderGraphViewer::render()
     {
         ImNodes::EditorContextSet(m_context);
-        ImGui::Begin("Pass代码生成器");
+        ImGui::Begin("RenderGraph");
 
         if (ImGui::Button("保存图表..."))
         {

@@ -74,15 +74,24 @@ namespace MQEngine {
             }
         }
 
-        m_snippets[snippetName] = std::move(snippet);
+        m_snippets[uuid] = std::move(snippet);
         spdlog::info("成功注册着色器片段: {}", snippetName);
         return OkStatus();
     }
 
-    const Snippet* ShaderSnippetManager::getSnippet(const std::string& snippetName) const {
-        auto it = m_snippets.find(snippetName);
+    const Snippet* ShaderSnippetManager::getSnippetByUuid(const std::string& uuid) const {
+        auto it = m_snippets.find(uuid);
         if (it != m_snippets.end()) {
             return &it->second;
+        }
+        return nullptr;
+    }
+
+    const Snippet* ShaderSnippetManager::getSnippetByName(const std::string& snippetName) const {
+        for (const auto& [uuid, snippet] : m_snippets) {
+            if (snippet.name == snippetName) {
+                return &snippet;
+            }
         }
         return nullptr;
     }

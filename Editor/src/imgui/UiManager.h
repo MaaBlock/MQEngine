@@ -17,6 +17,7 @@
 #include "../SceneViewer/Inspector.h"
 #include "../ShaderEditor/ShaderEditor.h"
 #include "../ShaderEditor/ShaderGraph.h"
+#include "ContentBrowser.h"
 
 namespace MQEngine {
     class UiManager {
@@ -42,6 +43,7 @@ namespace MQEngine {
         Inspector* m_inspector;
         ShaderEditor* m_shaderEditor;
         ShaderGraph* m_shaderGraph;
+        ContentBrowser* m_contentBrowser;
     };
 }
 

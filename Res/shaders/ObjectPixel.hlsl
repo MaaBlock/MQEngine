@@ -40,7 +40,7 @@ ShaderOut main(ShaderIn sIn) {
         float3 normal = normalize(sIn.normal.xyz);
         float3 lightDirection = normalize(lightDir.xyz);
         
-        float3 viewDir = normalize(viewPosition - sIn.srcpos.xyz);
+        float3 viewDir = normalize(viewPosition - sIn.worldPos.xyz);
 
         float NdotL = max(dot(normal, lightDirection), 0.0);
         float3 diffuse = NdotL * directionalLightColor * directionalLightIntensity;
@@ -51,7 +51,7 @@ ShaderOut main(ShaderIn sIn) {
         float spec = pow(NdotH, shininess);
         float3 specular = spec * directionalLightColor * directionalLightIntensity * 0.3;
 
-        float shadow = calculateShadow(directionalLightMvp * sIn.srcpos, sIn.normal.xyz, lightDirection);
+        float shadow = calculateShadow(directionalLightMvp * sIn.worldPos, sIn.normal.xyz, lightDirection);
         
         finalColor = sIn.color.xyz * (ambient + shadow * (diffuse + specular));
     }
