@@ -13,5 +13,6 @@ var struct_m_q_engine_1_1_engine_global =
     [ "rt", "struct_m_q_engine_1_1_engine_global.html#a4ce56cfaf1aff4ffe82f370dd72ecebf", null ],
     [ "sceneEventPipe", "struct_m_q_engine_1_1_engine_global.html#a07713c367314fa59c2758d9f359dfbfe", null ],
     [ "scriptSystem", "struct_m_q_engine_1_1_engine_global.html#accddc7559c15a657645cb412990325a2", null ],
+    [ "shininessSystem", "struct_m_q_engine_1_1_engine_global.html#a1e6649a3e60b1b743f0ab03f3826b761", null ],
     [ "textureRenderSystem", "struct_m_q_engine_1_1_engine_global.html#aad75203e87b889709d7bbfff4c015071", null ]
 ];

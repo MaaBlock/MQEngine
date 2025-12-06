@@ -5,6 +5,7 @@ var application_8h =
     [ "MQEngine::RenderCallBack::SubscribePass", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass" ],
     [ "MQEngine::RenderCallBack::SettingSync", "struct_m_q_engine_1_1_render_call_back_1_1_setting_sync.html", "struct_m_q_engine_1_1_render_call_back_1_1_setting_sync" ],
     [ "MQEngine::RenderCallBack::KeepImage", "struct_m_q_engine_1_1_render_call_back_1_1_keep_image.html", "struct_m_q_engine_1_1_render_call_back_1_1_keep_image" ],
+    [ "MQEngine::RenderCallBack::WindowClose", "struct_m_q_engine_1_1_render_call_back_1_1_window_close.html", null ],
     [ "MQEngine::Application", "class_m_q_engine_1_1_application.html", "class_m_q_engine_1_1_application" ],
     [ "MQEngine::Application::Global", "struct_m_q_engine_1_1_application_1_1_global.html", "struct_m_q_engine_1_1_application_1_1_global" ],
     [ "MQEngine::RenderTarget", "namespace_m_q_engine.html#aa3c47a240aff07391abdb10bcce7dc8f", [

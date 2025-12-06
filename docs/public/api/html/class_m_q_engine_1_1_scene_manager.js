@@ -11,6 +11,7 @@ var class_m_q_engine_1_1_scene_manager =
     [ "m_dataManager", "class_m_q_engine_1_1_scene_manager.html#a5a8815d63d91a1bf50edc03f48eb3474", null ],
     [ "m_deleteSceneIndex", "class_m_q_engine_1_1_scene_manager.html#a8679cf88368944a3324bdbafa0746c9c", null ],
     [ "m_errorMessage", "class_m_q_engine_1_1_scene_manager.html#a8dd8c0f2df67129ad77ed44c633b4530", null ],
+    [ "m_lastSceneOpenTime", "class_m_q_engine_1_1_scene_manager.html#a8f74811fbfdfe3bb73797e5f47a5a702", null ],
     [ "m_sceneList", "class_m_q_engine_1_1_scene_manager.html#afeab3cdd3b85413c613241a03af6dcdb", null ],
     [ "m_selectedSceneIndex", "class_m_q_engine_1_1_scene_manager.html#a6b58959344c45595ed0bce70720ac4f0", null ],
     [ "m_showCreateDialog", "class_m_q_engine_1_1_scene_manager.html#a109835e7dc76e259854ff31e67bbf9fa", null ],

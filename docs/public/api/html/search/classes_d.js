@@ -11,7 +11,8 @@ var searchData=
   ['selectedentitystate_8',['SelectedEntityState',['../struct_m_q_engine_1_1_selected_entity_state.html',1,'MQEngine']]],
   ['settingsync_9',['SettingSync',['../struct_m_q_engine_1_1_render_call_back_1_1_setting_sync.html',1,'MQEngine::RenderCallBack']]],
   ['settinguppass_10',['SettingUpPass',['../struct_m_q_engine_1_1_render_call_back_1_1_setting_up_pass.html',1,'MQEngine::RenderCallBack']]],
-  ['staticmeshinstance_11',['StaticMeshInstance',['../struct_m_q_engine_1_1_static_mesh_instance.html',1,'MQEngine']]],
-  ['subscribepass_12',['SubscribePass',['../struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html',1,'MQEngine::RenderCallBack']]],
-  ['systemmanager_13',['SystemManager',['../class_m_q_engine_1_1_system_manager.html',1,'MQEngine']]]
+  ['shininesssystem_11',['ShininessSystem',['../class_m_q_engine_1_1_shininess_system.html',1,'MQEngine']]],
+  ['staticmeshinstance_12',['StaticMeshInstance',['../struct_m_q_engine_1_1_static_mesh_instance.html',1,'MQEngine']]],
+  ['subscribepass_13',['SubscribePass',['../struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html',1,'MQEngine::RenderCallBack']]],
+  ['systemmanager_14',['SystemManager',['../class_m_q_engine_1_1_system_manager.html',1,'MQEngine']]]
 ];

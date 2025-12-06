@@ -14,6 +14,8 @@ var searchData=
   ['scriptmanager_2eh_11',['ScriptManager.h',['../_script_manager_8h.html',1,'']]],
   ['scriptsystem_2ecpp_12',['ScriptSystem.cpp',['../_script_system_8cpp.html',1,'']]],
   ['scriptsystem_2eh_13',['ScriptSystem.h',['../_script_system_8h.html',1,'']]],
-  ['systemmanager_2ecpp_14',['systemmanager.cpp',['../systemmanager_8cpp.html',1,'']]],
-  ['systemmanager_2eh_15',['systemmanager.h',['../systemmanager_8h.html',1,'']]]
+  ['shininesssystem_2ecpp_14',['ShininessSystem.cpp',['../_shininess_system_8cpp.html',1,'']]],
+  ['shininesssystem_2eh_15',['ShininessSystem.h',['../_shininess_system_8h.html',1,'']]],
+  ['systemmanager_2ecpp_16',['systemmanager.cpp',['../systemmanager_8cpp.html',1,'']]],
+  ['systemmanager_2eh_17',['systemmanager.h',['../systemmanager_8h.html',1,'']]]
 ];

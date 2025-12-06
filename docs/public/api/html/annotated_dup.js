@@ -5,7 +5,8 @@ var annotated_dup =
         [ "KeepImage", "struct_m_q_engine_1_1_render_call_back_1_1_keep_image.html", "struct_m_q_engine_1_1_render_call_back_1_1_keep_image" ],
         [ "SettingSync", "struct_m_q_engine_1_1_render_call_back_1_1_setting_sync.html", "struct_m_q_engine_1_1_render_call_back_1_1_setting_sync" ],
         [ "SettingUpPass", "struct_m_q_engine_1_1_render_call_back_1_1_setting_up_pass.html", "struct_m_q_engine_1_1_render_call_back_1_1_setting_up_pass" ],
-        [ "SubscribePass", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass" ]
+        [ "SubscribePass", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass" ],
+        [ "WindowClose", "struct_m_q_engine_1_1_render_call_back_1_1_window_close.html", null ]
       ] ],
       [ "SceneEvent", "namespace_m_q_engine_1_1_scene_event.html", [
         [ "EntryScene", "struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html", "struct_m_q_engine_1_1_scene_event_1_1_entry_scene" ],
@@ -16,6 +17,7 @@ var annotated_dup =
         [ "UnloadTrunk", "struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html", "struct_m_q_engine_1_1_scene_event_1_1_unload_trunk" ]
       ] ],
       [ "Application", "class_m_q_engine_1_1_application.html", "class_m_q_engine_1_1_application" ],
+      [ "ApplicationRegistrar", "class_m_q_engine_1_1_application_registrar.html", "class_m_q_engine_1_1_application_registrar" ],
       [ "CacheModelMatrix", "struct_m_q_engine_1_1_cache_model_matrix.html", "struct_m_q_engine_1_1_cache_model_matrix" ],
       [ "CameraSystem", "class_m_q_engine_1_1_camera_system.html", "class_m_q_engine_1_1_camera_system" ],
       [ "ComponentFieldInfo", "struct_m_q_engine_1_1_component_field_info.html", "struct_m_q_engine_1_1_component_field_info" ],
@@ -31,13 +33,13 @@ var annotated_dup =
       [ "EditorGlobal", "struct_m_q_engine_1_1_editor_global.html", "struct_m_q_engine_1_1_editor_global" ],
       [ "Engine", "class_m_q_engine_1_1_engine.html", "class_m_q_engine_1_1_engine" ],
       [ "EngineGlobal", "struct_m_q_engine_1_1_engine_global.html", "struct_m_q_engine_1_1_engine_global" ],
-      [ "EngineScope", "class_m_q_engine_1_1_engine_scope.html", "class_m_q_engine_1_1_engine_scope" ],
       [ "EntityInspector", "class_m_q_engine_1_1_entity_inspector.html", "class_m_q_engine_1_1_entity_inspector" ],
       [ "EntityRenderContext", "struct_m_q_engine_1_1_entity_render_context.html", "struct_m_q_engine_1_1_entity_render_context" ],
       [ "EnttInputArchiveWrapper", "class_m_q_engine_1_1_entt_input_archive_wrapper.html", "class_m_q_engine_1_1_entt_input_archive_wrapper" ],
       [ "EnttOutputArchiveWrapper", "class_m_q_engine_1_1_entt_output_archive_wrapper.html", "class_m_q_engine_1_1_entt_output_archive_wrapper" ],
       [ "FileDataLoader", "class_m_q_engine_1_1_file_data_loader.html", "class_m_q_engine_1_1_file_data_loader" ],
       [ "GameApplication", "class_m_q_engine_1_1_game_application.html", "class_m_q_engine_1_1_game_application" ],
+      [ "GraphicsEnv", "class_m_q_engine_1_1_graphics_env.html", "class_m_q_engine_1_1_graphics_env" ],
       [ "GraphViewInsight", "class_m_q_engine_1_1_graph_view_insight.html", "class_m_q_engine_1_1_graph_view_insight" ],
       [ "ImageNode", "struct_m_q_engine_1_1_image_node.html", "struct_m_q_engine_1_1_image_node" ],
       [ "LightingSystem", "class_m_q_engine_1_1_lighting_system.html", "class_m_q_engine_1_1_lighting_system" ],
@@ -64,6 +66,7 @@ var annotated_dup =
       [ "ScriptManager", "class_m_q_engine_1_1_script_manager.html", "class_m_q_engine_1_1_script_manager" ],
       [ "ScriptSystem", "class_m_q_engine_1_1_script_system.html", "class_m_q_engine_1_1_script_system" ],
       [ "SelectedEntityState", "struct_m_q_engine_1_1_selected_entity_state.html", "struct_m_q_engine_1_1_selected_entity_state" ],
+      [ "ShininessSystem", "class_m_q_engine_1_1_shininess_system.html", "class_m_q_engine_1_1_shininess_system" ],
       [ "StaticMeshInstance", "struct_m_q_engine_1_1_static_mesh_instance.html", "struct_m_q_engine_1_1_static_mesh_instance" ],
       [ "SystemManager", "class_m_q_engine_1_1_system_manager.html", "class_m_q_engine_1_1_system_manager" ],
       [ "Tech", "class_m_q_engine_1_1_tech.html", "class_m_q_engine_1_1_tech" ],

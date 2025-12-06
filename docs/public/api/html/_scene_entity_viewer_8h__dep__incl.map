@@ -1,17 +1,15 @@
 <map id="MQEngine/Editor/src/SceneViewer/SceneEntityViewer.h" name="MQEngine/Editor/src/SceneViewer/SceneEntityViewer.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="197,5,442,44"/>
-<area shape="rect" id="Node000002" href="$_scene_entity_viewer_8cpp.html" title=" " alt="" coords="76,92,335,131"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="284,56,232,94,229,89,280,52"/>
-<area shape="rect" id="Node000003" href="$_ui_manager_8h.html" title=" " alt="" coords="359,92,513,131"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="359,51,412,89,409,94,356,55"/>
-<area shape="rect" id="Node000004" href="$_editor_application_8h.html" title=" " alt="" coords="236,179,433,217"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="403,143,359,180,355,176,400,139"/>
-<area shape="rect" id="Node000008" href="$_ui_manager_8cpp.html" title=" " alt="" coords="456,179,618,217"/>
-<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="472,139,516,176,513,180,468,143"/>
-<area shape="rect" id="Node000005" href="$_editor_application_8cpp.html" title=" " alt="" coords="5,265,216,304"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="272,226,161,267,159,262,270,221"/>
-<area shape="rect" id="Node000006" href="$_render_call_back_8cpp.html" title=" " alt="" coords="240,265,429,304"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="337,233,337,265,332,265,332,233"/>
-<area shape="rect" id="Node000007" href="$_editor_2src_2core_2entry_8cpp.html" title=" " alt="" coords="453,265,608,304"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="393,221,488,262,486,267,391,226"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="127,5,372,44"/>
+<area shape="rect" id="Node000002" href="$_scene_entity_viewer_8cpp.html" title=" " alt="" coords="5,92,265,131"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,56,162,94,159,89,210,52"/>
+<area shape="rect" id="Node000003" href="$_ui_manager_8h.html" title=" " alt="" coords="288,92,443,131"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="289,51,342,89,338,94,286,55"/>
+<area shape="rect" id="Node000004" href="$_editor_application_8h.html" title=" " alt="" coords="166,179,362,217"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="333,143,288,180,285,176,330,139"/>
+<area shape="rect" id="Node000007" href="$_ui_manager_8cpp.html" title=" " alt="" coords="386,179,548,217"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="402,139,446,176,443,180,398,143"/>
+<area shape="rect" id="Node000005" href="$_editor_application_8cpp.html" title=" " alt="" coords="47,265,258,304"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,229,179,267,176,263,226,225"/>
+<area shape="rect" id="Node000006" href="$_render_call_back_8cpp.html" title=" " alt="" coords="282,265,471,304"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="303,225,353,263,350,267,300,229"/>
 </map>

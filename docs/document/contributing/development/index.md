@@ -11,4 +11,5 @@
 
 [📖 引擎架构概览](./engine-architecture.md)
 [编辑器相关](./editor/index.md)
+[管理器](./manager/index.md)
 ---

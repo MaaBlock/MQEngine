@@ -8,7 +8,9 @@ var searchData=
   ['selectedentity_5',['selectedEntity',['../struct_m_q_engine_1_1_editor_global.html#a215dccb278e865fd04cd813aeac7b5aa',1,'MQEngine::EditorGlobal']]],
   ['setter_6',['setter',['../struct_m_q_engine_1_1_component_field_info.html#afe2c9190b06cbf824e9296afbbfa8b0a',1,'MQEngine::ComponentFieldInfo']]],
   ['shadowuniformslot_7',['ShadowUniformSlot',['../namespace_m_q_engine.html#a994f5dec6dba4b13bdf26e94c0efd397',1,'MQEngine']]],
-  ['source_8',['source',['../struct_m_q_engine_1_1_vertex_shader_source.html#a36b72e4bde0e26a8b8281156a3382064',1,'MQEngine::VertexShaderSource::source'],['../struct_m_q_engine_1_1_pixel_shader_source.html#ab3dba2e0c380e34289647caf76cb0ca0',1,'MQEngine::PixelShaderSource::source']]],
-  ['standardmeshvertexlayout_9',['StandardMeshVertexLayout',['../namespace_m_q_engine.html#a2046e37f94df52290eeac1f4b74c60ae',1,'MQEngine']]],
-  ['startpinid_10',['startPinId',['../struct_m_q_engine_1_1_link_info.html#a5ea048dc7295c457174e9eca0d536170',1,'MQEngine::LinkInfo']]]
+  ['shininesssystem_8',['shininessSystem',['../struct_m_q_engine_1_1_engine_global.html#a1e6649a3e60b1b743f0ab03f3826b761',1,'MQEngine::EngineGlobal']]],
+  ['shininessuniformslot_9',['ShininessUniformSlot',['../namespace_m_q_engine.html#a16f952365b178a867ca65dbc9ebac96c',1,'MQEngine']]],
+  ['source_10',['source',['../struct_m_q_engine_1_1_vertex_shader_source.html#a36b72e4bde0e26a8b8281156a3382064',1,'MQEngine::VertexShaderSource::source'],['../struct_m_q_engine_1_1_pixel_shader_source.html#ab3dba2e0c380e34289647caf76cb0ca0',1,'MQEngine::PixelShaderSource::source']]],
+  ['standardmeshvertexlayout_11',['StandardMeshVertexLayout',['../namespace_m_q_engine.html#a2046e37f94df52290eeac1f4b74c60ae',1,'MQEngine']]],
+  ['startpinid_12',['startPinId',['../struct_m_q_engine_1_1_link_info.html#a5ea048dc7295c457174e9eca0d536170',1,'MQEngine::LinkInfo']]]
 ];

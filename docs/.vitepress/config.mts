@@ -76,7 +76,21 @@ export default defineConfig({
                                                 text: '打开一个全新的场景的协作图',
                                                 link: '/document/contributing/development/editor/open-new-scene.md',
                                             }
-                                        ]
+                                        ],
+                                        text: '管理器',
+                                        link: '/document/contributing/development/manager/index.md',
+                                        items: [
+                                            {
+                                                text: "着色器片段",
+                                                items: [
+                                                    {
+                                                        text: '着色器片段加载的实现流程',
+                                                        link: '/document/contributing/development/manager/ShaderSnippet/how-load-snippet.md',
+                                                    },
+
+                                                ]
+                                            }
+                                            ],
                                     }
                                 ]
                             },

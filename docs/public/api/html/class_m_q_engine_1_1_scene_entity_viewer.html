@@ -109,7 +109,7 @@ MQEngine::SceneEntityViewer 的协作图:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public 成员函数</h2></td></tr>
 <tr class="memitem:ac5ab431465420a0d080c6cbc1771eb6e" id="r_ac5ab431465420a0d080c6cbc1771eb6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5ab431465420a0d080c6cbc1771eb6e">SceneEntityViewer</a> ()</td></tr>
-<tr class="memitem:a62175a746d495310a107ae43c87f6bd5" id="r_a62175a746d495310a107ae43c87f6bd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62175a746d495310a107ae43c87f6bd5">renderGloabaEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="memitem:a35c08696007a0dbd631d5e2ba5ec147b" id="r_a35c08696007a0dbd631d5e2ba5ec147b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35c08696007a0dbd631d5e2ba5ec147b">renderGlobalEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
 <tr class="memitem:a78bc78d55ecaeb8c7c232af69d0f797b" id="r_a78bc78d55ecaeb8c7c232af69d0f797b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78bc78d55ecaeb8c7c232af69d0f797b">renderTrunkEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene, std::string trunkName)</td></tr>
 <tr class="memitem:a34f7f70112edaa67aca17ba6deb98540" id="r_a34f7f70112edaa67aca17ba6deb98540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34f7f70112edaa67aca17ba6deb98540">renderSceneEntityList</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
 <tr class="memitem:a4fa5025fa9bb28ea96e7526b2aa2731b" id="r_a4fa5025fa9bb28ea96e7526b2aa2731b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fa5025fa9bb28ea96e7526b2aa2731b">render</a> ()</td></tr>
@@ -120,9 +120,14 @@ Private 成员函数</h2></td></tr>
 <tr class="memitem:a40682ccf79e101b58937ba18ca74fbdd" id="r_a40682ccf79e101b58937ba18ca74fbdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40682ccf79e101b58937ba18ca74fbdd">renderCreateEntityDialog</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene)</td></tr>
 <tr class="memitem:a5e2721f8ac43d75b191c9d7b97f405e5" id="r_a5e2721f8ac43d75b191c9d7b97f405e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e2721f8ac43d75b191c9d7b97f405e5">showCreateEntityDialog</a> (const std::string &amp;targetTrunk=&quot;&quot;, bool isGlobal=true)</td></tr>
 <tr class="memitem:a590baec1eafe0d79288b7c35db412a22" id="r_a590baec1eafe0d79288b7c35db412a22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a590baec1eafe0d79288b7c35db412a22">createEntity</a> (<a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *scene, const std::string &amp;name, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=true)</td></tr>
+<tr class="memitem:a6dd21353c3d2ac82b4683afb098b5131" id="r_a6dd21353c3d2ac82b4683afb098b5131"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dd21353c3d2ac82b4683afb098b5131">deleteEntity</a> (entt::entity entity, const std::string &amp;trunkName=&quot;&quot;, bool isGlobal=false)</td></tr>
 <tr class="memitem:ae19f68282012fa3e37b75cba1e5db14f" id="r_ae19f68282012fa3e37b75cba1e5db14f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae19f68282012fa3e37b75cba1e5db14f">addStaticMeshComponent</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;meshName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
 <tr class="memitem:a5d6af110b9eea865002235f0dbc53f83" id="r_a5d6af110b9eea865002235f0dbc53f83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d6af110b9eea865002235f0dbc53f83">addScriptComponent</a> (entt::entity entity, const std::string &amp;functionName, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
 <tr class="memitem:a4d28835e8105ec229b0c27d776648eda" id="r_a4d28835e8105ec229b0c27d776648eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d28835e8105ec229b0c27d776648eda">addDiffuseTextureComponent</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;texturePath, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
+<tr class="memitem:a28cdf0df59199b6744662792ec17606b" id="r_a28cdf0df59199b6744662792ec17606b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28cdf0df59199b6744662792ec17606b">addNormalTextureComponent</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;texturePath, bool isGlobal, const std::string &amp;trunkName=&quot;&quot;)</td></tr>
+<tr class="memitem:ab3008d599eb075bdebd21deb5c7bbe4d" id="r_ab3008d599eb075bdebd21deb5c7bbe4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3008d599eb075bdebd21deb5c7bbe4d">renderScriptTypeSelectionPopup</a> ()</td></tr>
+<tr class="memitem:a8725f606dbc2cb4482ca4e8e7ba14683" id="r_a8725f606dbc2cb4482ca4e8e7ba14683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8725f606dbc2cb4482ca4e8e7ba14683">renderTextureTypeSelectionPopup</a> ()</td></tr>
+<tr class="memitem:a3a1f92812595aa6ef2d59d694b74b156" id="r_a3a1f92812595aa6ef2d59d694b74b156"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a1f92812595aa6ef2d59d694b74b156">openTextureTypePopup</a> (entt::entity entity, const std::string &amp;modelUuid, const std::string &amp;texturePath, bool isGlobal, const std::string &amp;trunkName)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private 属性</h2></td></tr>
@@ -133,6 +138,13 @@ Private 属性</h2></td></tr>
 <tr class="memitem:a5062679e3cd27c644bb1173ee8a5e375" id="r_a5062679e3cd27c644bb1173ee8a5e375"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5062679e3cd27c644bb1173ee8a5e375">m_createInGlobal</a> = true</td></tr>
 <tr class="memitem:a3e8190f0271d14f8ebf1d2218166339e" id="r_a3e8190f0271d14f8ebf1d2218166339e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e8190f0271d14f8ebf1d2218166339e">m_showContextMenu</a> = false</td></tr>
 <tr class="memitem:ab8e48f71b3957834b264945e961c3548" id="r_ab8e48f71b3957834b264945e961c3548"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8e48f71b3957834b264945e961c3548">m_contextMenuTarget</a></td></tr>
+<tr class="memitem:a32654b4857941c38bc7d21bf2dfb422e" id="r_a32654b4857941c38bc7d21bf2dfb422e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32654b4857941c38bc7d21bf2dfb422e">m_showScriptTypePopup</a> = false</td></tr>
+<tr class="memitem:ae5fef60403580f61f747775071ab096b" id="r_ae5fef60403580f61f747775071ab096b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5fef60403580f61f747775071ab096b">m_draggedFunctionName</a></td></tr>
+<tr class="memitem:a9905d8d00e813b392bf95d9066354b4c" id="r_a9905d8d00e813b392bf95d9066354b4c"><td class="memItemLeft" align="right" valign="top">entt::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9905d8d00e813b392bf95d9066354b4c">m_targetEntity</a></td></tr>
+<tr class="memitem:a54bc4c93a198a6aa67f94e41bf2c8922" id="r_a54bc4c93a198a6aa67f94e41bf2c8922"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54bc4c93a198a6aa67f94e41bf2c8922">m_targetIsGlobal</a></td></tr>
+<tr class="memitem:a578b1c9f19192c275e1fea478d588051" id="r_a578b1c9f19192c275e1fea478d588051"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a578b1c9f19192c275e1fea478d588051">m_showTextureTypePopup</a> = false</td></tr>
+<tr class="memitem:a86e5f6731a4b7ce7bdf081afc27011f2" id="r_a86e5f6731a4b7ce7bdf081afc27011f2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86e5f6731a4b7ce7bdf081afc27011f2">m_draggedTexturePath</a></td></tr>
+<tr class="memitem:a918cceb1fc0b8070af65afe0006d4f21" id="r_a918cceb1fc0b8070af65afe0006d4f21"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a918cceb1fc0b8070af65afe0006d4f21">m_draggedModelUuid</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
 <a id="ac5ab431465420a0d080c6cbc1771eb6e" name="ac5ab431465420a0d080c6cbc1771eb6e"></a>
@@ -213,16 +225,81 @@ Private 属性</h2></td></tr>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a4d28835e8105ec229b0c27d776648eda_icgraph">
-<area shape="rect" title=" " alt="" coords="780,37,998,76"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
-<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
-<area shape="poly" title=" " alt="" coords="765,74,733,78,733,72,765,69"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
-<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
-<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
-<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+<area shape="rect" title=" " alt="" coords="564,5,781,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a8725f606dbc2cb4482ca4e8e7ba14683" title=" " alt="" coords="264,5,516,44"/>
+<area shape="poly" title=" " alt="" coords="548,27,516,27,516,22,548,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a28cdf0df59199b6744662792ec17606b" name="a28cdf0df59199b6744662792ec17606b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28cdf0df59199b6744662792ec17606b">&#9670;&#160;</a></span>addNormalTextureComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::addNormalTextureComponent </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>modelUuid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>texturePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a28cdf0df59199b6744662792ec17606b_icgraph">
+<area shape="rect" title=" " alt="" coords="564,5,774,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a8725f606dbc2cb4482ca4e8e7ba14683" title=" " alt="" coords="264,5,516,44"/>
+<area shape="poly" title=" " alt="" coords="549,27,516,27,516,22,549,22"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
 </map>
 </div>
 
@@ -265,26 +342,12 @@ Private 属性</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <div class="dynheader">
-函数调用图:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_cgraph">
-<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
-<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
-<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
-<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
-</map>
-</div>
-<div class="dynheader">
 这是这个函数的调用关系图:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5d6af110b9eea865002235f0dbc53f83_icgraph">
 <area shape="rect" title=" " alt="" coords="780,37,991,76"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
 <area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
 <area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
@@ -359,7 +422,7 @@ Private 属性</h2></td></tr>
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_ae19f68282012fa3e37b75cba1e5db14f_icgraph">
 <area shape="rect" title=" " alt="" coords="780,37,991,76"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
 <area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
 <area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
@@ -438,6 +501,132 @@ Private 属性</h2></td></tr>
 
 </div>
 </div>
+<a id="a6dd21353c3d2ac82b4683afb098b5131" name="a6dd21353c3d2ac82b4683afb098b5131"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd21353c3d2ac82b4683afb098b5131">&#9670;&#160;</a></span>deleteEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::deleteEntity </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,216,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="271,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="204,58,263,45,264,50,205,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="264,68,481,93"/>
+<area shape="poly" title=" " alt="" coords="216,78,248,78,248,83,216,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="292,117,453,156"/>
+<area shape="poly" title=" " alt="" coords="205,98,277,114,276,119,204,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a6dd21353c3d2ac82b4683afb098b5131_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3a1f92812595aa6ef2d59d694b74b156" name="a3a1f92812595aa6ef2d59d694b74b156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a1f92812595aa6ef2d59d694b74b156">&#9670;&#160;</a></span>openTextureTypePopup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::openTextureTypePopup </td>
+          <td>(</td>
+          <td class="paramtype">entt::entity</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>modelUuid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>texturePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isGlobal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>trunkName</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a3a1f92812595aa6ef2d59d694b74b156_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a3a1f92812595aa6ef2d59d694b74b156_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a3a1f92812595aa6ef2d59d694b74b156_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a3a1f92812595aa6ef2d59d694b74b156_icgraph">
+<area shape="rect" title=" " alt="" coords="780,37,991,76"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
+<area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
+<area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,37,474,76"/>
+<area shape="poly" title=" " alt="" coords="507,42,475,46,474,41,506,37"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,37,216,76"/>
+<area shape="poly" title=" " alt="" coords="248,59,216,59,216,54,248,54"/>
+<area shape="poly" title=" " alt="" coords="506,76,474,72,475,67,507,70"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a4fa5025fa9bb28ea96e7526b2aa2731b" name="a4fa5025fa9bb28ea96e7526b2aa2731b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4fa5025fa9bb28ea96e7526b2aa2731b">&#9670;&#160;</a></span>render()</h2>
 
@@ -457,66 +646,83 @@ Private 属性</h2></td></tr>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a4fa5025fa9bb28ea96e7526b2aa2731b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,440,216,479"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd" title=" " alt="" coords="264,295,474,333"/>
-<area shape="poly" title=" " alt="" coords="146,437,318,339,321,343,148,442"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,471,474,509"/>
-<area shape="poly" title=" " alt="" coords="217,469,248,473,248,478,216,474"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22" title=" " alt="" coords="812,55,1022,93"/>
-<area shape="poly" title=" " alt="" coords="410,292,577,214,793,118,846,97,848,102,795,123,579,219,412,297"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="1095,201,1298,240"/>
-<area shape="poly" title=" " alt="" coords="994,91,1041,110,1107,149,1162,190,1158,194,1104,154,1038,115,992,96"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="1088,364,1305,389"/>
-<area shape="poly" title=" " alt="" coords="962,91,1004,118,1024,135,1042,155,1055,177,1062,197,1066,236,1070,273,1077,292,1090,312,1116,337,1147,355,1144,360,1113,341,1086,316,1072,294,1065,274,1060,236,1056,198,1050,179,1038,158,1021,139,1001,122,960,96"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="1116,264,1277,303"/>
-<area shape="poly" title=" " alt="" coords="1014,92,1041,111,1056,128,1063,146,1066,182,1069,216,1076,233,1090,249,1104,260,1100,264,1086,253,1072,236,1064,218,1061,182,1058,148,1051,131,1038,115,1011,96"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="1102,583,1291,608"/>
-<area shape="poly" title=" " alt="" coords="383,508,404,543,436,587,476,630,523,666,560,685,593,698,652,709,715,712,795,715,919,732,973,732,1039,715,1079,696,1116,670,1173,617,1176,621,1120,675,1082,701,1041,720,973,737,919,738,794,721,715,717,652,715,592,703,558,690,521,671,472,634,431,590,400,546,378,511"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="522,478,746,502"/>
-<area shape="poly" title=" " alt="" coords="474,487,506,487,506,493,474,493"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="543,527,725,552"/>
-<area shape="poly" title=" " alt="" coords="475,507,550,521,549,526,474,512"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="529,357,739,396"/>
-<area shape="poly" title=" " alt="" coords="415,468,572,400,574,405,417,473"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="529,264,739,303"/>
-<area shape="poly" title=" " alt="" coords="386,468,443,409,520,342,577,308,580,312,524,347,447,413,389,472"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="550,632,718,657"/>
-<area shape="poly" title=" " alt="" coords="405,507,599,622,597,626,403,512"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="794,534,1040,558"/>
-<area shape="poly" title=" " alt="" coords="701,500,837,527,836,533,700,505"/>
-<area shape="poly" title=" " alt="" coords="991,556,1108,577,1107,582,991,561"/>
-<area shape="poly" title=" " alt="" coords="661,394,720,434,756,453,795,467,863,483,917,489,971,484,1039,467,1076,454,1110,436,1167,397,1170,401,1113,440,1078,459,1040,472,972,489,917,494,862,489,794,472,754,458,717,439,658,398"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="808,232,1026,271"/>
-<area shape="poly" title=" " alt="" coords="671,354,745,312,768,295,793,280,808,274,810,278,796,284,771,299,748,316,674,359"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="812,357,1022,396"/>
-<area shape="poly" title=" " alt="" coords="740,374,796,374,796,379,740,379"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="812,420,1022,459"/>
-<area shape="poly" title=" " alt="" coords="725,394,812,413,811,419,724,399"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="812,169,1022,208"/>
-<area shape="poly" title=" " alt="" coords="683,354,715,336,744,312,760,288,766,264,774,240,792,217,797,214,800,218,796,221,778,243,771,266,765,290,748,316,718,340,686,359"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="812,295,1022,333"/>
-<area shape="poly" title=" " alt="" coords="724,354,811,335,812,340,725,359"/>
-<area shape="poly" title=" " alt="" coords="1026,237,1079,231,1080,236,1026,242"/>
-<area shape="poly" title=" " alt="" coords="1012,269,1041,279,1066,294,1089,312,1161,354,1158,359,1086,316,1063,299,1039,284,1010,274"/>
-<area shape="poly" title=" " alt="" coords="1026,261,1101,270,1100,275,1026,266"/>
-<area shape="poly" title=" " alt="" coords="1019,354,1038,342,1049,332,1055,321,1061,297,1068,273,1086,249,1090,246,1093,250,1090,253,1072,275,1066,299,1060,323,1053,335,1041,347,1022,359"/>
-<area shape="poly" title=" " alt="" coords="1023,374,1072,374,1072,379,1023,379"/>
-<area shape="poly" title=" " alt="" coords="998,354,1039,342,1134,306,1136,311,1041,347,1000,359"/>
-<area shape="poly" title=" " alt="" coords="1021,418,1038,405,1052,387,1059,368,1061,329,1063,289,1071,269,1086,249,1087,248,1091,252,1090,253,1075,272,1068,290,1067,330,1065,369,1057,389,1042,409,1024,422"/>
-<area shape="poly" title=" " alt="" coords="1006,417,1122,390,1124,395,1007,422"/>
-<area shape="poly" title=" " alt="" coords="1014,417,1038,405,1053,393,1063,380,1072,366,1086,351,1145,309,1148,313,1089,355,1076,369,1067,383,1057,396,1041,409,1016,422"/>
-<area shape="poly" title=" " alt="" coords="639,262,657,214,688,151,708,119,733,88,761,61,793,40,858,11,888,5,916,3,944,6,974,13,1041,40,1087,69,1126,108,1158,149,1180,186,1176,189,1153,152,1122,111,1084,73,1038,44,972,18,943,11,916,8,888,10,860,16,796,44,764,65,737,92,713,122,692,154,662,216,644,264"/>
-<area shape="poly" title=" " alt="" coords="650,261,709,205,749,176,793,154,862,131,921,119,949,119,977,125,1008,136,1041,154,1054,165,1061,176,1068,201,1073,226,1079,238,1089,249,1103,259,1100,263,1086,253,1075,241,1068,228,1063,202,1057,179,1050,168,1038,159,1006,141,976,130,948,125,921,124,864,136,795,159,751,180,712,209,654,265"/>
-<area shape="poly" title=" " alt="" coords="740,269,793,263,793,268,740,274"/>
-<area shape="poly" title=" " alt="" coords="684,301,795,342,822,350,820,355,793,347,682,306"/>
-<area shape="poly" title=" " alt="" coords="682,301,716,319,748,343,763,360,772,376,780,391,796,405,805,411,802,415,793,409,776,394,767,378,759,363,745,347,713,324,680,305"/>
-<area shape="poly" title=" " alt="" coords="679,261,793,217,815,210,817,215,795,222,681,266"/>
-<area shape="poly" title=" " alt="" coords="740,292,797,298,796,303,740,297"/>
-<area shape="poly" title=" " alt="" coords="712,629,794,618,947,605,1086,597,1086,602,947,610,795,623,712,634"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="815,632,1019,657"/>
-<area shape="poly" title=" " alt="" coords="719,642,800,642,800,647,719,647"/>
-<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="805,682,1029,706"/>
-<area shape="poly" title=" " alt="" coords="710,655,828,676,827,681,709,660"/>
+<area shape="rect" title=" " alt="" coords="5,221,216,259"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a40682ccf79e101b58937ba18ca74fbdd" title=" " alt="" coords="264,249,474,287"/>
+<area shape="poly" title=" " alt="" coords="216,249,248,252,248,258,216,254"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,563,474,602"/>
+<area shape="poly" title=" " alt="" coords="129,258,346,549,341,552,125,262"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ab3008d599eb075bdebd21deb5c7bbe4d" title=" " alt="" coords="822,62,1068,101"/>
+<area shape="poly" title=" " alt="" coords="195,218,263,203,556,146,810,101,811,107,557,152,264,208,197,223"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a8725f606dbc2cb4482ca4e8e7ba14683" title=" " alt="" coords="522,187,774,226"/>
+<area shape="poly" title=" " alt="" coords="216,231,506,213,507,218,216,236"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a590baec1eafe0d79288b7c35db412a22" title=" " alt="" coords="840,250,1050,289"/>
+<area shape="poly" title=" " alt="" coords="474,266,825,266,825,272,474,271"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="1123,310,1326,349"/>
+<area shape="poly" title=" " alt="" coords="1039,287,1117,304,1115,309,1038,292"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="1116,194,1333,219"/>
+<area shape="poly" title=" " alt="" coords="1034,247,1150,220,1152,226,1035,252"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="1144,247,1305,286"/>
+<area shape="poly" title=" " alt="" coords="1051,266,1128,265,1128,270,1051,271"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="1130,840,1319,864"/>
+<area shape="poly" title=" " alt="" coords="385,601,440,670,479,709,523,742,596,779,673,807,753,829,833,843,912,852,986,857,1114,857,1114,862,986,862,912,858,833,848,752,834,671,813,594,784,521,746,476,713,436,674,381,604"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="536,708,760,732"/>
+<area shape="poly" title=" " alt="" coords="412,600,608,698,606,703,409,605"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="557,452,739,476"/>
+<area shape="poly" title=" " alt="" coords="394,561,450,522,521,486,542,478,544,484,523,491,453,527,397,565"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="543,501,753,539"/>
+<area shape="poly" title=" " alt="" coords="457,560,543,541,544,546,459,565"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="543,563,753,602"/>
+<area shape="poly" title=" " alt="" coords="474,580,528,580,528,585,474,585"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="564,914,732,939"/>
+<area shape="poly" title=" " alt="" coords="378,602,395,654,425,725,468,801,494,837,524,869,554,890,587,906,585,911,551,895,520,873,490,840,463,804,420,727,390,656,373,604"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="822,790,1068,815"/>
+<area shape="poly" title=" " alt="" coords="691,730,823,770,876,784,875,789,822,775,690,736"/>
+<area shape="poly" title=" " alt="" coords="1019,813,1136,834,1135,839,1019,818"/>
+<area shape="poly" title=" " alt="" coords="752,503,772,486,782,471,789,450,796,397,796,334,792,266,789,197,790,135,799,83,808,63,820,48,851,25,880,10,909,4,938,4,968,9,999,19,1069,47,1115,74,1155,110,1187,147,1210,180,1205,183,1182,151,1151,113,1112,78,1066,52,997,24,967,14,937,9,909,9,882,15,853,29,824,51,813,66,804,85,796,135,795,197,798,265,801,334,801,398,794,451,787,473,776,490,755,507"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="840,626,1050,665"/>
+<area shape="poly" title=" " alt="" coords="755,538,776,549,792,564,801,581,809,597,824,611,833,617,830,621,821,616,804,600,796,583,788,568,773,553,753,542"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="840,563,1050,602"/>
+<area shape="poly" title=" " alt="" coords="744,537,836,557,835,562,742,543"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6dd21353c3d2ac82b4683afb098b5131" title=" " alt="" coords="840,501,1050,539"/>
+<area shape="poly" title=" " alt="" coords="754,517,824,517,824,523,754,523"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3a1f92812595aa6ef2d59d694b74b156" title=" " alt="" coords="840,313,1050,351"/>
+<area shape="poly" title=" " alt="" coords="752,500,773,486,785,472,792,457,796,425,800,393,807,376,820,361,825,357,829,361,824,365,812,379,805,394,801,426,797,458,790,474,776,490,755,504"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="840,375,1050,414"/>
+<area shape="poly" title=" " alt="" coords="750,498,773,486,788,471,796,456,804,439,821,423,828,419,830,424,824,428,809,442,801,458,792,474,776,490,753,503"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="840,438,1050,477"/>
+<area shape="poly" title=" " alt="" coords="742,498,835,478,836,483,744,503"/>
+<area shape="poly" title=" " alt="" coords="1044,561,1066,549,1114,506,1154,455,1185,404,1206,361,1211,364,1189,407,1158,458,1118,510,1069,553,1047,565"/>
+<area shape="poly" title=" " alt="" coords="1049,563,1066,549,1081,530,1091,510,1099,471,1097,433,1089,393,1081,354,1079,314,1088,273,1098,253,1114,233,1121,226,1125,230,1118,237,1103,256,1093,275,1084,314,1086,353,1094,392,1102,432,1105,472,1096,512,1085,532,1070,553,1052,567"/>
+<area shape="poly" title=" " alt="" coords="1049,562,1066,549,1087,518,1095,487,1094,456,1089,425,1084,393,1084,361,1092,328,1114,296,1128,284,1131,288,1118,299,1097,330,1089,361,1090,392,1095,424,1099,456,1100,488,1091,520,1070,553,1052,567"/>
+<area shape="poly" title=" " alt="" coords="1041,498,1066,486,1106,458,1143,424,1198,360,1202,363,1146,428,1110,462,1069,490,1043,503"/>
+<area shape="poly" title=" " alt="" coords="1049,500,1066,486,1087,455,1094,425,1094,393,1089,362,1084,330,1083,298,1092,265,1114,233,1122,225,1126,229,1118,237,1097,267,1089,298,1089,329,1094,361,1099,393,1100,425,1091,458,1070,490,1052,504"/>
+<area shape="poly" title=" " alt="" coords="1049,499,1066,486,1083,463,1090,440,1091,417,1089,393,1087,369,1089,344,1096,320,1114,296,1128,284,1131,288,1118,299,1101,322,1094,345,1093,369,1095,393,1096,417,1095,441,1087,466,1070,490,1052,503"/>
+<area shape="poly" title=" " alt="" coords="672,601,749,669,791,700,823,719,892,743,950,755,977,755,1005,750,1034,738,1066,719,1107,684,1140,640,1166,592,1186,541,1200,490,1210,442,1219,364,1224,365,1215,442,1205,491,1191,542,1171,594,1145,643,1111,687,1069,724,1037,743,1007,755,978,761,949,761,891,748,821,724,788,705,746,673,669,605"/>
+<area shape="poly" title=" " alt="" coords="678,600,753,648,803,673,857,694,913,708,968,712,994,709,1020,702,1044,690,1066,674,1086,653,1099,632,1107,610,1111,588,1107,541,1095,494,1083,445,1077,395,1078,370,1085,345,1096,320,1114,296,1128,283,1132,287,1118,299,1101,323,1090,347,1084,371,1082,395,1088,444,1101,492,1112,541,1116,588,1112,611,1104,634,1090,656,1069,678,1046,695,1022,707,995,714,968,717,912,714,855,699,800,678,751,652,675,605"/>
+<area shape="poly" title=" " alt="" coords="744,600,836,620,835,625,742,605"/>
+<area shape="poly" title=" " alt="" coords="754,580,824,580,824,585,754,585"/>
+<area shape="poly" title=" " alt="" coords="742,560,835,541,836,546,744,565"/>
+<area shape="poly" title=" " alt="" coords="752,564,772,549,789,526,796,504,798,481,796,457,794,433,795,409,803,385,820,361,825,356,829,360,824,365,808,387,800,410,799,433,801,457,803,480,802,505,794,529,776,553,755,568"/>
+<area shape="poly" title=" " alt="" coords="752,562,773,549,785,534,792,519,796,488,800,455,807,439,820,424,825,420,829,424,824,427,812,442,805,457,801,488,797,521,790,537,776,553,755,567"/>
+<area shape="poly" title=" " alt="" coords="750,561,773,549,788,534,796,518,804,502,821,486,828,482,830,486,824,490,809,505,801,521,792,537,776,553,753,565"/>
+<area shape="poly" title=" " alt="" coords="733,913,1114,864,1114,869,733,919"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="843,940,1047,964"/>
+<area shape="poly" title=" " alt="" coords="733,931,828,939,828,945,732,937"/>
+<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="833,989,1057,1014"/>
+<area shape="poly" title=" " alt="" coords="692,937,823,974,863,983,862,988,822,979,691,942"/>
+<area shape="poly" title=" " alt="" coords="1056,99,1070,110,1087,134,1095,157,1096,181,1095,204,1093,228,1094,251,1102,273,1118,296,1121,299,1117,303,1114,299,1097,276,1089,252,1088,228,1089,204,1091,181,1090,158,1082,136,1066,114,1052,103"/>
+<area shape="poly" title=" " alt="" coords="1038,99,1069,110,1138,146,1195,183,1192,187,1135,150,1067,115,1037,104"/>
+<area shape="poly" title=" " alt="" coords="1054,99,1069,110,1083,125,1090,140,1095,170,1099,200,1106,215,1118,229,1132,240,1128,244,1114,233,1101,217,1094,202,1090,171,1085,142,1078,128,1066,114,1051,103"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="836,125,1054,163"/>
+<area shape="poly" title=" " alt="" coords="742,184,835,165,836,170,744,189"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a28cdf0df59199b6744662792ec17606b" title=" " alt="" coords="840,187,1050,226"/>
+<area shape="poly" title=" " alt="" coords="775,204,825,204,825,209,775,209"/>
+<area shape="poly" title=" " alt="" coords="1054,162,1069,173,1083,188,1090,204,1095,235,1099,266,1105,281,1118,296,1122,299,1118,303,1114,299,1101,284,1094,268,1089,236,1085,205,1078,191,1066,177,1051,166"/>
+<area shape="poly" title=" " alt="" coords="1035,161,1152,188,1150,193,1034,167"/>
+<area shape="poly" title=" " alt="" coords="1048,162,1069,173,1085,186,1094,201,1103,215,1117,229,1134,238,1132,243,1114,233,1099,218,1090,204,1081,190,1066,177,1045,166"/>
+<area shape="poly" title=" " alt="" coords="1048,224,1069,235,1085,250,1094,266,1102,281,1117,295,1126,301,1123,305,1114,300,1098,284,1089,268,1081,254,1066,240,1046,229"/>
+<area shape="poly" title=" " alt="" coords="1051,204,1100,204,1100,209,1051,209"/>
+<area shape="poly" title=" " alt="" coords="1039,224,1129,244,1128,249,1038,229"/>
 </map>
 </div>
 
@@ -573,14 +779,14 @@ Private 属性</h2></td></tr>
 
 </div>
 </div>
-<a id="a62175a746d495310a107ae43c87f6bd5" name="a62175a746d495310a107ae43c87f6bd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62175a746d495310a107ae43c87f6bd5">&#9670;&#160;</a></span>renderGloabaEntityList()</h2>
+<a id="a35c08696007a0dbd631d5e2ba5ec147b" name="a35c08696007a0dbd631d5e2ba5ec147b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c08696007a0dbd631d5e2ba5ec147b">&#9670;&#160;</a></span>renderGlobalEntityList()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MQEngine::SceneEntityViewer::renderGloabaEntityList </td>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderGlobalEntityList </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_m_q_engine_1_1_scene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span></td><td>)</td>
           <td></td>
@@ -590,39 +796,38 @@ Private 属性</h2></td></tr>
 <div class="dynheader">
 函数调用图:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_cgraph">
-<area shape="rect" title=" " alt="" coords="5,160,216,199"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="264,5,481,44"/>
-<area shape="poly" title=" " alt="" coords="129,158,185,106,223,77,262,53,273,48,275,53,265,58,226,82,189,110,132,162"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="529,135,746,160"/>
-<area shape="poly" title=" " alt="" coords="216,183,343,185,481,178,574,161,575,166,481,183,343,191,216,188"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="267,68,478,107"/>
-<area shape="poly" title=" " alt="" coords="157,157,263,115,282,109,284,114,265,121,159,162"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="267,131,478,169"/>
-<area shape="poly" title=" " alt="" coords="216,165,252,161,252,166,216,170"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="267,245,478,284"/>
-<area shape="poly" title=" " alt="" coords="173,197,297,238,295,243,171,202"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="267,308,478,347"/>
-<area shape="poly" title=" " alt="" coords="134,197,191,245,227,271,265,293,279,300,277,304,262,298,224,275,187,249,131,201"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="536,71,739,109"/>
-<area shape="poly" title=" " alt="" coords="455,42,542,64,541,69,453,47"/>
-<area shape="poly" title=" " alt="" coords="463,42,483,53,499,70,507,87,515,103,531,119,545,127,542,131,527,123,511,106,502,89,495,73,479,57,461,47"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="557,8,718,47"/>
-<area shape="poly" title=" " alt="" coords="482,23,541,24,541,29,482,28"/>
-<area shape="poly" title=" " alt="" coords="478,86,520,86,520,91,478,91"/>
-<area shape="poly" title=" " alt="" coords="462,105,566,128,564,134,461,110"/>
-<area shape="poly" title=" " alt="" coords="461,65,541,46,542,52,462,70"/>
-<area shape="poly" title=" " alt="" coords="461,127,533,111,535,116,462,133"/>
-<area shape="poly" title=" " alt="" coords="478,146,513,146,513,151,478,152"/>
-<area shape="poly" title=" " alt="" coords="457,128,479,116,494,102,503,87,511,71,527,56,541,48,544,52,531,60,516,74,507,89,499,105,483,120,460,132"/>
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,188,216,227"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="124,186,180,121,219,84,262,53,271,48,273,53,265,58,222,88,184,124,128,189"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="264,131,474,169"/>
+<area shape="poly" title=" " alt="" coords="200,185,263,171,264,176,201,190"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="522,194,739,218"/>
+<area shape="poly" title=" " alt="" coords="216,204,506,204,506,209,216,210"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6dd21353c3d2ac82b4683afb098b5131" title=" " alt="" coords="264,68,474,107"/>
+<area shape="poly" title=" " alt="" coords="139,185,195,150,263,116,277,110,279,115,265,120,198,155,142,190"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3a1f92812595aa6ef2d59d694b74b156" title=" " alt="" coords="264,245,474,284"/>
+<area shape="poly" title=" " alt="" coords="201,225,264,239,263,244,200,230"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="264,308,474,347"/>
+<area shape="poly" title=" " alt="" coords="143,225,198,259,265,293,282,300,280,305,263,298,196,264,140,230"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="264,371,474,409"/>
+<area shape="poly" title=" " alt="" coords="128,226,184,290,222,326,265,357,273,362,271,366,262,362,219,330,180,294,124,229"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="529,131,732,169"/>
+<area shape="poly" title=" " alt="" coords="474,147,513,147,513,153,474,153"/>
+<area shape="poly" title=" " alt="" coords="463,167,555,187,554,192,462,173"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="550,68,711,107"/>
+<area shape="poly" title=" " alt="" coords="452,127,534,108,535,113,453,133"/>
+<area shape="poly" title=" " alt="" coords="453,105,533,124,531,129,452,110"/>
+<area shape="poly" title=" " alt="" coords="456,105,476,116,492,132,500,148,508,164,524,179,535,185,532,190,520,183,504,167,495,151,487,135,472,120,453,109"/>
+<area shape="poly" title=" " alt="" coords="474,85,534,85,534,90,474,90"/>
 </map>
 </div>
 <div class="dynheader">
 这是这个函数的调用关系图:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a62175a746d495310a107ae43c87f6bd5_icgraph">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a35c08696007a0dbd631d5e2ba5ec147b_icgraph">
 <area shape="rect" title=" " alt="" coords="522,5,732,44"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a34f7f70112edaa67aca17ba6deb98540" title=" " alt="" coords="264,5,474,44"/>
 <area shape="poly" title=" " alt="" coords="506,27,475,27,475,22,506,22"/>
@@ -652,57 +857,57 @@ Private 属性</h2></td></tr>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_cgraph">
-<area shape="rect" title=" " alt="" coords="5,173,216,212"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="843,55,1033,79"/>
-<area shape="poly" title=" " alt="" coords="166,170,263,140,415,110,568,89,710,76,828,68,828,73,711,81,569,94,416,115,264,146,167,175"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="264,5,488,30"/>
-<area shape="poly" title=" " alt="" coords="125,171,181,109,220,75,262,46,292,33,294,38,265,51,223,79,185,113,129,174"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="285,204,467,229"/>
-<area shape="poly" title=" " alt="" coords="216,199,269,204,269,209,216,205"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="271,480,481,518"/>
-<area shape="poly" title=" " alt="" coords="123,211,143,255,175,313,216,376,266,433,290,453,317,470,314,474,287,457,262,437,212,379,170,316,138,257,118,213"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="271,385,481,424"/>
-<area shape="poly" title=" " alt="" coords="138,210,340,373,337,377,135,214"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="292,155,460,179"/>
-<area shape="poly" title=" " alt="" coords="216,180,276,174,277,179,216,185"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="536,5,781,30"/>
-<area shape="poly" title=" " alt="" coords="488,15,521,15,521,20,488,20"/>
-<area shape="poly" title=" " alt="" coords="733,28,849,49,848,54,732,33"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="550,354,767,393"/>
-<area shape="poly" title=" " alt="" coords="411,477,487,433,510,416,535,402,550,396,552,401,537,407,513,421,489,437,414,482"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="829,579,1047,603"/>
-<area shape="poly" title=" " alt="" coords="392,517,415,550,448,588,489,626,537,654,602,674,656,677,712,669,781,654,845,634,899,609,902,613,846,639,782,659,713,674,657,683,601,679,535,659,486,630,444,592,410,553,387,520"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="554,542,764,581"/>
-<area shape="poly" title=" " alt="" coords="467,516,554,536,553,541,466,522"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="554,605,764,644"/>
-<area shape="poly" title=" " alt="" coords="406,516,465,554,537,591,553,597,551,602,535,596,462,559,403,521"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="554,480,764,518"/>
-<area shape="poly" title=" " alt="" coords="481,496,538,496,538,502,481,502"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="554,417,764,456"/>
-<area shape="poly" title=" " alt="" coords="466,476,553,457,554,462,467,482"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="836,513,1040,552"/>
-<area shape="poly" title=" " alt="" coords="762,391,783,402,800,417,809,433,817,449,831,465,885,503,882,507,828,469,813,452,804,435,795,421,780,407,760,396"/>
-<area shape="poly" title=" " alt="" coords="769,392,783,402,799,422,806,443,808,483,810,523,817,542,831,561,840,568,837,573,827,565,812,545,804,524,803,484,801,444,794,425,779,406,766,396"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="857,417,1019,456"/>
-<area shape="poly" title=" " alt="" coords="749,391,843,412,842,418,747,396"/>
-<area shape="poly" title=" " alt="" coords="764,548,821,542,821,547,764,553"/>
-<area shape="poly" title=" " alt="" coords="764,570,814,575,814,581,764,575"/>
-<area shape="poly" title=" " alt="" coords="747,539,780,527,805,514,828,498,889,462,891,466,831,503,807,518,782,532,749,544"/>
-<area shape="poly" title=" " alt="" coords="749,602,780,591,804,578,828,565,853,555,855,560,830,569,807,583,782,596,750,607"/>
-<area shape="poly" title=" " alt="" coords="764,609,813,603,814,608,765,614"/>
-<area shape="poly" title=" " alt="" coords="763,602,780,592,797,570,804,548,811,524,827,499,851,478,877,461,880,465,854,482,831,502,816,526,810,550,802,573,783,596,766,607"/>
-<area shape="poly" title=" " alt="" coords="481,390,535,384,535,390,482,396"/>
-<area shape="poly" title=" " alt="" coords="410,382,483,347,529,329,580,315,632,307,685,306,736,316,783,339,798,353,807,368,812,399,815,432,821,449,831,465,853,486,879,503,876,508,850,490,827,469,816,451,810,433,807,400,802,370,794,357,780,344,734,321,685,312,633,312,581,320,531,335,485,352,412,387"/>
-<area shape="poly" title=" " alt="" coords="396,382,455,336,494,312,535,295,603,276,660,269,715,274,782,295,823,316,860,345,891,375,915,403,911,407,887,379,856,349,820,321,780,300,714,279,660,274,605,281,537,300,496,317,458,340,399,387"/>
-<area shape="poly" title=" " alt="" coords="423,422,457,441,490,465,505,482,513,498,522,513,538,528,547,533,544,538,534,532,518,517,509,501,500,485,486,469,454,445,420,426"/>
-<area shape="poly" title=" " alt="" coords="430,422,462,440,490,465,502,483,508,500,512,532,518,563,525,577,538,592,542,595,539,599,534,596,520,580,513,564,507,533,503,501,497,485,486,469,459,445,427,427"/>
-<area shape="poly" title=" " alt="" coords="424,422,537,464,563,473,562,478,535,470,423,427"/>
-<area shape="poly" title=" " alt="" coords="482,414,538,420,538,425,481,419"/>
-<area shape="poly" title=" " alt="" coords="449,151,849,80,850,85,450,157"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="557,155,760,179"/>
-<area shape="poly" title=" " alt="" coords="460,164,541,164,541,170,460,170"/>
-<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="546,204,771,229"/>
-<area shape="poly" title=" " alt="" coords="451,177,569,198,568,203,450,183"/>
+<area shape="rect" title=" " alt="" coords="5,222,216,261"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a827263fc50fa582fbccd5499b3cc47a1" title=" " alt="" coords="843,155,1033,179"/>
+<area shape="poly" title=" " alt="" coords="160,219,210,203,263,190,416,170,569,160,711,157,828,159,828,165,711,163,569,165,416,175,264,195,211,208,162,224"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a8c74f9c75b564ceb589c5b1e8f14fb89" title=" " alt="" coords="264,204,488,229"/>
+<area shape="poly" title=" " alt="" coords="216,229,248,226,248,231,216,234"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#acc15bdee6fbd7a21a83ffd17a945d390" title=" " alt="" coords="285,253,467,278"/>
+<area shape="poly" title=" " alt="" coords="216,249,269,253,269,259,216,254"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="271,510,481,549"/>
+<area shape="poly" title=" " alt="" coords="123,260,177,355,217,412,265,465,290,484,317,501,314,505,287,489,262,469,213,416,172,358,119,263"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="271,417,481,456"/>
+<area shape="poly" title=" " alt="" coords="140,259,337,405,334,410,137,264"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a298b3c294a245a04e0120cd364dbd8a3" title=" " alt="" coords="292,80,460,105"/>
+<area shape="poly" title=" " alt="" coords="141,220,262,146,332,110,335,114,265,151,144,224"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a85eeb21191d6826361993d93d6d70da6" title=" " alt="" coords="536,204,781,229"/>
+<area shape="poly" title=" " alt="" coords="488,214,521,214,521,219,488,219"/>
+<area shape="poly" title=" " alt="" coords="732,201,848,180,849,185,733,206"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="554,417,764,456"/>
+<area shape="poly" title=" " alt="" coords="422,507,535,464,557,458,559,463,537,470,424,512"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="554,480,764,518"/>
+<area shape="poly" title=" " alt="" coords="481,516,538,509,538,515,482,521"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="829,549,1047,574"/>
+<area shape="poly" title=" " alt="" coords="389,548,410,587,442,635,485,681,510,701,537,717,603,742,631,748,658,749,714,741,780,717,825,690,864,655,896,618,919,585,923,588,900,621,868,659,829,694,782,721,715,746,658,755,630,753,601,747,535,721,507,705,481,685,438,638,405,590,384,551"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6dd21353c3d2ac82b4683afb098b5131" title=" " alt="" coords="554,542,764,581"/>
+<area shape="poly" title=" " alt="" coords="482,539,538,545,538,551,481,544"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3a1f92812595aa6ef2d59d694b74b156" title=" " alt="" coords="554,668,764,706"/>
+<area shape="poly" title=" " alt="" coords="398,548,457,601,496,630,537,654,549,659,547,664,535,659,493,634,454,605,394,552"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="554,354,764,393"/>
+<area shape="poly" title=" " alt="" coords="420,508,454,489,486,465,500,449,509,433,518,417,534,402,541,398,544,402,538,406,522,421,513,436,505,452,490,469,457,493,423,512"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="554,605,764,644"/>
+<area shape="poly" title=" " alt="" coords="423,547,537,591,559,598,557,603,535,596,421,552"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="836,420,1040,458"/>
+<area shape="poly" title=" " alt="" coords="752,476,829,460,830,465,753,482"/>
+<area shape="poly" title=" " alt="" coords="749,516,865,543,864,548,747,522"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="857,482,1019,521"/>
+<area shape="poly" title=" " alt="" coords="764,497,842,498,841,503,764,503"/>
+<area shape="poly" title=" " alt="" coords="757,540,780,527,795,513,803,498,812,483,828,468,834,463,837,468,831,472,816,486,808,501,799,517,783,532,759,544"/>
+<area shape="poly" title=" " alt="" coords="764,559,814,559,814,564,764,564"/>
+<area shape="poly" title=" " alt="" coords="752,539,842,520,843,525,753,544"/>
+<area shape="poly" title=" " alt="" coords="481,434,538,434,538,439,481,439"/>
+<area shape="poly" title=" " alt="" coords="467,454,554,473,553,478,466,459"/>
+<area shape="poly" title=" " alt="" coords="390,415,414,386,447,352,488,320,535,295,603,273,659,266,715,273,782,295,824,317,860,346,892,377,916,406,912,409,888,381,857,350,821,321,780,300,714,278,659,271,604,279,537,300,491,324,451,356,418,390,394,418"/>
+<area shape="poly" title=" " alt="" coords="400,414,458,373,496,354,535,339,605,318,664,305,692,304,721,309,751,320,783,340,798,354,806,370,810,403,813,436,819,452,831,468,845,478,842,483,827,472,814,455,808,438,805,403,801,371,794,357,780,344,748,325,719,314,692,309,665,310,607,323,537,344,498,359,461,378,403,419"/>
+<area shape="poly" title=" " alt="" coords="416,454,489,495,513,512,537,527,555,534,553,539,535,532,510,517,487,500,414,459"/>
+<area shape="poly" title=" " alt="" coords="433,454,463,472,490,496,504,518,510,539,512,579,515,618,523,636,538,654,543,659,539,663,534,658,518,639,510,619,507,580,505,540,499,520,486,499,460,476,430,458"/>
+<area shape="poly" title=" " alt="" coords="466,414,553,394,554,400,467,419"/>
+<area shape="poly" title=" " alt="" coords="429,454,461,472,490,496,507,522,513,547,520,570,538,592,542,595,538,599,534,596,515,572,508,548,502,524,486,499,458,476,426,458"/>
+<area shape="poly" title=" " alt="" coords="461,101,828,150,828,155,460,106"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#ae3375671e3e22f12acd3caf068027f8f" title=" " alt="" coords="557,5,760,30"/>
+<area shape="poly" title=" " alt="" coords="415,77,535,40,574,31,576,36,537,46,416,82"/>
+<area shape="rect" href="namespace_m_q_engine.html#a5c39298635c5a9d4542bd651e240600d" title=" " alt="" coords="546,55,771,79"/>
+<area shape="poly" title=" " alt="" coords="460,82,531,76,531,81,461,87"/>
 </map>
 </div>
 <div class="dynheader">
@@ -711,6 +916,111 @@ Private 属性</h2></td></tr>
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a34f7f70112edaa67aca17ba6deb98540_icgraph">
 <area shape="rect" title=" " alt="" coords="264,5,474,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab3008d599eb075bdebd21deb5c7bbe4d" name="ab3008d599eb075bdebd21deb5c7bbe4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3008d599eb075bdebd21deb5c7bbe4d">&#9670;&#160;</a></span>renderScriptTypeSelectionPopup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderScriptTypeSelectionPopup </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,61,251,100"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="306,5,509,44"/>
+<area shape="poly" title=" " alt="" coords="228,58,292,45,293,50,229,63"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="299,68,516,93"/>
+<area shape="poly" title=" " alt="" coords="251,78,283,78,283,83,251,83"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="327,117,488,156"/>
+<area shape="poly" title=" " alt="" coords="229,98,312,115,311,120,228,103"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_ab3008d599eb075bdebd21deb5c7bbe4d_icgraph">
+<area shape="rect" title=" " alt="" coords="264,5,509,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
+<area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8725f606dbc2cb4482ca4e8e7ba14683" name="a8725f606dbc2cb4482ca4e8e7ba14683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8725f606dbc2cb4482ca4e8e7ba14683">&#9670;&#160;</a></span>renderTextureTypeSelectionPopup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::SceneEntityViewer::renderTextureTypeSelectionPopup </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_cgraph">
+<area shape="rect" title=" " alt="" coords="5,63,258,101"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="306,31,523,69"/>
+<area shape="poly" title=" " alt="" coords="258,65,290,61,291,67,258,70"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a28cdf0df59199b6744662792ec17606b" title=" " alt="" coords="309,93,520,132"/>
+<area shape="poly" title=" " alt="" coords="258,93,294,97,293,102,258,98"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="578,5,781,44"/>
+<area shape="poly" title=" " alt="" coords="523,37,562,33,563,38,524,42"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="571,68,788,93"/>
+<area shape="poly" title=" " alt="" coords="524,60,556,64,555,69,523,65"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="599,117,760,156"/>
+<area shape="poly" title=" " alt="" coords="493,67,524,78,572,102,592,110,590,115,570,107,522,83,491,72"/>
+<area shape="poly" title=" " alt="" coords="488,90,522,78,570,54,590,47,592,52,572,59,524,83,489,95"/>
+<area shape="poly" title=" " alt="" coords="520,97,556,93,557,98,520,103"/>
+<area shape="poly" title=" " alt="" coords="520,120,584,125,584,131,520,125"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a8725f606dbc2cb4482ca4e8e7ba14683_icgraph">
+<area shape="rect" title=" " alt="" coords="264,5,516,44"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4fa5025fa9bb28ea96e7526b2aa2731b" title=" " alt="" coords="5,5,216,44"/>
 <area shape="poly" title=" " alt="" coords="248,27,216,27,216,22,248,22"/>
 </map>
@@ -741,31 +1051,30 @@ Private 属性</h2></td></tr>
 <div class="dyncontent">
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a78bc78d55ecaeb8c7c232af69d0f797b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,165,216,204"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a4d28835e8105ec229b0c27d776648eda" title=" " alt="" coords="264,40,481,79"/>
-<area shape="poly" title=" " alt="" coords="137,162,193,125,263,87,276,82,278,87,265,92,196,129,140,167"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="536,44,739,83"/>
-<area shape="poly" title=" " alt="" coords="121,163,143,131,175,91,215,54,263,25,302,12,343,5,385,3,427,5,505,18,572,36,570,41,504,23,426,10,385,8,344,10,303,17,265,30,218,58,179,95,147,134,126,166"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="557,161,718,200"/>
-<area shape="poly" title=" " alt="" coords="196,202,264,213,372,220,481,213,547,201,548,206,481,218,372,225,263,218,195,207"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="267,103,478,141"/>
-<area shape="poly" title=" " alt="" coords="194,162,273,143,274,148,195,167"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="267,165,478,204"/>
-<area shape="poly" title=" " alt="" coords="216,182,252,182,252,187,216,187"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="267,280,478,319"/>
-<area shape="poly" title=" " alt="" coords="150,202,265,258,299,272,297,277,263,263,148,207"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="267,343,478,381"/>
-<area shape="poly" title=" " alt="" coords="129,203,184,265,223,299,265,329,273,333,271,338,262,333,219,304,181,269,125,206"/>
-<area shape="poly" title=" " alt="" coords="482,58,521,59,520,64,482,64"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="529,110,746,134"/>
-<area shape="poly" title=" " alt="" coords="458,77,568,103,567,108,457,82"/>
-<area shape="poly" title=" " alt="" coords="462,77,483,88,498,102,507,116,516,130,531,144,545,152,542,157,527,148,512,134,503,119,494,105,479,92,459,82"/>
-<area shape="poly" title=" " alt="" coords="462,99,531,84,533,89,464,105"/>
-<area shape="poly" title=" " alt="" coords="478,119,513,119,513,125,478,125"/>
-<area shape="poly" title=" " alt="" coords="464,139,542,157,541,162,462,144"/>
-<area shape="poly" title=" " alt="" coords="457,162,479,150,494,137,503,124,512,110,527,96,543,87,545,92,531,100,516,113,507,127,498,141,483,155,459,167"/>
-<area shape="poly" title=" " alt="" coords="457,162,567,136,568,141,458,167"/>
-<area shape="poly" title=" " alt="" coords="478,180,542,179,542,185,478,186"/>
+<area shape="rect" title=" " alt="" coords="5,212,216,251"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5d6af110b9eea865002235f0dbc53f83" title=" " alt="" coords="264,5,474,44"/>
+<area shape="poly" title=" " alt="" coords="123,210,178,138,218,97,262,61,285,48,288,53,265,66,221,101,182,142,127,213"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#ae19f68282012fa3e37b75cba1e5db14f" title=" " alt="" coords="264,120,474,159"/>
+<area shape="poly" title=" " alt="" coords="157,209,263,167,282,161,284,166,265,173,159,214"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a84aea59d465202c1a40a2d1d22959d75" title=" " alt="" coords="529,96,732,135"/>
+<area shape="poly" title=" " alt="" coords="126,210,182,154,220,126,263,105,328,89,395,83,461,84,521,90,521,96,461,89,395,88,329,94,265,110,223,131,185,158,130,213"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_trunk.html#a4e2563af5dc1cefe19a64df41fec82da" title=" " alt="" coords="550,208,711,247"/>
+<area shape="poly" title=" " alt="" coords="216,230,264,230,474,230,534,228,535,234,474,235,264,235,216,235"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a6dd21353c3d2ac82b4683afb098b5131" title=" " alt="" coords="264,183,474,221"/>
+<area shape="poly" title=" " alt="" coords="216,217,248,213,248,218,216,222"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a3a1f92812595aa6ef2d59d694b74b156" title=" " alt="" coords="264,297,474,336"/>
+<area shape="poly" title=" " alt="" coords="172,249,294,289,292,294,170,254"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a18432073dde1c1fec4e90ae588898d58" title=" " alt="" coords="264,360,474,399"/>
+<area shape="poly" title=" " alt="" coords="135,249,191,297,227,323,265,345,279,352,277,356,262,350,224,327,188,301,131,253"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a5e2721f8ac43d75b191c9d7b97f405e5" title=" " alt="" coords="264,423,474,461"/>
+<area shape="poly" title=" " alt="" coords="125,249,147,284,179,327,219,371,265,409,272,413,269,418,262,414,215,375,175,330,143,287,121,252"/>
+<area shape="poly" title=" " alt="" coords="474,127,513,123,514,129,475,132"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene.html#a4fba5dda1e01903d559dcd87cd6bfabd" title=" " alt="" coords="522,159,739,184"/>
+<area shape="poly" title=" " alt="" coords="475,150,510,154,509,159,474,155"/>
+<area shape="poly" title=" " alt="" coords="445,157,475,168,523,193,542,200,540,205,521,198,473,172,443,162"/>
+<area shape="poly" title=" " alt="" coords="439,179,473,168,521,145,542,137,544,142,523,150,475,172,441,185"/>
+<area shape="poly" title=" " alt="" coords="474,187,506,183,507,189,475,192"/>
+<area shape="poly" title=" " alt="" coords="475,210,535,215,535,221,474,215"/>
 </map>
 </div>
 <div class="dynheader">
@@ -812,7 +1121,7 @@ Private 属性</h2></td></tr>
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a18432073dde1c1fec4e90ae588898d58_icgraph">
 <area shape="rect" title=" " alt="" coords="780,37,991,76"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
 <area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
 <area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
@@ -858,7 +1167,7 @@ Private 属性</h2></td></tr>
 <div class="center"><img src="class_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph.png" border="0" usemap="#aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph" id="aclass_m_q_engine_1_1_scene_entity_viewer_a5e2721f8ac43d75b191c9d7b97f405e5_icgraph">
 <area shape="rect" title=" " alt="" coords="780,37,991,76"/>
-<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a62175a746d495310a107ae43c87f6bd5" title=" " alt="" coords="522,5,732,44"/>
+<area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a35c08696007a0dbd631d5e2ba5ec147b" title=" " alt="" coords="522,5,732,44"/>
 <area shape="poly" title=" " alt="" coords="765,44,733,40,733,35,765,39"/>
 <area shape="rect" href="class_m_q_engine_1_1_scene_entity_viewer.html#a78bc78d55ecaeb8c7c232af69d0f797b" title=" " alt="" coords="522,68,732,107"/>
 <area shape="poly" title=" " alt="" coords="765,74,733,77,733,72,765,68"/>
@@ -939,6 +1248,72 @@ Private 属性</h2></td></tr>
 
 </div>
 </div>
+<a id="ae5fef60403580f61f747775071ab096b" name="ae5fef60403580f61f747775071ab096b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5fef60403580f61f747775071ab096b">&#9670;&#160;</a></span>m_draggedFunctionName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::SceneEntityViewer::m_draggedFunctionName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a918cceb1fc0b8070af65afe0006d4f21" name="a918cceb1fc0b8070af65afe0006d4f21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a918cceb1fc0b8070af65afe0006d4f21">&#9670;&#160;</a></span>m_draggedModelUuid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::SceneEntityViewer::m_draggedModelUuid</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a86e5f6731a4b7ce7bdf081afc27011f2" name="a86e5f6731a4b7ce7bdf081afc27011f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86e5f6731a4b7ce7bdf081afc27011f2">&#9670;&#160;</a></span>m_draggedTexturePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MQEngine::SceneEntityViewer::m_draggedTexturePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a2eaf2afac5bce0d23af9905fa3787ef3" name="a2eaf2afac5bce0d23af9905fa3787ef3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2eaf2afac5bce0d23af9905fa3787ef3">&#9670;&#160;</a></span>m_newEntityName</h2>
 
@@ -994,6 +1369,94 @@ Private 属性</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">bool MQEngine::SceneEntityViewer::m_showCreateEntityDialog = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a32654b4857941c38bc7d21bf2dfb422e" name="a32654b4857941c38bc7d21bf2dfb422e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32654b4857941c38bc7d21bf2dfb422e">&#9670;&#160;</a></span>m_showScriptTypePopup</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_showScriptTypePopup = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a578b1c9f19192c275e1fea478d588051" name="a578b1c9f19192c275e1fea478d588051"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a578b1c9f19192c275e1fea478d588051">&#9670;&#160;</a></span>m_showTextureTypePopup</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_showTextureTypePopup = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9905d8d00e813b392bf95d9066354b4c" name="a9905d8d00e813b392bf95d9066354b4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9905d8d00e813b392bf95d9066354b4c">&#9670;&#160;</a></span>m_targetEntity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">entt::entity MQEngine::SceneEntityViewer::m_targetEntity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a54bc4c93a198a6aa67f94e41bf2c8922" name="a54bc4c93a198a6aa67f94e41bf2c8922"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54bc4c93a198a6aa67f94e41bf2c8922">&#9670;&#160;</a></span>m_targetIsGlobal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MQEngine::SceneEntityViewer::m_targetIsGlobal</td>
         </tr>
       </table>
   </td>

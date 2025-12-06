@@ -1,12 +1,13 @@
 var dir_5951f2f33309dc55205e4c070fcb7660 =
 [
     [ "application.h", "application_8h.html", "application_8h" ],
+    [ "CreateApplication.h", "_create_application_8h.html", "_create_application_8h" ],
     [ "engine.cpp", "engine_8cpp.html", "engine_8cpp" ],
     [ "engine.h", "core_2engine_8h.html", "core_2engine_8h" ],
     [ "EngineGlobal.h", "_engine_global_8h.html", "_engine_global_8h" ],
-    [ "enginescope.h", "enginescope_8h.html", "enginescope_8h" ],
-    [ "entry.cpp", "_engine_2src_2core_2entry_8cpp.html", null ],
-    [ "entry.h", "entry_8h.html", null ],
+    [ "entry.cpp", "_engine_2src_2core_2entry_8cpp.html", "_engine_2src_2core_2entry_8cpp" ],
+    [ "entry.h", "entry_8h.html", "entry_8h" ],
+    [ "GraphicsEnv.h", "_graphics_env_8h.html", "_graphics_env_8h" ],
     [ "imgui.cpp", "imgui_8cpp.html", "imgui_8cpp" ],
     [ "layout.h", "layout_8h.html", null ],
     [ "systemmanager.cpp", "systemmanager_8cpp.html", null ],

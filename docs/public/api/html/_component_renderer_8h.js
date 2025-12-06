@@ -7,9 +7,12 @@ var _component_renderer_8h =
     [ "MQEngine::renderComponent< DiffuseTextureComponent >", "namespace_m_q_engine.html#a0ec68910b226064ffb2a4942a9fad4a8", null ],
     [ "MQEngine::renderComponent< DirectionalLightComponent >", "namespace_m_q_engine.html#a41f10f102c9ab6ca57141378ec27e49f", null ],
     [ "MQEngine::renderComponent< NameTag >", "namespace_m_q_engine.html#ae9a1825225ce658decb9046a01b31f22", null ],
+    [ "MQEngine::renderComponent< NormalMapComponent >", "namespace_m_q_engine.html#a3ede01f404817f1a3f4ea096b26cd9aa", null ],
+    [ "MQEngine::renderComponent< OnStartScriptComponent >", "namespace_m_q_engine.html#a592ac149aa9dcb98a122a289c29be00a", null ],
     [ "MQEngine::renderComponent< PositionComponent >", "namespace_m_q_engine.html#a56ba9a6a64ed9f23b670311979aa3861", null ],
     [ "MQEngine::renderComponent< RotationComponent >", "namespace_m_q_engine.html#a3ab4c0808a0afe0c9f40d3c429434f2d", null ],
     [ "MQEngine::renderComponent< ScaleComponent >", "namespace_m_q_engine.html#a7344395b2e646514e79866d89bfda4bc", null ],
-    [ "MQEngine::renderComponent< ScriptComponent >", "namespace_m_q_engine.html#a22b0e8284205b0dded18129a1ab65141", null ],
-    [ "MQEngine::renderComponent< StaticMeshInstance >", "namespace_m_q_engine.html#aeb0b937e846bf782873b3e83856469bb", null ]
+    [ "MQEngine::renderComponent< ShininessComponent >", "namespace_m_q_engine.html#a418cd1b3927de1cab9b9506d82e55b1b", null ],
+    [ "MQEngine::renderComponent< StaticMeshInstance >", "namespace_m_q_engine.html#aeb0b937e846bf782873b3e83856469bb", null ],
+    [ "MQEngine::renderComponent< TickerScriptComponent >", "namespace_m_q_engine.html#a6a2bd833d07d04afb9f10f00917e88cc", null ]
 ];

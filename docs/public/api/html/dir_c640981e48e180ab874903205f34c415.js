@@ -12,6 +12,8 @@ var dir_c640981e48e180ab874903205f34c415 =
     [ "MeshCacheSystem.h", "_mesh_cache_system_8h.html", "_mesh_cache_system_8h" ],
     [ "ScriptSystem.cpp", "_script_system_8cpp.html", null ],
     [ "ScriptSystem.h", "_script_system_8h.html", "_script_system_8h" ],
+    [ "ShininessSystem.cpp", "_shininess_system_8cpp.html", null ],
+    [ "ShininessSystem.h", "_shininess_system_8h.html", "_shininess_system_8h" ],
     [ "TechSystem.cpp", "_tech_system_8cpp.html", null ],
     [ "TechSystem.h", "_tech_system_8h.html", "_tech_system_8h" ],
     [ "TextureCacheSystem.cpp", "_texture_cache_system_8cpp.html", "_texture_cache_system_8cpp" ],

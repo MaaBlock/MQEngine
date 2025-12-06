@@ -4,6 +4,7 @@ var hierarchy =
       [ "MQEngine::EditorApplication", "class_m_q_engine_1_1_editor_application.html", null ],
       [ "MQEngine::GameApplication", "class_m_q_engine_1_1_game_application.html", null ]
     ] ],
+    [ "MQEngine::ApplicationRegistrar", "class_m_q_engine_1_1_application_registrar.html", null ],
     [ "MQEngine::CacheModelMatrix", "struct_m_q_engine_1_1_cache_model_matrix.html", null ],
     [ "MQEngine::CameraSystem", "class_m_q_engine_1_1_camera_system.html", null ],
     [ "MQEngine::ComponentFieldInfo", "struct_m_q_engine_1_1_component_field_info.html", null ],
@@ -19,7 +20,6 @@ var hierarchy =
     [ "MQEngine::EditorGlobal", "struct_m_q_engine_1_1_editor_global.html", null ],
     [ "MQEngine::Engine", "class_m_q_engine_1_1_engine.html", null ],
     [ "MQEngine::EngineGlobal", "struct_m_q_engine_1_1_engine_global.html", null ],
-    [ "MQEngine::EngineScope", "class_m_q_engine_1_1_engine_scope.html", null ],
     [ "MQEngine::EntityInspector", "class_m_q_engine_1_1_entity_inspector.html", null ],
     [ "MQEngine::EntityRenderContext", "struct_m_q_engine_1_1_entity_render_context.html", null ],
     [ "MQEngine::SceneEvent::EntryScene", "struct_m_q_engine_1_1_scene_event_1_1_entry_scene.html", null ],
@@ -27,6 +27,7 @@ var hierarchy =
     [ "MQEngine::EnttOutputArchiveWrapper", "class_m_q_engine_1_1_entt_output_archive_wrapper.html", null ],
     [ "MQEngine::SceneEvent::ExitScene", "struct_m_q_engine_1_1_scene_event_1_1_exit_scene.html", null ],
     [ "MQEngine::Application::Global", "struct_m_q_engine_1_1_application_1_1_global.html", null ],
+    [ "MQEngine::GraphicsEnv", "class_m_q_engine_1_1_graphics_env.html", null ],
     [ "MQEngine::GraphViewInsight", "class_m_q_engine_1_1_graph_view_insight.html", null ],
     [ "MQEngine::ImageNode", "struct_m_q_engine_1_1_image_node.html", null ],
     [ "MQEngine::RenderCallBack::KeepImage", "struct_m_q_engine_1_1_render_call_back_1_1_keep_image.html", null ],
@@ -62,6 +63,7 @@ var hierarchy =
     [ "MQEngine::SelectedEntityState", "struct_m_q_engine_1_1_selected_entity_state.html", null ],
     [ "MQEngine::RenderCallBack::SettingSync", "struct_m_q_engine_1_1_render_call_back_1_1_setting_sync.html", null ],
     [ "MQEngine::RenderCallBack::SettingUpPass", "struct_m_q_engine_1_1_render_call_back_1_1_setting_up_pass.html", null ],
+    [ "MQEngine::ShininessSystem", "class_m_q_engine_1_1_shininess_system.html", null ],
     [ "MQEngine::StaticMeshInstance", "struct_m_q_engine_1_1_static_mesh_instance.html", null ],
     [ "MQEngine::RenderCallBack::SubscribePass", "struct_m_q_engine_1_1_render_call_back_1_1_subscribe_pass.html", null ],
     [ "MQEngine::SystemManager", "class_m_q_engine_1_1_system_manager.html", null ],
@@ -76,5 +78,6 @@ var hierarchy =
     [ "MQEngine::UiManager", "class_m_q_engine_1_1_ui_manager.html", null ],
     [ "MQEngine::SceneEvent::Unload", "struct_m_q_engine_1_1_scene_event_1_1_unload.html", null ],
     [ "MQEngine::SceneEvent::UnloadTrunk", "struct_m_q_engine_1_1_scene_event_1_1_unload_trunk.html", null ],
-    [ "MQEngine::VertexShaderSource", "struct_m_q_engine_1_1_vertex_shader_source.html", null ]
+    [ "MQEngine::VertexShaderSource", "struct_m_q_engine_1_1_vertex_shader_source.html", null ],
+    [ "MQEngine::RenderCallBack::WindowClose", "struct_m_q_engine_1_1_render_call_back_1_1_window_close.html", null ]
 ];

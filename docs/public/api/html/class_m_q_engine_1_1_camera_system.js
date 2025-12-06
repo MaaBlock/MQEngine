@@ -6,6 +6,7 @@ var class_m_q_engine_1_1_camera_system =
     [ "calculateViewMatrix", "class_m_q_engine_1_1_camera_system.html#a8f35534ce542079933f1b19c70c18bbb", null ],
     [ "setActiveCamera", "class_m_q_engine_1_1_camera_system.html#aa527a26b81a82f70dfb6a3272a38f350", null ],
     [ "update", "class_m_q_engine_1_1_camera_system.html#a5b83ebfacad8b6b3609bf2466f196313", null ],
+    [ "updateUniforms", "class_m_q_engine_1_1_camera_system.html#a325fe74bede678b72bab2bebd0c5b1c3", null ],
     [ "m_cameraUniform", "class_m_q_engine_1_1_camera_system.html#a4cf866bf90810bfbc5abf29d6a6bce1e", null ],
     [ "m_ctx", "class_m_q_engine_1_1_camera_system.html#a817408e18f6ec036b64cd28babafa422", null ],
     [ "m_dataManager", "class_m_q_engine_1_1_camera_system.html#aff67d8b8cc4d56dd06b3427cb4c38f0e", null ],

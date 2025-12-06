@@ -114,8 +114,12 @@ Public 成员函数</h2></td></tr>
 <tr class="memdesc:afad89d8b3ad8ec8bc0d3a40a8e9270ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">加载并执行JavaScript脚本文件  <br /></td></tr>
 <tr class="memitem:a5b588773ec8e1a8d880d7a014b3f001c" id="r_a5b588773ec8e1a8d880d7a014b3f001c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b588773ec8e1a8d880d7a014b3f001c">getFunctionNames</a> () const</td></tr>
 <tr class="memdesc:a5b588773ec8e1a8d880d7a014b3f001c"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取当前JavaScript环境中的所有函数名  <br /></td></tr>
+<tr class="memitem:a2475e80ef293747949a05eceb38cda4d" id="r_a2475e80ef293747949a05eceb38cda4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2475e80ef293747949a05eceb38cda4d">start</a> ()</td></tr>
+<tr class="memdesc:a2475e80ef293747949a05eceb38cda4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">执行所有OnStart类型的脚本  <br /></td></tr>
 <tr class="memitem:ae622435b514f8f83a95ca35383dd16e5" id="r_ae622435b514f8f83a95ca35383dd16e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae622435b514f8f83a95ca35383dd16e5">update</a> ()</td></tr>
-<tr class="memdesc:ae622435b514f8f83a95ca35383dd16e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">更新系统，执行所有ScriptComponent的脚本  <br /></td></tr>
+<tr class="memdesc:ae622435b514f8f83a95ca35383dd16e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">更新系统，执行所有Ticker类型的脚本  <br /></td></tr>
+<tr class="memitem:a2e1e0a305f5eceb273885990e4b03298" id="r_a2e1e0a305f5eceb273885990e4b03298"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e1e0a305f5eceb273885990e4b03298">cleanUp</a> ()</td></tr>
+<tr class="memdesc:a2e1e0a305f5eceb273885990e4b03298"><td class="mdescLeft">&#160;</td><td class="mdescRight">清理已启动的实体记录  <br /></td></tr>
 <tr class="memitem:a4c9a52eb1af7dadc09a378994be59889" id="r_a4c9a52eb1af7dadc09a378994be59889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c9a52eb1af7dadc09a378994be59889">setLogicDeltaTime</a> (float deltaTime)</td></tr>
 <tr class="memdesc:a4c9a52eb1af7dadc09a378994be59889"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置逻辑帧时间间隔  <br /></td></tr>
 </table><table class="memberdecls">
@@ -137,6 +141,7 @@ Private 属性</h2></td></tr>
 <tr class="memitem:ac35b8f797549fee0b0886eff839ea3b4" id="r_ac35b8f797549fee0b0886eff839ea3b4"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; FCT::NodeEnvironment &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac35b8f797549fee0b0886eff839ea3b4">m_nodeEnv</a></td></tr>
 <tr class="memitem:a413f2d442c0bcbf82ac0c47d8a1d7305" id="r_a413f2d442c0bcbf82ac0c47d8a1d7305"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_m_q_engine_1_1_component_reflection.html">ComponentReflection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a413f2d442c0bcbf82ac0c47d8a1d7305">m_componentReflection</a></td></tr>
 <tr class="memitem:ab12e9f1e7015acb7d847c8f9bd529470" id="r_ab12e9f1e7015acb7d847c8f9bd529470"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab12e9f1e7015acb7d847c8f9bd529470">m_logicDeltaTime</a> = 0.0f</td></tr>
+<tr class="memitem:abdda1e9f83ed3b38d2f99fff159e0f8e" id="r_abdda1e9f83ed3b38d2f99fff159e0f8e"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; entt::entity &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdda1e9f83ed3b38d2f99fff159e0f8e">m_startedEntities</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">构造及析构函数说明</h2>
 <a id="a5b36e059c188359d4ce8a2da6f30e26d" name="a5b36e059c188359d4ce8a2da6f30e26d"></a>
@@ -174,6 +179,25 @@ Private 属性</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">成员函数说明</h2>
+<a id="a2e1e0a305f5eceb273885990e4b03298" name="a2e1e0a305f5eceb273885990e4b03298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e1e0a305f5eceb273885990e4b03298">&#9670;&#160;</a></span>cleanUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::ScriptSystem::cleanUp </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>清理已启动的实体记录 </p>
+
+</div>
+</div>
 <a id="a0abbf06e445fd072b109978e75a114e8" name="a0abbf06e445fd072b109978e75a114e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0abbf06e445fd072b109978e75a114e8">&#9670;&#160;</a></span>convertComponentValueToJS()</h2>
 
@@ -499,6 +523,25 @@ Private 属性</h2></td></tr>
 
 </div>
 </div>
+<a id="a2475e80ef293747949a05eceb38cda4d" name="a2475e80ef293747949a05eceb38cda4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2475e80ef293747949a05eceb38cda4d">&#9670;&#160;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MQEngine::ScriptSystem::start </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>执行所有OnStart类型的脚本 </p>
+
+</div>
+</div>
 <a id="ae622435b514f8f83a95ca35383dd16e5" name="ae622435b514f8f83a95ca35383dd16e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae622435b514f8f83a95ca35383dd16e5">&#9670;&#160;</a></span>update()</h2>
 
@@ -514,7 +557,7 @@ Private 属性</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>更新系统，执行所有ScriptComponent的脚本 </p>
+<p>更新系统，执行所有Ticker类型的脚本 </p>
 
 </div>
 </div>
@@ -596,6 +639,28 @@ Private 属性</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::unique_ptr&lt;FCT::NodeEnvironment&gt; MQEngine::ScriptSystem::m_nodeEnv</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abdda1e9f83ed3b38d2f99fff159e0f8e" name="abdda1e9f83ed3b38d2f99fff159e0f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdda1e9f83ed3b38d2f99fff159e0f8e">&#9670;&#160;</a></span>m_startedEntities</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_set&lt;entt::entity&gt; MQEngine::ScriptSystem::m_startedEntities</td>
         </tr>
       </table>
   </td>
