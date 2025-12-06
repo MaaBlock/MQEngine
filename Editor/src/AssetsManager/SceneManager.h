@@ -5,19 +5,29 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 #include "../thirdparty/thirdparty.h"
+#include "../imgui/ContentBrowser.h"
+
 namespace MQEngine {
 
-    class SceneManager {
+    class SceneManager : public IContentProvider {
     public:
         SceneManager();
+        
+        // IContentProvider implementation
+        void init() override;
+        void render() override;
+        void term() override {}
+        std::string getName() const override { return "Scenes"; }
+
         std::string getSceneUuid(const std::string& sceneName);
         void newScene(const std::string& sceneName);
         void openScene(const std::string& sceneName);
-        void render();
         void refreshSceneList();
+        
+    private:
         void renderCreateSceneDialog();
         void renderDeleteSceneDialog();
-    private:
+
         DataManager* m_dataManager;
         std::vector<std::string> m_sceneList;
         int m_selectedSceneIndex = -1;

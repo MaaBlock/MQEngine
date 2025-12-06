@@ -11,14 +11,7 @@ namespace MQEngine {
         ImGui::Text("片段UUID: %s", snippetUuid.c_str());
         ImGui::Separator();
         if (g_engineGlobal.shaderSnippetManager) {
-            const auto& snippets = g_engineGlobal.shaderSnippetManager->getSnippets();
-            const Snippet* foundSnippet = nullptr;
-            for (const auto& [key, val] : snippets) {
-                if (val.uuid == snippetUuid) {
-                    foundSnippet = &val;
-                    break;
-                }
-            }
+            const Snippet* foundSnippet = g_engineGlobal.shaderSnippetManager->getSnippetByUuid(snippetUuid);
 
             if (foundSnippet) {
                 ImGui::Text("Shader片段源码:");
@@ -33,14 +26,24 @@ namespace MQEngine {
 
     ShaderGraph::ShaderGraph() {
         m_context = ImNodes::EditorContextCreate();
+        if (g_engineGlobal.shaderSnippetManager) {
+            m_snippetUpdateSubId = g_engineGlobal.shaderSnippetManager->subscribe<SnippetEvent::Update>(
+                [this](const SnippetEvent::Update& e) {
+                    onSnippetUpdated(e.uuid);
+                });
+        }
     }
 
     ShaderGraph::~ShaderGraph() {
+        if (g_engineGlobal.shaderSnippetManager) {
+            g_engineGlobal.shaderSnippetManager->unsubscribe<SnippetEvent::Update>(m_snippetUpdateSubId);
+        }
         ImNodes::EditorContextFree(m_context);
     }
 
     void ShaderGraph::render()
     {
+
         ImGui::Begin("Shader Graph");
         ImNodes::EditorContextSet(m_context);
 
@@ -268,7 +271,7 @@ namespace MQEngine {
                 
                 ImGui::BeginChild("SnippetList", ImVec2(300, 200));
                 
-                for (const auto& [uuid, snippet] : snippets) {
+                for (const auto& snippet : snippets) {
                     if (m_nodeSearchFilter[0] != '\0') {
                         std::string lowerName = snippet.name;
                         std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(), ::tolower);
@@ -330,6 +333,155 @@ namespace MQEngine {
 
         ImNodes::SetNodeScreenSpacePos(node->id, pos);
         m_nodes.push_back(std::move(node));
+    }
+
+    void ShaderGraph::onSnippetUpdated(const std::string& uuid) {
+        if (!g_engineGlobal.shaderSnippetManager) return;
+        
+        spdlog::info("ShaderGraph::onSnippetUpdated called for UUID: {}", uuid);
+
+        const Snippet* newSnippet = g_engineGlobal.shaderSnippetManager->getSnippetByUuid(uuid);
+        if (!newSnippet) {
+            spdlog::warn("ShaderGraph: Snippet not found for UUID: {}", uuid);
+            return;
+        }
+        spdlog::info("  Updated Snippet Name: '{}'", newSnippet->name);
+
+        spdlog::info("  Current Nodes in Graph: {}", m_nodes.size());
+        for (const auto& node : m_nodes) {
+            spdlog::info("    - Node ID: {}, Name: '{}', UUID: '{}'", node->id, node->name, node->snippetUuid);
+        }
+
+        bool nodeFound = false;
+        for (auto& node : m_nodes) {
+            // Match by UUID OR Name (to handle cases where UUID might have regenerated but file/name is same)
+            bool uuidMatch = (node->snippetUuid == uuid);
+            bool nameMatch = (node->name == newSnippet->name);
+
+            if (uuidMatch || nameMatch) {
+                nodeFound = true;
+                spdlog::info("  MATCHED Node ID: {} (UUID Match: {}, Name Match: {})", node->id, uuidMatch, nameMatch);
+                spdlog::info("  Updating node '{}' (ID: {}). Old Inputs: {}, Old Outputs: {}", 
+                    node->name, node->id, node->inputs.size(), node->outputs.size());
+
+                // Sync UUID in case it changed (e.g. meta file regeneration)
+                if (node->snippetUuid != uuid) {
+                    spdlog::info("  ShaderGraph: Updating node UUID from {} to {}", node->snippetUuid, uuid);
+                    node->snippetUuid = uuid;
+                }
+
+                // Keep track of old pins to try and preserve links
+                std::vector<ShaderGraphPin> oldInputs = node->inputs;
+                std::vector<ShaderGraphPin> oldOutputs = node->outputs;
+
+                node->inputs.clear();
+                node->outputs.clear();
+                node->name = newSnippet->name;
+
+                // Re-create inputs
+                for (const auto& param : newSnippet->inputs) {
+                    ShaderGraphPin pin;
+                    pin.id = getNextId(); 
+                    pin.name = param.name;
+                    pin.type = param.type;
+                    
+                    auto it = std::find_if(oldInputs.begin(), oldInputs.end(), [&](const ShaderGraphPin& p) {
+                        return p.name == pin.name && p.type == pin.type;
+                    });
+                    if (it != oldInputs.end()) {
+                        pin.id = it->id;
+                    }
+                    
+                    node->inputs.push_back(pin);
+                }
+                
+                // Re-create inouts (as inputs)
+                for (const auto& param : newSnippet->inouts) {
+                    ShaderGraphPin pin;
+                    pin.id = getNextId();
+                    pin.name = param.name + " (in)";
+                    pin.type = param.type;
+
+                    auto it = std::find_if(oldInputs.begin(), oldInputs.end(), [&](const ShaderGraphPin& p) {
+                        // Match old input name (e.g. "A" for in, or "A (in)" for inout)
+                        // Note: If param was previously "inout", name in oldInputs was "A (in)".
+                        // If param was "in", name was "A".
+                        // New logic: name is "A (in)".
+                        return p.name == pin.name && p.type == pin.type;
+                    });
+                    if (it != oldInputs.end()) {
+                        pin.id = it->id;
+                    }
+
+                    node->inputs.push_back(pin);
+                }
+
+                // Re-create outputs
+                for (const auto& param : newSnippet->outputs) {
+                    ShaderGraphPin pin;
+                    pin.id = getNextId();
+                    pin.name = param.name;
+                    pin.type = param.type;
+
+                    auto it = std::find_if(oldOutputs.begin(), oldOutputs.end(), [&](const ShaderGraphPin& p) {
+                        return p.name == pin.name && p.type == pin.type;
+                    });
+                    if (it != oldOutputs.end()) {
+                        pin.id = it->id;
+                    }
+
+                    node->outputs.push_back(pin);
+                }
+
+                // Re-create inouts (as outputs)
+                for (const auto& param : newSnippet->inouts) {
+                    ShaderGraphPin pin;
+                    pin.id = getNextId();
+                    pin.name = param.name + " (out)";
+                    pin.type = param.type;
+
+                    auto it = std::find_if(oldOutputs.begin(), oldOutputs.end(), [&](const ShaderGraphPin& p) {
+                        return p.name == pin.name && p.type == pin.type;
+                    });
+                    if (it != oldOutputs.end()) {
+                        pin.id = it->id;
+                    }
+
+                    node->outputs.push_back(pin);
+                }
+                
+                spdlog::info("  Node updated. New Inputs: {}, New Outputs: {}", 
+                    node->inputs.size(), node->outputs.size());
+            }
+        }
+        
+        if (!nodeFound) {
+            spdlog::info("ShaderGraph: No nodes found for snippet '{}' (UUID: {})", newSnippet->name, uuid);
+        } else {
+            // Cleanup invalid links
+            // Collect all valid pin IDs
+            std::vector<int> validPinIds;
+            for (const auto& node : m_nodes) {
+                for (const auto& pin : node->inputs) validPinIds.push_back(pin.id);
+                for (const auto& pin : node->outputs) validPinIds.push_back(pin.id);
+            }
+            std::sort(validPinIds.begin(), validPinIds.end());
+
+            size_t oldLinkCount = m_links.size();
+            m_links.erase(std::remove_if(m_links.begin(), m_links.end(), [&](const ShaderGraphLink& link) {
+                bool startValid = std::binary_search(validPinIds.begin(), validPinIds.end(), link.startPinId);
+                bool endValid = std::binary_search(validPinIds.begin(), validPinIds.end(), link.endPinId);
+                if (!startValid || !endValid) {
+                    spdlog::info("ShaderGraph: Removing invalid link ID {} (Pins: {} -> {})", link.id, link.startPinId, link.endPinId);
+                    return true;
+                }
+                return false;
+            }), m_links.end());
+            
+            if (m_links.size() != oldLinkCount) {
+                spdlog::info("ShaderGraph: Removed {} invalid links.", oldLinkCount - m_links.size());
+            }
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 #include "./DataError.h"
 namespace MQEngine
 {
+
     class ENGINE_API DataLoader {
     public:
         virtual ~DataLoader() = default;
@@ -20,6 +21,7 @@ namespace MQEngine
         virtual bool directoryExists(const std::string& string) = 0;
         virtual std::vector<std::string> getFileNamesWithExtension(const std::string& dir, const std::string& extension) const = 0;
         virtual std::vector<std::string> getFilePathsWithExtension(const std::string& dir, const std::string& extension) const = 0;
+
     };
 } // MQEngine
 

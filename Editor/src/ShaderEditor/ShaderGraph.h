@@ -37,6 +37,7 @@ namespace MQEngine {
         ~ShaderGraph();
 
         void render();
+        void onSnippetUpdated(const std::string& uuid);
 
     private:
         void dispatchContextMenu(bool& isEditorHovered);
@@ -62,6 +63,8 @@ namespace MQEngine {
         ImVec2 m_contextMenuPos;
         int m_hoveredNodeId = -1;
         int m_hoveredLinkId = -1;
+
+        FCT::SubscribeId m_snippetUpdateSubId = 0;
     };
 } // namespace MQEngine
 

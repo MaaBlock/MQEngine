@@ -94,10 +94,12 @@ add_copy_target_headers(Engine "${ALL_HEADERS}")
 find_package(spdlog CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
 find_package(ctre CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 target_link_libraries(Engine
         spdlog::spdlog
         absl::any absl::log absl::base absl::bits
         ctre::ctre
+        fmt::fmt
 )
 target_link_fct_libraries(Engine)
 target_link_fct_node_libraries(Engine)
@@ -120,6 +122,7 @@ function(target_link_engine target_name)
 
     if(WIN32)
         add_custom_target(${target_name}_copy_engine_dll ALL
+                COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:${target_name}>
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 $<TARGET_FILE:Engine>
                 $<TARGET_FILE_DIR:${target_name}>

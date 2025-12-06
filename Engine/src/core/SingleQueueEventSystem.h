@@ -10,7 +10,7 @@
 
 namespace MQEngine
 {
-    using SubscribeId = std::size_t;
+    using FCT::SubscribeId;
 
     /**
      * @brief 单队列事件系统 - 完全无锁的线程安全实现

@@ -4,6 +4,7 @@
 
 #include "UiManager.h"
 #include <imnodes.h>
+#include "../AssetsManager/ShaderSnippetBrowser.h"
 
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
@@ -22,10 +23,10 @@ namespace MQEngine
         g_editorGlobal.imguiContext = m_imguiCtx;
         m_graphView = FCT_NEW(GraphViewInsight,m_imguiCtx);
         m_passGenerator = FCT_NEW(RenderGraphViewer,g_editorGlobal.ctx,g_editorGlobal.wnd);
-        m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager);
+        // m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager); // Moved to ContentBrowser
         m_editorCameraManager = new EditorCameraManager();
         g_editorGlobal.cameraManager = m_editorCameraManager;
-        m_sceneManager = new SceneManager();
+        // m_sceneManager = new SceneManager(); // Moved to ContentBrowser
         m_scriptManager = new ScriptManager();
         m_sceneEntityViewer = new SceneEntityViewer();
         m_entityInspector = new EntityInspector();
@@ -35,51 +36,58 @@ namespace MQEngine
         m_shaderGraph = new ShaderGraph();
         m_contentBrowser = new ContentBrowser();
         g_editorGlobal.contentBrowser = m_contentBrowser;
+
+        m_contentBrowser->registerProvider<SceneManager>();
+        m_contentBrowser->registerProvider<ModelManager>();
+        m_contentBrowser->registerProvider<ShaderSnippetBrowser>();
     }
 
     void UiManager::setupCustomDarkTheme()
-{
-    ImGuiStyle& style = ImGui::GetStyle();
-    ImVec4* colors = style.Colors;
+    {
+        ImGuiStyle& style = ImGui::GetStyle();
+        ImVec4* colors = style.Colors;
 
-    colors[ImGuiCol_Text]                   = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
-    colors[ImGuiCol_TextDisabled]           = ImVec4(0.70f, 0.70f, 0.70f, 1.00f);
-    colors[ImGuiCol_WindowBg]               = ImVec4(0.06f, 0.06f, 0.06f, 1.00f);
-    colors[ImGuiCol_ChildBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-    colors[ImGuiCol_PopupBg]                = ImVec4(0.07f, 0.07f, 0.07f, 0.94f);
-    colors[ImGuiCol_Border]                 = ImVec4(0.25f, 0.25f, 0.25f, 0.88f);
-    colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-    colors[ImGuiCol_FrameBg]                = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-    colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
-    colors[ImGuiCol_FrameBgActive]          = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
-    colors[ImGuiCol_TitleBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-    colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.07f, 0.07f, 0.07f, 0.75f);
-    colors[ImGuiCol_MenuBarBg]              = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-    colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
-    colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
-    colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.40f, 0.40f, 0.40f, 0.54f);
-    colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
-    colors[ImGuiCol_CheckMark]              = ImVec4(0.33f, 0.67f, 0.86f, 1.00f);
-    colors[ImGuiCol_SliderGrab]             = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
-    colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
-    colors[ImGuiCol_Button]                 = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
-    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.19f, 0.19f, 0.19f, 0.54f);
-    colors[ImGuiCol_ButtonActive]           = ImVec4(0.20f, 0.22f, 0.23f, 1.00f);
-    colors[ImGuiCol_Header]                 = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-    colors[ImGuiCol_HeaderHovered]          = ImVec4(0.00f, 0.00f, 0.00f, 0.36f);
-    colors[ImGuiCol_HeaderActive]           = ImVec4(0.20f, 0.22f, 0.23f, 0.33f);
-    colors[ImGuiCol_Separator]              = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
-    colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
-    colors[ImGuiCol_SeparatorActive]        = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
-    colors[ImGuiCol_ResizeGrip]             = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
-    colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
-    colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
-    colors[ImGuiCol_Tab]                    = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-    colors[ImGuiCol_TabHovered]             = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
-    colors[ImGuiCol_TabActive]              = ImVec4(0.20f, 0.20f, 0.20f, 0.36f);
-    colors[ImGuiCol_TabUnfocused]           = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-    colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+        colors[ImGuiCol_Text]                   = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
+        colors[ImGuiCol_TextDisabled]           = ImVec4(0.70f, 0.70f, 0.70f, 1.00f);
+        colors[ImGuiCol_WindowBg]               = ImVec4(0.06f, 0.06f, 0.06f, 1.00f);
+        colors[ImGuiCol_ChildBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
+        colors[ImGuiCol_PopupBg]                = ImVec4(0.07f, 0.07f, 0.07f, 0.94f);
+        colors[ImGuiCol_Border]                 = ImVec4(0.25f, 0.25f, 0.25f, 0.88f);
+        colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+        colors[ImGuiCol_FrameBg]                = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
+        colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
+        colors[ImGuiCol_FrameBgActive]          = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+        colors[ImGuiCol_TitleBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
+        colors[ImGuiCol_TitleBgActive]          = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
+        colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.07f, 0.07f, 0.07f, 0.75f);
+        colors[ImGuiCol_MenuBarBg]              = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
+        colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
+        colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
+        colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.40f, 0.40f, 0.40f, 0.54f);
+        colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
+        colors[ImGuiCol_CheckMark]              = ImVec4(0.33f, 0.67f, 0.86f, 1.00f);
+        colors[ImGuiCol_SliderGrab]             = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
+        colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
+        colors[ImGuiCol_Button]                 = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
+        colors[ImGuiCol_ButtonHovered]          = ImVec4(0.19f, 0.19f, 0.19f, 0.54f);
+        colors[ImGuiCol_ButtonActive]           = ImVec4(0.20f, 0.22f, 0.23f, 1.00f);
+        colors[ImGuiCol_Header]                 = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
+        colors[ImGuiCol_HeaderHovered]          = ImVec4(0.00f, 0.00f, 0.00f, 0.36f);
+        colors[ImGuiCol_HeaderActive]           = ImVec4(0.20f, 0.22f, 0.23f, 0.33f);
+        colors[ImGuiCol_Separator]              = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
+        colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
+        colors[ImGuiCol_SeparatorActive]        = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
+        colors[ImGuiCol_ResizeGrip]             = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
+        colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
+        colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
+        colors[ImGuiCol_Tab]                    = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
+        colors[ImGuiCol_TabHovered]             = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+
+        // Match active tab color to ChildBg/WindowBg for seamless look
+        colors[ImGuiCol_TabActive]              = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
+        colors[ImGuiCol_TabUnfocused]           = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
+        colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
+    
         colors[ImGuiCol_DockingPreview]         = ImVec4(0.26f, 0.59f, 0.98f, 0.70f);
         colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
         colors[ImGuiCol_PlotLines]              = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
@@ -112,23 +120,23 @@ namespace MQEngine
         style.PopupBorderSize                   = 1;
         style.FrameBorderSize                   = 1;
         style.TabBorderSize                     = 1;
-        style.WindowRounding                    = 0;
-        style.ChildRounding                     = 0;
-        style.FrameRounding                     = 0;
-        style.PopupRounding                     = 0;
+        style.WindowRounding                    = 6.0f;
+        style.ChildRounding                     = 6.0f;
+        style.FrameRounding                     = 4.0f;
+        style.PopupRounding                     = 4.0f;
         style.ScrollbarRounding                 = 9;
-        style.GrabRounding                      = 0;
+        style.GrabRounding                      = 4.0f;
         style.LogSliderDeadzone                 = 4;
-        style.TabRounding                       = 0;
+        style.TabRounding                       = 4.0f;
     }
 
     void UiManager::term()
     {
         delete m_graphView;
         delete m_passGenerator;
-        delete m_modelManager;
+        // delete m_modelManager; // Handled by ContentBrowser
         delete m_editorCameraManager;
-        delete m_sceneManager;
+        // delete m_sceneManager; // Handled by ContentBrowser
         delete m_scriptManager;
         delete m_sceneEntityViewer;
         delete m_entityInspector;
@@ -241,8 +249,8 @@ namespace MQEngine
 #endif
             m_graphView->render();
             m_passGenerator->render();
-            m_modelManager->render();
-            m_sceneManager->render();
+            // m_modelManager->render(); // Handled by ContentBrowser
+            // m_sceneManager->render(); // Handled by ContentBrowser
             m_scriptManager->render();
             m_sceneEntityViewer->render();
             m_entityInspector->render();

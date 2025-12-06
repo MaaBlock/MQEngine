@@ -1,10 +1,5 @@
-﻿//
-// Created by Administrator on 2025/8/18.
-//
+﻿#include "GraphViewInsight.h"
 
-#include "GraphViewInsight.h"
-
-#define TEXT(str) (const char*)u8##str
 namespace MQEngine
 {
     GraphViewInsight::GraphViewInsight(FCT::ImguiContext* imguiCtx)

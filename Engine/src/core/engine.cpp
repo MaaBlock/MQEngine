@@ -25,6 +25,7 @@ namespace MQEngine
 #include "./GraphicsEnv.h"
 #include "../manager/RegistriesManager.h"
 #include "../system/ScriptCacheSystem.h"
+#include "../data/DiskResourceLoader.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
@@ -94,10 +95,18 @@ namespace MQEngine
         m_systemManager.requestSetSystemEnabled("ScriptCacheSystem", false);
         m_systemManager.requestAddSystem("InputSystem", m_inputSystem);
         
-        m_application->init();
-        m_techManager = makeUnique<TechManager>();
+        m_resourceLoader = makeUnique<DiskResourceLoader>();
+        g_engineGlobal.resourceLoader = m_resourceLoader.get();
+
         m_shaderSnippetManager = makeUnique<ShaderSnippetManager>();
         g_engineGlobal.shaderSnippetManager = m_shaderSnippetManager.get();
+
+        m_application->init();
+        m_techManager = makeUnique<TechManager>();
+        
+        m_shaderFileWatcher = makeUnique<ShaderFileWatcher>(m_scriptSystem->getNodeEnvironment(), m_shaderSnippetManager.get());
+        m_shaderSnippetManager->loadSnippetFromResource();
+        m_shaderFileWatcher->startWatching("./res/snippets/");
 
         registerShaderSnippets();
     }
@@ -648,6 +657,9 @@ namespace MQEngine
         m_textureRenderSystem->updateLogic();
         m_lightingSystem->updateLogic();
         m_shininessSystem->update();
+        if (m_shaderFileWatcher) {
+            m_shaderFileWatcher->update();
+        }
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_systemManager.logicTick();
         m_scriptSystem->update();

@@ -20,6 +20,10 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/multi_index_container.hpp>
+#include <boost/multi_index/member.hpp>
+#include <boost/multi_index/hashed_index.hpp>
+#include <boost/multi_index/tag.hpp>
 #include <boost/thread/future.hpp>
 #include <spdlog/spdlog.h>
 #include <absl/status/status.h>
@@ -63,6 +67,7 @@ namespace MQEngine
     using absl::UnknownError;
     using absl::OkStatus;
     using absl::StrCat;
+    using absl::IsNotFound;
     using FCT::Context;
     using FCT::Window;
     using FCT::Uniform;

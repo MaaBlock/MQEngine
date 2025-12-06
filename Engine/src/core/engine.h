@@ -28,6 +28,8 @@
 #include "layout.h"
 #include "../manager/SystemManager.h"
 #include "../manager/ShaderSnippetManager.h"
+#include "../manager/ShaderFileWatcher.h"
+#include "../data/ResourceLoader.h"
 
 namespace FCT
 {
@@ -106,8 +108,10 @@ namespace MQEngine {
         UniquePtr<TechManager> m_techManager;
         UniquePtr<RegistriesManager> m_registriesManager;
         UniquePtr<ShaderSnippetManager> m_shaderSnippetManager;
+        UniquePtr<ShaderFileWatcher> m_shaderFileWatcher;
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
         UniquePtr<ResourceActiveSystem> m_resourceActiveSystem;
+        UniquePtr<ResourceLoader> m_resourceLoader;
         InputSystem* m_inputSystem = nullptr;
         Uniform m_floorModelUniform;
         // OutputInfo for passes

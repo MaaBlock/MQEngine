@@ -11,9 +11,13 @@
 using namespace FCT;
 namespace MQEngine
 {
-    ModelManager::ModelManager(DataManager* dataManager)
+    ModelManager::ModelManager()
     {
-        m_dataManager = dataManager;
+    }
+
+    void ModelManager::init()
+    {
+        m_dataManager = g_editorGlobal.dataManager;
         m_modelLoader = g_editorGlobal.rt->createModelLoader();
         m_supportedExtensions = m_modelLoader->getSupportedExtensions();
         g_editorGlobal.wnd->getCallBack()->addFileDropCallback([this](Window*,const std::vector<std::string>& files)
@@ -34,7 +38,6 @@ namespace MQEngine
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Mesh", m_meshIcon);
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Texture", m_textureIcon);
         g_editorGlobal.imguiContext->addTexture("ModelManager_Icon_Material", m_materialIcon);
-
     }
 
     ModelManager::~ModelManager()
@@ -171,7 +174,6 @@ namespace MQEngine
 
     void ModelManager::render()
     {
-        ImGui::Begin("模型资产管理");
         auto modelPaths = m_dataManager->getModelList();
 
         ImGui::Columns(2, "ModelManagerColumns");
@@ -441,7 +443,6 @@ namespace MQEngine
         ImGui::EndChild();
 
         ImGui::Columns(1);
-        ImGui::End();
     }
     std::string ModelManager::getModelUuid(const std::string& modelName) {
         std::filesystem::path modelDir = std::filesystem::path("./res/models") / modelName;

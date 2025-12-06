@@ -48,6 +48,7 @@
     {
       "name": "vs2022-debug-x64",
       "displayName": "Windows x64 VS 2022 Debug",
+      "binaryDir": "${sourceDir}/build-vs2022-debug",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",

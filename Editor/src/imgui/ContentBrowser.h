@@ -30,7 +30,8 @@ namespace MQEngine {
 
         template <typename T, typename... Args>
         void registerProvider(Args&&... args) {
-            auto provider = FCT::makeUnique<T>(std::forward<Args>(args)...);
+            T* rawPtr = FCT_NEW(T, std::forward<Args>(args)...);
+            FCT::UniquePtr<IContentProvider> provider(rawPtr);
             provider->init();
             m_providers.push_back(std::move(provider));
         }

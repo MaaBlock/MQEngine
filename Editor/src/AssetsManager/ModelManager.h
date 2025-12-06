@@ -6,12 +6,20 @@
 #define MODELMANAGER_H
 #include "../thirdparty/thirdparty.h"
 #include "../core/Global.h"
+#include "../imgui/ContentBrowser.h"
+
 namespace MQEngine {
-    class ModelManager {
+    class ModelManager : public IContentProvider {
     public:
-        ModelManager(DataManager* dataManager);
-        ~ModelManager();
-        void render();
+        ModelManager();
+        ~ModelManager() override;
+        
+        // IContentProvider implementation
+        void init() override;
+        void render() override;
+        void term() override {}
+        std::string getName() const override { return "Models"; }
+
         std::string getModelUuid(const std::string& modelName);
         void loadSelectedModelInfo(const std::filesystem::path& modelDir);
         void importModel(const std::string& modelPath);

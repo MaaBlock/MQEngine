@@ -18,6 +18,7 @@ namespace MQEngine
     class InputSystem;
     class ResourceActiveSystem;
     class ShaderSnippetManager;
+    class ResourceLoader;
 
     struct ENGINE_API EngineGlobal
     {
@@ -36,6 +37,7 @@ namespace MQEngine
         SystemManager* systemManager;
         ResourceActiveSystem* resourceActiveSystem;
         ShaderSnippetManager* shaderSnippetManager;
+        ResourceLoader* resourceLoader;
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly> sceneEventPipe;
         bool isRunning = false;
         EngineGlobal() = default;

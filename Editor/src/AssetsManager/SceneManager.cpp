@@ -11,9 +11,14 @@ using namespace FCT;
 namespace MQEngine {
     SceneManager::SceneManager()
     {
+    }
+
+    void SceneManager::init()
+    {
         m_dataManager = g_editorGlobal.dataManager;
         refreshSceneList();
     }
+
     std::string SceneManager::getSceneUuid(const std::string& sceneName)
     {
         std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
@@ -86,8 +91,6 @@ namespace MQEngine {
 
 void SceneManager::render()
 {
-    ImGui::Begin("场景管理器");
-
     if (ImGui::Button("创建新场景")) {
         m_showCreateDialog = true;
     }
@@ -99,7 +102,7 @@ void SceneManager::render()
     ImGui::Separator();
 
     // 显示场景列表
-    ImGui::BeginChild("场景列表", ImVec2(0, 0), true);
+    // ImGui::BeginChild("场景列表", ImVec2(0, 0), true); // ContentBrowser already wraps in a child window
     {
         if (m_sceneList.empty()) {
             ImGui::Text("暂无场景");
@@ -199,15 +202,13 @@ void SceneManager::render()
             }
         }
     }
-    ImGui::EndChild();
+    // ImGui::EndChild();
 
     // 创建场景对话框
     renderCreateSceneDialog();
 
     // 删除确认对话框
     renderDeleteSceneDialog();
-
-    ImGui::End();
 }
 
 void SceneManager::refreshSceneList()
