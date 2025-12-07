@@ -28,6 +28,7 @@
 #include "layout.h"
 #include "../manager/SystemManager.h"
 #include "../manager/ShaderSnippetManager.h"
+#include "../manager/ShaderGraphManager.h"
 #include "../manager/ShaderFileWatcher.h"
 #include "../data/ResourceLoader.h"
 
@@ -108,6 +109,7 @@ namespace MQEngine {
         UniquePtr<TechManager> m_techManager;
         UniquePtr<RegistriesManager> m_registriesManager;
         UniquePtr<ShaderSnippetManager> m_shaderSnippetManager;
+        UniquePtr<ShaderGraphManager> m_shaderGraphManager;
         UniquePtr<ShaderFileWatcher> m_shaderFileWatcher;
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
         UniquePtr<ResourceActiveSystem> m_resourceActiveSystem;

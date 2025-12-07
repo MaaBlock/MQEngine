@@ -5,7 +5,7 @@
 #ifndef SYSTEMMANAGER_H
 #define SYSTEMMANAGER_H
 #include "../system/ISystem.h"
-#include "SingleQueueEventSystem.h"
+#include "../core/SingleQueueEventSystem.h"
 #include <unordered_set>
 
 namespace MQEngine {
@@ -38,8 +38,8 @@ namespace MQEngine {
         void requestSetSystemEnabled(const std::string& name, bool enabled);
         
         void logicTick();
+        void renderTick();
 
-    private:
         struct SystemConfig
         {
             std::string name;
@@ -49,6 +49,9 @@ namespace MQEngine {
             bool enabled = true;
         };
 
+        const std::unordered_map<std::string, SystemConfig>& getConfigs() const { return m_configs; }
+
+    private:
         SystemGraph m_systemGraph;
         SingleQueueEventSystem m_requestQueue;
         std::unordered_map<std::string, SystemConfig> m_configs;

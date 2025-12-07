@@ -73,6 +73,10 @@ set(ENGINE_OTHERS_HEADERS
         "./src/EnginePCH.h"
 )
 
+if(MSVC)
+    add_compile_options(/bigobj)
+endif()
+
 add_library(Engine SHARED
     ${CORE_MODULE_SOURCES}
     ${DATA_MODULE_SOURCES}

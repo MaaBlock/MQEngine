@@ -5,6 +5,8 @@
 #include "UiManager.h"
 #include <imnodes.h>
 #include "../AssetsManager/ShaderSnippetBrowser.h"
+#include "../AssetsManager/ShaderGraphBrowser.h"
+#include "../SceneViewer/Inspector.h"
 
 #define TEXT(str) (const char*)u8##str
 using namespace FCT;
@@ -40,6 +42,7 @@ namespace MQEngine
         m_contentBrowser->registerProvider<SceneManager>();
         m_contentBrowser->registerProvider<ModelManager>();
         m_contentBrowser->registerProvider<ShaderSnippetBrowser>();
+        m_contentBrowser->registerProvider<ShaderGraphBrowser>(m_shaderGraph);
     }
 
     void UiManager::setupCustomDarkTheme()

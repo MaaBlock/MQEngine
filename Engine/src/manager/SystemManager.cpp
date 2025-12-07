@@ -85,7 +85,8 @@ namespace MQEngine
     {
         processRequests();
 
-        if (m_dirty) {
+        if (m_dirty)
+        {
             m_systemGraph.update();
             m_dirty = false;
         }
@@ -99,4 +100,15 @@ namespace MQEngine
             }
         }
     }
-}
+    void SystemManager::renderTick()
+    {
+        auto systems = m_systemGraph.order();
+        for (auto* system : systems)
+        {
+            if (system)
+            {
+                system->updateRender();
+            }
+        }
+    }
+} // namespace MQEngine

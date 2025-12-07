@@ -24,6 +24,7 @@ namespace MQEngine
 #include "../data/Camera.h"
 #include "./GraphicsEnv.h"
 #include "../manager/RegistriesManager.h"
+#include "../manager/ShaderGraphManager.h"
 #include "../system/ScriptCacheSystem.h"
 #include "../data/DiskResourceLoader.h"
 namespace FCT
@@ -95,11 +96,28 @@ namespace MQEngine
         m_systemManager.requestSetSystemEnabled("ScriptCacheSystem", false);
         m_systemManager.requestAddSystem("InputSystem", m_inputSystem);
         
+        m_systemManager.requestAddSystem("CameraSystem", m_cameraSystem.get());
+        m_systemManager.requestSetSystemEnabled("CameraSystem", false);
+        m_systemManager.requestAddSystem("LightingSystem", m_lightingSystem.get());
+        m_systemManager.requestSetSystemEnabled("LightingSystem", false);
+        m_systemManager.requestAddSystem("TextureSamplerSystem", m_textureSamplerSystem.get());
+        m_systemManager.requestSetSystemEnabled("TextureSamplerSystem", false);
+        
         m_resourceLoader = makeUnique<DiskResourceLoader>();
         g_engineGlobal.resourceLoader = m_resourceLoader.get();
 
         m_shaderSnippetManager = makeUnique<ShaderSnippetManager>();
         g_engineGlobal.shaderSnippetManager = m_shaderSnippetManager.get();
+
+        m_shaderGraphManager = makeUnique<ShaderGraphManager>();
+        g_engineGlobal.shaderGraphManager = m_shaderGraphManager.get();
+        
+        m_shaderGraphManager->registerVertexLayout("StandardMeshVertexLayout", StandardMeshVertexLayout);
+        m_shaderGraphManager->registerPixelLayout("StandardPixelLayout", pixelLayout); // Assuming 'pixelLayout' exists in Engine members or global
+
+        ShaderGraphConfig sgConfig = m_shaderGraphManager->getConfig();
+        sgConfig.bindedSystemNames = {"CameraSystem", "LightingSystem", "TextureSamplerSystem"};
+        m_shaderGraphManager->setConfig(sgConfig);
 
         m_application->init();
         m_techManager = makeUnique<TechManager>();
@@ -623,9 +641,9 @@ namespace MQEngine
                 m_resourceActiveSystem->updateRender();
                 m_textureRenderSystem->updateRender(); // Added: Process Acquire Barriers
                 m_matrixCacheSystem->updateRender();
-                m_cameraSystem->updateRender();
+                //m_cameraSystem->updateRender();
                 m_shininessSystem->updateUniforms();
-                m_lightingSystem->updateRender();
+                //m_lightingSystem->updateRender();
             },
             {},
             {RenderGraphTickers::RenderGraphSubmit}
@@ -651,11 +669,11 @@ namespace MQEngine
         lastFrameTime = currentTime;
         m_application->logicTick();
         m_matrixCacheSystem->updateLogic();
-        m_cameraSystem->updateLogic();
+        //m_cameraSystem->updateLogic();
         m_skyboxCacheSystem->updateLogic();
         m_meshRenderSystem->update();
         m_textureRenderSystem->updateLogic();
-        m_lightingSystem->updateLogic();
+        //m_lightingSystem->updateLogic();
         m_shininessSystem->update();
         if (m_shaderFileWatcher) {
             m_shaderFileWatcher->update();
