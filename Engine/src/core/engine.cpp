@@ -97,11 +97,11 @@ namespace MQEngine
         m_systemManager.requestAddSystem("InputSystem", m_inputSystem);
         
         m_systemManager.requestAddSystem("CameraSystem", m_cameraSystem.get());
-        m_systemManager.requestSetSystemEnabled("CameraSystem", false);
+      //  m_systemManager.requestSetSystemEnabled("CameraSystem", false);
         m_systemManager.requestAddSystem("LightingSystem", m_lightingSystem.get());
-        m_systemManager.requestSetSystemEnabled("LightingSystem", false);
+        //m_systemManager.requestSetSystemEnabled("LightingSystem", false);
         m_systemManager.requestAddSystem("TextureSamplerSystem", m_textureSamplerSystem.get());
-        m_systemManager.requestSetSystemEnabled("TextureSamplerSystem", false);
+       // m_systemManager.requestSetSystemEnabled("TextureSamplerSystem", false);
         
         m_resourceLoader = makeUnique<DiskResourceLoader>();
         g_engineGlobal.resourceLoader = m_resourceLoader.get();
@@ -264,7 +264,6 @@ namespace MQEngine
                                 context.layout->bindTexture("normalTexture", normalMap.texture);
 
                                 g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
-
                                 if (meshInstance.mesh)
                                 {
                                     g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
@@ -643,6 +642,7 @@ namespace MQEngine
                 m_matrixCacheSystem->updateRender();
                 //m_cameraSystem->updateRender();
                 m_shininessSystem->updateUniforms();
+                m_systemManager.renderTick();
                 //m_lightingSystem->updateRender();
             },
             {},
