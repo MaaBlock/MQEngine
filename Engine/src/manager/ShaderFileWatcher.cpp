@@ -40,9 +40,6 @@ namespace MQEngine {
     void ShaderFileWatcher::stopWatching() {
         if (m_isWatching) {
             uv_fs_event_stop(&m_fsEvent);
-            // uv_close handles are usually closed when the loop stops or explicitly.
-            // Since we are tying this to the Engine's lifecycle which manages the loop,
-            // stopping the event should be sufficient to stop callbacks.
             m_isWatching = false;
         }
     }
@@ -74,8 +71,6 @@ namespace MQEngine {
             if (ext != ".hlsl" && ext != ".meta") continue;
 
             std::string stem = p.stem().string();
-            // Construct full path to check existence. 
-            // m_watchPath is "./res/snippets/" usually.
             
             std::filesystem::path hlslPath = std::filesystem::path(m_watchPath) / (stem + ".hlsl");
 

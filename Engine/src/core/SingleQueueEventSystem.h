@@ -91,10 +91,9 @@ namespace MQEngine
                     }
                 }
             }
-            return absl::OkStatus();
+            return OkStatus();
         }
 
-        // 处理订阅操作（仅在消费者线程中调用）
         void processSubscribeOps() {
             SubscribeOp* op = nullptr;
             while (m_subscribeQueue.pop(op)) {
