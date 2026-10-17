@@ -19,6 +19,7 @@ namespace MQEngine {
 
     void MatrixCacheSystem::updateLogic()
     {
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -100,6 +101,7 @@ namespace MQEngine {
     }
     void MatrixCacheSystem::updateRender()
     {
+        ZoneScoped();
 
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)

@@ -30,6 +30,7 @@ namespace MQEngine
 
     void LauncherApplication::init()
     {
+        ZoneScoped();
         m_imguiCtx = m_imguiModule.createContext(global.wnd, global.ctx);
         m_imguiCtx->attachPass("ImguiPass");
         m_imguiCtx->create(ImguiContextCreateFlag::Docking);
@@ -236,6 +237,7 @@ namespace MQEngine
 
     void LauncherApplication::scanProjects()
     {
+        ZoneScoped();
         m_projects.clear();
         m_selectedProjectIndex = -1;
 
@@ -299,6 +301,7 @@ namespace MQEngine
 
     void LauncherApplication::logicTick()
     {
+        ZoneScoped();
         if (!m_imguiCtx)
             return;
 
@@ -310,6 +313,7 @@ namespace MQEngine
 
     void LauncherApplication::renderUi()
     {
+        ZoneScoped();
         ImGuiViewport* viewport = ImGui::GetMainViewport();
         ImGui::SetNextWindowPos(viewport->WorkPos);
         ImGui::SetNextWindowSize(viewport->WorkSize);

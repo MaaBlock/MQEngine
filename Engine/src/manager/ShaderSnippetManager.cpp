@@ -71,6 +71,7 @@ namespace MQEngine {
 
     Status ShaderSnippetManager::loadSnippetFromResource()
     {
+        ZoneScoped();
         auto rl = g_engineGlobal.resourceLoader;
         const std::string snippetDir = "./res/snippets/";
         
@@ -137,6 +138,8 @@ namespace MQEngine {
 
     Status ShaderSnippetManager::loadSnippet(const std::string& snippetName)
     {
+        ZoneScoped();
+        ZoneText(snippetName.c_str(), snippetName.size());
         const std::string snippetDir = "./res/snippets/";
         std::string hlslPath = snippetDir + snippetName + ".hlsl";
         std::string metaPath = snippetDir + snippetName + ".meta";

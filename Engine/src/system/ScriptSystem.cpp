@@ -28,6 +28,7 @@ namespace MQEngine {
     }
     
     void ScriptSystem::loadScripts() {
+        ZoneScoped();
         if (m_isScriptsLoaded) return;
 
         if (!m_dataManager) {
@@ -316,6 +317,7 @@ namespace MQEngine {
     }
     
     void ScriptSystem::update() {
+        ZoneScoped();
         if (!m_nodeEnv) {
             std::cerr << "NodeEnvironment not initialized." << std::endl;
             return;
@@ -376,6 +378,7 @@ namespace MQEngine {
     }
 
     void ScriptSystem::start() {
+        ZoneScoped();
         if (!m_nodeEnv || !m_dataManager) {
             return;
         }

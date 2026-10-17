@@ -18,6 +18,7 @@ namespace MQEngine {
 
     void ShininessSystem::update()
     {
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -50,6 +51,7 @@ namespace MQEngine {
 
     void ShininessSystem::updateUniforms()
     {
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {

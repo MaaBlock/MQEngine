@@ -25,12 +25,13 @@ namespace MQEngine
 
     void MeshCacheSystem::update()
     {
+        ZoneScoped();
         collectMeshes();
     }
 
     void MeshCacheSystem::collectMeshes()
     {
-        
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -54,6 +55,8 @@ namespace MQEngine
 
     void MeshCacheSystem::loadMesh(const std::string& modelUuid, const std::string& meshName)
     {
+        ZoneScoped();
+        ZoneText(meshName.c_str(), meshName.size());
         std::string meshKey = modelUuid + "|" + meshName;
 
         if (m_loadedMeshes.find(meshKey) != m_loadedMeshes.end()) {

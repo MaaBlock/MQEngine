@@ -8,6 +8,7 @@ namespace MQEngine
     namespace fs = std::filesystem;
     void DataManager::loadRes()
     {
+        ZoneScoped();
         m_dataLoader->ensureDirectory(m_assetRoot);
         loadProjectSetting();
         loadScenePathList();
@@ -16,6 +17,7 @@ namespace MQEngine
 
     void DataManager::loadScenePathList()
     {
+        ZoneScoped();
         std::string scenesDir = m_assetRoot + "/scenes";
         m_dataLoader->ensureDirectory(scenesDir);
         m_scenePathList = m_dataLoader->getSubDirectories(scenesDir);
@@ -29,6 +31,7 @@ namespace MQEngine
 
     void DataManager::updateModelPathList()
     {
+        ZoneScoped();
         std::string modelsDir = m_assetRoot + "/models";
         m_dataLoader->ensureDirectory(modelsDir);
         m_modelPathList = m_dataLoader->getSubDirectories(modelsDir);
@@ -52,6 +55,7 @@ namespace MQEngine
 
     void DataManager::openScene(const std::string& uuid)
     {
+        ZoneScoped();
         try {
             if (m_currentScene == uuid) {
                 return;
@@ -98,6 +102,7 @@ namespace MQEngine
 
     void DataManager::closeScene(const std::string& uuid)
     {
+        ZoneScoped();
         if (m_loadScenes.find(uuid) != m_loadScenes.end()) {
             auto scenePtr = m_loadScenes[uuid];
             if (scenePtr) {
@@ -122,10 +127,15 @@ namespace MQEngine
 
     bool DataManager::saveScene(const std::string& uuid)
     {
+        ZoneScoped();
         if (m_loadScenes.find(uuid) == m_loadScenes.end()) {
             return true;
         }
-        m_loadScenes[uuid]->save();
+        Status st = m_loadScenes[uuid]->save();
+        if (!st.ok()) {
+            spdlog::error("保存场景失败: {}", st.message());
+            return false;
+        }
         return true;
     }
 

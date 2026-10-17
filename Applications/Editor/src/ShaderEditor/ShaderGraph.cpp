@@ -205,6 +205,7 @@ namespace MQEngine {
 
     void ShaderGraph::render()
     {
+        ZoneScoped();
         ImGui::Begin("Shader Graph");
         
         // Settings moved to Inspector

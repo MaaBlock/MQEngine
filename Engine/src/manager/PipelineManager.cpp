@@ -286,6 +286,7 @@ StatusOr<PipelineConfig> parsePipelineConfig(const json::value& jv) {
 PipelineManager::PipelineManager() = default;
 
 StatusOr<PipelineConfig> PipelineManager::loadPipeline(const std::string& path) {
+    ZoneScoped();
     if (!g_engineGlobal.resourceLoader) {
         return InternalError("ResourceLoader 实例未初始化");
     }
@@ -339,6 +340,7 @@ Status PipelineManager::buildRenderGraph(const PipelineConfig& config,
                                          FCT::RenderGraph* graph,
                                          FCT::Window* wnd,
                                          RenderTarget targetType) {
+    ZoneScoped();
     if (!graph) {
         return InvalidArgumentError("RenderGraph 指针为空");
     }
@@ -443,6 +445,7 @@ Status PipelineManager::buildRenderGraph(const PipelineConfig& config,
 }
 
 Status PipelineManager::buildTechManager(const PipelineConfig& config, TechManager* techMgr) {
+    ZoneScoped();
     if (!techMgr) {
         return InvalidArgumentError("TechManager 指针为空");
     }
@@ -549,14 +552,12 @@ Status PipelineManager::buildTechManager(const PipelineConfig& config, TechManag
 
         // 绑定关联系统 (如 CameraSystem, LightingSystem, TextureSamplerSystem)
         if (g_engineGlobal.systemManager) {
-            const auto& configs = g_engineGlobal.systemManager->getConfigs();
             for (const auto& sysName : techDesc.bindedSystems) {
-                auto it = configs.find(sysName);
-                if (it != configs.end() && it->second.system) {
-                    auto* binded = dynamic_cast<BindedSystem*>(it->second.system);
-                    if (binded) {
-                        tech.addBindedSystem(binded);
-                    }
+                auto* binded = dynamic_cast<BindedSystem*>(g_engineGlobal.systemManager->findSystem(sysName));
+                if (binded) {
+                    tech.addBindedSystem(binded);
+                } else {
+                    spdlog::warn("Technique {} 找不到绑定系统: {}", techDesc.name, sysName);
                 }
             }
         }
@@ -573,6 +574,7 @@ Status PipelineManager::loadAndApplyPipeline(const std::string& path,
                                              TechManager* techMgr,
                                              FCT::Window* wnd,
                                              RenderTarget targetType) {
+    ZoneScoped();
     auto configRes = loadPipeline(path);
     CHECK_STATUS(configRes);
     const auto& config = configRes.value();

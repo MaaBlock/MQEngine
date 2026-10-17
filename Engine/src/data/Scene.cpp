@@ -1,13 +1,13 @@
 #include "Scene.h"
 #include "EnttArchiveWrapper.h"
-#include <boost/archive/binary_oarchive.hpp>
-
 #include "DataManager.h"
+#include "ResourceLoader.h"
 #include "SavedComponentsList.h"
+#include "../core/EngineGlobal.h"
 #include "../manager/RegistriesManager.h"
+
 namespace MQEngine
 {
-
     Scene::Scene(DataManager* dataManager, const std::string& uuid)
     {
         m_dataManager = dataManager;
@@ -17,157 +17,189 @@ namespace MQEngine
     void Scene::init()
     {
         m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
-        m_loadedSceneTrunks["default"] = std::make_unique<SceneTrunk>("default",this);
+        m_loadedSceneTrunks["default"] = std::make_unique<SceneTrunk>("default", this);
         auto trunk = m_loadedSceneTrunks["default"].get();
         trunk->init();
     }
 
-    void Scene::saveTrunk(const std::string& trunkName)
+    std::string Scene::buildScenePath()
+    {
+        return StrCat(m_dataManager->getAssetRoot(), "/scenes/", getName());
+    }
+
+    Status Scene::saveTrunk(const std::string& trunkName)
     {
         if (!m_dataManager) {
-            throw DataError("DataManager为空，无法保存场景块");
+            return InternalError("DataManager为空，无法保存场景块");
         }
 
         auto it = m_loadedSceneTrunks.find(trunkName);
         if (it == m_loadedSceneTrunks.end()) {
-            throw DataError("场景块 '" + trunkName + "' 不存在，无法保存");
+            return NotFoundError(StrCat("场景块 '", trunkName, "' 不存在，无法保存"));
         }
 
         auto trunk = it->second.get();
-        trunk->save();
+        CHECK_STATUS(trunk->save());
+        return OkStatus();
     }
 
-    void Scene::loadTrunk(const std::string& trunkName)
+    Status Scene::loadTrunk(const std::string& trunkName)
     {
         if (!m_dataManager) {
-            throw DataError("DataManager为空，无法加载场景块");
+            return InternalError("DataManager为空，无法加载场景块");
         }
 
-        try {
-            if (m_loadedSceneTrunks.find(trunkName) != m_loadedSceneTrunks.end()) {
-                return;
-            }
-
-            updateTrunkList();
-
-            auto it = std::find(m_sceneTrunk.begin(), m_sceneTrunk.end(), trunkName);
-            if (it == m_sceneTrunk.end()) {
-                throw DataError("场景块 '" + trunkName + "' 不存在于trunk列表中，无法加载");
-            }
-
-            auto trunk = std::make_unique<SceneTrunk>(trunkName, this);
-
-            trunk->load();
-
-            m_loadedSceneTrunks[trunkName] = std::move(trunk);
-
-            if (m_dataManager->getCurrentSceneUuid() == m_uuid) {
-                m_dataManager->appendRegistry(m_loadedSceneTrunks[trunkName]->getRegistry());
-            }
-
-        } catch (const DataError& e) {
-            throw;
-        } catch (const std::exception& e) {
-            throw DataError("加载场景块 '" + trunkName + "' 失败: " + std::string(e.what()));
+        if (m_loadedSceneTrunks.find(trunkName) != m_loadedSceneTrunks.end()) {
+            return OkStatus();
         }
+
+        CHECK_STATUS(updateTrunkList());
+
+        auto it = std::find(m_sceneTrunk.begin(), m_sceneTrunk.end(), trunkName);
+        if (it == m_sceneTrunk.end()) {
+            return NotFoundError(StrCat("场景块 '", trunkName, "' 不存在于trunk列表中，无法加载"));
+        }
+
+        auto trunk = std::make_unique<SceneTrunk>(trunkName, this);
+        CHECK_STATUS(trunk->load());
+
+        m_loadedSceneTrunks[trunkName] = std::move(trunk);
+
+        if (m_dataManager->getCurrentSceneUuid() == m_uuid) {
+            m_dataManager->appendRegistry(m_loadedSceneTrunks[trunkName]->getRegistry());
+        }
+
+        return OkStatus();
     }
 
-
-    void Scene::save()
+    Status Scene::saveSceneConfig(const std::string& sceneDataPath)
     {
-        if (!m_dataManager) {
-            throw DataError("DataManager为空，无法保存场景");
-        }
-
         try {
-            std::string sceneName = getName();
-            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
-            std::string sceneDataPath = scenePath + "/scene.dat";
-            std::string registryDataPath = scenePath + "/scene.reg";
-
-            m_dataManager->getDataLoader()->ensureDirectory(scenePath);
-
-            auto sceneStream = m_dataManager->getDataLoader()->openBinaryOutputStream(sceneDataPath);
-            if (sceneStream && sceneStream->is_open()) {
-                boost::archive::binary_oarchive archive(*sceneStream);
+            std::stringstream ss(std::ios::in | std::ios::out | std::ios::binary);
+            {
+                boost::archive::binary_oarchive archive(ss);
                 archive << *this;
-            } else {
-                throw DataError("无法创建场景配置文件: " + sceneDataPath);
             }
+            CHECK_STATUS(g_engineGlobal.resourceLoader->saveFile(sceneDataPath, ss.str()));
+            return OkStatus();
+        } catch (const std::exception& e) {
+            return InternalError(StrCat("保存场景配置失败: ", e.what()));
+        }
+    }
 
-            auto registryStream = m_dataManager->getDataLoader()->openBinaryOutputStream(registryDataPath);
-            if (registryStream && registryStream->is_open()) {
-                boost::archive::binary_oarchive archive(*registryStream);
+    Status Scene::saveSceneRegistry(const std::string& registryDataPath)
+    {
+        if (!m_registry) {
+            return InternalError("场景Registry为空，无法保存");
+        }
+        try {
+            std::stringstream ss(std::ios::in | std::ios::out | std::ios::binary);
+            {
+                boost::archive::binary_oarchive archive(ss);
                 EnttOutputArchiveWrapper wrapper(archive);
                 SerializeComponents(entt::snapshot{*m_registry}, wrapper);
-            } else {
-                throw DataError("无法创建registry文件: " + registryDataPath);
             }
-
-            for (const auto& pair : m_loadedSceneTrunks) {
-                saveTrunk(pair.first);
-            }
-
-        } catch (const DataError& e) {
-            throw;
+            CHECK_STATUS(g_engineGlobal.resourceLoader->saveFile(registryDataPath, ss.str()));
+            return OkStatus();
         } catch (const std::exception& e) {
-            throw DataError("保存场景失败: " + std::string(e.what()));
+            return InternalError(StrCat("保存场景Registry失败: ", e.what()));
         }
     }
 
+    Status Scene::saveLoadedTrunks()
+    {
+        for (const auto& pair : m_loadedSceneTrunks) {
+            CHECK_STATUS(saveTrunk(pair.first));
+        }
+        return OkStatus();
+    }
 
-    void Scene::load()
+    Status Scene::save()
     {
         if (!m_dataManager) {
-            throw DataError("DataManager为空，无法加载场景");
+            return InternalError("DataManager为空，无法保存场景");
         }
+        if (!g_engineGlobal.resourceLoader) {
+            return InternalError("ResourceLoader为空，无法保存场景");
+        }
+
+        std::string scenePath = buildScenePath();
+        CHECK_STATUS(g_engineGlobal.resourceLoader->ensureDir(scenePath));
+        CHECK_STATUS(saveSceneConfig(StrCat(scenePath, "/scene.dat")));
+        CHECK_STATUS(saveSceneRegistry(StrCat(scenePath, "/scene.reg")));
+        CHECK_STATUS(saveLoadedTrunks());
+        return OkStatus();
+    }
+
+    Status Scene::loadSceneConfig(const std::string& sceneDataPath)
+    {
+        auto contentOr = g_engineGlobal.resourceLoader->loadFile(sceneDataPath);
+        if (IsNotFound(contentOr.status())) {
+            m_isChunked = false;
+            m_sceneTrunk.clear();
+            m_sceneTrunk.push_back("default");
+            return OkStatus();
+        }
+        CHECK_STATUS(contentOr);
 
         try {
-            std::string sceneName = getName();
-            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
-            std::string sceneDataPath = scenePath + "/scene.dat";
-            std::string registryDataPath = scenePath + "/scene.reg";
-
-            if (m_dataManager->getDataLoader()->fileExists(sceneDataPath)) {
-                auto sceneStream = m_dataManager->getDataLoader()->openBinaryInputStream(sceneDataPath);
-                if (sceneStream && sceneStream->is_open()) {
-                    boost::archive::binary_iarchive archive(*sceneStream);
-
-                    archive >> *this;
-
-                }
-            } else {
-                m_isChunked = false;
-                m_sceneTrunk.clear();
-                m_sceneTrunk.push_back("default");
-            }
-
-            // Use RegistriesManager to create registry
-            m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
-
-            if (m_dataManager->getDataLoader()->fileExists(registryDataPath)) {
-                auto registryStream = m_dataManager->getDataLoader()->openBinaryInputStream(registryDataPath);
-                if (registryStream && registryStream->is_open()) {
-                    m_registry->clear();
-                    boost::archive::binary_iarchive archive(*registryStream);
-                    EnttInputArchiveWrapper wrapper(archive);
-                    SerializeComponents(entt::snapshot_loader{*m_registry}, wrapper);
-                    g_engineGlobal.registriesManager->storage(m_registry.get());
-                }
-            }
-
-            m_loadedSceneTrunks.clear();
-            if (!m_isChunked) {
-                if (m_loadedSceneTrunks.find("default") == m_loadedSceneTrunks.end()) {
-                    loadTrunk("default");
-                }
-            }
-
-        } catch (const DataError& e) {
-            throw;
+            std::stringstream ss(contentOr.value(), std::ios::in | std::ios::binary);
+            boost::archive::binary_iarchive archive(ss);
+            archive >> *this;
+            return OkStatus();
         } catch (const std::exception& e) {
-            throw DataError("加载场景失败: " + std::string(e.what()));
+            return InternalError(StrCat("加载场景配置失败: ", e.what()));
         }
+    }
+
+    Status Scene::loadSceneRegistry(const std::string& registryDataPath)
+    {
+        auto contentOr = g_engineGlobal.resourceLoader->loadFile(registryDataPath);
+        if (IsNotFound(contentOr.status())) {
+            return OkStatus();
+        }
+        CHECK_STATUS(contentOr);
+
+        try {
+            m_registry->clear();
+            std::stringstream ss(contentOr.value(), std::ios::in | std::ios::binary);
+            boost::archive::binary_iarchive archive(ss);
+            EnttInputArchiveWrapper wrapper(archive);
+            SerializeComponents(entt::snapshot_loader{*m_registry}, wrapper);
+            g_engineGlobal.registriesManager->storage(m_registry.get());
+            return OkStatus();
+        } catch (const std::exception& e) {
+            return InternalError(StrCat("加载场景Registry失败: ", e.what()));
+        }
+    }
+
+    Status Scene::loadDefaultTrunks()
+    {
+        m_loadedSceneTrunks.clear();
+        if (!m_isChunked) {
+            if (m_loadedSceneTrunks.find("default") == m_loadedSceneTrunks.end()) {
+                CHECK_STATUS(loadTrunk("default"));
+            }
+        }
+        return OkStatus();
+    }
+
+    Status Scene::load()
+    {
+        if (!m_dataManager) {
+            return InternalError("DataManager为空，无法加载场景");
+        }
+        if (!g_engineGlobal.resourceLoader) {
+            return InternalError("ResourceLoader为空，无法加载场景");
+        }
+
+        std::string scenePath = buildScenePath();
+        CHECK_STATUS(loadSceneConfig(StrCat(scenePath, "/scene.dat")));
+
+        m_registry.reset(g_engineGlobal.registriesManager->createRegistry());
+        CHECK_STATUS(loadSceneRegistry(StrCat(scenePath, "/scene.reg")));
+        CHECK_STATUS(loadDefaultTrunks());
+        return OkStatus();
     }
 
     std::string Scene::getName()
@@ -176,33 +208,34 @@ namespace MQEngine
         return m_dataManager->getSceneNameByUuid(m_uuid);
     }
 
-    void Scene::updateTrunkList()
+    Status Scene::updateTrunkList()
     {
         if (!m_dataManager) {
-            throw DataError("DataManager为空，无法更新场景块列表");
+            return InternalError("DataManager为空，无法更新场景块列表");
+        }
+        if (!g_engineGlobal.resourceLoader) {
+            return InternalError("ResourceLoader为空，无法更新场景块列表");
         }
 
-        try {
-            std::string sceneName = getName();
-            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
-            std::string trunksPath = scenePath + "/trunks";
+        std::string trunksPath = StrCat(buildScenePath(), "/trunks");
+        m_sceneTrunk.clear();
 
-            m_sceneTrunk.clear();
+        Status accessSt = g_engineGlobal.resourceLoader->accessDir(trunksPath);
+        if (IsNotFound(accessSt)) {
+            return OkStatus();
+        }
+        CHECK_STATUS(accessSt);
 
-            if (m_dataManager->getDataLoader()->directoryExists(trunksPath)) {
-                auto trunkNames = m_dataManager->getDataLoader()->getFileNamesWithExtension(trunksPath, ".dat");
-                /**
-                 *todo: 使用=
-                 **/
-                for (const auto& trunkName : trunkNames) {
-                    m_sceneTrunk.push_back(trunkName);
-                }
+        auto filesOr = g_engineGlobal.resourceLoader->readDir(trunksPath);
+        CHECK_STATUS(filesOr);
+
+        for (const auto& file : filesOr.value()) {
+            if (file->extension() == ".dat") {
+                m_sceneTrunk.push_back(file->stem());
             }
-        } catch (const DataError& e) {
-            throw;
-        } catch (const std::exception& e) {
-            throw DataError("更新场景块列表失败: " + std::string(e.what()));
         }
+        return OkStatus();
     }
 }
+
 

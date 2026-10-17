@@ -89,7 +89,13 @@ if(MSVC)
     add_compile_options(/bigobj)
 endif()
 
-add_library(Engine SHARED
+if(ANDROID)
+    set(ENGINE_LIB_TYPE STATIC)
+else()
+    set(ENGINE_LIB_TYPE SHARED)
+endif()
+
+add_library(Engine ${ENGINE_LIB_TYPE}
     ${CORE_MODULE_SOURCES}
     ${DATA_MODULE_SOURCES}
     ${ENGINE_HEADERS}

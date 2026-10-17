@@ -20,7 +20,14 @@
       "platform": "windows"
     },
     "freetype",
-    "fruit",
+    {
+      "name": "fruit",
+      "platform": "linux"
+    },
+    {
+      "name": "fruit",
+      "platform": "windows"
+    },
     {
       "name": "glfw3",
       "platform": "linux"
@@ -47,6 +54,10 @@
     {
       "name": "vulkan",
       "platform": "windows"
+    },
+    {
+      "name": "vulkan-headers",
+      "platform": "android"
     },
     "ctre"
   ]

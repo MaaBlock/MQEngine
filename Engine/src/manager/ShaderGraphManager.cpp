@@ -180,6 +180,7 @@ namespace MQEngine {
     }
 
     Status ShaderGraphManager::save(const std::string& name) {
+        ZoneScoped();
         std::string path = "res/shadergraph/" + name + ".sg";
 
         if (g_engineGlobal.resourceLoader) {
@@ -198,6 +199,7 @@ namespace MQEngine {
     }
 
     Status ShaderGraphManager::load(const std::string& name) {
+        ZoneScoped();
         std::string path = "res/shadergraph/" + name + ".sg";
         if (!g_engineGlobal.resourceLoader) {
             return InternalError("ResourceLoader not available");
@@ -218,6 +220,7 @@ namespace MQEngine {
     }
 
     void ShaderGraphManager::updateMasterNodes() {
+        ZoneScoped();
         auto it = std::remove_if(m_nodes.begin(), m_nodes.end(),
             [](ShaderGraphNode* node) {
                 if (node->id == INPUT_NODE_ID || node->id == OUTPUT_NODE_ID) {
@@ -237,11 +240,9 @@ namespace MQEngine {
 
         // 更新绑定系统节点
         if (g_engineGlobal.systemManager) {
-            const auto& systemConfigs = g_engineGlobal.systemManager->getConfigs();
             for (const auto& sysName : m_config.bindedSystemNames) {
-                auto it = systemConfigs.find(sysName);
-                if (it != systemConfigs.end()) {
-                    BindedSystem* bs = dynamic_cast<BindedSystem*>(it->second.system);
+                {
+                    BindedSystem* bs = dynamic_cast<BindedSystem*>(g_engineGlobal.systemManager->findSystem(sysName));
                     if (bs) {
                         std::string systemNodeUuid = "SYSTEM_" + sysName;
                         

@@ -62,7 +62,14 @@ namespace MQEngine
 
     void SystemManager::requestAddSystem(const std::string& name, ISystem* system, const std::vector<std::string>& pre, const std::vector<std::string>& succ)
     {
+        m_registeredSystems[name] = system;
         m_requestQueue.enqueue(Request::Add{name, system, pre, succ});
+    }
+
+    ISystem* SystemManager::findSystem(const std::string& name) const
+    {
+        auto it = m_registeredSystems.find(name);
+        return it != m_registeredSystems.end() ? it->second : nullptr;
     }
 
     void SystemManager::requestSetSystemEnabled(const std::string& name, bool enabled)
@@ -83,6 +90,7 @@ namespace MQEngine
 
     void SystemManager::logicTick()
     {
+        ZoneScoped();
         processRequests();
 
         if (m_dirty)
@@ -102,6 +110,7 @@ namespace MQEngine
     }
     void SystemManager::renderTick()
     {
+        ZoneScoped();
         auto systems = m_systemGraph.order();
         for (auto* system : systems)
         {

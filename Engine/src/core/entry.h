@@ -5,5 +5,9 @@
 */
 #ifndef ENTRY_H
 #define ENTRY_H
+#ifdef FCT_ANDROID
+int ENGINE_API main();
+#else
 int ENGINE_API main(int argc, char* argv[]);
+#endif
 #endif //ENTRY_H

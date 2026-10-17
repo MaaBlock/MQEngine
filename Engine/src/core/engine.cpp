@@ -44,6 +44,7 @@ namespace MQEngine
     EngineGlobal g_engineGlobal;
     void Engine::registerEnttComponents()
     {
+        ZoneScoped();
         entt::registry dummyRegistry;
         [&]<typename... Components>(std::tuple<Components...>)
         {
@@ -52,6 +53,7 @@ namespace MQEngine
     }
     void Engine::settingUpEnv()
     {
+        ZoneScoped();
         m_systemManager.init();
         g_engineGlobal.systemManager = &m_systemManager;
         m_nodeEnv = new FCT::JS::NodeEnvironment;
@@ -63,8 +65,8 @@ namespace MQEngine
         g_engineGlobal.registriesManager = m_registriesManager.get();
         m_dataManager = new DataManager();
         g_engineGlobal.dataManager = m_dataManager;
-        m_wnd = m_rt.createWindow(800,600,m_application->renderConfig().windowTitle);
-        m_ctx = m_rt.createContext();
+        m_wnd = m_rt.createWindow(800, 600, m_application->renderConfig().windowTitle, FCT::WindowBackend::Win32);
+        m_ctx = m_rt.createContext(FCT::ContextBackend::D3D12);
         m_ctx->create();
         m_wnd->bind(m_ctx);
         m_dataManager->loadRes();
@@ -139,6 +141,7 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
+        ZoneScoped();
         if (!m_pipelineManager) {
             m_pipelineManager = makeUnique<PipelineManager>();
         }
@@ -152,6 +155,7 @@ namespace MQEngine
 
     void Engine::settingUpPass()
     {
+        ZoneScoped();
         auto graph = m_ctx->getModule<RenderGraph>();
         if (!m_pipelineManager) {
             m_pipelineManager = makeUnique<PipelineManager>();
@@ -182,6 +186,7 @@ namespace MQEngine
 
     void Engine::settingUpResources()
     {
+        ZoneScoped();
         m_shadowSampler = m_ctx->createResource<Sampler>();
         m_shadowSampler->setShadowMap();
         m_shadowSampler->create();
@@ -249,10 +254,12 @@ namespace MQEngine
 
     void Engine::settingUpSync()
     {
+        ZoneScoped();
         auto &syncGraph = m_ctx->syncTickers();
         syncGraph["ManagerSyncTicker"] = {
             [this]()
             {
+                ZoneScopedN("Engine::ManagerSyncTicker");
                 m_registriesManager->syncTicker();
             },
             {},
@@ -267,6 +274,7 @@ namespace MQEngine
 
     void Engine::settingUpSubmitTicker()
     {
+        ZoneScoped();
         auto graph = m_ctx->getModule<RenderGraph>();
 
         m_ctx->pipeHub().passPipe.subscribe<PassInfo>("ShadowMapPass", [this](PassInfo& passInfo) {
@@ -279,6 +287,7 @@ namespace MQEngine
         auto& submitTickers = m_ctx->submitTickers();
         submitTickers["MatrixCacheSystemUpdateTicker"] = {
             [this]() {
+                ZoneScopedN("Engine::MatrixCacheSystemUpdateTicker");
                 m_resourceActiveSystem->updateRender();
                 m_textureRenderSystem->updateRender(); // Added: Process Acquire Barriers
                 m_matrixCacheSystem->updateRender();
@@ -308,10 +317,12 @@ namespace MQEngine
 
     void Engine::logicTick()
     {
+        ZoneScoped();
         static auto lastFrameTime = std::chrono::high_resolution_clock::now();
         auto currentTime = std::chrono::high_resolution_clock::now();
         float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - lastFrameTime).count() / 1000000.0f;
         lastFrameTime = currentTime;
+        TracyPlot("LogicDeltaTime (ms)", deltaTime * 1000.0f);
         m_application->logicTick();
         m_matrixCacheSystem->updateLogic();
         //m_cameraSystem->updateLogic();
@@ -330,6 +341,7 @@ namespace MQEngine
         }
         m_scriptSystem->update();
         m_ctx->flush();
+        FrameMark;
     }
 
     namespace
@@ -377,6 +389,7 @@ namespace MQEngine
 
     void Engine::init(Application* application)
     {
+        ZoneScoped();
         s_instance = this;
         m_application = application;
         AlignWorkingDirectoryForInit();
@@ -415,6 +428,7 @@ namespace MQEngine
 
     void Engine::term()
     {
+        ZoneScoped();
         if (m_scriptSystem) {
             m_scriptSystem->cleanUp();
         }

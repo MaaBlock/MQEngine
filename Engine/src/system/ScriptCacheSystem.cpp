@@ -8,8 +8,6 @@
 #include "../data/Component.h"
 #include "../manager/RegistriesManager.h"
 #include "../core/EngineGlobal.h"
-#include <FCT_Node/NodeEnvironment.h>
-#include <FCT_Node/JSObject.h>
 
 namespace MQEngine {
 
@@ -20,6 +18,7 @@ namespace MQEngine {
 
     void ScriptCacheSystem::updateLogic()
     {
+        ZoneScoped();
         if (!m_scriptSystem || !m_dataManager) {
             return;
         }

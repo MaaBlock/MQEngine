@@ -14,6 +14,7 @@ namespace MQEngine
 {
     void UiManager::init()
     {
+        ZoneScoped();
         ImNodes::CreateContext();
         m_imguiCtx = g_editorGlobal.imguiModule->createContext(g_editorGlobal.wnd,g_editorGlobal.ctx);
         m_imguiCtx->attachPass("ImguiPass");
@@ -209,16 +210,21 @@ namespace MQEngine
                 auto scene = g_editorGlobal.dataManager->getCurrentScene();
                 if (scene)
                 {
-                    scene->save();
+                    Status st = scene->save();
+                    if (!st.ok()) {
+                        spdlog::error("保存场景失败: {}", st.message());
+                    }
                 }
             });
     }
 
     void UiManager::logicTick()
     {
+        ZoneScoped();
 
         m_imguiCtx->push([this]()
         {
+            ZoneScopedN("UiManager::RenderUI");
             renderMainMenuBar();
             ImguiContext::createMainDockSpace("MQEngine");
             renderScene();
@@ -266,6 +272,7 @@ namespace MQEngine
 
     void UiManager::renderScene()
     {
+        ZoneScoped();
 
         ImGui::Begin("场景视口");
         

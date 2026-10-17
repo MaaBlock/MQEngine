@@ -19,6 +19,7 @@ namespace MQEngine
 
     Status TechManager::addTech(const std::string& passName, Tech&& tech)
     {
+        ZoneScoped();
         const std::string techName = tech.getName();
         if (techName.empty())
             return InvalidArgumentError("Tech名字不能为空");
@@ -54,6 +55,7 @@ namespace MQEngine
 
     Layout* TechManager::getLayoutForTech(const std::string& techName)
     {
+        ZoneScoped();
         auto mapIt = m_techToLayoutMap.find(techName);
         if (mapIt != m_techToLayoutMap.end())
         {
@@ -123,6 +125,8 @@ namespace MQEngine
 
         graph->subscribe(passName, [this, passName](PassSubmitEvent env)
         {
+            ZoneScopedN("TechManager::PassSubmit");
+            ZoneName(passName.c_str(), passName.size());
             auto cmdBuf = env.cmdBuf;
 
             auto it = m_passOutputInfos.find(passName);
@@ -149,6 +153,8 @@ namespace MQEngine
             auto techs = this->getTechsForPass(env.passName);
             for (auto tech : techs)
             {
+                ZoneScopedN("TechManager::ExecuteTech");
+                ZoneName(tech->getName().c_str(), tech->getName().size());
                 auto layout = this->getLayoutForTech(tech->getName());
                 layout->begin();
 

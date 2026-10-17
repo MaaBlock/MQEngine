@@ -70,12 +70,14 @@ namespace MQEngine {
     }
 
     void TextureCacheSystem::updateLogic() {
+        ZoneScoped();
         processLoadedTextures();
         collectTextures();
     }
 
     void TextureCacheSystem::updateRender()
     {
+        ZoneScoped();
         TextureLoadResult* res;
         while (m_acquireQueue->pop(res))
         {
@@ -103,7 +105,7 @@ namespace MQEngine {
     }
 
     void TextureCacheSystem::collectTextures() {
-        
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -134,6 +136,7 @@ namespace MQEngine {
 
     void TextureCacheSystem::processLoadedTextures()
     {
+        ZoneScoped();
         TextureLoadResult* res;
         while (m_resultsQueue->pop(res))
         {
@@ -161,7 +164,11 @@ namespace MQEngine {
 
     void TextureCacheSystem::cacheTextureAsync(const TextureCacheKey& key)
     {
+        ZoneScoped();
         std::thread([this, key]() {
+            tracy::SetThreadName("TextureAsyncLoad");
+            ZoneScopedN("TextureCacheSystem::AsyncLoadWorker");
+            ZoneText(key.texturePath.c_str(), key.texturePath.size());
             std::vector<unsigned char> fileData;
             bool loaded = false;
             std::string errorMsg;

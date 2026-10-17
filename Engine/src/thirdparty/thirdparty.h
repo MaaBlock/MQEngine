@@ -5,6 +5,7 @@
  */
 #ifndef ENGINE_THIRDPARTY_H
 #define ENGINE_THIRDPARTY_H
+#include <FCT_Base.h>
 #include <FCT_Node.h>
 #include <FCT.h>
 #include <FCT_IMGUI.h>
@@ -78,6 +79,8 @@ namespace MQEngine
     using FCT::Runtime;
     using FCT::Vec3;
     using FCT::Image;
+    using FCT::RenderGraph;
+    using FCT::TokenGraph;
     //using EventPipe = FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>;
 }
 #endif //THIRDPARTY_H

@@ -1,4 +1,4 @@
-﻿#include "RenderGraphViewer.h"
+#include "RenderGraphViewer.h"
 #include "../thirdparty/thirdparty.h"
 #include <fstream>
 #include <functional>
@@ -167,6 +167,7 @@ namespace MQEngine
 
     void RenderGraphViewer::render()
     {
+        ZoneScoped();
         ImNodes::EditorContextSet(m_context);
         ImGui::Begin("RenderGraph");
 

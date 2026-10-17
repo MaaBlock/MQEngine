@@ -18,6 +18,7 @@ namespace MQEngine {
 
     void ResourceActiveSystem::updateRender()
     {
+        ZoneScoped();
         CacheResource* resource = nullptr;
         while (m_activeQueue.try_dequeue(resource))
         {

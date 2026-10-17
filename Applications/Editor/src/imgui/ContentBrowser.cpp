@@ -4,6 +4,7 @@
 namespace MQEngine {
 
     void ContentBrowser::render() {
+        ZoneScoped();
         ImGui::Begin("内容浏览器"); 
 
         if (m_providers.empty()) {

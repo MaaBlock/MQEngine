@@ -7,27 +7,26 @@
 
 #include "../EnginePCH.h"
 #include "../thirdparty/thirdparty.h"
-#include "DataError.h"
 #include "Component.h"
-#include <fstream>
-#include <filesystem>
-
-namespace MQEngine
-{
-    class Scene;
-}
 
 namespace MQEngine {
-    
+    class Scene;
+
     class ENGINE_API SceneTrunk
     {
     public:
-        SceneTrunk(std::string name,Scene* scene);
+        SceneTrunk(std::string name, Scene* scene);
         void init();
         Status save();
-        void load();
+        Status load();
         entt::registry* getRegistry() { return m_registry.get(); }
     private:
+        std::string buildTrunksPath() const;
+        Status saveTrunkConfig(const std::string& trunkDataPath);
+        Status saveTrunkRegistry(const std::string& trunkRegistryPath);
+        Status loadTrunkConfig(const std::string& trunkDataPath);
+        Status loadTrunkRegistry(const std::string& trunkRegistryPath);
+
         friend class boost::serialization::access;
 
         template<class Archive>
@@ -43,4 +42,5 @@ namespace MQEngine {
 } // namespace MQEngine
 
 #endif //SCENETRUNK_H
+
 

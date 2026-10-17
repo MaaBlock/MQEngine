@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by MaaBlock on 2025/11/3.
 //
 
@@ -120,6 +120,7 @@ namespace MQEngine {
     }
     void RegistriesManager::syncTicker()
     {
+        ZoneScoped();
         while (!m_requestQueue.empty())
         {
             auto status = m_requestQueue.processNext();
@@ -130,6 +131,7 @@ namespace MQEngine {
     std::vector<entt::registry*> RegistriesManager::currentRegistries() const { return m_registries; }
     entt::registry* RegistriesManager::createRegistry()
     {
+        ZoneScoped();
         auto registry = FCT_NEW(entt::registry);
         storage(registry);
         return registry;

@@ -14,6 +14,7 @@ namespace MQEngine {
 
     void EntityInspector::render()
     {
+        ZoneScoped();
         ImGui::Begin("实体检查器");
         
         auto& selectedEntity = g_editorGlobal.selectedEntity;

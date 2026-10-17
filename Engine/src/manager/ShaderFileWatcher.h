@@ -2,7 +2,6 @@
 #define SHADERFILEWATCHER_H
 
 #include "../thirdparty/thirdparty.h"
-#include <FCT_Node/NodeEnvironment.h>
 #include "ShaderSnippetManager.h"
 #include <uv.h>
 #include <atomic>

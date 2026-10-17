@@ -11,6 +11,7 @@ namespace MQEngine {
         : m_ctx(ctx), m_dataManager(dataManager) {}
 
     void SkyboxCacheSystem::updateLogic() {
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto registry : registries) {
             auto view = registry->view<SkyboxComponent>();

@@ -19,6 +19,7 @@ namespace MQEngine
 
     void LightingSystem::updateLogic()
     {
+        ZoneScoped();
         m_hasDirectionalLight = false;
         updateDirectionalLight();
         updateShadowMatrix();
@@ -30,6 +31,7 @@ namespace MQEngine
     }
     void LightingSystem::updateRender()
     {
+        ZoneScoped();
         m_directionalLightUniform.update();
         m_shadowUniform.update();
     }

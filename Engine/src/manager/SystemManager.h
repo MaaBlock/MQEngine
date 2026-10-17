@@ -1,4 +1,4 @@
-﻿/**
+/**
  *@file SystemManager.h
  *@brief class header for start and stop system
  */
@@ -51,10 +51,14 @@ namespace MQEngine {
 
         const std::unordered_map<std::string, SystemConfig>& getConfigs() const { return m_configs; }
 
+        // 包含已请求但尚未被 processRequests 处理的系统
+        ISystem* findSystem(const std::string& name) const;
+
     private:
         SystemGraph m_systemGraph;
         SingleQueueEventSystem m_requestQueue;
         std::unordered_map<std::string, SystemConfig> m_configs;
+        std::unordered_map<std::string, ISystem*> m_registeredSystems;
         bool m_dirty = false;
         
         void processRequests();

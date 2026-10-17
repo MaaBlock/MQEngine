@@ -158,6 +158,7 @@ std::string ProjectManager::resolvePath(const std::string& basePath, const std::
 }
 
 Status ProjectManager::openProject(const std::string& projectFilePath, Engine* engine) {
+    ZoneScoped();
     if (!engine) {
         return InvalidArgumentError("openProject: Engine 指针为空");
     }
@@ -208,6 +209,7 @@ Status ProjectManager::openProject(const std::string& projectFilePath, Engine* e
 }
 
 Status ProjectManager::applyPipeline(Engine* engine) {
+    ZoneScoped();
     if (m_currentConfig.resolvedPipelinePath.empty()) {
         return OkStatus();
     }
@@ -243,6 +245,7 @@ Status ProjectManager::applyPipeline(Engine* engine) {
 }
 
 Status ProjectManager::applyPlugins(Engine* engine) {
+    ZoneScoped();
     if (m_currentConfig.plugins.empty()) {
         return OkStatus();
     }
@@ -277,6 +280,7 @@ Status ProjectManager::applyPlugins(Engine* engine) {
 }
 
 Status ProjectManager::closeProject(Engine* engine) {
+    ZoneScoped();
     if (!m_isProjectOpen) {
         return OkStatus();
     }

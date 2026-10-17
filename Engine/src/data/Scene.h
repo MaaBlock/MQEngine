@@ -7,13 +7,7 @@
 
 #include "../EnginePCH.h"
 #include "../thirdparty/thirdparty.h"
-#include "DataError.h"
 #include "SceneTrunk.h"
-#include <string>
-#include <vector>
-#include <memory>
-#include <fstream>
-#include <filesystem>
 
 namespace MQEngine {
     class DataManager;
@@ -23,10 +17,10 @@ namespace MQEngine {
     public:
         Scene(DataManager* dataManager, const std::string& uuid);
         void init();
-        void saveTrunk(const std::string& trunkName);
-        void loadTrunk(const std::string& trunkName);
-        void save();
-        void load();
+        Status saveTrunk(const std::string& trunkName);
+        Status loadTrunk(const std::string& trunkName);
+        Status save();
+        Status load();
         void onLoad()
         {
             if (m_isChunked)
@@ -38,28 +32,39 @@ namespace MQEngine {
             }
         }
         std::string getName();
-        void updateTrunkList();
+        Status updateTrunkList();
         DataManager* getDataManager() { return m_dataManager; }
         std::vector<std::string> getTrunkList()
         {
-            updateTrunkList();
+            Status st = updateTrunkList();
+            if (!st.ok()) {
+                spdlog::warn("更新场景块列表失败: {}", st.message());
+            }
             return m_sceneTrunk;
         }
         bool isLoad(std::string trunkName)
         {
-            return m_loadedSceneTrunks.find(trunkName)!= m_loadedSceneTrunks.end();
+            return m_loadedSceneTrunks.find(trunkName) != m_loadedSceneTrunks.end();
         }
         entt::registry* getRegistry() { return m_registry.get(); }
         SceneTrunk* getLoadedTrunk(const std::string& trunkName)
         {
             auto it = m_loadedSceneTrunks.find(trunkName);
-            if (it!= m_loadedSceneTrunks.end())
+            if (it != m_loadedSceneTrunks.end())
             {
                 return it->second.get();
             }
             return nullptr;
         }
     private:
+        std::string buildScenePath();
+        Status saveSceneConfig(const std::string& sceneDataPath);
+        Status saveSceneRegistry(const std::string& registryDataPath);
+        Status saveLoadedTrunks();
+        Status loadSceneConfig(const std::string& sceneDataPath);
+        Status loadSceneRegistry(const std::string& registryDataPath);
+        Status loadDefaultTrunks();
+
         friend class boost::serialization::access;
         template<class Archive>
         void serialize(Archive & ar, const unsigned int version) {
@@ -76,4 +81,5 @@ namespace MQEngine {
 } // namespace MQEngine
 
 #endif //SCENE_H
+
 

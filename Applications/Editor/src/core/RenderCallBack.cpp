@@ -1,9 +1,10 @@
-﻿#include "EditorApplication.h"
+#include "EditorApplication.h"
 using namespace FCT;
 namespace MQEngine {
 
     void EditorApplication::init()
     {
+        ZoneScoped();
         g_editorGlobal.wnd = global.wnd;
         g_editorGlobal.ctx = global.ctx;
         g_editorGlobal.dataManager = global.dataManager;
@@ -22,6 +23,7 @@ namespace MQEngine {
 
     void EditorApplication::logicTick()
     {
+        ZoneScoped();
         uiManager.logicTick();
         imguiLogicTick();
     }

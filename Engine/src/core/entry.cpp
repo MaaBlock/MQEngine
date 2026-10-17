@@ -17,8 +17,10 @@ namespace MQEngine
     extern CreateApplicationFn GCreateApplication;
 }
 
+#ifndef FCT_ANDROID
 int ENGINE_API main(int argc, char* argv[])
 {
+    tracy::SetThreadName("Main / Logic Thread");
 #ifdef WIN32
     system("chcp 65001");
 #endif
@@ -44,3 +46,4 @@ int ENGINE_API main(int argc, char* argv[])
 
     return 0;
 }
+#endif

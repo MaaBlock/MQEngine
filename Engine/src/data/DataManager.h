@@ -115,11 +115,20 @@ namespace MQEngine
                 auto scene = std::make_shared<Scene>(this,uuid);
 
                 if (m_dataLoader->fileExists(sceneDataPath)) {
-                    scene->load();
+                    Status loadSt = scene->load();
+                    if (!loadSt.ok()) {
+                        spdlog::error("加载场景失败: {}", loadSt.message());
+                    }
                 } else {
                     scene->init();
-                    scene->save();
-                    scene->load();
+                    Status saveSt = scene->save();
+                    if (!saveSt.ok()) {
+                        spdlog::error("初始化保存场景失败: {}", saveSt.message());
+                    }
+                    Status loadSt = scene->load();
+                    if (!loadSt.ok()) {
+                        spdlog::error("初始化加载场景失败: {}", loadSt.message());
+                    }
                 }
 
                 m_loadScenes[uuid] = scene;

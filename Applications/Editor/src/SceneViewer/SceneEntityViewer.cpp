@@ -13,6 +13,7 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::render() {
+        ZoneScoped();
         ImGui::Begin(TEXT("场景实体查看器"));
 
         if (m_dataManager && m_dataManager->getCurrentScene()) {
@@ -32,7 +33,10 @@ namespace MQEngine {
         ImGui::Text(TEXT("当前场景: %s"), scene->getName().c_str());
         ImGui::SameLine();
         if (ImGui::Button(TEXT("保存场景"))) {
-            scene->save();
+            Status st = scene->save();
+            if (!st.ok()) {
+                spdlog::error("保存场景失败: {}", st.message());
+            }
         }
         ImGui::Separator();
 

@@ -16,6 +16,7 @@ namespace MQEngine
 
     void CameraSystem::updateLogic()
     {
+        ZoneScoped();
         auto registries = m_dataManager->currentRegistries();
         for (auto& registry : registries)
         {
@@ -43,6 +44,7 @@ namespace MQEngine
     }
     void CameraSystem::updateRender()
     {
+        ZoneScoped();
         m_cameraUniform.update();
         m_viewPosUniform.update();
     }

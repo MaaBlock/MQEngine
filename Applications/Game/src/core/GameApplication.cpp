@@ -9,6 +9,7 @@ namespace MQEngine {
 
     void GameApplication::init()
     {
+        ZoneScoped();
         g_engineGlobal.dataManager->appendRegistry(&m_registry);
         m_tempCameraEntity = m_registry.create();
         m_registry.emplace<CameraComponent>(m_tempCameraEntity);
@@ -19,6 +20,7 @@ namespace MQEngine {
 
     void GameApplication::logicTick()
     {
+        ZoneScoped();
         //延迟加载场景（为了临时避免ClearCahce带来的bug）
         /**
          *todo:正确处理Cache和场景加载
