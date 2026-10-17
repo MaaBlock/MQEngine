@@ -11,7 +11,7 @@ namespace MQEngine {
     
     ScriptSystem::ScriptSystem() 
         : m_dataManager(g_engineGlobal.dataManager)
-        , m_nodeEnv(std::make_unique<FCT::NodeEnvironment>())
+        , m_nodeEnv(std::make_unique<FCT::JS::NodeEnvironment>())
         , m_componentReflection(std::make_unique<ComponentReflection>())
     {
         //todo:要从DataLoader里读包
@@ -151,8 +151,8 @@ namespace MQEngine {
             registerEntityFunctions();
 
             // Bind Input functions
-            FCT::JSObject globalObj = m_nodeEnv->global();
-            FCT::JSObject inputObj = globalObj["Input"];
+            FCT::JS::Object globalObj = m_nodeEnv->global();
+            FCT::JS::Object inputObj = globalObj["Input"];
             
             inputObj["isKeyPressed"] = [](int key) -> bool {
                 if (g_engineGlobal.inputSystem) {
@@ -284,8 +284,8 @@ namespace MQEngine {
         }
 
         try {
-            FCT::JSArray resultArray = const_cast<FCT::NodeEnvironment*>(m_nodeEnv.get())
-                                        ->callFunction<FCT::JSArray>("getGlobalClassNames");
+            FCT::JS::Array resultArray = const_cast<FCT::JS::NodeEnvironment*>(m_nodeEnv.get())
+                                        ->callFunction<FCT::JS::Array>("getGlobalClassNames");
             
             std::vector<std::string> names;
             uint32_t length = resultArray.length();
@@ -307,7 +307,7 @@ namespace MQEngine {
         if (m_nodeEnv) {
             try {
                 auto global = m_nodeEnv->global();
-                FCT::JSObject engine = global["engine"];
+                FCT::JS::Object engine = global["engine"];
                 engine["logicDealt"] = deltaTime;
             } catch (const std::exception& e) {
                 std::cerr << "Error updating logicDealt: " << e.what() << std::endl;
@@ -410,7 +410,7 @@ namespace MQEngine {
         m_startedEntities.clear();
     }
     
-    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSAny& jsAny, const std::string& fieldName) {
+    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, FCT::JS::Any& jsAny, const std::string& fieldName) {
         ComponentValue componentValue;
         
         try {
@@ -431,7 +431,7 @@ namespace MQEngine {
                 componentValue = stringValue;
             } else if (fieldType == "Vec3") {
                 // 处理Vec3类型
-                FCT::JSObject jsObject = jsAny.to<FCT::JSObject>();
+                FCT::JS::Object jsObject = jsAny.to<FCT::JS::Object>();
                 if (jsObject.hasProperty("x") && jsObject.hasProperty("y") && jsObject.hasProperty("z")) {
                     float x = jsObject.get<float>("x");
                     float y = jsObject.get<float>("y");
@@ -452,20 +452,20 @@ namespace MQEngine {
         return componentValue;
     }
 
-    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSAny& fieldValue) {
-        // 由于JSAny的拷贝构造函数被删除，我们需要通过const_cast来移除const限定符
-        FCT::JSAny& mutableFieldValue = const_cast<FCT::JSAny&>(fieldValue);
+    ComponentValue ScriptSystem::convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JS::Any& fieldValue) {
+        // 由于Any的拷贝构造函数被删除，我们需要通过const_cast来移除const限定符
+        FCT::JS::Any& mutableFieldValue = const_cast<FCT::JS::Any&>(fieldValue);
         return convertJSObjectToComponentValue(fieldType, mutableFieldValue, "unknown");
     }
 
-    std::pair<entt::registry*, entt::entity> ScriptSystem::getEntityFromJS(FCT::NodeEnvironment& env) {
+    std::pair<entt::registry*, entt::entity> ScriptSystem::getEntityFromJS(FCT::JS::NodeEnvironment& env) {
         auto registries = m_dataManager->currentRegistries();
         if (registries.empty()) {
             return {nullptr, entt::null};
         }
 
-        FCT::JSObject globalObj = env.global();
-        FCT::JSObject entityInfo = globalObj["entityInfo"];
+        FCT::JS::Object globalObj = env.global();
+        FCT::JS::Object entityInfo = globalObj["entityInfo"];
         uint64_t registryPtr = entityInfo["registry_ptr"];
         uint32_t entityId = entityInfo["entity_id"];
 
@@ -507,13 +507,13 @@ namespace MQEngine {
     void ScriptSystem::registerEntityFunctions() {
         auto& env = *m_nodeEnv;
         
-        FCT::JSObject globalObj = env.global();
-        FCT::JSObject entityInfo = globalObj["entityInfo"];
+        FCT::JS::Object globalObj = env.global();
+        FCT::JS::Object entityInfo = globalObj["entityInfo"];
         
         entityInfo["getComponent"] = [this](std::string componentName) -> v8::Local<v8::Value> {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -550,10 +550,10 @@ namespace MQEngine {
             return v8::Object::New(m_nodeEnv->isolate());
         };
         
-        entityInfo["setComponent"] = [this](std::string componentName, FCT::JSObject componentObj) -> bool {
+        entityInfo["setComponent"] = [this](std::string componentName, FCT::JS::Object componentObj) -> bool {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -572,7 +572,7 @@ namespace MQEngine {
                             std::string fieldType = m_componentReflection->getComponentFieldType(componentName, fieldName);
                             
                             try {
-                                FCT::JSAny fieldValue = componentObj.get<FCT::JSAny>(fieldName);
+                                FCT::JS::Any fieldValue = componentObj.get<FCT::JS::Any>(fieldName);
                                 ComponentValue componentValue = convertJSObjectToComponentValue(fieldType, fieldValue, fieldName);
                                 m_componentReflection->setComponentField(*targetRegistry, entity, componentName, fieldName, componentValue);
                             } catch (const std::exception& e) {
@@ -590,8 +590,8 @@ namespace MQEngine {
         
         entityInfo["getComponentField"] = [this](std::string componentName, std::string fieldName) -> v8::Local<v8::Value> {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -611,10 +611,10 @@ namespace MQEngine {
             return v8::Undefined(m_nodeEnv->isolate());
         };
         
-        entityInfo["setComponentField"] = [this](std::string componentName, std::string fieldName, FCT::JSAny fieldValue) -> bool {
+        entityInfo["setComponentField"] = [this](std::string componentName, std::string fieldName, FCT::JS::Any fieldValue) -> bool {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -644,8 +644,8 @@ namespace MQEngine {
         
         entityInfo["hasComponent"] = [this](std::string componentName) -> bool {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -666,8 +666,8 @@ namespace MQEngine {
         
         entityInfo["addComponent"] = [this](std::string componentName) -> bool {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -689,8 +689,8 @@ namespace MQEngine {
         
         entityInfo["removeComponent"] = [this](std::string componentName) -> bool {
             try {
-                FCT::JSObject globalObj = m_nodeEnv->global();
-                FCT::JSObject entityInfo = globalObj["entityInfo"];
+                FCT::JS::Object globalObj = m_nodeEnv->global();
+                FCT::JS::Object entityInfo = globalObj["entityInfo"];
                 uint64_t registryPtr = entityInfo["registry_ptr"];
                 uint32_t entityId = entityInfo["entity_id"];
                 
@@ -745,7 +745,7 @@ namespace MQEngine {
             return v8::Undefined(m_nodeEnv->isolate());
         };
 
-        entityInfo["setComponentById"] = [this](double registryPtrDouble, uint32_t entityId, std::string componentName, FCT::JSObject componentObj) -> bool {
+        entityInfo["setComponentById"] = [this](double registryPtrDouble, uint32_t entityId, std::string componentName, FCT::JS::Object componentObj) -> bool {
             try {
                 uint64_t registryPtr = static_cast<uint64_t>(registryPtrDouble);
                 auto registries = m_dataManager->currentRegistries();
@@ -762,7 +762,7 @@ namespace MQEngine {
                         if (componentObj.hasProperty(fieldName)) {
                             std::string fieldType = m_componentReflection->getComponentFieldType(componentName, fieldName);
                             try {
-                                FCT::JSAny fieldValue = componentObj.get<FCT::JSAny>(fieldName);
+                                FCT::JS::Any fieldValue = componentObj.get<FCT::JS::Any>(fieldName);
                                 ComponentValue componentValue = convertJSObjectToComponentValue(fieldType, fieldValue, fieldName);
                                 m_componentReflection->setComponentField(*targetRegistry, entity, componentName, fieldName, componentValue);
                             } catch (const std::exception& e) {

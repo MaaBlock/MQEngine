@@ -53,26 +53,26 @@ namespace MQEngine {
             for (auto entity : creationView)
             {
                 auto& table = registry->get<ScriptFunctionTableComponent>(entity);
-                FCT::JSObject* jsObject = nullptr;
+                FCT::JS::Object* jsObject = nullptr;
 
                                 if (!table.className.empty()) {
                                     try {
-                                        FCT::JSObject result = nodeEnv->callFunction<FCT::JSObject>("createScriptClassInstance", 
+                                        FCT::JS::Object result = nodeEnv->callFunction<FCT::JS::Object>("createScriptClassInstance", 
                                             table.className,
                                             static_cast<uint32_t>(entity),
                                             reinterpret_cast<uint64_t>(registry)
                                         );
                                         
                                         if (!result.isNull()) {
-                                            jsObject = new FCT::JSObject(std::move(result));
+                                            jsObject = new FCT::JS::Object(std::move(result));
                                         } else {
                                         }
                                     } catch (const std::exception& e) {
                                     }
                                 }
                 if (!jsObject) {
-                     jsObject = new FCT::JSObject(
-                            nodeEnv->callFunction<FCT::JSObject>("createEntityObject",
+                     jsObject = new FCT::JS::Object(
+                            nodeEnv->callFunction<FCT::JS::Object>("createEntityObject",
                             static_cast<uint32_t>(entity),
                             reinterpret_cast<uint64_t>(registry)));
                 }

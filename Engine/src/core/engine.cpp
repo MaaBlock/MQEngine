@@ -54,7 +54,7 @@ namespace MQEngine
     {
         m_systemManager.init();
         g_engineGlobal.systemManager = &m_systemManager;
-        m_nodeEnv = new NodeEnvironment;
+        m_nodeEnv = new FCT::JS::NodeEnvironment;
         //todo:要从DataLoader里读包
         m_nodeEnv->addModulePath("./res/scripts/node_modules");
         m_nodeEnv->setup();
@@ -395,7 +395,7 @@ namespace MQEngine
             (void)m_projectManager->closeProject(this);
         }
         m_systemManager.term();
-        NodeCommon::Term();
+        FCT::JS::NodeCommon::Term();
         if (m_dataManager) {
             delete m_dataManager;
             m_dataManager = nullptr;

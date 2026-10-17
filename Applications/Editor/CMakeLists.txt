@@ -1,4 +1,4 @@
-include("../Config/set_utf8_compiler_encoding.cmake")
+include("../../Config/set_utf8_compiler_encoding.cmake")
 file(GLOB CORE_MODULE_SOURCES
         LIST_DIRECTORIES false
         CONFIGURE_DEPENDS

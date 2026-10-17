@@ -139,7 +139,7 @@ namespace MQEngine {
         // OutputInfo for passes
         FCT::OutputInfo m_shadowPassOutputInfo;
         FCT::OutputInfo m_objectPassOutputInfo;
-        FCT::NodeEnvironment* m_nodeEnv;
+        FCT::JS::NodeEnvironment* m_nodeEnv;
     };
     /**
      * @return engine version

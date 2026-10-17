@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/31.
 //
 
@@ -66,11 +66,11 @@ namespace MQEngine {
          */
         void setLogicDeltaTime(float deltaTime);
         
-        FCT::NodeEnvironment* getNodeEnvironment() const { return m_nodeEnv.get(); }
+        FCT::JS::NodeEnvironment* getNodeEnvironment() const { return m_nodeEnv.get(); }
         
     private:
         DataManager* m_dataManager;
-        std::unique_ptr<FCT::NodeEnvironment> m_nodeEnv;
+        std::unique_ptr<FCT::JS::NodeEnvironment> m_nodeEnv;
         std::unique_ptr<ComponentReflection> m_componentReflection;
         float m_logicDeltaTime = 0.0f;
         bool m_isScriptsLoaded = false;
@@ -95,10 +95,10 @@ namespace MQEngine {
          * @param fieldName 字段名称（同时用于错误输出）
          * @return 转换后的ComponentValue
          */
-        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, FCT::JSAny& jsAny, const std::string& fieldName);
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, FCT::JS::Any& jsAny, const std::string& fieldName);
         
-        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JSAny& fieldValue);
-        std::pair<entt::registry*, entt::entity> getEntityFromJS(FCT::NodeEnvironment& env);
+        ComponentValue convertJSObjectToComponentValue(const std::string& fieldType, const FCT::JS::Any& fieldValue);
+        std::pair<entt::registry*, entt::entity> getEntityFromJS(FCT::JS::NodeEnvironment& env);
         v8::Local<v8::Value> convertComponentValueToJS(const ComponentValue& value);
         
         /**

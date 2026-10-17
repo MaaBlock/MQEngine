@@ -1,4 +1,4 @@
-﻿/**
+/**
 * @file systemmanager.cpp
 * @brief class source for start and stop system
 */
@@ -52,12 +52,12 @@ namespace MQEngine
 
     void SystemManager::init()
     {
-        NodeCommon::Init();
+        FCT::JS::NodeCommon::Init();
     }
 
     void SystemManager::term()
     {
-        NodeCommon::Term();
+        FCT::JS::NodeCommon::Term();
     }
 
     void SystemManager::requestAddSystem(const std::string& name, ISystem* system, const std::vector<std::string>& pre, const std::vector<std::string>& succ)

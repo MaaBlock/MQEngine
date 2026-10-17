@@ -12,7 +12,7 @@ namespace MQEngine {
 
     class ShaderFileWatcher {
     public:
-        ShaderFileWatcher(FCT::NodeEnvironment* env, ShaderSnippetManager* manager);
+        ShaderFileWatcher(FCT::JS::NodeEnvironment* env, ShaderSnippetManager* manager);
         ~ShaderFileWatcher();
 
         void startWatching(const std::string& path);
@@ -23,7 +23,7 @@ namespace MQEngine {
         static void onFileChange(uv_fs_event_t* handle, const char* filename, int events, int status);
         void handleFileChange(const std::string& filename);
 
-        FCT::NodeEnvironment* m_env;
+        FCT::JS::NodeEnvironment* m_env;
         ShaderSnippetManager* m_manager;
         uv_fs_event_t m_fsEvent;
         bool m_isWatching = false;

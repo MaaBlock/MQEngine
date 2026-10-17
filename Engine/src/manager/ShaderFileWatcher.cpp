@@ -4,7 +4,7 @@
 
 namespace MQEngine {
 
-    ShaderFileWatcher::ShaderFileWatcher(FCT::NodeEnvironment* env, ShaderSnippetManager* manager)
+    ShaderFileWatcher::ShaderFileWatcher(FCT::JS::NodeEnvironment* env, ShaderSnippetManager* manager)
         : m_env(env), m_manager(manager) {
         m_fsEvent.data = this;
     }

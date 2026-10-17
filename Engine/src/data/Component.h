@@ -269,7 +269,7 @@ namespace MQEngine {
 
     struct ENGINE_API CacheScriptComponent
     {
-        FCT::JSObject* m_jsObject = nullptr;
+        FCT::JS::Object* m_jsObject = nullptr;
     };
     BOOST_DESCRIBE_STRUCT(CacheScriptComponent, (), (m_jsObject))
 
