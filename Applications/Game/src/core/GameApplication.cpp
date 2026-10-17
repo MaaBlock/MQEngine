@@ -1,8 +1,9 @@
-﻿//
+//
 // Created by Administrator on 2025/9/12.
 //
 
 #include "GameApplication.h"
+#include "Engine/manager/ProjectManager.h"
 
 namespace MQEngine {
 
@@ -33,20 +34,30 @@ namespace MQEngine {
         {
             sceneLoaded = true;
             std::string uuid = g_engineGlobal.dataManager->getInitialSceneUuid();
-            g_engineGlobal.dataManager->loadScene(uuid);
-            g_engineGlobal.dataManager->openScene(uuid);
+            if (uuid.empty() && Engine::getInstance().getProjectManager() && Engine::getInstance().getProjectManager()->isProjectOpen())
+                uuid = Engine::getInstance().getProjectManager()->getCurrentProject().initialSceneUuid;
 
+            if (!uuid.empty())
+            {
+                g_engineGlobal.dataManager->loadScene(uuid);
+                g_engineGlobal.dataManager->openScene(uuid);
+            }
+
+            bool hasSceneCamera = false;
             for (auto registry : g_engineGlobal.dataManager->currentRegistries())
             {
+                if (registry == &m_registry)
+                    continue;
                 auto cameraView = registry->view<CameraComponent>();
                 for (auto entity : cameraView)
                 {
                     auto& camera = cameraView.get<CameraComponent>(entity);
                     camera.active = true;
+                    hasSceneCamera = true;
                 }
             }
             
-            if (m_registry.valid(m_tempCameraEntity))
+            if (hasSceneCamera && m_registry.valid(m_tempCameraEntity))
             {
                 auto& tempCam = m_registry.get<CameraComponent>(m_tempCameraEntity);
                 tempCam.active = false;

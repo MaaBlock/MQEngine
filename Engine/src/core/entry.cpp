@@ -4,6 +4,7 @@
  *@note The entry point has been unified in FCT library.
 */
 #include "../engineapi.h"
+#include "CommandLineArgs.h"
 /**
 * @brief Entrypoint for the program.
 * @note The entry point has been unified in FCT library.
@@ -16,11 +17,12 @@ namespace MQEngine
     extern CreateApplicationFn GCreateApplication;
 }
 
-int ENGINE_API main()
+int ENGINE_API main(int argc, char* argv[])
 {
 #ifdef WIN32
     system("chcp 65001");
 #endif
+    MQEngine::CommandLineArgs::instance().parse(argc, argv);
     spdlog::info("main函数启动");
     std::filesystem::path current_path = std::filesystem::current_path();
     spdlog::info("当前工作目录：{}", current_path.string());

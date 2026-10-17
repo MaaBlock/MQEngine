@@ -1,4 +1,4 @@
-﻿#include "SceneTrunk.h"
+#include "SceneTrunk.h"
 
 #include "DataManager.h"
 #include "EnttArchiveWrapper.h"
@@ -25,7 +25,7 @@ namespace MQEngine {
 
         try {
             std::string sceneName = m_scene->getName();
-            std::string scenePath = "./res/scenes/" + sceneName;
+            std::string scenePath = m_scene->getDataManager()->getAssetRoot() + "/scenes/" + sceneName;
             std::string trunksPath = scenePath + "/trunks";
             std::string trunkDataPath = trunksPath + "/" + m_name + ".dat";
             std::string trunkRegistryPath = trunksPath + "/" + m_name + ".reg";
@@ -67,7 +67,7 @@ namespace MQEngine {
 
         try {
             std::string sceneName = m_scene->getName();
-            std::string scenePath = "./res/scenes/" + sceneName;
+            std::string scenePath = m_scene->getDataManager()->getAssetRoot() + "/scenes/" + sceneName;
             std::string trunksPath = scenePath + "/trunks";
             std::string trunkDataPath = trunksPath + "/" + m_name + ".dat";
             std::string trunkRegistryPath = trunksPath + "/" + m_name + ".reg";

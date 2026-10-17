@@ -81,7 +81,7 @@ namespace MQEngine
 
         try {
             std::string sceneName = getName();
-            std::string scenePath = "./res/scenes/" + sceneName;
+            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
             std::string sceneDataPath = scenePath + "/scene.dat";
             std::string registryDataPath = scenePath + "/scene.reg";
 
@@ -124,7 +124,7 @@ namespace MQEngine
 
         try {
             std::string sceneName = getName();
-            std::string scenePath = "./res/scenes/" + sceneName;
+            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
             std::string sceneDataPath = scenePath + "/scene.dat";
             std::string registryDataPath = scenePath + "/scene.reg";
 
@@ -184,7 +184,7 @@ namespace MQEngine
 
         try {
             std::string sceneName = getName();
-            std::string scenePath = "./res/scenes/" + sceneName;
+            std::string scenePath = m_dataManager->getAssetRoot() + "/scenes/" + sceneName;
             std::string trunksPath = scenePath + "/trunks";
 
             m_sceneTrunk.clear();

@@ -192,6 +192,8 @@ Status ProjectManager::openProject(const std::string& projectFilePath, Engine* e
     }
 
     if (!m_currentConfig.initialSceneUuid.empty() && engine->getDataManager()) {
+        if (engine->getDataManager()->getInitialSceneUuid().empty())
+            engine->getDataManager()->setInitialSceneUuid(m_currentConfig.initialSceneUuid);
         try {
             engine->getDataManager()->openScene(m_currentConfig.initialSceneUuid);
             spdlog::info("ProjectManager: 已打开初始场景: {}", m_currentConfig.initialSceneUuid);
@@ -213,6 +215,16 @@ Status ProjectManager::applyPipeline(Engine* engine) {
     auto* pipeMgr = engine->getPipelineManager();
     if (!pipeMgr) {
         return FailedPreconditionError("ProjectManager: Engine 未包含有效的 PipelineManager");
+    }
+
+    if (pipeMgr->isGraphBuilt()) {
+        auto configRes = pipeMgr->loadPipeline(m_currentConfig.resolvedPipelinePath);
+        if (!configRes.ok()) {
+            spdlog::error("ProjectManager: 加载管线配置失败 [{}]: {}", m_currentConfig.resolvedPipelinePath, configRes.status().message());
+            return configRes.status();
+        }
+        spdlog::info("ProjectManager: 成功加载工程管线配置: {}", m_currentConfig.resolvedPipelinePath);
+        return OkStatus();
     }
 
     auto* graph = engine->getContext() ? engine->getContext()->getModule<FCT::RenderGraph>() : nullptr;

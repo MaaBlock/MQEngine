@@ -25,6 +25,13 @@ namespace MQEngine
         tech.setPassName(passName);
         auto valid = tech.valid();
         CHECK_STATUS(valid);
+        if (m_techs.count(techName))
+        {
+            Tech* oldPtr = m_techs[techName].get();
+            for (auto& [pass, vec] : m_passTechs)
+                std::erase(vec, oldPtr);
+            m_techToLayoutMap.erase(techName);
+        }
         auto techUniquePtr = std::make_unique<Tech>(std::move(tech));
         Tech* techRawPtr = techUniquePtr.get();
         m_techs[techName] = std::move(techUniquePtr);

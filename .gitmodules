@@ -1,21 +1,6 @@
-[submodule "FCT_IMGUI"]
-	path = FCT/FCT_IMGUI
-	url = https://github.com/MaaBlock/FCT_IMGUI
 [submodule "FCT"]
-	path = FCT/FCT
+	path = FCT
 	url = https://github.com/MaaBlock/FCT
-[submodule "FCT_Node"]
-	path = FCT/FCT_Node
-	url = https://github.com/MaaBlock/FCT_Node
-[submodule "FCT_Phys"]
-	path = FCT/FCT_Phys
-	url = https://github.com/MaaBlock/FCT_Phys
 [submodule "ThirdParty/ImGuiColorTextEdit"]
 	path = ThirdParty/ImGuiColorTextEdit
 	url = https://github.com/MaaBlock/ImGuiColorTextEdit
-[submodule "FCT/FCT_Cuda"]
-	path = FCT/FCT_Cuda
-	url = https://github.com/MaaBlock/FCT_Cuda
-[submodule "FCT/FCT_Compute"]
-	path = FCT/FCT_Compute
-	url = https://github.com/MaaBlock/FCT_Compute

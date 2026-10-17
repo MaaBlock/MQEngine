@@ -332,10 +332,54 @@ namespace MQEngine
         m_ctx->flush();
     }
 
+    namespace
+    {
+        void AlignWorkingDirectoryForInit()
+        {
+            namespace fs = std::filesystem;
+            std::error_code ec;
+            if (CommandLineArgs::instance().hasProject())
+            {
+                fs::path projPath = fs::u8path(CommandLineArgs::instance().getProjectPath());
+                if (fs::exists(projPath, ec))
+                {
+                    fs::path absProj = fs::weakly_canonical(projPath, ec);
+                    if (!ec)
+                    {
+                        CommandLineArgs::instance().setProjectPath(
+                            std::string(reinterpret_cast<const char*>(absProj.generic_u8string().c_str())));
+                        fs::path projDir = absProj.parent_path();
+                        if (fs::is_directory(projDir, ec))
+                            fs::current_path(projDir, ec);
+                    }
+                }
+                return;
+            }
+
+            fs::path cur = fs::current_path(ec);
+            if (ec || fs::exists(cur / "res", ec) || fs::exists(cur / "Res", ec))
+                return;
+
+            fs::path probe = cur;
+            for (int depth = 0; depth < 6 && probe.has_parent_path(); ++depth)
+            {
+                if (fs::exists(probe / "Res" / "pipelines" / "default_pipeline.json", ec))
+                {
+                    fs::current_path(probe, ec);
+                    return;
+                }
+                if (probe == probe.parent_path())
+                    break;
+                probe = probe.parent_path();
+            }
+        }
+    }
+
     void Engine::init(Application* application)
     {
         s_instance = this;
         m_application = application;
+        AlignWorkingDirectoryForInit();
         m_pipelineManager = makeUnique<PipelineManager>();
         m_componentReflection = makeUnique<ComponentReflection>();
         registerEnttComponents();

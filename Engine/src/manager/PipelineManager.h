@@ -64,8 +64,11 @@ public:
      */
     const PipelineConfig& getConfig() const { return m_currentConfig; }
 
+    bool isGraphBuilt() const { return m_isGraphBuilt; }
+
 private:
     PipelineConfig m_currentConfig;
+    bool m_isGraphBuilt = false;
 };
 
 } // namespace MQEngine

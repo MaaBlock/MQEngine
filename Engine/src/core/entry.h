@@ -5,5 +5,5 @@
 */
 #ifndef ENTRY_H
 #define ENTRY_H
-int ENGINE_API main();
+int ENGINE_API main(int argc, char* argv[]);
 #endif //ENTRY_H

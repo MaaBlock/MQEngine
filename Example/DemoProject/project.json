@@ -1,0 +1,11 @@
+{
+  "projectName": "DemoProject",
+  "version": "1.0.0",
+  "assetRoot": "res",
+  "pipelinePath": "res/pipelines/default_pipeline.json",
+  "plugins": [],
+  "initialSceneUuid": "default-scene-0001-0000-000000000001",
+  "settings": {
+    "description": "MQEngine 默认示例工程 (Minimal Default Scene)"
+  }
+}

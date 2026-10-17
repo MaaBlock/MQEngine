@@ -296,10 +296,17 @@ StatusOr<PipelineConfig> PipelineManager::loadPipeline(const std::string& path) 
         "./" + path,
         "MQEngine/" + path,
         "../" + path,
+        "../../" + path,
+        "../../../" + path,
+        "../../../../" + path,
         "Res/pipelines/default_pipeline.json",
         "MQEngine/Res/pipelines/default_pipeline.json",
         "res/pipelines/default_pipeline.json",
-        "MQEngine/res/pipelines/default_pipeline.json"
+        "MQEngine/res/pipelines/default_pipeline.json",
+        "../Res/pipelines/default_pipeline.json",
+        "../../Res/pipelines/default_pipeline.json",
+        "../../../Res/pipelines/default_pipeline.json",
+        "../../../../Res/pipelines/default_pipeline.json"
     };
 
     std::string content;
@@ -431,6 +438,7 @@ Status PipelineManager::buildRenderGraph(const PipelineConfig& config,
         graph->addPassDesc(passDesc);
     }
 
+    m_isGraphBuilt = true;
     return OkStatus();
 }
 
