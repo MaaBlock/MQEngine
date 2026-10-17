@@ -61,7 +61,9 @@ namespace MQEngine
         DataManager()
         {
             m_dataLoader = std::make_unique<FileDataLoader>();
-            m_modelLoader = UniquePtr(g_engineGlobal.rt->createModelLoader());
+            if (g_engineGlobal.rt) {
+                m_modelLoader = UniquePtr(g_engineGlobal.rt->createModelLoader());
+            }
         }
         std::vector<std::string> getModelList()
         {
@@ -139,10 +141,30 @@ namespace MQEngine
         std::string getModelPathByUuid(const std::string& uuid) const;
         std::string getModelRelativePathByUuid(const std::string& uuid) const;
         Scene* getCurrentScene() const;
+
+        /**
+         * @brief 动态设置/重定向资产根目录并重新加载资产清单
+         */
+        void setAssetRoot(const std::string& assetRoot)
+        {
+            m_assetRoot = assetRoot;
+            if (!m_assetRoot.empty() && m_dataLoader) {
+                try {
+                    loadRes();
+                } catch (...) {}
+            }
+        }
+
+        const std::string& getAssetRoot() const
+        {
+            return m_assetRoot;
+        }
+
     private:
         StatusOr<std::string> locateModelFile(const std::string& modelUuid) const;
         bool m_isEditorMode;
         std::string m_currentScene;
+        std::string m_assetRoot = "./res";
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;
         std::vector<std::string> m_scenePathList;
         std::unordered_map<std::string,std::string> m_uuidToModel;
@@ -156,10 +178,11 @@ namespace MQEngine
         void loadModelUuidMapping() {
             m_uuidToModel.clear();
 
-            m_dataLoader->ensureDirectory("./res/models");
+            std::string modelsDir = m_assetRoot + "/models";
+            m_dataLoader->ensureDirectory(modelsDir);
 
             try {
-                std::vector<std::string> modelDirs = m_dataLoader->getSubDirectories("./res/models");
+                std::vector<std::string> modelDirs = m_dataLoader->getSubDirectories(modelsDir);
 
                 for (const std::string& modelDir : modelDirs) {
                     std::string uuidFilePath = modelDir + "/model.uuid";
@@ -197,10 +220,11 @@ namespace MQEngine
         {
             m_uuidToScenePath.clear();
             m_uuidToSceneName.clear();
-            m_dataLoader->ensureDirectory("./res/scenes");
+            std::string scenesDir = m_assetRoot + "/scenes";
+            m_dataLoader->ensureDirectory(scenesDir);
 
             try {
-                std::vector<std::string> sceneDirs = m_dataLoader->getSubDirectories("./res/scenes");
+                std::vector<std::string> sceneDirs = m_dataLoader->getSubDirectories(scenesDir);
                 for (const std::string& sceneDir : sceneDirs) {
                     std::string uuidFilePath = sceneDir + "/scene.uuid";
 

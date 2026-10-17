@@ -8,7 +8,7 @@ namespace MQEngine
     namespace fs = std::filesystem;
     void DataManager::loadRes()
     {
-        m_dataLoader->ensureDirectory("./res");
+        m_dataLoader->ensureDirectory(m_assetRoot);
         loadProjectSetting();
         loadScenePathList();
         updateModelPathList();
@@ -16,20 +16,22 @@ namespace MQEngine
 
     void DataManager::loadScenePathList()
     {
-        m_dataLoader->ensureDirectory("./res/scenes");
-        m_scenePathList = m_dataLoader->getSubDirectories("./res/scenes");
+        std::string scenesDir = m_assetRoot + "/scenes";
+        m_dataLoader->ensureDirectory(scenesDir);
+        m_scenePathList = m_dataLoader->getSubDirectories(scenesDir);
         loadSceneUuidMapping();
     }
 
     void DataManager::newScene(const std::string& sceneName)
     {
-        m_dataLoader->createDirectory("./res/scenes/" + sceneName);
+        m_dataLoader->createDirectory(m_assetRoot + "/scenes/" + sceneName);
     }
 
     void DataManager::updateModelPathList()
     {
-        m_dataLoader->ensureDirectory("./res/models");
-        m_modelPathList = m_dataLoader->getSubDirectories("./res/models");
+        std::string modelsDir = m_assetRoot + "/models";
+        m_dataLoader->ensureDirectory(modelsDir);
+        m_modelPathList = m_dataLoader->getSubDirectories(modelsDir);
         loadModelUuidMapping();
     }
 
@@ -201,7 +203,7 @@ namespace MQEngine
         }
         
         std::string modelUuidFilePath = modelPath + "/model.uuid";
-        std::ifstream file(modelUuidFilePath);
+        std::ifstream file(modelUuidFilePath, std::ios::binary);
         if (!file.is_open()) {
             return "";
         }
@@ -219,7 +221,7 @@ namespace MQEngine
 
     void DataManager::loadProjectSetting()
     {
-        std::string settingFilePath = "./res/project.setting";
+        std::string settingFilePath = m_assetRoot + "/project.setting";
         
         if (!m_dataLoader->fileExists(settingFilePath)) {
             m_projectSetting.initialSceneUuid = "";
@@ -240,7 +242,7 @@ namespace MQEngine
 
     void DataManager::saveProjectSetting(const ProjectSetting& setting)
     {
-        std::string settingFilePath = "./res/project.setting";
+        std::string settingFilePath = m_assetRoot + "/project.setting";
         m_projectSetting = setting;
         
         try {

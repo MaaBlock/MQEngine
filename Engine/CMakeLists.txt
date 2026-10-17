@@ -59,6 +59,17 @@ file(GLOB EVENE_MODULE_HEADERS
         "./src/event/*.h"
         "./src/event/*.hpp"
 )
+file(GLOB PLUGIN_MODULE_SOURCES
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/plugin/*.cpp"
+)
+file(GLOB PLUGIN_MODULE_HEADERS
+        LIST_DIRECTORIES false
+        CONFIGURE_DEPENDS
+        "./src/plugin/*.h"
+        "./src/plugin/*.hpp"
+)
 
 set(ENGINE_HEADERS
         ${CORE_MODULE_HEADERS}
@@ -67,6 +78,7 @@ set(ENGINE_HEADERS
         ${SYSTEM_MODULE_HEADERS}
         ${EVENE_MODULE_HEADERS}
         ${MANAGER_MODULE_HEADERS}
+        ${PLUGIN_MODULE_HEADERS}
 )
 set(ENGINE_OTHERS_HEADERS
         "./src/headers.h"
@@ -84,6 +96,7 @@ add_library(Engine SHARED
     ${ENGINE_OTHERS_HEADERS}
     ${SYSTEM_MODULE_SOURCES}
     ${MANAGER_MODULE_SOURCES}
+    ${PLUGIN_MODULE_SOURCES}
 )
 target_compile_definitions(Engine PRIVATE BUILD_ENGINE)
 

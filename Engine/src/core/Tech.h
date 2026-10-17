@@ -1,4 +1,4 @@
-﻿#ifndef TECH_H
+#ifndef TECH_H
 #define TECH_H
 #pragma once
 
@@ -136,7 +136,21 @@ namespace MQEngine
         /** @name 内部设置器（供TechManager使用）
          *  @{
          */
+        void setName(const std::string& name) { m_name = name; }
         void setPassName(const std::string& passName) { m_passName = passName; }
+        void setVertexShaderSource(const std::string& source) { m_vsSource = source; }
+        void setPixelShaderSource(const std::string& source) { m_psSource = source; }
+        void setVertexLayouts(const std::vector<FCT::VertexLayout>& layouts) { m_vertexLayouts = layouts; }
+        void addVertexLayout(const FCT::VertexLayout& layout) { m_vertexLayouts.push_back(layout); }
+        void setPixelLayout(const FCT::PixelLayout& layout) { m_pixelLayout = layout; }
+        void setUniformSlots(const std::vector<FCT::UniformSlot>& slots) { m_uniformSlots = slots; }
+        void addUniformSlot(const FCT::UniformSlot& slot) { m_uniformSlots.push_back(slot); }
+        void setSamplerSlots(const std::vector<FCT::SamplerSlot>& slots) { m_samplerSlots = slots; }
+        void addSamplerSlot(const FCT::SamplerSlot& slot) { m_samplerSlots.push_back(slot); }
+        void setTextureSlots(const std::vector<FCT::TextureSlot>& slots) { m_textureSlots = slots; }
+        void addTextureSlot(const FCT::TextureSlot& slot) { m_textureSlots.push_back(slot); }
+        void setComponentFilter(const ComponentFilter& filter) { m_componentFilter = filter; }
+        void addBindedSystem(BindedSystem* system) { processArgs(system); }
         void setVertexShaderRef(const ShaderRef& ref) { m_vsRef = ref; }
         void setPixelShaderRef(const ShaderRef& ref) { m_psRef = ref; }
         void setEntityOperationCallback(const EntityOperationCallback& callback) { m_entityOperationCallback = callback; }

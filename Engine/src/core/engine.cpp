@@ -1,4 +1,4 @@
-﻿#include "../engineapi.h"
+#include "../engineapi.h"
 #include "CreateApplication.h"
 #include "Tech.hpp"
 
@@ -27,6 +27,11 @@ namespace MQEngine
 #include "../manager/ShaderGraphManager.h"
 #include "../system/ScriptCacheSystem.h"
 #include "../data/DiskResourceLoader.h"
+#include "../manager/PipelineManager.h"
+#include "../manager/ProjectManager.h"
+#include "../plugin/PluginManager.h"
+#include "../system/ComponentReflection.h"
+#include "CommandLineArgs.h"
 namespace FCT
 {
     std::string LoadStringFromStringResource(const unsigned char* resource, size_t size)
@@ -123,7 +128,10 @@ namespace MQEngine
         m_techManager = makeUnique<TechManager>();
         
         m_shaderFileWatcher = makeUnique<ShaderFileWatcher>(m_scriptSystem->getNodeEnvironment(), m_shaderSnippetManager.get());
-        m_shaderSnippetManager->loadSnippetFromResource();
+        auto snippetStatus = m_shaderSnippetManager->loadSnippetFromResource();
+        if (!snippetStatus.ok()) {
+            spdlog::warn("加载着色器片段失败: {}", snippetStatus.message());
+        }
         m_shaderFileWatcher->startWatching("./res/snippets/");
 
         registerShaderSnippets();
@@ -131,399 +139,33 @@ namespace MQEngine
 
     void Engine::settingUpTechs()
     {
-        
-        EntityOperationCallback universalEntityCallback = [](const EntityRenderContext& context) {
-            if (context.registry.all_of<StaticMeshInstance>(context.entity))
-            {
-                const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
-                if (meshInstance.mesh != nullptr)
-                {
-                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
-                }
-            }
-        };
-
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                TechName{"BasicTech"},
-                VertexShaderSource{LoadStringFromStringResource(g_engineShaderObjectVertex,g_engineShaderObjectVertexSize)},
-                PixelShaderSource{LoadStringFromStringResource(g_engineShaderObjectPixel,g_engineShaderObjectPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    ModelUniformSlot,
-                },
-                m_cameraSystem.get(),
-                m_lightingSystem.get(),
-                ComponentFilter{
-                    .include_types = {entt::type_id<StaticMeshInstance>()},
-                    .exclude_types = {
-                        entt::type_id<DiffuseTextureComponent>(),
-                        entt::type_id<AlbedoTextureComponent>()
-                    }
-                }
-                .exclude<AlbedoTextureComponent>(),
-                universalEntityCallback
-            ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                 TechName{"DiffuseTech"},
-                 VertexShaderSource{LoadStringFromStringResource(g_engineShaderDiffuseObjectVertex,g_engineShaderDiffuseObjectVertexSize)},
-                 PixelShaderSource{LoadStringFromStringResource(g_engineShaderDiffuseObjectPixel,g_engineShaderDiffuseObjectPixelSize)},
-                 vertexLayout,
-                 pixelLayout,
-                 std::vector<FCT::UniformSlot>{
-                     DirectionalLightUniformSlot,
-                     CameraUniformSlot,
-                     ViewPosUniformSlot,
-                     ShadowUniformSlot,
-                     ModelUniformSlot,
-                 },
-                 std::vector<FCT::TextureSlot>{
-                     TextureSlot{"diffuseTexture"}
-                 },
-                 ComponentFilter{
-                     .include_types = {
-                         entt::type_id<DiffuseTextureComponent>(),
-                         entt::type_id<StaticMeshInstance>()
-                     },
-                     .exclude_types = {
-                         entt::type_id<NormalTextureComponent>()
-                     }
-                 }
-                 .exclude<AlbedoTextureComponent>(),
-                 m_lightingSystem.get(),
-                 m_cameraSystem.get(),
-                 m_textureSamplerSystem.get(),
-                 EntityOperationCallback(
-                     [](const EntityRenderContext& context)
-                     {
-                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
-                        {
-                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
-                            const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
-                            
-                            if (diffuseTexture.texture && diffuseTexture.visible)
-                            {
-                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
-                                if (meshInstance.mesh)
-                                {
-                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
-                                }
-                            }
-                        }
-                    })
-                    ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
+        if (!m_pipelineManager) {
+            m_pipelineManager = makeUnique<PipelineManager>();
         }
 
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                TechName{"NormalMapTech"},
-                VertexShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectVertex,g_engineShaderNormalMapObjectVertexSize)},
-                PixelShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectPixel,g_engineShaderNormalMapObjectPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    ModelUniformSlot,
-                    ShininessUniformSlot
-                },
-                std::vector<FCT::SamplerSlot>{
-                    //SamplerSlot{"shadowSampler"},
-                    //SamplerSlot{"diffuseSampler"},
-                    //SamplerSlot{"normalSampler"}
-                },
-                std::vector<FCT::TextureSlot>{
-                    TextureSlot{"diffuseTexture"},
-                    TextureSlot{"normalTexture"}
-                },
-                m_textureSamplerSystem.get(),
-                m_lightingSystem.get(),
-                m_cameraSystem.get(),
-                ComponentFilter()
-                .include<DiffuseTextureComponent,NormalTextureComponent,StaticMeshInstance>()
-                .exclude<AlbedoTextureComponent>(),
-                EntityOperationCallback(
-                    [](const EntityRenderContext& context)
-                    {
-                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
-                        {
-                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
-                            const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
-                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
-                            
-                            if (diffuseTexture.texture && diffuseTexture.visible && normalMap.texture && normalMap.visible)
-                            {
-                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
-                                context.layout->bindTexture("normalTexture", normalMap.texture);
-
-                                g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
-                                if (meshInstance.mesh)
-                                {
-                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
-                                }
-                            }
-                        }
-                    })
-            ));
-
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                TechName{"NormalMapTech"},
-                //VertexShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectVertex,g_engineShaderNormalMapObjectVertexSize)},
-                //PixelShaderSource{LoadStringFromStringResource(g_engineShaderNormalMapObjectPixel,g_engineShaderNormalMapObjectPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    ModelUniformSlot,
-                },
-                std::vector<FCT::TextureSlot>{
-                    TextureSlot{"diffuseTexture"},
-                    TextureSlot{"normalTexture"}
-                },
-                m_textureSamplerSystem.get(),
-                m_lightingSystem.get(),
-                m_cameraSystem.get(),
-                ComponentFilter()
-                .include<
-                DiffuseTextureComponent,
-                StaticMeshInstance,
-                AlbedoTextureComponent,
-                NormalTextureComponent,
-                OrmTextureComponent
-                >()
-                .exclude<AlbedoTextureComponent>(),
-                EntityOperationCallback(
-                    [](const EntityRenderContext& context)
-                    {
-                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
-                        {
-                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
-                            const auto& diffuseTexture = context.registry.get<DiffuseTextureComponent>(context.entity);
-                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
-                            if (diffuseTexture.texture)
-                                context.layout->bindTexture("diffuseTexture", diffuseTexture.texture);
-                            if (normalMap.texture)
-                                context.layout->bindTexture("normalTexture", normalMap.texture);
-
-                            g_engineGlobal.shininessSystem->bindShininess(&context.registry, context.entity, context.layout);
-
-                            if (meshInstance.mesh)
-                            {
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
-                            }
-                        }
-                    })
-            ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ShadowMapPass", Tech(
-                TechName{"ShadowTech"},
-                VertexShaderSource{LoadStringFromStringResource(
-                    g_engineShaderShadowVertex, g_engineShaderShadowVertexSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    //ShadowUniformSlot,
-                    ModelUniformSlot
-                },
-                ComponentFilter{
-                    {entt::type_id<StaticMeshInstance>()}
-                },
-                m_lightingSystem.get(),
-                universalEntityCallback
-                ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                TechName{"PBRTech"},
-                VertexShaderSource{LoadStringFromStringResource(g_engineShaderPBRVertex,g_engineShaderPBRVertexSize)},
-                PixelShaderSource{LoadStringFromStringResource(g_engineShaderPBRPixel,g_engineShaderPBRPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    DirectionalLightUniformSlot,
-                    CameraUniformSlot,
-                    ViewPosUniformSlot,
-                    ShadowUniformSlot,
-                    ModelUniformSlot,
-                },
-                std::vector<FCT::TextureSlot>{
-                    TextureSlot{"albedoTexture"},
-                    TextureSlot{"normalTexture"},
-                    TextureSlot{"ormTexture"}
-                },
-                m_lightingSystem.get(),
-                m_cameraSystem.get(),
-                m_textureSamplerSystem.get(),
-                ComponentFilter()
-                .include<
-                    StaticMeshInstance,
-                    AlbedoTextureComponent,
-                    NormalTextureComponent,
-                    OrmTextureComponent
-                >(),
-                EntityOperationCallback(
-                    [](const EntityRenderContext& context)
-                    {
-                        if (context.registry.all_of<StaticMeshInstance>(context.entity))
-                        {
-                            const auto& meshInstance = context.registry.get<StaticMeshInstance>(context.entity);
-                            const auto& albedoTexture = context.registry.get<AlbedoTextureComponent>(context.entity);
-                            const auto& normalMap = context.registry.get<NormalTextureComponent>(context.entity);
-                            const auto& ormTexture = context.registry.get<OrmTextureComponent>(context.entity);
-
-                            if (albedoTexture.texture && albedoTexture.visible &&
-                                normalMap.texture && normalMap.visible &&
-                                ormTexture.texture && ormTexture.visible)
-                            {
-                                context.layout->bindTexture("albedoTexture", albedoTexture.texture);
-                                context.layout->bindTexture("normalTexture", normalMap.texture);
-                                context.layout->bindTexture("ormTexture", ormTexture.texture);
-
-                                if (meshInstance.mesh)
-                                {
-                                    g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-                                    context.layout->drawMesh(context.cmdBuf, meshInstance.mesh);
-                                }
-                            }
-                        }
-                    })
-            ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ObjectPass", Tech(
-                TechName{"SkyboxTech"},
-                VertexShaderSource{LoadStringFromStringResource(g_engineShaderSkyboxVertex, g_engineShaderSkyboxVertexSize)},
-                PixelShaderSource{LoadStringFromStringResource(g_engineShaderSkyboxPixel, g_engineShaderSkyboxPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                    CameraUniformSlot,
-                    ModelUniformSlot 
-                },
-                std::vector<FCT::TextureSlot>{
-                    TextureSlot{"skyboxTexture", FCT::TextureType::TextureCube}
-                },
-                m_cameraSystem.get(),
-                m_textureSamplerSystem.get(),
-                ComponentFilter()
-                .include<CacheSkyboxComponent>(),
-                EntityOperationCallback(
-                    [this](const EntityRenderContext& context)
-                    {
-                        if (context.registry.all_of<CacheSkyboxComponent>(context.entity))
-                        {
-                            const auto& skyboxComp = context.registry.get<CacheSkyboxComponent>(context.entity);
-                            
-                            if (skyboxComp.texture && skyboxComp.visible) {
-                                context.layout->bindTexture("skyboxTexture", skyboxComp.texture);
-
-                                // Bind model matrix
-                                g_engineGlobal.matrixCacheSystem->bindModelMatrix(&context.registry, context.entity, context.layout);
-
-                                if (m_skyboxMesh)
-                                {
-                                    context.layout->drawMesh(context.cmdBuf, m_skyboxMesh);
-                                }
-                            }
-                        }
-                    })
-            ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
-        }
-        {
-            auto ret = m_techManager->addTech("ToneMappingPass", Tech(
-                TechName{"ToneMappingTech"},
-                VertexShaderSource{LoadStringFromStringResource(g_engineShaderToneMappingVertex, g_engineShaderToneMappingVertexSize)},
-                PixelShaderSource{LoadStringFromStringResource(g_engineShaderToneMappingPixel, g_engineShaderToneMappingPixelSize)},
-                vertexLayout,
-                pixelLayout,
-                std::vector<FCT::UniformSlot>{
-                },
-                std::vector<FCT::TextureSlot>{
-                },
-                m_textureSamplerSystem.get(),
-                ComponentFilter()
-                .include<CameraComponent>(),
-                EntityOperationCallback(
-                    [this](const EntityRenderContext& context)
-                    {
-                        if (context.registry.all_of<CameraComponent>(context.entity))
-                        {
-                            const auto& cameraComp = context.registry.get<CameraComponent>(context.entity);
-                            if (cameraComp.active && m_fullScreenMesh)
-                            {
-                                context.layout->drawMesh(context.cmdBuf, m_fullScreenMesh);
-                            }
-                        }
-                    })
-            ));
-            if (!ret.ok())
-                spdlog::error("Failed to add tech: {}", ret.message());
+        const auto& config = m_pipelineManager->getConfig();
+        auto buildRes = m_pipelineManager->buildTechManager(config, m_techManager.get());
+        if (!buildRes.ok()) {
+            spdlog::error("通过 PipelineManager 构建 TechManager 失败: {}", buildRes.message());
         }
     }
 
     void Engine::settingUpPass()
     {
         auto graph = m_ctx->getModule<RenderGraph>();
-        graph->addPass(
-            "ShadowMapPass",
-            EnablePassClear(ClearType::depth,1.0f),
-            DepthStencil("DepthFromLigth0Image",
-                2048,2048,
-                Format::D32_SFLOAT
-                ));
-        Target SceenColorTarget;
-        DepthStencil SceenDepthTarget;
-        if (m_application->renderConfig().target == RenderTarget::Window)
-        {
-            SceenColorTarget =
-                Target("SceneColorTarget", m_wnd);
-            SceenDepthTarget =
-                DepthStencil("SceneDepthTarget", m_wnd);
+        if (!m_pipelineManager) {
+            m_pipelineManager = makeUnique<PipelineManager>();
         }
-        else if (m_application->renderConfig().target == RenderTarget::Texture)
-        {
-            SceenColorTarget =
-                Target("SceneColorTarget",1024, 768, Format::R8G8B8A8_SRGB);
-            SceenDepthTarget =
-                DepthStencil("SceneDepthTarget",Format::D32_SFLOAT);
+
+        auto loadRes = m_pipelineManager->loadPipeline("res/pipelines/default_pipeline.json");
+        if (loadRes.ok()) {
+            auto buildRes = m_pipelineManager->buildRenderGraph(loadRes.value(), graph, m_wnd, m_application->renderConfig().target);
+            if (!buildRes.ok()) {
+                spdlog::error("通过 PipelineManager 构建 RenderGraph 失败: {}", buildRes.message());
+            }
+        } else {
+            spdlog::error("加载默认管线配置失败: {}", loadRes.status().message());
         }
-        graph->addPass(
-            "ObjectPass",
-            Texture("DepthFromLigth0Image"),
-            EnablePassClear(ClearType::color | ClearType::depthStencil,
-                Vec4(0,0,0,1)),
-            Target("SceneHDRColor", Format::R16G16B16A16_SFLOAT),
-            Target("PosTarget"),
-            Target("RetTarget"),
-            SceenDepthTarget
-            );
-        
-        graph->addPass(
-            "ToneMappingPass",
-            Texture("SceneHDRColor"),
-            SceenColorTarget
-            );
 
         {
             RenderCallBack::SettingUpPass callback;
@@ -620,7 +262,7 @@ namespace MQEngine
             .graph = syncGraph
         };
         m_application->renderCallBackDispatcher.trigger(callback);
-        syncGraph.update();
+        (void)syncGraph.update();
     }
 
     void Engine::settingUpSubmitTicker()
@@ -643,12 +285,15 @@ namespace MQEngine
                 //m_cameraSystem->updateRender();
                 m_shininessSystem->updateUniforms();
                 m_systemManager.renderTick();
+                if (m_projectManager && m_projectManager->getPluginManager()) {
+                    m_projectManager->getPluginManager()->renderTick();
+                }
                 //m_lightingSystem->updateRender();
             },
             {},
             {RenderGraphTickers::RenderGraphSubmit}
         };
-        submitTickers.update();
+        (void)submitTickers.update();
 
         RenderCallBack::SubscribePass callback;
         callback.graph = graph;
@@ -680,6 +325,9 @@ namespace MQEngine
         }
         m_scriptSystem->setLogicDeltaTime(deltaTime);
         m_systemManager.logicTick();
+        if (m_projectManager && m_projectManager->getPluginManager()) {
+            m_projectManager->getPluginManager()->logicTick(deltaTime);
+        }
         m_scriptSystem->update();
         m_ctx->flush();
     }
@@ -688,14 +336,24 @@ namespace MQEngine
     {
         s_instance = this;
         m_application = application;
+        m_pipelineManager = makeUnique<PipelineManager>();
+        m_componentReflection = makeUnique<ComponentReflection>();
         registerEnttComponents();
         settingUpEnv();
+        m_projectManager = makeUnique<ProjectManager>(m_resourceLoader.get());
+        settingUpResources();
         settingUpPass();
         settingUpTechs();
-        settingUpResources();
         initUniformValue();
         settingUpSubmitTicker();
         settingUpSync();
+
+        if (CommandLineArgs::instance().hasProject()) {
+            auto st = m_projectManager->openProject(CommandLineArgs::instance().getProjectPath(), this);
+            if (!st.ok()) {
+                spdlog::error("初始化时打开工程失败 [{}]: {}", CommandLineArgs::instance().getProjectPath(), st.message());
+            }
+        }
 
         if (m_scriptSystem) {
             m_scriptSystem->loadScripts();
@@ -733,9 +391,21 @@ namespace MQEngine
         delete m_nodeEnv;
         m_ctx->release();
         m_wnd->release();
+        if (m_projectManager) {
+            (void)m_projectManager->closeProject(this);
+        }
         m_systemManager.term();
         NodeCommon::Term();
+        if (m_dataManager) {
+            delete m_dataManager;
+            m_dataManager = nullptr;
+            g_engineGlobal.dataManager = nullptr;
+        }
         s_instance = nullptr;
+    }
+
+    PluginManager* Engine::getPluginManager() const {
+        return m_projectManager ? m_projectManager->getPluginManager() : nullptr;
     }
 
     Engine& Engine::getInstance() {

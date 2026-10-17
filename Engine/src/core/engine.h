@@ -1,4 +1,4 @@
-﻿/*
+/*
  *@file engine.h
  */
 
@@ -30,7 +30,11 @@
 #include "../manager/ShaderSnippetManager.h"
 #include "../manager/ShaderGraphManager.h"
 #include "../manager/ShaderFileWatcher.h"
+#include "../manager/PipelineManager.h"
 #include "../data/ResourceLoader.h"
+#include "CommandLineArgs.h"
+#include "../manager/ProjectManager.h"
+#include "../system/ComponentReflection.h"
 
 namespace FCT
 {
@@ -40,7 +44,8 @@ namespace FCT
 #include "UniformSlots.h"
 
 namespace MQEngine {
-    //class TextureSamplerSystem;
+    class PluginManager;
+
     class ENGINE_API Engine
     {
     public:
@@ -55,6 +60,18 @@ namespace MQEngine {
         static void RegisterApplicationFactory(CreateApplicationFn fn);
         
         SystemManager& getSystemManager() { return m_systemManager; }
+        FCT::StaticMesh<uint32_t>* getSkyboxMesh() const { return m_skyboxMesh; }
+        FCT::StaticMesh<uint32_t>* getFullScreenMesh() const { return m_fullScreenMesh; }
+        FCT::Window* getWindow() const { return m_wnd; }
+        FCT::Context* getContext() const { return m_ctx; }
+        PipelineManager* getPipelineManager() const { return m_pipelineManager.get(); }
+        TechManager* getTechManager() const { return m_techManager.get(); }
+        DataManager* getDataManager() const { return m_dataManager; }
+        ResourceLoader* getResourceLoader() const { return m_resourceLoader.get(); }
+        ProjectManager* getProjectManager() const { return m_projectManager.get(); }
+        PluginManager* getPluginManager() const;
+        ComponentReflection* getComponentReflection() const { return m_componentReflection.get(); }
+        Application* getApplication() const { return m_application; }
 
         static Engine* s_instance;
     private:
@@ -96,7 +113,7 @@ namespace MQEngine {
 
         FCT::Layout* m_layout;
         FCT::Layout* m_shadowLayout;
-        DataManager* m_dataManager;
+        DataManager* m_dataManager{nullptr};
         UniquePtr<CameraSystem> m_cameraSystem;
         UniquePtr<MeshCacheSystem> m_meshRenderSystem;
         UniquePtr<ScriptSystem> m_scriptSystem;
@@ -114,6 +131,9 @@ namespace MQEngine {
         UniquePtr<TextureSamplerSystem> m_textureSamplerSystem;
         UniquePtr<ResourceActiveSystem> m_resourceActiveSystem;
         UniquePtr<ResourceLoader> m_resourceLoader;
+        UniquePtr<PipelineManager> m_pipelineManager;
+        UniquePtr<ProjectManager> m_projectManager;
+        UniquePtr<ComponentReflection> m_componentReflection;
         InputSystem* m_inputSystem = nullptr;
         Uniform m_floorModelUniform;
         // OutputInfo for passes
