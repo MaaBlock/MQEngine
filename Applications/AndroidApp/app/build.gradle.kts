@@ -24,6 +24,10 @@ tasks.named("preBuild") {
     dependsOn(syncEngineAssets)
 }
 
+tasks.matching { it.name.startsWith("merge") && it.name.endsWith("JniLibFolders") }.configureEach {
+    dependsOn(tasks.matching { it.name.startsWith("configureCMake") || it.name.startsWith("buildCMake") })
+}
+
 android {
     namespace = "com.example.androidtutorial"
     compileSdk = 35
@@ -42,7 +46,7 @@ android {
                 cppFlags += "-std=c++20"
                 arguments += "-DANDROID_STL=c++_shared"
                 arguments += "-DVCPKG_MANIFEST_MODE=OFF"
-                arguments += "-DCMAKE_TOOLCHAIN_FILE=${System.getenv("VCPKG_ROOT")}/scripts/buildsystems/vcpkg.cmake"
+                arguments += "-DCMAKE_TOOLCHAIN_FILE=${System.getenv("VCPKG_ROOT")?.replace("\\", "/")}/scripts/buildsystems/vcpkg.cmake"
                 targets += "AndroidApp"
             }
         }
@@ -55,7 +59,7 @@ android {
     sourceSets {
         getByName("main") {
             assets.srcDir(layout.buildDirectory.dir("generated/assets/engineRes"))
-            jniLibs.srcDir(file("../../../FCT/FCT_Node/node/Android/lib"))
+            jniLibs.srcDir(file("../../../FCT/FCT_Node/.cache/jniLibs"))
         }
     }
 
