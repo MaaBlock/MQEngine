@@ -156,6 +156,17 @@ namespace MQEngine
          */
         void setAssetRoot(const std::string& assetRoot)
         {
+            if (m_assetRoot != assetRoot)
+            {
+                if (!m_currentScene.empty())
+                {
+                    try {
+                        closeScene(m_currentScene);
+                    } catch (...) {}
+                    m_currentScene.clear();
+                }
+                m_loadScenes.clear();
+            }
             m_assetRoot = assetRoot;
             if (!m_assetRoot.empty() && m_dataLoader) {
                 try {
@@ -169,11 +180,17 @@ namespace MQEngine
             return m_assetRoot;
         }
 
+        const std::unordered_map<std::string, std::string>& getSceneUuidToNameMap()
+        {
+            loadSceneUuidMapping();
+            return m_uuidToSceneName;
+        }
+
     private:
         StatusOr<std::string> locateModelFile(const std::string& modelUuid) const;
         bool m_isEditorMode;
         std::string m_currentScene;
-        std::string m_assetRoot = "./res";
+        std::string m_assetRoot = "./Assets";
         std::unordered_map<std::string, std::shared_ptr<Scene>> m_loadScenes;
         std::vector<std::string> m_scenePathList;
         std::unordered_map<std::string,std::string> m_uuidToModel;

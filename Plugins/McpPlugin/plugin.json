@@ -1,0 +1,6 @@
+{
+  "name": "McpPlugin",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "description": "MQEngine 内嵌 MCP (Model Context Protocol) 服务端插件，支持 AI Agent 实时检视与操控引擎、场景、实体及组件"
+}

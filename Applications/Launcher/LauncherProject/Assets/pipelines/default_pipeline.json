@@ -1,0 +1,275 @@
+{
+  "name": "DefaultDeferredPipeline",
+  "version": "1.0",
+  "defaultTarget": "window",
+  "passes": [
+    {
+      "name": "ShadowMapPass",
+      "type": "raster",
+      "clear": {
+        "types": ["depth"],
+        "depth": 1.0
+      },
+      "depthStencil": {
+        "name": "DepthFromLigth0Image",
+        "width": 2048,
+        "height": 2048,
+        "format": "D32_SFLOAT"
+      }
+    },
+    {
+      "name": "ObjectPass",
+      "type": "raster",
+      "clear": {
+        "types": ["color", "depthStencil"],
+        "color": [0.0, 0.0, 0.0, 1.0],
+        "depth": 1.0
+      },
+      "inputTextures": [
+        {
+          "name": "DepthFromLigth0Image",
+          "stages": ["fragment"]
+        }
+      ],
+      "targets": [
+        {
+          "name": "SceneHDRColor",
+          "format": "R16G16B16A16_SFLOAT"
+        },
+        {
+          "name": "PosTarget",
+          "format": "R16G16B16A16_SFLOAT"
+        },
+        {
+          "name": "RetTarget",
+          "format": "R8G8B8A8_UNORM"
+        }
+      ],
+      "depthStencil": {
+        "name": "SceneDepthTarget",
+        "format": "D32_SFLOAT",
+        "inheritWindow": true
+      }
+    },
+    {
+      "name": "ToneMappingPass",
+      "type": "raster",
+      "inputTextures": [
+        {
+          "name": "SceneHDRColor",
+          "stages": ["fragment"]
+        }
+      ],
+      "targets": [
+        {
+          "name": "SceneColorTarget",
+          "inheritWindow": true
+        }
+      ]
+    }
+  ],
+  "techniques": [
+    {
+      "name": "BasicTech",
+      "pass": "ObjectPass",
+      "vertexShader": "ObjectVertex",
+      "pixelShader": "ObjectPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "ModelUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [],
+      "bindedSystems": [
+        "CameraSystem",
+        "LightingSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "StaticMeshInstance"
+        ],
+        "exclude": [
+          "DiffuseTextureComponent",
+          "AlbedoTextureComponent"
+        ]
+      },
+      "entityCallback": "UniversalMeshDrawCallback"
+    },
+    {
+      "name": "DiffuseTech",
+      "pass": "ObjectPass",
+      "vertexShader": "DiffuseObjectVertex",
+      "pixelShader": "DiffuseObjectPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "DirectionalLightUniform",
+        "CameraUniform",
+        "ViewPosUniform",
+        "ShadowUniform",
+        "ModelUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [
+        "diffuseTexture"
+      ],
+      "bindedSystems": [
+        "LightingSystem",
+        "CameraSystem",
+        "TextureSamplerSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "DiffuseTextureComponent",
+          "StaticMeshInstance"
+        ],
+        "exclude": [
+          "NormalTextureComponent",
+          "AlbedoTextureComponent"
+        ]
+      },
+      "entityCallback": "DiffuseMeshDrawCallback"
+    },
+    {
+      "name": "NormalMapTech",
+      "pass": "ObjectPass",
+      "vertexShader": "NormalMapObjectVertex",
+      "pixelShader": "NormalMapObjectPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "ModelUniform",
+        "ShininessUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [
+        "diffuseTexture",
+        "normalTexture"
+      ],
+      "bindedSystems": [
+        "TextureSamplerSystem",
+        "LightingSystem",
+        "CameraSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "DiffuseTextureComponent",
+          "NormalTextureComponent",
+          "StaticMeshInstance"
+        ],
+        "exclude": [
+          "AlbedoTextureComponent"
+        ]
+      },
+      "entityCallback": "NormalMapMeshDrawCallback"
+    },
+    {
+      "name": "ShadowTech",
+      "pass": "ShadowMapPass",
+      "vertexShader": "ShadowVertex",
+      "pixelShader": "",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "ModelUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [],
+      "bindedSystems": [
+        "LightingSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "StaticMeshInstance"
+        ],
+        "exclude": []
+      },
+      "entityCallback": "UniversalMeshDrawCallback"
+    },
+    {
+      "name": "PBRTech",
+      "pass": "ObjectPass",
+      "vertexShader": "PBRVertex",
+      "pixelShader": "PBRPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "DirectionalLightUniform",
+        "CameraUniform",
+        "ViewPosUniform",
+        "ShadowUniform",
+        "ModelUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [
+        "albedoTexture",
+        "normalTexture",
+        "ormTexture"
+      ],
+      "bindedSystems": [
+        "LightingSystem",
+        "CameraSystem",
+        "TextureSamplerSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "StaticMeshInstance",
+          "AlbedoTextureComponent",
+          "NormalTextureComponent",
+          "OrmTextureComponent"
+        ],
+        "exclude": []
+      },
+      "entityCallback": "PBRMeshDrawCallback"
+    },
+    {
+      "name": "SkyboxTech",
+      "pass": "ObjectPass",
+      "vertexShader": "SkyboxVertex",
+      "pixelShader": "SkyboxPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [
+        "CameraUniform",
+        "ModelUniform"
+      ],
+      "samplerSlots": [],
+      "textureSlots": [
+        "skyboxTexture"
+      ],
+      "bindedSystems": [
+        "CameraSystem",
+        "TextureSamplerSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "CacheSkyboxComponent"
+        ],
+        "exclude": []
+      },
+      "entityCallback": "SkyboxDrawCallback"
+    },
+    {
+      "name": "ToneMappingTech",
+      "pass": "ToneMappingPass",
+      "vertexShader": "ToneMappingVertex",
+      "pixelShader": "ToneMappingPixel",
+      "vertexLayout": "StandardMeshVertexLayout",
+      "pixelLayout": "StandardPixelLayout",
+      "uniformSlots": [],
+      "samplerSlots": [],
+      "textureSlots": [],
+      "bindedSystems": [
+        "TextureSamplerSystem"
+      ],
+      "componentFilter": {
+        "include": [
+          "CameraComponent"
+        ],
+        "exclude": []
+      },
+      "entityCallback": "ToneMappingDrawCallback"
+    }
+  ]
+}

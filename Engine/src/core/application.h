@@ -1,4 +1,4 @@
-﻿#ifndef APPLICATION_H
+#ifndef APPLICATION_H
 #define APPLICATION_H
 #include "../data/DataManager.h"
 
@@ -11,24 +11,25 @@ namespace MQEngine {
     struct RenderConfig {
         RenderTarget target = RenderTarget::Window;
         const char* windowTitle;
+        const char* defaultProjectPath = nullptr;
     };
     namespace RenderCallBack
     {
         struct SettingUpPass
         {
-            FCT::RenderGraph* graph;
+            RenderGraph* graph;
         };
         struct SubscribePass
         {
-            FCT::RenderGraph* graph;
+            RenderGraph* graph;
         };
         struct SettingSync
         {
-            FCT::TokenGraph<std::string, FCT::SyncTicker>& graph;
+            TokenGraph<std::string, FCT::SyncTicker>& graph;
         };
         struct KeepImage
         {
-            FCT::RenderGraph* graph;
+            RenderGraph* graph;
         };
         struct WindowClose
         {

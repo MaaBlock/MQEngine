@@ -179,7 +179,7 @@ namespace MQEngine {
 
             if (ImGui::MenuItem("Skybox Component")) {
                 if (!registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
-                    m_inputPopup.open("设置 Skybox 路径", "Skybox 路径", "Res/textures/skybox/",
+                    m_inputPopup.open("设置 Skybox 路径", "Skybox 路径", "Assets/textures/skybox/",
                     [registry, selectedEntity](const std::string& path) {
                         if (registry->valid(selectedEntity.entity) && !registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
                             registry->emplace<SkyboxComponent>(selectedEntity.entity, path);

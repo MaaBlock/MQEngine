@@ -88,6 +88,7 @@ namespace MQEngine {
         {
             FCT::Mat4 modelMatrix = calculateModelMatrix(pos, rot, scl);
             cacheModel->uniform->setValue(FCT::UniformType::ModelMatrix, modelMatrix);
+            cacheModel->uniform->setValue("modelInverseTransposeMatrix", calculateModelInverseTransposeMatrix(modelMatrix));
             cacheModel->init = true;
         }
     }

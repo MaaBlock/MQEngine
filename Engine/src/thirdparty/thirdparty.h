@@ -30,6 +30,7 @@
 #include <absl/status/status.h>
 #include <absl/status/statusor.h>
 #include <absl/strings/str_cat.h>
+#include "FCTImporter.h"
 namespace MQEngine
 {
     template<typename T>
@@ -69,18 +70,6 @@ namespace MQEngine
     using absl::OkStatus;
     using absl::StrCat;
     using absl::IsNotFound;
-    using FCT::Context;
-    using FCT::Window;
-    using FCT::Uniform;
-    using FCT::ShaderRef;
-    using FCT::UniquePtr;
-    using FCT::ModelLoader;
-    using FCT::Sampler;
-    using FCT::Runtime;
-    using FCT::Vec3;
-    using FCT::Image;
-    using FCT::RenderGraph;
-    using FCT::TokenGraph;
     //using EventPipe = FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>;
 }
 #endif //THIRDPARTY_H

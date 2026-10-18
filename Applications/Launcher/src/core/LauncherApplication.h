@@ -19,6 +19,8 @@ namespace MQEngine
         RenderConfig renderConfig() const override;
 
     private:
+        void locateWorkspaceRoot();
+        std::string resolveWorkspacePath(const std::string& relativePath) const;
         void setupRenderCallbacks();
         void setupDefaultCamera();
         void ensureDemoProjectInitialized();
@@ -28,6 +30,11 @@ namespace MQEngine
         Status ensureSceneBootstrapFiles(const std::string& assetRoot,
                                          const std::string& sceneName,
                                          const std::string& sceneUuid);
+        void ensureDefaultDemoModels(const std::string& assetRoot);
+        void importBuiltinModel(const std::string& assetRoot,
+                                const std::string& modelDirName,
+                                const std::string& modelUuid,
+                                const std::string& sourceModelPath);
         void populateDefaultSceneEntities(const std::string& sceneUuid);
 
         void scanProjects();
@@ -51,11 +58,12 @@ namespace MQEngine
                             const std::string& workingDir);
 
     private:
-        FCT::ImguiModule m_imguiModule;
+        std::shared_ptr<ImguiPlugin> m_imguiPlugin;
         FCT::ImguiContext* m_imguiCtx = nullptr;
         entt::registry m_registry;
         entt::entity m_cameraEntity = entt::null;
 
+        std::string m_workspaceRoot;
         std::vector<ProjectConfig> m_projects;
         int m_selectedProjectIndex = -1;
         std::string m_statusMessage;

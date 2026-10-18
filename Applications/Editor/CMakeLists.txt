@@ -110,11 +110,12 @@ target_link_libraries(Editor
 target_link_fct_libraries(Editor)
 target_link_fct_node_libraries(Editor)
 target_link_engine(Editor)
+target_link_imgui_plugin(Editor)
 set_utf8_for_target(Editor)
 fct_embed_resource(
         TARGET Editor
-        FILES "${CMAKE_SOURCE_DIR}/Res/icons/Mesh.png"
-        FILES "${CMAKE_SOURCE_DIR}/Res/icons/Texture.png"
-        FILES "${CMAKE_SOURCE_DIR}/Res/icons/Material.png"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/icons/Mesh.png"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/icons/Texture.png"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/icons/Material.png"
         PREFIX "g_editorIcon"
 )

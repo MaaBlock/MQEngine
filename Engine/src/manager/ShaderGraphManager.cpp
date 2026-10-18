@@ -181,10 +181,10 @@ namespace MQEngine {
 
     Status ShaderGraphManager::save(const std::string& name) {
         ZoneScoped();
-        std::string path = "res/shadergraph/" + name + ".sg";
+        std::string path = "Assets/shadergraph/" + name + ".sg";
 
         if (g_engineGlobal.resourceLoader) {
-            CHECK_STATUS(g_engineGlobal.resourceLoader->ensureDir("res/shadergraph/"));
+            CHECK_STATUS(g_engineGlobal.resourceLoader->ensureDir("Assets/shadergraph/"));
         } else {
             return InternalError("ResourceLoader not available");
         }
@@ -200,7 +200,7 @@ namespace MQEngine {
 
     Status ShaderGraphManager::load(const std::string& name) {
         ZoneScoped();
-        std::string path = "res/shadergraph/" + name + ".sg";
+        std::string path = "Assets/shadergraph/" + name + ".sg";
         if (!g_engineGlobal.resourceLoader) {
             return InternalError("ResourceLoader not available");
         }

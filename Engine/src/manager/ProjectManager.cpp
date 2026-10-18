@@ -95,7 +95,7 @@ Status ProjectManager::parseProjectJson(const std::string& jsonContent,
         } else if (obj.contains("assets") && obj.at("assets").is_string()) {
             outConfig.assetRoot = obj.at("assets").as_string().c_str();
         } else {
-            outConfig.assetRoot = "res";
+            outConfig.assetRoot = "Assets";
         }
         outConfig.resolvedAssetRoot = resolvePath(outConfig.projectDirectory, outConfig.assetRoot);
 
@@ -250,29 +250,15 @@ Status ProjectManager::applyPlugins(Engine* engine) {
         return OkStatus();
     }
 
-    PluginContext ctx;
-    ctx.engine = engine;
-    ctx.renderGraph = engine->getContext() ? engine->getContext()->getModule<FCT::RenderGraph>() : nullptr;
-    ctx.techManager = engine->getTechManager();
-    ctx.systemManager = &engine->getSystemManager();
+    PluginContext ctx = engine->createPluginContext();
     ctx.resourceLoader = m_resourceLoader;
-    ctx.dataManager = engine->getDataManager();
-    ctx.componentReflection = engine->getComponentReflection();
 
     for (const auto& pluginIdent : m_currentConfig.plugins) {
-        if (pluginIdent.ends_with(".dll") || pluginIdent.ends_with(".so")) {
-            std::string dllPath = resolvePath(m_currentConfig.projectDirectory, pluginIdent);
-            Status status = m_pluginManager->loadDynamicPlugin(dllPath, ctx);
-            if (!status.ok()) {
-                spdlog::error("ProjectManager: 加载动态插件失败 [{}]: {}", dllPath, status.message());
-                return status;
-            }
-        } else {
-            Status status = m_pluginManager->loadAndInitPlugin(pluginIdent, ctx);
-            if (!status.ok()) {
-                spdlog::error("ProjectManager: 加载静态插件失败 [{}]: {}", pluginIdent, status.message());
-                return status;
-            }
+        Status status = m_pluginManager->resolveAndLoadPlugin(
+            pluginIdent, m_currentConfig.projectDirectory, ctx);
+        if (!status.ok()) {
+            spdlog::error("ProjectManager: 加载插件失败 [{}]: {}", pluginIdent, status.message());
+            return status;
         }
     }
 
@@ -288,7 +274,7 @@ Status ProjectManager::closeProject(Engine* engine) {
     m_pluginManager->unloadAll();
 
     if (engine && engine->getDataManager()) {
-        engine->getDataManager()->setAssetRoot("./res");
+        engine->getDataManager()->setAssetRoot("./Assets");
     }
 
     m_isProjectOpen = false;

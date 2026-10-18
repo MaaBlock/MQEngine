@@ -58,7 +58,7 @@ namespace MQEngine
         g_engineGlobal.systemManager = &m_systemManager;
         m_nodeEnv = new FCT::JS::NodeEnvironment;
         //todo:要从DataLoader里读包
-        m_nodeEnv->addModulePath("./res/scripts/node_modules");
+        m_nodeEnv->addModulePath("./Assets/scripts/node_modules");
         m_nodeEnv->setup();
         g_engineGlobal.rt = &m_rt;
         m_registriesManager = makeUnique<RegistriesManager>();
@@ -126,15 +126,16 @@ namespace MQEngine
         sgConfig.bindedSystemNames = {"CameraSystem", "LightingSystem", "TextureSamplerSystem"};
         m_shaderGraphManager->setConfig(sgConfig);
 
-        m_application->init();
         m_techManager = makeUnique<TechManager>();
+        m_projectManager = makeUnique<ProjectManager>(m_resourceLoader.get());
+        m_application->init();
         
         m_shaderFileWatcher = makeUnique<ShaderFileWatcher>(m_scriptSystem->getNodeEnvironment(), m_shaderSnippetManager.get());
         auto snippetStatus = m_shaderSnippetManager->loadSnippetFromResource();
         if (!snippetStatus.ok()) {
             spdlog::warn("加载着色器片段失败: {}", snippetStatus.message());
         }
-        m_shaderFileWatcher->startWatching("./res/snippets/");
+        m_shaderFileWatcher->startWatching("./Assets/snippets/");
 
         registerShaderSnippets();
     }
@@ -161,7 +162,7 @@ namespace MQEngine
             m_pipelineManager = makeUnique<PipelineManager>();
         }
 
-        auto loadRes = m_pipelineManager->loadPipeline("res/pipelines/default_pipeline.json");
+        auto loadRes = m_pipelineManager->loadPipeline("Assets/pipelines/default_pipeline.json");
         if (loadRes.ok()) {
             auto buildRes = m_pipelineManager->buildRenderGraph(loadRes.value(), graph, m_wnd, m_application->renderConfig().target);
             if (!buildRes.ok()) {
@@ -346,10 +347,45 @@ namespace MQEngine
 
     namespace
     {
-        void AlignWorkingDirectoryForInit()
+        void AlignWorkingDirectoryForInit(Application* application)
         {
             namespace fs = std::filesystem;
             std::error_code ec;
+            fs::path cur = fs::current_path(ec);
+
+            if (!ec && !CommandLineArgs::instance().hasProject())
+            {
+                fs::path curProj = cur / "project.json";
+                if (fs::exists(curProj, ec))
+                {
+                    CommandLineArgs::instance().setProjectPath(
+                        std::string(reinterpret_cast<const char*>(curProj.generic_u8string().c_str())));
+                }
+            }
+
+            if (!CommandLineArgs::instance().hasProject() && application)
+            {
+                const char* defaultProj = application->renderConfig().defaultProjectPath;
+                if (defaultProj && defaultProj[0] != '\0')
+                {
+                    fs::path relProj = fs::u8path(defaultProj);
+                    fs::path probe = cur;
+                    for (int depth = 0; depth < 6; ++depth)
+                    {
+                        fs::path candidate = probe / relProj;
+                        if (fs::exists(candidate, ec))
+                        {
+                            CommandLineArgs::instance().setProjectPath(
+                                std::string(reinterpret_cast<const char*>(candidate.generic_u8string().c_str())));
+                            break;
+                        }
+                        if (!probe.has_parent_path() || probe == probe.parent_path())
+                            break;
+                        probe = probe.parent_path();
+                    }
+                }
+            }
+
             if (CommandLineArgs::instance().hasProject())
             {
                 fs::path projPath = fs::u8path(CommandLineArgs::instance().getProjectPath());
@@ -368,14 +404,13 @@ namespace MQEngine
                 return;
             }
 
-            fs::path cur = fs::current_path(ec);
-            if (ec || fs::exists(cur / "res", ec) || fs::exists(cur / "Res", ec))
+            if (ec || fs::exists(cur / "Assets", ec) || fs::exists(cur / "assets", ec))
                 return;
 
             fs::path probe = cur;
             for (int depth = 0; depth < 6 && probe.has_parent_path(); ++depth)
             {
-                if (fs::exists(probe / "Res" / "pipelines" / "default_pipeline.json", ec))
+                if (fs::exists(probe / "Assets" / "pipelines" / "default_pipeline.json", ec))
                 {
                     fs::current_path(probe, ec);
                     return;
@@ -392,12 +427,14 @@ namespace MQEngine
         ZoneScoped();
         s_instance = this;
         m_application = application;
-        AlignWorkingDirectoryForInit();
+        AlignWorkingDirectoryForInit(m_application);
         m_pipelineManager = makeUnique<PipelineManager>();
         m_componentReflection = makeUnique<ComponentReflection>();
         registerEnttComponents();
         settingUpEnv();
-        m_projectManager = makeUnique<ProjectManager>(m_resourceLoader.get());
+        if (!m_projectManager) {
+            m_projectManager = makeUnique<ProjectManager>(m_resourceLoader.get());
+        }
         settingUpResources();
         settingUpPass();
         settingUpTechs();
@@ -410,11 +447,21 @@ namespace MQEngine
             if (!st.ok()) {
                 spdlog::error("初始化时打开工程失败 [{}]: {}", CommandLineArgs::instance().getProjectPath(), st.message());
             }
+        } else if (m_dataManager && !m_dataManager->getCurrentScene() && !m_dataManager->getInitialSceneUuid().empty()) {
+            try {
+                m_dataManager->openScene(m_dataManager->getInitialSceneUuid());
+            } catch (const std::exception& e) {
+                spdlog::warn("初始化时打开默认场景失败: {}", e.what());
+            }
         }
 
         if (m_scriptSystem) {
             m_scriptSystem->loadScripts();
             m_scriptSystem->start();
+        }
+
+        if (getPluginManager() && !getPluginManager()->hasPlugin("McpPlugin")) {
+            (void)loadPlugin("McpPlugin");
         }
     }
 
@@ -429,16 +476,17 @@ namespace MQEngine
     void Engine::term()
     {
         ZoneScoped();
+        if (m_projectManager) {
+            if (m_projectManager->getPluginManager()) {
+                m_projectManager->getPluginManager()->unloadAll();
+            }
+            (void)m_projectManager->closeProject(this);
+        }
         if (m_scriptSystem) {
             m_scriptSystem->cleanUp();
         }
         if (m_inputSystem) {
-            // InputSystem inherits from RefCount, but we manage its lifecycle here as a system
-            // Ensure it's unregistered
             m_inputSystem->onDeactivate();
-            // Assuming initial ref count allows us to delete or release. 
-            // If RefCount is strict, we might need m_inputSystem->release();
-            // For now, using delete as we used 'new'.
             m_inputSystem->release();
             m_inputSystem = nullptr;
         }
@@ -449,9 +497,6 @@ namespace MQEngine
         delete m_nodeEnv;
         m_ctx->release();
         m_wnd->release();
-        if (m_projectManager) {
-            (void)m_projectManager->closeProject(this);
-        }
         m_systemManager.term();
         FCT::JS::NodeCommon::Term();
         if (m_dataManager) {
@@ -464,6 +509,39 @@ namespace MQEngine
 
     PluginManager* Engine::getPluginManager() const {
         return m_projectManager ? m_projectManager->getPluginManager() : nullptr;
+    }
+
+    FCT::JS::NodeEnvironment* Engine::getNodeEnvironment() const {
+        if (m_scriptSystem && m_scriptSystem->getNodeEnvironment()) {
+            return m_scriptSystem->getNodeEnvironment();
+        }
+        return m_nodeEnv;
+    }
+
+    PluginContext Engine::createPluginContext() {
+        PluginContext ctx;
+        ctx.engine = this;
+        ctx.wnd = m_wnd;
+        ctx.rhiContext = m_ctx;
+        ctx.renderGraph = m_ctx ? m_ctx->getModule<FCT::RenderGraph>() : nullptr;
+        ctx.techManager = m_techManager.get();
+        ctx.systemManager = &m_systemManager;
+        ctx.resourceLoader = m_resourceLoader.get();
+        ctx.dataManager = m_dataManager;
+        ctx.componentReflection = m_componentReflection.get();
+        ctx.nodeEnv = getNodeEnvironment();
+        return ctx;
+    }
+
+    Status Engine::loadPlugin(const std::string& pluginIdent) {
+        if (!m_projectManager) {
+            m_projectManager = makeUnique<ProjectManager>(m_resourceLoader.get());
+        }
+        PluginContext ctx = createPluginContext();
+        std::string baseDir = m_projectManager->isProjectOpen()
+            ? m_projectManager->getCurrentConfig().projectDirectory
+            : "";
+        return m_projectManager->getPluginManager()->resolveAndLoadPlugin(pluginIdent, baseDir, ctx);
     }
 
     Engine& Engine::getInstance() {
@@ -484,5 +562,28 @@ namespace MQEngine
     void Engine::RegisterApplicationFactory(CreateApplicationFn fn)
     {
         GCreateApplication = fn;
+    }
+
+    void Engine::addLogSink(const std::shared_ptr<spdlog::sinks::sink>& sink)
+    {
+        if (!sink)
+            return;
+        if (auto logger = spdlog::default_logger())
+        {
+            auto& sinks = logger->sinks();
+            if (std::find(sinks.begin(), sinks.end(), sink) == sinks.end())
+                sinks.push_back(sink);
+        }
+    }
+
+    void Engine::removeLogSink(const std::shared_ptr<spdlog::sinks::sink>& sink)
+    {
+        if (!sink)
+            return;
+        if (auto logger = spdlog::default_logger())
+        {
+            auto& sinks = logger->sinks();
+            sinks.erase(std::remove(sinks.begin(), sinks.end(), sink), sinks.end());
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/24.
 //
 
@@ -12,6 +12,11 @@ namespace MQEngine {
     {
         m_editorRegistry = g_editorGlobal.editorRegistry;
         createEditorCamera();
+        g_engineGlobal.sceneEventPipe.subscribe<SceneEvent::EntryScene>(
+            [this](const SceneEvent::EntryScene&)
+            {
+                hookCamera();
+            });
     }
 
     void EditorCameraManager::createEditorCamera()
@@ -19,12 +24,12 @@ namespace MQEngine {
         m_editorCameraEntity = m_editorRegistry->create();
 
         auto& position = m_editorRegistry->emplace<PositionComponent>(m_editorCameraEntity);
-        position.position = Vec3(3.0f, 3.0f, 3.0f);
+        position.position = Vec3(2.8f, 2.2f, 2.8f);
 
         auto& rotation = m_editorRegistry->emplace<RotationComponent>(m_editorCameraEntity);
 
         Vec3 cameraPos = position.position;
-        Vec3 target = Vec3(0.0f, 0.0f, 0.0f);
+        Vec3 target = Vec3(0.0f, 0.9f, 0.0f);
         Vec3 direction = target - cameraPos;
         direction = normalize(direction);
 

@@ -91,18 +91,40 @@ namespace MQEngine
     void CameraSystem::setActiveCamera(entt::registry* registry, entt::entity cameraEntity)
     {
         if (!registry) return;
-        
-        auto registries = m_dataManager->currentRegistries();
-        for (auto& currentRegistry : registries)
+
+        auto deactivateRegistryCameras = [](entt::registry* reg)
         {
-            auto view = currentRegistry->view<CameraComponent>();
+            if (!reg) return;
+            auto view = reg->view<CameraComponent>();
             for (auto entity : view)
             {
                 auto& camera = view.get<CameraComponent>(entity);
                 camera.active = false;
             }
+        };
+
+        auto registries = m_dataManager->currentRegistries();
+        for (auto& currentRegistry : registries)
+        {
+            deactivateRegistryCameras(currentRegistry);
         }
-        
+
+        if (Scene* currentScene = m_dataManager->getCurrentScene())
+        {
+            deactivateRegistryCameras(currentScene->getRegistry());
+            for (const auto& trunkName : currentScene->getTrunkList())
+            {
+                if (currentScene->isLoad(trunkName))
+                {
+                    if (SceneTrunk* trunk = currentScene->getLoadedTrunk(trunkName))
+                    {
+                        deactivateRegistryCameras(trunk->getRegistry());
+                    }
+                }
+            }
+        }
+        deactivateRegistryCameras(registry);
+
         if (registry->valid(cameraEntity) && registry->all_of<CameraComponent>(cameraEntity))
         {
             auto& targetCamera = registry->get<CameraComponent>(cameraEntity);

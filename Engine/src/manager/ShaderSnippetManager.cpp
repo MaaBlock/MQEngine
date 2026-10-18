@@ -73,7 +73,7 @@ namespace MQEngine {
     {
         ZoneScoped();
         auto rl = g_engineGlobal.resourceLoader;
-        const std::string snippetDir = "./res/snippets/";
+        const std::string snippetDir = "./Assets/snippets/";
         
         Status ensureRes = rl->ensureDir(snippetDir);
         CHECK_STATUS(ensureRes);
@@ -140,7 +140,7 @@ namespace MQEngine {
     {
         ZoneScoped();
         ZoneText(snippetName.c_str(), snippetName.size());
-        const std::string snippetDir = "./res/snippets/";
+        const std::string snippetDir = "./Assets/snippets/";
         std::string hlslPath = snippetDir + snippetName + ".hlsl";
         std::string metaPath = snippetDir + snippetName + ".meta";
         auto rl = g_engineGlobal.resourceLoader;

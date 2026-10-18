@@ -18,6 +18,7 @@
 #include "../ShaderEditor/ShaderEditor.h"
 #include "../ShaderEditor/ShaderGraph.h"
 #include "ContentBrowser.h"
+#include "LogWindow.h"
 
 namespace MQEngine {
     class UiManager {
@@ -31,7 +32,12 @@ namespace MQEngine {
         void renderCameraWindow();
     private:
         void setupCustomDarkTheme();
-        FCT::ImguiContext* m_imguiCtx;
+        void setupDefaultLayout(ImGuiID dockspaceId);
+        bool m_needResetLayout = false;
+        bool m_focusDefaultTabs = false;
+        bool m_layoutChecked = false;
+        std::shared_ptr<ImguiPlugin> m_imguiPlugin;
+        FCT::ImguiContext* m_imguiCtx = nullptr;
         GraphViewInsight* m_graphView;
         RenderGraphViewer* m_passGenerator;
         ModelManager* m_modelManager;
@@ -44,6 +50,7 @@ namespace MQEngine {
         ShaderEditor* m_shaderEditor;
         ShaderGraph* m_shaderGraph;
         ContentBrowser* m_contentBrowser;
+        LogWindow* m_logWindow = nullptr;
     };
 }
 

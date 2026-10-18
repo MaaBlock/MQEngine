@@ -15,10 +15,25 @@ namespace MQEngine
     void UiManager::init()
     {
         ZoneScoped();
-        ImNodes::CreateContext();
-        m_imguiCtx = g_editorGlobal.imguiModule->createContext(g_editorGlobal.wnd,g_editorGlobal.ctx);
-        m_imguiCtx->attachPass("ImguiPass");
-        m_imguiCtx->create(ImguiContextCreateFlag::Docking);
+        m_logWindow = new LogWindow();
+
+        auto& engine = Engine::getInstance();
+        Status pluginSt = engine.loadPlugin("ImguiPlugin");
+        if (!pluginSt.ok())
+        {
+            spdlog::error("UiManager: 加载 ImguiPlugin 失败: {}", pluginSt.message());
+        }
+        if (engine.getPluginManager())
+        {
+            m_imguiPlugin = engine.getPluginManager()->getPluginAs<ImguiPlugin>("ImguiPlugin");
+        }
+        if (m_imguiPlugin)
+        {
+            m_imguiPlugin->setClearColor(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
+            m_imguiPlugin->syncCallerContext();
+            m_imguiCtx = m_imguiPlugin->getImguiContext();
+            g_editorGlobal.imguiModule = m_imguiPlugin->getImguiModule();
+        }
 
         setupCustomDarkTheme();
         ImNodes::StyleColorsDark();
@@ -26,10 +41,8 @@ namespace MQEngine
         g_editorGlobal.imguiContext = m_imguiCtx;
         m_graphView = FCT_NEW(GraphViewInsight,m_imguiCtx);
         m_passGenerator = FCT_NEW(RenderGraphViewer,g_editorGlobal.ctx,g_editorGlobal.wnd);
-        // m_modelManager = FCT_NEW(ModelManager,g_editorGlobal.dataManager); // Moved to ContentBrowser
         m_editorCameraManager = new EditorCameraManager();
         g_editorGlobal.cameraManager = m_editorCameraManager;
-        // m_sceneManager = new SceneManager(); // Moved to ContentBrowser
         m_scriptManager = new ScriptManager();
         m_sceneEntityViewer = new SceneEntityViewer();
         m_entityInspector = new EntityInspector();
@@ -48,90 +61,10 @@ namespace MQEngine
 
     void UiManager::setupCustomDarkTheme()
     {
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec4* colors = style.Colors;
-
-        colors[ImGuiCol_Text]                   = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
-        colors[ImGuiCol_TextDisabled]           = ImVec4(0.70f, 0.70f, 0.70f, 1.00f);
-        colors[ImGuiCol_WindowBg]               = ImVec4(0.06f, 0.06f, 0.06f, 1.00f);
-        colors[ImGuiCol_ChildBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-        colors[ImGuiCol_PopupBg]                = ImVec4(0.07f, 0.07f, 0.07f, 0.94f);
-        colors[ImGuiCol_Border]                 = ImVec4(0.25f, 0.25f, 0.25f, 0.88f);
-        colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        colors[ImGuiCol_FrameBg]                = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-        colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
-        colors[ImGuiCol_FrameBgActive]          = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
-        colors[ImGuiCol_TitleBg]                = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-        colors[ImGuiCol_TitleBgActive]          = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-        colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.07f, 0.07f, 0.07f, 0.75f);
-        colors[ImGuiCol_MenuBarBg]              = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-        colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
-        colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
-        colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.40f, 0.40f, 0.40f, 0.54f);
-        colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
-        colors[ImGuiCol_CheckMark]              = ImVec4(0.33f, 0.67f, 0.86f, 1.00f);
-        colors[ImGuiCol_SliderGrab]             = ImVec4(0.34f, 0.34f, 0.34f, 0.54f);
-        colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.56f, 0.56f, 0.56f, 0.54f);
-        colors[ImGuiCol_Button]                 = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
-        colors[ImGuiCol_ButtonHovered]          = ImVec4(0.19f, 0.19f, 0.19f, 0.54f);
-        colors[ImGuiCol_ButtonActive]           = ImVec4(0.20f, 0.22f, 0.23f, 1.00f);
-        colors[ImGuiCol_Header]                 = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-        colors[ImGuiCol_HeaderHovered]          = ImVec4(0.00f, 0.00f, 0.00f, 0.36f);
-        colors[ImGuiCol_HeaderActive]           = ImVec4(0.20f, 0.22f, 0.23f, 0.33f);
-        colors[ImGuiCol_Separator]              = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
-        colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
-        colors[ImGuiCol_SeparatorActive]        = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
-        colors[ImGuiCol_ResizeGrip]             = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
-        colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
-        colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
-        colors[ImGuiCol_Tab]                    = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-        colors[ImGuiCol_TabHovered]             = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
-
-        // Match active tab color to ChildBg/WindowBg for seamless look
-        colors[ImGuiCol_TabActive]              = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-        colors[ImGuiCol_TabUnfocused]           = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
-        colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.07f, 0.07f, 0.07f, 1.00f);
-    
-        colors[ImGuiCol_DockingPreview]         = ImVec4(0.26f, 0.59f, 0.98f, 0.70f);
-        colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
-        colors[ImGuiCol_PlotLines]              = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
-        colors[ImGuiCol_PlotLinesHovered]       = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
-        colors[ImGuiCol_PlotHistogram]          = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
-        colors[ImGuiCol_PlotHistogramHovered]   = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
-        colors[ImGuiCol_TableHeaderBg]          = ImVec4(0.19f, 0.19f, 0.20f, 1.00f);
-        colors[ImGuiCol_TableBorderStrong]      = ImVec4(0.31f, 0.31f, 0.35f, 1.00f);
-        colors[ImGuiCol_TableBorderLight]       = ImVec4(0.23f, 0.23f, 0.25f, 1.00f);
-        colors[ImGuiCol_TableRowBg]             = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        colors[ImGuiCol_TableRowBgAlt]          = ImVec4(1.00f, 1.00f, 1.00f, 0.07f);
-        colors[ImGuiCol_TextSelectedBg]         = ImVec4(0.26f, 0.59f, 0.98f, 0.35f);
-        colors[ImGuiCol_DragDropTarget]         = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
-        colors[ImGuiCol_NavHighlight]           = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-        colors[ImGuiCol_NavWindowingHighlight]  = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
-        colors[ImGuiCol_NavWindowingDimBg]      = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
-        colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
-
-        style.WindowPadding                     = ImVec2(6.00f, 4.00f);
-        style.FramePadding                      = ImVec2(6.00f, 4.00f);
-        style.CellPadding                       = ImVec2(6.00f, 6.00f);
-        style.ItemSpacing                       = ImVec2(6.00f, 6.00f);
-        style.ItemInnerSpacing                  = ImVec2(6.00f, 6.00f);
-        style.TouchExtraPadding                 = ImVec2(0.00f, 0.00f);
-        style.IndentSpacing                     = 25;
-        style.ScrollbarSize                     = 15;
-        style.GrabMinSize                       = 10;
-        style.WindowBorderSize                  = 1;
-        style.ChildBorderSize                   = 1;
-        style.PopupBorderSize                   = 1;
-        style.FrameBorderSize                   = 1;
-        style.TabBorderSize                     = 1;
-        style.WindowRounding                    = 6.0f;
-        style.ChildRounding                     = 6.0f;
-        style.FrameRounding                     = 4.0f;
-        style.PopupRounding                     = 4.0f;
-        style.ScrollbarRounding                 = 9;
-        style.GrabRounding                      = 4.0f;
-        style.LogSliderDeadzone                 = 4;
-        style.TabRounding                       = 4.0f;
+        if (m_imguiPlugin)
+        {
+            m_imguiPlugin->applyDefaultDarkTheme();
+        }
     }
 
     void UiManager::term()
@@ -148,60 +81,21 @@ namespace MQEngine
         delete m_shaderEditor;
         delete m_shaderGraph;
         delete m_contentBrowser;
-        ImNodes::DestroyContext();
+        delete m_logWindow;
+        m_logWindow = nullptr;
     }
 
 
     void UiManager::registerRenderCallback(
         FCT::EventDispatcher<FCT::EventSystemConfig::TriggerOnly>& callback)
     {
-        callback.subscribe<RenderCallBack::SettingUpPass>(
-        [this](const RenderCallBack::SettingUpPass& event) {
-             auto graph = event.graph;
-             graph->addPass(
-                 "ImguiPass",
-                 EnablePassClear(ClearType::color | ClearType::depthStencil,
-                     Vec4(0,0,0,1)),
-                 Target("mainWindowColor",g_editorGlobal.wnd),
-                 Texture("SceneColorTarget"),
-                 Texture("PosTarget"),
-                 Texture("RetTarget"),
-                 DepthStencil("mainWindowDS",g_editorGlobal.wnd)
-                 );
-         });
-        callback.subscribe<RenderCallBack::KeepImage>(
-            [this](const RenderCallBack::KeepImage& event)
+        if (m_imguiPlugin)
+        {
+            m_imguiPlugin->registerKeepImageCallback([this](RenderGraph* graph)
             {
-                auto graph = event.graph;
-
-                m_imguiCtx->enableChinese();
-                //m_imguiCtx->addTexture("SceneView",graph->getImage("SceneColorTarget"));
                 m_graphView->keepImage(graph);
-            }
-        );
-        callback.subscribe<RenderCallBack::SettingSync>(
-            [this](const RenderCallBack::SettingSync& event)
-            {
-                auto& graph = event.graph;
-                graph["syncImgui"] = {
-                    [this]()
-                    {
-                        m_imguiCtx->swapBuffer();
-                    },
-                    {},
-                    {}
-                };
             });
-        callback.subscribe<RenderCallBack::SubscribePass>(
-            [this](const RenderCallBack::SubscribePass& event)
-            {
-                auto graph = event.graph;
-                graph->subscribe("ImguiPass",[this](PassSubmitEvent env)
-                {
-                    auto cmdBuf = env.cmdBuf;
-                    m_imguiCtx->submit(cmdBuf);
-                });
-            });
+        }
 
         callback.subscribe<RenderCallBack::WindowClose>(
             [this](const RenderCallBack::WindowClose& event)
@@ -218,15 +112,85 @@ namespace MQEngine
             });
     }
 
+    void UiManager::setupDefaultLayout(ImGuiID dockspaceId)
+    {
+        ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::DockBuilderRemoveNode(dockspaceId);
+        ImGui::DockBuilderAddNode(dockspaceId, ImGuiDockNodeFlags_DockSpace);
+        ImGui::DockBuilderSetNodeSize(dockspaceId, viewport->WorkSize);
+
+        ImGuiID dockMain = dockspaceId;
+        ImGuiID dockLeft = 0;
+        ImGuiID dockRight = 0;
+        ImGuiID dockBottom = 0;
+        ImGuiID dockBottomLeft = 0;
+        ImGuiID dockBottomRight = 0;
+        ImGuiID dockLeftBottom = 0;
+        ImGuiID dockRightBottom = 0;
+
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Left, 0.20f, &dockLeft, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Right, 0.30f, &dockRight, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Down, 0.30f, &dockBottom, &dockMain);
+        ImGui::DockBuilderSplitNode(dockBottom, ImGuiDir_Left, 0.55f, &dockBottomLeft, &dockBottomRight);
+        ImGui::DockBuilderSplitNode(dockLeft, ImGuiDir_Down, 0.38f, &dockLeftBottom, &dockLeft);
+        ImGui::DockBuilderSplitNode(dockRight, ImGuiDir_Down, 0.36f, &dockRightBottom, &dockRight);
+
+        ImGui::DockBuilderDockWindow(TEXT("场景实体查看器"), dockLeft);
+        ImGui::DockBuilderDockWindow(TEXT("相机控制"), dockLeftBottom);
+#ifdef FCT_DEBUG
+        ImGui::DockBuilderDockWindow(TEXT("编辑器内存分析"), dockLeftBottom);
+#endif
+
+        ImGui::DockBuilderDockWindow(TEXT("实体检查器"), dockRight);
+        ImGui::DockBuilderDockWindow(TEXT("细节"), dockRight);
+
+        ImGui::DockBuilderDockWindow(TEXT("贴图: SceneColorTarget"), dockRightBottom);
+        ImGui::DockBuilderDockWindow(TEXT("贴图: PosTarget"), dockRightBottom);
+        ImGui::DockBuilderDockWindow(TEXT("贴图: RetTarget"), dockRightBottom);
+
+        ImGui::DockBuilderDockWindow(TEXT("内容浏览器"), dockBottomLeft);
+        ImGui::DockBuilderDockWindow(TEXT("脚本管理器"), dockBottomLeft);
+        ImGui::DockBuilderDockWindow(TEXT("日志"), dockBottomRight);
+
+        ImGui::DockBuilderDockWindow(TEXT("场景视口"), dockMain);
+        ImGui::DockBuilderDockWindow("Shader Graph", dockMain);
+        ImGui::DockBuilderDockWindow(TEXT("着色器编辑器"), dockMain);
+        ImGui::DockBuilderDockWindow("RenderGraph", dockMain);
+
+        ImGui::DockBuilderFinish(dockspaceId);
+        m_focusDefaultTabs = true;
+    }
+
     void UiManager::logicTick()
     {
         ZoneScoped();
+        if (!m_imguiCtx)
+        {
+            return;
+        }
 
         m_imguiCtx->push([this]()
         {
             ZoneScopedN("UiManager::RenderUI");
+            if (m_imguiPlugin)
+            {
+                m_imguiPlugin->syncCallerContext();
+            }
             renderMainMenuBar();
-            ImguiContext::createMainDockSpace("MQEngine");
+            ImGuiID dockspaceId = ImguiContext::createMainDockSpace("MQEngine");
+            ImGuiDockNode* dockNode = ImGui::DockBuilderGetNode(dockspaceId);
+            bool logNotDocked = false;
+            if (!m_layoutChecked)
+            {
+                m_layoutChecked = true;
+                ImGuiWindowSettings* logSettings = ImGui::FindWindowSettingsByID(ImHashStr(TEXT("日志")));
+                logNotDocked = (!logSettings || logSettings->DockId == 0);
+            }
+            if (m_needResetLayout || !dockNode || (!dockNode->IsSplitNode() && dockNode->Windows.empty()) || logNotDocked)
+            {
+                m_needResetLayout = false;
+                setupDefaultLayout(dockspaceId);
+            }
             renderScene();
 #ifdef FCT_DEBUG
             ImGui::Begin("编辑器内存分析");
@@ -267,6 +231,24 @@ namespace MQEngine
             m_shaderEditor->render();
             m_shaderGraph->render();
             m_contentBrowser->render();
+            if (m_logWindow)
+                m_logWindow->render();
+
+            if (m_focusDefaultTabs)
+            {
+                m_focusDefaultTabs = false;
+                ImGui::SetWindowFocus(TEXT("相机控制"));
+                ImGui::SetWindowFocus(TEXT("贴图: SceneColorTarget"));
+                ImGui::SetWindowFocus(TEXT("实体检查器"));
+                ImGui::SetWindowFocus(TEXT("内容浏览器"));
+                ImGui::SetWindowFocus(TEXT("日志"));
+                ImGui::SetWindowFocus(TEXT("场景实体查看器"));
+                ImGui::SetWindowFocus(TEXT("场景视口"));
+                if (ImGui::GetIO().IniFilename)
+                {
+                    ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
+                }
+            }
         });
     }
 
@@ -330,6 +312,14 @@ namespace MQEngine
                 if (ImGui::MenuItem(TEXT("退出"), "Alt+F4"))
                 {
 
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu(TEXT("布局")))
+            {
+                if (ImGui::MenuItem(TEXT("重置默认排版")))
+                {
+                    m_needResetLayout = true;
                 }
                 ImGui::EndMenu();
             }

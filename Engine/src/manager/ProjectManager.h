@@ -25,7 +25,7 @@ struct ProjectConfig {
     std::string version = "1.0.0";
     std::string projectFilePath;
     std::string projectDirectory;
-    std::string assetRoot = "res";
+    std::string assetRoot = "Assets";
     std::string resolvedAssetRoot;
     std::string pipelinePath;
     std::string resolvedPipelinePath;
@@ -76,6 +76,7 @@ public:
      * @brief 获取当前工程配置
      */
     const ProjectConfig& getCurrentProject() const { return m_currentConfig; }
+    const ProjectConfig& getCurrentConfig() const { return m_currentConfig; }
 
     /**
      * @brief 获取当前工程所在根目录

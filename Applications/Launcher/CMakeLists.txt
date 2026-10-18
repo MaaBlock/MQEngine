@@ -40,6 +40,7 @@ target_link_libraries(Launcher
 target_link_fct_libraries(Launcher)
 target_link_fct_node_libraries(Launcher)
 target_link_engine(Launcher)
+target_link_imgui_plugin(Launcher)
 set_utf8_for_target(Launcher)
 
 if(TARGET Game)

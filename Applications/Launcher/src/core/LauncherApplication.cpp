@@ -10,6 +10,10 @@ namespace MQEngine
     {
         constexpr const char* kDefaultDemoSceneUuid = "default-scene-0001-0000-000000000001";
         constexpr const char* kDefaultDemoSceneName = "DefaultScene";
+        constexpr const char* kDemoFloorModelUuid = "demo-model-floor1-0001-000000000001";
+        constexpr const char* kDemoRobotModelUuid = "demo-model-robot0-0001-000000000002";
+        constexpr const char* kDemoBallModelUuid = "demo-model-ball00-0001-000000000003";
+        constexpr const char* kDemoFloorMatModelUuid = "demo-model-flrmat-0001-000000000004";
 
         std::string NormalizePathString(const fs::path& p)
         {
@@ -24,16 +28,45 @@ namespace MQEngine
     {
         return RenderConfig{
             .target = RenderTarget::Texture,
-            .windowTitle = "MQEngine Launcher"
+            .windowTitle = "MQEngine Launcher",
+            .defaultProjectPath = "Applications/Launcher/LauncherProject/project.json"
         };
+    }
+
+    void LauncherApplication::locateWorkspaceRoot()
+    {
+        std::error_code ec;
+        fs::path probe = fs::current_path(ec);
+        for (int depth = 0; depth < 8; ++depth)
+        {
+            if (fs::exists(probe / "CMakeLists.txt", ec) &&
+                fs::exists(probe / "Engine", ec) &&
+                fs::exists(probe / "Assets", ec))
+            {
+                m_workspaceRoot = NormalizePathString(probe);
+                return;
+            }
+            if (!probe.has_parent_path() || probe == probe.parent_path())
+                break;
+            probe = probe.parent_path();
+        }
+        m_workspaceRoot = NormalizePathString(fs::current_path(ec));
+    }
+
+    std::string LauncherApplication::resolveWorkspacePath(const std::string& relativePath) const
+    {
+        if (relativePath.empty() || m_workspaceRoot.empty())
+            return relativePath;
+        fs::path p = fs::u8path(relativePath);
+        if (p.is_absolute())
+            return relativePath;
+        return NormalizePathString(fs::u8path(m_workspaceRoot) / p);
     }
 
     void LauncherApplication::init()
     {
         ZoneScoped();
-        m_imguiCtx = m_imguiModule.createContext(global.wnd, global.ctx);
-        m_imguiCtx->attachPass("ImguiPass");
-        m_imguiCtx->create(ImguiContextCreateFlag::Docking);
+        locateWorkspaceRoot();
 
         setupRenderCallbacks();
         setupDefaultCamera();
@@ -41,52 +74,35 @@ namespace MQEngine
         scanProjects();
 
         if (CommandLineArgs::instance().hasProject())
-            addOrUpdateProjectEntry(CommandLineArgs::instance().getProjectPath());
+        {
+            std::string cliProj = NormalizePathString(fs::u8path(CommandLineArgs::instance().getProjectPath()));
+            std::string launcherProj = resolveWorkspacePath("Applications/Launcher/LauncherProject/project.json");
+            if (cliProj != launcherProj)
+                addOrUpdateProjectEntry(cliProj);
+        }
     }
 
     void LauncherApplication::setupRenderCallbacks()
     {
-        renderCallBackDispatcher.subscribe<RenderCallBack::SettingUpPass>(
-            [this](const RenderCallBack::SettingUpPass& event)
-            {
-                auto graph = event.graph;
-                graph->addPass(
-                    "ImguiPass",
-                    EnablePassClear(ClearType::color | ClearType::depthStencil, Vec4(0.10f, 0.11f, 0.13f, 1.0f)),
-                    Target("mainWindowColor", global.wnd),
-                    Texture("SceneColorTarget"),
-                    Texture("PosTarget"),
-                    Texture("RetTarget"),
-                    DepthStencil("mainWindowDS", global.wnd));
-            });
+        auto& engine = Engine::getInstance();
+        Status pluginSt = engine.loadPlugin("ImguiPlugin");
+        if (!pluginSt.ok())
+        {
+            spdlog::error("LauncherApplication: 加载 ImguiPlugin 失败: {}", pluginSt.message());
+            return;
+        }
 
-        renderCallBackDispatcher.subscribe<RenderCallBack::KeepImage>(
-            [this](const RenderCallBack::KeepImage&)
-            {
-                m_imguiCtx->enableChinese();
-            });
+        if (engine.getPluginManager())
+        {
+            m_imguiPlugin = engine.getPluginManager()->getPluginAs<ImguiPlugin>("ImguiPlugin");
+        }
 
-        renderCallBackDispatcher.subscribe<RenderCallBack::SettingSync>(
-            [this](const RenderCallBack::SettingSync& event)
-            {
-                event.graph["syncImgui"] = {
-                    [this]()
-                    {
-                        m_imguiCtx->swapBuffer();
-                    },
-                    {},
-                    {}
-                };
-            });
-
-        renderCallBackDispatcher.subscribe<RenderCallBack::SubscribePass>(
-            [this](const RenderCallBack::SubscribePass& event)
-            {
-                event.graph->subscribe("ImguiPass", [this](PassSubmitEvent env)
-                {
-                    m_imguiCtx->submit(env.cmdBuf);
-                });
-            });
+        if (m_imguiPlugin)
+        {
+            m_imguiPlugin->setClearColor(Vec4(0.10f, 0.11f, 0.13f, 1.0f));
+            m_imguiPlugin->syncCallerContext();
+            m_imguiCtx = m_imguiPlugin->getImguiContext();
+        }
     }
 
     void LauncherApplication::setupDefaultCamera()
@@ -100,7 +116,7 @@ namespace MQEngine
 
     void LauncherApplication::ensureDemoProjectInitialized()
     {
-        std::string demoDir = "Example/DemoProject";
+        std::string demoDir = resolveWorkspacePath("Example/DemoProject");
         auto st = initializeProjectDirectory(demoDir, "DemoProject", kDefaultDemoSceneUuid);
         if (!st.ok())
         {
@@ -120,7 +136,7 @@ namespace MQEngine
         auto* dataLoader = g_engineGlobal.dataManager->getDataLoader();
         dataLoader->ensureDirectory(projectDir);
 
-        std::string assetRoot = projectDir + "/res";
+        std::string assetRoot = projectDir + "/Assets";
         dataLoader->ensureDirectory(assetRoot);
         dataLoader->ensureDirectory(assetRoot + "/pipelines");
         dataLoader->ensureDirectory(assetRoot + "/scenes");
@@ -135,8 +151,8 @@ namespace MQEngine
             ProjectConfig cfg;
             cfg.projectName = projectName;
             cfg.version = "1.0.0";
-            cfg.assetRoot = "res";
-            cfg.pipelinePath = "res/pipelines/default_pipeline.json";
+            cfg.assetRoot = "Assets";
+            cfg.pipelinePath = "Assets/pipelines/default_pipeline.json";
             cfg.initialSceneUuid = sceneUuid;
             cfg.settings["description"] = "MQEngine 默认工程";
 
@@ -148,7 +164,7 @@ namespace MQEngine
         std::string targetPipelinePath = assetRoot + "/pipelines/default_pipeline.json";
         if (!dataLoader->fileExists(targetPipelinePath))
         {
-            auto defaultPipeRes = g_engineGlobal.resourceLoader->loadFile("Res/pipelines/default_pipeline.json");
+            auto defaultPipeRes = g_engineGlobal.resourceLoader->loadFile(resolveWorkspacePath("Assets/pipelines/default_pipeline.json"));
             if (defaultPipeRes.ok())
             {
                 auto pipeSaveSt = g_engineGlobal.resourceLoader->saveFile(targetPipelinePath, defaultPipeRes.value());
@@ -190,8 +206,11 @@ namespace MQEngine
             ar << setting;
         }
 
+        bool hadRobotModel = dataLoader->fileExists(assetRoot + "/models/robot/model.uuid");
+        ensureDefaultDemoModels(assetRoot);
+
         std::string sceneDatPath = sceneDir + "/scene.dat";
-        if (!dataLoader->fileExists(sceneDatPath))
+        if (!dataLoader->fileExists(sceneDatPath) || !hadRobotModel)
         {
             std::string prevAssetRoot = g_engineGlobal.dataManager->getAssetRoot();
             g_engineGlobal.dataManager->setAssetRoot(assetRoot);
@@ -200,6 +219,95 @@ namespace MQEngine
         }
 
         return OkStatus();
+    }
+
+    void LauncherApplication::ensureDefaultDemoModels(const std::string& assetRoot)
+    {
+        importBuiltinModel(assetRoot, "floor_1", kDemoFloorModelUuid, resolveWorkspacePath("Assets/models/floor_1.glb"));
+        importBuiltinModel(assetRoot, "robot", kDemoRobotModelUuid, resolveWorkspacePath("Assets/models/robot.glb"));
+        importBuiltinModel(assetRoot, "ball", kDemoBallModelUuid, resolveWorkspacePath("Assets/ball.obj"));
+        importBuiltinModel(assetRoot, "floor_material", kDemoFloorMatModelUuid, resolveWorkspacePath("Assets/models/floor_material.glb"));
+    }
+
+    void LauncherApplication::importBuiltinModel(const std::string& assetRoot,
+                                                 const std::string& modelDirName,
+                                                 const std::string& modelUuid,
+                                                 const std::string& sourceModelPath)
+    {
+        std::error_code ec;
+        fs::path srcPath = fs::u8path(sourceModelPath);
+        if (!fs::exists(srcPath, ec))
+            return;
+
+        fs::path targetDir = fs::u8path(assetRoot) / "models" / modelDirName;
+        if (fs::exists(targetDir / "model.uuid", ec) && fs::exists(targetDir / "index.edit.dat", ec))
+            return;
+
+        fs::path sourceSubDir = targetDir / "source";
+        fs::create_directories(sourceSubDir, ec);
+
+        if (!g_engineGlobal.rt)
+            return;
+        UniquePtr<ModelLoader> modelLoader(g_engineGlobal.rt->createModelLoader());
+        if (!modelLoader)
+            return;
+
+        std::set<std::string> allPaths = modelLoader->resolveModePaths(sourceModelPath);
+        allPaths.insert(sourceModelPath);
+        fs::path sourceBaseDir = srcPath.parent_path();
+
+        for (const auto& filePath : allPaths)
+        {
+            fs::path sFile = fs::u8path(filePath);
+            if (!fs::exists(sFile, ec))
+                continue;
+            fs::path dstFile;
+            fs::path relPath = fs::relative(sFile, sourceBaseDir, ec);
+            if (!ec && !relPath.empty() && relPath.native()[0] != '.')
+                dstFile = sourceSubDir / relPath;
+            else
+                dstFile = sourceSubDir / sFile.filename();
+
+            fs::create_directories(dstFile.parent_path(), ec);
+            fs::copy_file(sFile, dstFile, fs::copy_options::overwrite_existing, ec);
+        }
+
+        try
+        {
+            ModelInfo::SceneInfo sceneInfo = modelLoader->loadModelInfo(sourceModelPath);
+            std::ofstream indexOut(targetDir / "index.edit.dat", std::ios::binary);
+            if (indexOut.is_open())
+            {
+                boost::archive::binary_oarchive ar(indexOut);
+                ar << sceneInfo;
+            }
+
+            ModelUuidFile uuidFileData;
+            uuidFileData.uuid = modelUuid;
+            uuidFileData.modelRelativePath = "source/" + srcPath.filename().string();
+            std::ofstream uuidOut(targetDir / "model.uuid", std::ios::binary);
+            if (uuidOut.is_open())
+            {
+                boost::archive::binary_oarchive ar(uuidOut);
+                ar << uuidFileData;
+            }
+
+            auto fileTime = fs::last_write_time(srcPath, ec);
+            auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
+                fileTime - fs::file_time_type::clock::now() + std::chrono::system_clock::now());
+            auto timestamp = std::chrono::duration_cast<std::chrono::seconds>(sctp.time_since_epoch()).count();
+            std::ofstream tsOut(targetDir / "timestamp.dat", std::ios::binary);
+            if (tsOut.is_open())
+            {
+                boost::archive::binary_oarchive ar(tsOut);
+                ar << timestamp;
+                ar << sourceModelPath;
+            }
+        }
+        catch (const std::exception& e)
+        {
+            spdlog::warn("导入默认模型 {} 失败: {}", modelDirName, e.what());
+        }
     }
 
     void LauncherApplication::populateDefaultSceneEntities(const std::string& sceneUuid)
@@ -217,17 +325,65 @@ namespace MQEngine
                 {
                     auto camEntity = reg->create();
                     reg->emplace<NameTag>(camEntity, NameTag{ "MainCamera" });
-                    reg->emplace<PositionComponent>(camEntity, PositionComponent{ Vec3(0.0f, 2.0f, -5.0f) });
-                    reg->emplace<RotationComponent>(camEntity, RotationComponent{ Vec3(0.0f, 0.0f, 0.0f) });
-                    reg->emplace<CameraComponent>(camEntity, CameraComponent{ .active = true });
+                    reg->emplace<PositionComponent>(camEntity, PositionComponent{ Vec3(2.8f, 2.2f, 2.8f) });
+                    reg->emplace<RotationComponent>(camEntity, RotationComponent{ Vec3(-22.0f, -135.0f, 0.0f) });
+                    reg->emplace<CameraComponent>(camEntity, CameraComponent{
+                        .active = true,
+                        .fov = 60.0f,
+                        .nearPlane = 0.1f,
+                        .farPlane = 100.0f
+                    });
 
                     auto lightEntity = reg->create();
                     reg->emplace<NameTag>(lightEntity, NameTag{ "DirectionalLight" });
-                    reg->emplace<PositionComponent>(lightEntity, PositionComponent{ Vec3(0.0f, 5.0f, 0.0f) });
+                    reg->emplace<PositionComponent>(lightEntity, PositionComponent{ Vec3(4.0f, 8.0f, 4.0f) });
                     reg->emplace<RotationComponent>(lightEntity, RotationComponent{ Vec3(-45.0f, 45.0f, 0.0f) });
                     DirectionalLightComponent dirLight{};
+                    dirLight.direction = Vec3(-0.5f, -1.0f, -0.6f);
+                    dirLight.color = Vec3(1.0f, 0.98f, 0.92f);
+                    dirLight.intensity = 1.8f;
                     dirLight.enabled = true;
                     reg->emplace<DirectionalLightComponent>(lightEntity, dirLight);
+                }
+                else
+                {
+                    auto lightView = reg->view<DirectionalLightComponent>();
+                    for (auto entity : lightView)
+                    {
+                        auto& dirLight = lightView.get<DirectionalLightComponent>(entity);
+                        dirLight.direction = Vec3(-0.5f, -1.0f, -0.6f);
+                        dirLight.color = Vec3(1.0f, 0.98f, 0.92f);
+                        dirLight.intensity = 1.8f;
+                        dirLight.enabled = true;
+                    }
+                }
+
+                if (reg->view<StaticMeshInstance>().empty())
+                {
+                    auto floorEntity = reg->create();
+                    reg->emplace<NameTag>(floorEntity, NameTag{ "Floor" });
+                    reg->emplace<PositionComponent>(floorEntity, PositionComponent{ Vec3(0.0f, 0.0f, 0.0f) });
+                    reg->emplace<RotationComponent>(floorEntity, RotationComponent{ Vec3(0.0f, 0.0f, 0.0f) });
+                    reg->emplace<ScaleComponent>(floorEntity, ScaleComponent{ Vec3(2.0f, 1.0f, 2.0f) });
+                    reg->emplace<StaticMeshInstance>(floorEntity, StaticMeshInstance{ kDemoFloorModelUuid, "Object_0" });
+                    reg->emplace<DiffuseTextureComponent>(floorEntity, DiffuseTextureComponent{ kDemoFloorModelUuid, "*0" });
+                    reg->emplace<NormalTextureComponent>(floorEntity, NormalTextureComponent{ kDemoFloorModelUuid, "*2" });
+
+                    auto robotEntity = reg->create();
+                    reg->emplace<NameTag>(robotEntity, NameTag{ "Robot" });
+                    reg->emplace<PositionComponent>(robotEntity, PositionComponent{ Vec3(0.0f, 0.0f, 0.0f) });
+                    reg->emplace<RotationComponent>(robotEntity, RotationComponent{ Vec3(0.0f, 45.0f, 0.0f) });
+                    reg->emplace<ScaleComponent>(robotEntity, ScaleComponent{ Vec3(1.0f, 1.0f, 1.0f) });
+                    reg->emplace<StaticMeshInstance>(robotEntity, StaticMeshInstance{ kDemoRobotModelUuid, "Bot_Bot_0" });
+                    reg->emplace<DiffuseTextureComponent>(robotEntity, DiffuseTextureComponent{ kDemoRobotModelUuid, "*0" });
+                    reg->emplace<NormalTextureComponent>(robotEntity, NormalTextureComponent{ kDemoRobotModelUuid, "*3" });
+
+                    auto sphereEntity = reg->create();
+                    reg->emplace<NameTag>(sphereEntity, NameTag{ "Sphere" });
+                    reg->emplace<PositionComponent>(sphereEntity, PositionComponent{ Vec3(-1.3f, 0.4f, 0.8f) });
+                    reg->emplace<RotationComponent>(sphereEntity, RotationComponent{ Vec3(0.0f, 0.0f, 0.0f) });
+                    reg->emplace<ScaleComponent>(sphereEntity, ScaleComponent{ Vec3(2.0f, 2.0f, 2.0f) });
+                    reg->emplace<StaticMeshInstance>(sphereEntity, StaticMeshInstance{ kDemoBallModelUuid, "ball" });
                 }
             }
             g_engineGlobal.dataManager->saveScene(sceneUuid);
@@ -241,9 +397,9 @@ namespace MQEngine
         m_projects.clear();
         m_selectedProjectIndex = -1;
 
-        addOrUpdateProjectEntry("Example/DemoProject/project.json");
-        scanDirectoryForProjects("Example");
-        scanDirectoryForProjects("Projects");
+        addOrUpdateProjectEntry(resolveWorkspacePath("Example/DemoProject/project.json"));
+        scanDirectoryForProjects(resolveWorkspacePath("Example"));
+        scanDirectoryForProjects(resolveWorkspacePath("Projects"));
 
         if (!m_projects.empty() && m_selectedProjectIndex < 0)
             m_selectedProjectIndex = 0;
@@ -307,6 +463,8 @@ namespace MQEngine
 
         m_imguiCtx->push([this]()
         {
+            if (m_imguiPlugin)
+                m_imguiPlugin->syncCallerContext();
             renderUi();
         });
     }
@@ -514,7 +672,8 @@ namespace MQEngine
             return;
         }
 
-        std::string projDir = parentDir.empty() ? projName : (parentDir + "/" + projName);
+        std::string relProjDir = parentDir.empty() ? projName : (parentDir + "/" + projName);
+        std::string projDir = resolveWorkspacePath(relProjDir);
         auto st = initializeProjectDirectory(projDir, projName, kDefaultDemoSceneUuid);
         if (!st.ok())
         {
@@ -567,10 +726,10 @@ namespace MQEngine
             candidates.push_back(launcherExeDir.parent_path() / appName / exeFileName);
         }
 #endif
-        candidates.push_back(fs::u8path("Output/build-windows-debug/Applications/" + appName + "/" + exeFileName));
-        candidates.push_back(fs::u8path("Output/build-windows-release/Applications/" + appName + "/" + exeFileName));
-        candidates.push_back(fs::u8path("build-windows-debug/Applications/" + appName + "/" + exeFileName));
-        candidates.push_back(fs::u8path("Applications/" + appName + "/" + exeFileName));
+        candidates.push_back(fs::u8path(resolveWorkspacePath("Output/build-windows-debug/Applications/" + appName + "/" + exeFileName)));
+        candidates.push_back(fs::u8path(resolveWorkspacePath("Output/build-windows-release/Applications/" + appName + "/" + exeFileName)));
+        candidates.push_back(fs::u8path(resolveWorkspacePath("build-windows-debug/Applications/" + appName + "/" + exeFileName)));
+        candidates.push_back(fs::u8path(resolveWorkspacePath("Applications/" + appName + "/" + exeFileName)));
 
         std::error_code ec;
         for (const auto& candidate : candidates)
@@ -624,19 +783,5 @@ namespace MQEngine
 #endif
     }
 
-    static Application* CreateLauncherApplication()
-    {
-        return new LauncherApplication();
-    }
 
-    class LauncherApplicationRegistrar
-    {
-    public:
-        LauncherApplicationRegistrar()
-        {
-            Engine::RegisterApplicationFactory(CreateLauncherApplication);
-        }
-    };
-
-    static LauncherApplicationRegistrar g_launcherRegistrar;
 }

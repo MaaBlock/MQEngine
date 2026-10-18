@@ -683,9 +683,9 @@ namespace MQEngine {
         }
 
         // 3. 序列化编辑器数据
-        std::string path = "res/shadergraph/" + name + ".sgedt";
+        std::string path = "Assets/shadergraph/" + name + ".sgedt";
         if (g_engineGlobal.resourceLoader) {
-            g_engineGlobal.resourceLoader->ensureDir("res/shadergraph/");
+            g_engineGlobal.resourceLoader->ensureDir("Assets/shadergraph/");
             std::stringstream ss;
             boost::archive::text_oarchive oa(ss);
             oa << *this;
@@ -709,7 +709,7 @@ namespace MQEngine {
         }
 
         // 2. 加载编辑器数据
-        std::string path = "res/shadergraph/" + name + ".sgedt";
+        std::string path = "Assets/shadergraph/" + name + ".sgedt";
         if (g_engineGlobal.resourceLoader) {
             auto contentStatus = g_engineGlobal.resourceLoader->loadFile(path);
             if (contentStatus.ok()) {

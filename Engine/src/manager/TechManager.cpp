@@ -75,7 +75,7 @@ namespace MQEngine
             boost::hash_combine(vertexLayoutsHash, vl.getHash());
         }
 
-        LayoutKey key = { tech.getPassName(), vertexLayoutsHash, tech.getPixelLayout().getHash() };
+        LayoutKey key = { techName, tech.getPassName(), vertexLayoutsHash, tech.getPixelLayout().getHash() };
 
         auto layoutIt = m_layouts.find(key);
         if (layoutIt == m_layouts.end())

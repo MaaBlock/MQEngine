@@ -22,7 +22,7 @@ namespace MQEngine {
         void loadGraph(const std::string& name);
         
         ShaderGraph* m_shaderGraph;
-        std::filesystem::path m_rootPath = "./res/shadergraph/";
+        std::filesystem::path m_rootPath = "./Assets/shadergraph/";
         char m_newGraphName[128] = "NewGraph";
         std::string m_selectedGraph;
     };

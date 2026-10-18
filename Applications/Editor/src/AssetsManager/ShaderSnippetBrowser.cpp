@@ -74,7 +74,7 @@ namespace MQEngine {
     }
 
     void ShaderSnippetBrowser::createSnippet(const std::string& name) {
-        std::filesystem::path snippetsDir = "./res/snippets";
+        std::filesystem::path snippetsDir = "./Assets/snippets";
         std::filesystem::path newPath = snippetsDir / (name + ".hlsl");
         if (std::filesystem::exists(newPath)) {
             // TODO: Show error in ImGui

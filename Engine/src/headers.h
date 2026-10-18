@@ -22,4 +22,7 @@
 #include "system/ScriptSystem.h"
 #include "data/Scene.h"
 #include "data/Component.h"
+#include "plugin/IPlugin.h"
+#include "plugin/PluginContext.h"
+#include "plugin/PluginManager.h"
 #endif //HEADERS_H

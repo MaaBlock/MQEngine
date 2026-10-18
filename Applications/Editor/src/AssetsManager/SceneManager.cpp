@@ -21,7 +21,7 @@ namespace MQEngine {
 
     std::string SceneManager::getSceneUuid(const std::string& sceneName)
     {
-        std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
+        std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
         std::filesystem::path uuidFile = sceneFolder / "scene.uuid";
 
         if (std::filesystem::exists(uuidFile)) {
@@ -44,7 +44,7 @@ namespace MQEngine {
     void SceneManager::newScene(const std::string& sceneName)
     {
         //创建一个文件夹
-        std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
+        std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
 
         try {
             std::filesystem::create_directories(sceneFolder);
@@ -57,7 +57,7 @@ namespace MQEngine {
             SceneUuidFile sceneUuidData;
             sceneUuidData.uuid = uuidString;
 
-            //然后在/res/scenes/场景名/底下生成一个uuid文件
+            //然后在/Assets/scenes/场景名/底下生成一个uuid文件
             std::filesystem::path uuidFile = sceneFolder / "scene.uuid";
             std::ofstream uuidOut(uuidFile, std::ios::binary);
 
@@ -161,7 +161,7 @@ void SceneManager::render()
                         ImGui::Separator();
                         if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
-                            std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
+                            std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
                             std::string command = "explorer "" + sceneFolder.string() + """;
                             system(command.c_str());
 #endif
@@ -216,7 +216,7 @@ void SceneManager::refreshSceneList()
     m_sceneList.clear();
     m_selectedSceneIndex = -1;
 
-    std::filesystem::path scenesDir = "./res/scenes";
+    std::filesystem::path scenesDir = "./Assets/scenes";
     if (!std::filesystem::exists(scenesDir)) {
         std::filesystem::create_directories(scenesDir);
         return;
@@ -263,7 +263,7 @@ void SceneManager::renderCreateSceneDialog()
         if (ImGui::Button("创建")) {
             if (strlen(sceneName) > 0) {
                 // 检查场景是否已存在
-                std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / sceneName;
+                std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
                 if (std::filesystem::exists(sceneFolder)) {
                     m_errorMessage = "场景已存在: " + std::string(sceneName);
                 } else {
@@ -310,7 +310,7 @@ void SceneManager::renderDeleteSceneDialog()
 
             if (ImGui::Button("删除")) {
                 // 删除场景文件夹
-                std::filesystem::path sceneFolder = std::filesystem::path("./res/scenes") / m_sceneList[m_deleteSceneIndex];
+                std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / m_sceneList[m_deleteSceneIndex];
                 try {
                     std::filesystem::remove_all(sceneFolder);
                     fout << "删除场景成功: " << sceneFolder << std::endl;

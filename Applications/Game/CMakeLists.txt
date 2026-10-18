@@ -19,4 +19,5 @@ target_link_libraries(Game
 target_link_fct_libraries(Game)
 target_link_fct_node_libraries(Game)
 target_link_engine(Game)
+target_link_imgui_plugin(Game)
 set_utf8_for_target(Game)

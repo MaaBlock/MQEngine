@@ -45,6 +45,10 @@ namespace MQEngine
 
     void DataManager::appendRegistry(entt::registry* registry)
     {
+        if (registry)
+        {
+            g_engineGlobal.registriesManager->storage(registry);
+        }
         g_engineGlobal.registriesManager->requestAddRegistries(boost::make_ready_future(registry));
     }
 

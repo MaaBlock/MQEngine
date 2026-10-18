@@ -22,6 +22,7 @@ namespace MQEngine {
             {
                 if (entt::registry* registry = request.future.get())
                 {
+                    storage(registry);
                     m_registries.push_back(registry);
                     return OkStatus();
                 }

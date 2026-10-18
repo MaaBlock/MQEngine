@@ -161,66 +161,66 @@ endfunction()
 
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ObjectPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/ObjectPixel.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ObjectVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/ObjectVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ShadowVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/ShadowVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/DiffuseObjectVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/DiffuseObjectVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/DiffuseObjectPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/DiffuseObjectPixel.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/NormalMapObjectVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/NormalMapObjectVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/NormalMapObjectPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/NormalMapObjectPixel.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/PBRVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/PBRVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/PBRPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/PBRPixel.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/SkyboxVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/SkyboxVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/SkyboxPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/SkyboxPixel.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ToneMappingVertex.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/ToneMappingVertex.hlsl"
         PREFIX "g_engineShader"
 )
 fct_embed_resource(
         TARGET Engine
-        FILES "${CMAKE_SOURCE_DIR}/Res/shaders/ToneMappingPixel.hlsl"
+        FILES "${CMAKE_SOURCE_DIR}/Assets/shaders/ToneMappingPixel.hlsl"
         PREFIX "g_engineShader"
 )

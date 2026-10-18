@@ -27,12 +27,15 @@ class ISystem;
  */
 struct ENGINE_API PluginContext {
     Engine* engine = nullptr;
+    FCT::Window* wnd = nullptr;
+    FCT::Context* rhiContext = nullptr;
     FCT::RenderGraph* renderGraph = nullptr;
     TechManager* techManager = nullptr;
     SystemManager* systemManager = nullptr;
     ResourceLoader* resourceLoader = nullptr;
     DataManager* dataManager = nullptr;
     ComponentReflection* componentReflection = nullptr;
+    FCT::JS::NodeEnvironment* nodeEnv = nullptr;
 
     /**
      * @brief 向 TechManager 动态注册自定义渲染 Technique

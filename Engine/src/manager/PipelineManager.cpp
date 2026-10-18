@@ -1,10 +1,10 @@
+#include <boost/json/src.hpp>
 #include "PipelineManager.h"
 #include "../core/EngineGlobal.h"
 #include "../data/ResourceLoader.h"
 #include "../core/engine.h"
 #include "../core/VertexLayouts.h"
 #include "../manager/SystemManager.h"
-#include <boost/json/src.hpp>
 #include <spdlog/spdlog.h>
 #include <cstring>
 #include <cstdint>
@@ -300,14 +300,12 @@ StatusOr<PipelineConfig> PipelineManager::loadPipeline(const std::string& path) 
         "../../" + path,
         "../../../" + path,
         "../../../../" + path,
-        "Res/pipelines/default_pipeline.json",
-        "MQEngine/Res/pipelines/default_pipeline.json",
-        "res/pipelines/default_pipeline.json",
-        "MQEngine/res/pipelines/default_pipeline.json",
-        "../Res/pipelines/default_pipeline.json",
-        "../../Res/pipelines/default_pipeline.json",
-        "../../../Res/pipelines/default_pipeline.json",
-        "../../../../Res/pipelines/default_pipeline.json"
+        "Assets/pipelines/default_pipeline.json",
+        "MQEngine/Assets/pipelines/default_pipeline.json",
+        "../Assets/pipelines/default_pipeline.json",
+        "../../Assets/pipelines/default_pipeline.json",
+        "../../../Assets/pipelines/default_pipeline.json",
+        "../../../../Assets/pipelines/default_pipeline.json"
     };
 
     std::string content;

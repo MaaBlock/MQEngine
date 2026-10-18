@@ -32,6 +32,7 @@ struct PluginEntry {
     PluginState state = PluginState::Unloaded;
     std::string errorMessage;
     bool isDynamic = false;
+    bool isScript = false;
     std::string dynamicLibraryPath;
     void* libraryHandle = nullptr;
 };
@@ -66,6 +67,18 @@ public:
      * @brief 动态加载共享库/DLL 插件
      */
     Status loadDynamicPlugin(const std::string& libraryPath, PluginContext& ctx);
+
+    /**
+     * @brief 加载 JS / TS 脚本插件（支持 .js / .ts 文件或包含 plugin.json / index.ts / index.js 的目录）
+     */
+    Status loadScriptPlugin(const std::string& scriptOrDirPath, PluginContext& ctx);
+
+    /**
+     * @brief 根据插件标识符自动解析并加载静态插件、动态库插件 (.dll) 或脚本插件 (.js/.ts)
+     */
+    Status resolveAndLoadPlugin(const std::string& pluginIdent,
+                                const std::string& baseDir,
+                                PluginContext& ctx);
 
     /**
      * @brief 加载指定插件 (执行 onLoad)
@@ -123,6 +136,15 @@ public:
     std::shared_ptr<IPlugin> getPlugin(const std::string& name) const;
 
     /**
+     * @brief 按具体类型获取插件实例
+     */
+    template<typename T>
+    std::shared_ptr<T> getPluginAs(const std::string& name) const {
+        auto base = getPlugin(name);
+        return base ? std::static_pointer_cast<T>(base) : nullptr;
+    }
+
+    /**
      * @brief 获取插件生命周期状态
      */
     PluginState getPluginState(const std::string& name) const;
@@ -149,6 +171,8 @@ private:
 
     Status ensurePluginInstance(const std::string& name);
     void freeDynamicLibrary(PluginEntry& entry);
+    std::string resolveDynamicLibraryPath(const std::string& inputPath, const std::string& baseDir = "") const;
+    std::string resolveScriptPluginPath(const std::string& inputPath, const std::string& baseDir = "") const;
 };
 
 } // namespace MQEngine

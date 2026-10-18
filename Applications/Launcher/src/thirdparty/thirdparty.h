@@ -8,6 +8,7 @@
 #include <Engine/manager/PipelineManager.h>
 #include <Engine/core/CommandLineArgs.h>
 #include <Engine/data/ResourceLoader.h>
+#include <ImguiPlugin/ImguiPlugin.h>
 #include <tinyfiledialogs.h>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>

@@ -35,6 +35,9 @@
 #include "CommandLineArgs.h"
 #include "../manager/ProjectManager.h"
 #include "../system/ComponentReflection.h"
+#include "../plugin/IPlugin.h"
+#include "../plugin/PluginContext.h"
+#include "../plugin/PluginManager.h"
 
 namespace FCT
 {
@@ -58,6 +61,8 @@ namespace MQEngine {
         void loop();
         static Engine& getInstance();
         static void RegisterApplicationFactory(CreateApplicationFn fn);
+        static void addLogSink(const std::shared_ptr<spdlog::sinks::sink>& sink);
+        static void removeLogSink(const std::shared_ptr<spdlog::sinks::sink>& sink);
         
         SystemManager& getSystemManager() { return m_systemManager; }
         FCT::StaticMesh<uint32_t>* getSkyboxMesh() const { return m_skyboxMesh; }
@@ -72,6 +77,9 @@ namespace MQEngine {
         PluginManager* getPluginManager() const;
         ComponentReflection* getComponentReflection() const { return m_componentReflection.get(); }
         Application* getApplication() const { return m_application; }
+        FCT::JS::NodeEnvironment* getNodeEnvironment() const;
+        PluginContext createPluginContext();
+        Status loadPlugin(const std::string& pluginIdent);
 
         static Engine* s_instance;
     private:

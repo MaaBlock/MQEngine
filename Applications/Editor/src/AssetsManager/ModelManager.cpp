@@ -49,8 +49,8 @@ namespace MQEngine
     {
         std::filesystem::path modelFilePath(modelPath);
         std::string modelBaseName = modelFilePath.stem().string();
-        std::string targetDirName = GetUniqueDirectoryName("./res/models",modelBaseName);
-        std::filesystem::path targetDir = std::filesystem::path("./res/models") / targetDirName;
+        std::string targetDirName = GetUniqueDirectoryName("./Assets/models",modelBaseName);
+        std::filesystem::path targetDir = std::filesystem::path("./Assets/models") / targetDirName;
         std::filesystem::create_directories(targetDir);
 
         std::set<std::string> allModelPaths = m_modelLoader->resolveModePaths(modelPath);
@@ -181,12 +181,16 @@ namespace MQEngine
 
         ImGui::BeginChild("模型列表", ImVec2(0, 0), true);
         {
-            std::filesystem::path modelsDir = "./res/models";
+            std::filesystem::path modelsDir = "./Assets/models";
             if (std::filesystem::exists(modelsDir) && std::filesystem::is_directory(modelsDir)) {
                 try {
                     for (const auto& entry : std::filesystem::directory_iterator(modelsDir)) {
                         if (entry.is_directory()) {
                             std::string modelName = entry.path().filename().string();
+                            if (m_selectedModel.empty()) {
+                                m_selectedModel = modelName;
+                                loadSelectedModelInfo(entry.path());
+                            }
 
                             if (ImGui::Selectable(modelName.c_str(), m_selectedModel == modelName)) {
                                 m_selectedModel = modelName;
@@ -445,7 +449,7 @@ namespace MQEngine
         ImGui::Columns(1);
     }
     std::string ModelManager::getModelUuid(const std::string& modelName) {
-        std::filesystem::path modelDir = std::filesystem::path("./res/models") / modelName;
+        std::filesystem::path modelDir = std::filesystem::path("./Assets/models") / modelName;
         std::filesystem::path uuidFile = modelDir / "model.uuid";
 
         if (std::filesystem::exists(uuidFile)) {
