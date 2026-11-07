@@ -2,22 +2,22 @@
 #include <imgui.h>
 #include "../core/Global.h"
 #include "../SceneViewer/Inspector.h"
-#include "../../Engine/src/manager/SystemManager.h"
-#include "../../Engine/src/system/BindedSystem.h"
+#include <Engine/headers.h>
+
 #include <algorithm>
 
 namespace MQEngine {
     void EditorGraphNode::onInspectorGui() {
-        if (!g_engineGlobal.shaderGraphManager) return;
-        ShaderGraphNode* engineNode = g_engineGlobal.shaderGraphManager->getNode(engineNodeId);
+        if (!Runtime::Engine::getInstance()->effect->shaderGraphManager) return;
+        ShaderGraphNode* engineNode = Runtime::Engine::getInstance()->effect->shaderGraphManager->getNode(engineNodeId);
         if (!engineNode) return;
 
         ImGui::Text("Node ID: %d", engineNode->id);
         ImGui::Text("Shader Snippet: %s", engineNode->name.c_str());
         ImGui::Text("UUID: %s", engineNode->uuid.c_str());
         ImGui::Separator();
-        if (g_engineGlobal.shaderSnippetManager) {
-            const Snippet* foundSnippet = g_engineGlobal.shaderSnippetManager->getSnippetByUuid(engineNode->uuid);
+        if (Runtime::Engine::getInstance()->effect->shaderSnippetManager) {
+            const Snippet* foundSnippet = Runtime::Engine::getInstance()->effect->shaderSnippetManager->getSnippetByUuid(engineNode->uuid);
 
             if (foundSnippet) {
                 ImGui::Text("Source:");
@@ -32,8 +32,8 @@ namespace MQEngine {
 
     ShaderGraph::ShaderGraph() {
         m_context = ImNodes::EditorContextCreate();
-        if (g_engineGlobal.shaderSnippetManager) {
-            m_snippetUpdateSubId = g_engineGlobal.shaderSnippetManager->subscribe<SnippetEvent::Update>(
+        if (Runtime::Engine::getInstance()->effect->shaderSnippetManager) {
+            m_snippetUpdateSubId = Runtime::Engine::getInstance()->effect->shaderSnippetManager->subscribe<SnippetEvent::Update>(
                 [this](const SnippetEvent::Update& e) {
                     redirectionNode(e.uuid);
                 });
@@ -41,8 +41,8 @@ namespace MQEngine {
     }
 
     ShaderGraph::~ShaderGraph() {
-        if (g_engineGlobal.shaderSnippetManager) {
-            g_engineGlobal.shaderSnippetManager->unsubscribe<SnippetEvent::Update>(m_snippetUpdateSubId);
+        if (Runtime::Engine::getInstance()->effect->shaderSnippetManager) {
+            Runtime::Engine::getInstance()->effect->shaderSnippetManager->unsubscribe<SnippetEvent::Update>(m_snippetUpdateSubId);
         }
         ImNodes::EditorContextFree(m_context);
     }
@@ -66,10 +66,10 @@ namespace MQEngine {
     }
 
     void ShaderGraph::onInspectorGui() {
-        if (!g_engineGlobal.shaderGraphManager)
+        if (!Runtime::Engine::getInstance()->effect->shaderGraphManager)
             return;
 
-        ShaderGraphConfig config = g_engineGlobal.shaderGraphManager->getConfig();
+        ShaderGraphConfig config = Runtime::Engine::getInstance()->effect->shaderGraphManager->getConfig();
         bool changed = false;
 
         // Shader类型
@@ -82,8 +82,8 @@ namespace MQEngine {
 
         // 布局
         if (ImGui::CollapsingHeader("Layouts", ImGuiTreeNodeFlags_DefaultOpen)) {
-            const auto& vertexLayouts = g_engineGlobal.shaderGraphManager->getRegisteredVertexLayouts();
-            const auto& pixelLayouts = g_engineGlobal.shaderGraphManager->getRegisteredPixelLayouts();
+            const auto& vertexLayouts = Runtime::Engine::getInstance()->effect->shaderGraphManager->getRegisteredVertexLayouts();
+            const auto& pixelLayouts = Runtime::Engine::getInstance()->effect->shaderGraphManager->getRegisteredPixelLayouts();
 
             if (config.type == ShaderType::Vertex) {
                 if (ImGui::BeginCombo("Vertex Layout (Input)", config.vertexLayoutName.c_str())) {
@@ -114,8 +114,8 @@ namespace MQEngine {
 
         // 绑定系统
         if (ImGui::CollapsingHeader("Binded Systems")) {
-            if (g_engineGlobal.systemManager) {
-                const auto& systemConfigs = g_engineGlobal.systemManager->getConfigs();
+            if (Runtime::Engine::getInstance()->host->systemManager) {
+                const auto& systemConfigs = Runtime::Engine::getInstance()->host->systemManager->getConfigs();
                 
                 if (ImGui::BeginCombo("Add System", "Select to add...")) {
                     for (const auto& [name, sysConfig] : systemConfigs) {
@@ -154,7 +154,7 @@ namespace MQEngine {
                                         ImGui::TextDisabled("Uniforms:");
                                         for (const auto& slot : uniformSlots) {
                                             if(ImGui::Selectable(("Uniform: " + std::string(slot.getName())).c_str())) {
-                                                 g_engineGlobal.shaderGraphManager->createParameterNode(slot.getName(), "uniform", sysName);
+                                                 Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.getName(), "uniform", sysName);
                                             }
                                         }
                                     }
@@ -163,7 +163,7 @@ namespace MQEngine {
                                         ImGui::TextDisabled("Samplers:");
                                         for (const auto& slot : samplerSlots) {
                                             if(ImGui::Selectable(("Sampler: " + std::string(slot.getName())).c_str())) {
-                                                 g_engineGlobal.shaderGraphManager->createParameterNode(slot.getName(), "sampler", sysName);
+                                                 Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.getName(), "sampler", sysName);
                                             }
                                         }
                                     }
@@ -172,7 +172,7 @@ namespace MQEngine {
                                         ImGui::TextDisabled("Textures:");
                                         for (const auto& slot : textureSlots) {
                                             if(ImGui::Selectable(("Texture: " + slot.name).c_str())) {
-                                                 g_engineGlobal.shaderGraphManager->createParameterNode(slot.name, "texture", sysName);
+                                                 Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.name, "texture", sysName);
                                             }
                                         }
                                     }
@@ -190,7 +190,7 @@ namespace MQEngine {
         }
 
         if (changed) {
-            g_engineGlobal.shaderGraphManager->setConfig(config);
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->setConfig(config);
             
             if (m_editorNodes.count(ShaderGraphManager::INPUT_NODE_ID)) {
                 m_editorNodes[ShaderGraphManager::INPUT_NODE_ID]->inputPinIds.clear();
@@ -217,8 +217,8 @@ namespace MQEngine {
         ImNodes::BeginNodeEditor();
         bool isEditorHovered = ImGui::IsWindowHovered();
         
-        if (g_engineGlobal.shaderGraphManager) {
-            const auto& engineNodes = g_engineGlobal.shaderGraphManager->getNodes();
+        if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+            const auto& engineNodes = Runtime::Engine::getInstance()->effect->shaderGraphManager->getNodes();
             for (auto engineNode : engineNodes) {
                 // Find or create editor node
                 if (m_editorNodes.find(engineNode->id) == m_editorNodes.end()) {
@@ -304,8 +304,8 @@ namespace MQEngine {
                 
                 if (isTypeCompatible(startRef->type, endRef->type)) {
                     // 检查链接是否已存在于引擎中
-                    if (g_engineGlobal.shaderGraphManager) {
-                        const auto& links = g_engineGlobal.shaderGraphManager->getLinks();
+                    if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+                        const auto& links = Runtime::Engine::getInstance()->effect->shaderGraphManager->getLinks();
                         for (const auto& link : links) {
                             if (link.endNodeId == endRef->nodeId && link.endPinName == endRef->pinName) {
                                  spdlog::warn("Input pin already connected");
@@ -314,7 +314,7 @@ namespace MQEngine {
                         }
                         
                         int newLinkId = getNextId();
-                        g_engineGlobal.shaderGraphManager->createLink(
+                        Runtime::Engine::getInstance()->effect->shaderGraphManager->createLink(
                             newLinkId,
                             startRef->nodeId, startRef->pinName,
                             endRef->nodeId, endRef->pinName
@@ -328,9 +328,9 @@ namespace MQEngine {
     
         void ShaderGraph::renderLinks()
         {
-            if (!g_engineGlobal.shaderGraphManager) return;
+            if (!Runtime::Engine::getInstance()->effect->shaderGraphManager) return;
     
-            const auto& links = g_engineGlobal.shaderGraphManager->getLinks();
+            const auto& links = Runtime::Engine::getInstance()->effect->shaderGraphManager->getLinks();
             for (const auto& link : links)
             {
                 // 我们需要将引擎节点/引脚解析为ImNodes引脚ID
@@ -410,8 +410,8 @@ namespace MQEngine {
                     }
 
                     if (engineId != -1) {
-                        if (g_engineGlobal.shaderGraphManager) {
-                            g_engineGlobal.shaderGraphManager->deleteNode(engineId);
+                        if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+                            Runtime::Engine::getInstance()->effect->shaderGraphManager->deleteNode(engineId);
                         }
                         
                         // 检查是否正在删除检视器目标
@@ -437,8 +437,8 @@ namespace MQEngine {
             {
                 if (m_hoveredLinkId != -1)
                 {
-                    if (g_engineGlobal.shaderGraphManager) {
-                        g_engineGlobal.shaderGraphManager->deleteLink(m_hoveredLinkId);
+                    if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+                        Runtime::Engine::getInstance()->effect->shaderGraphManager->deleteLink(m_hoveredLinkId);
                     }
                     m_hoveredLinkId = -1;
                 }
@@ -484,9 +484,9 @@ namespace MQEngine {
 
             // 添加绑定系统的插槽
             if (ImGui::BeginMenu("Binded System Slots")) {
-                if (g_engineGlobal.shaderGraphManager && g_engineGlobal.systemManager) {
-                    const auto& config = g_engineGlobal.shaderGraphManager->getConfig();
-                    const auto& systemConfigs = g_engineGlobal.systemManager->getConfigs();
+                if (Runtime::Engine::getInstance()->effect->shaderGraphManager && Runtime::Engine::getInstance()->host->systemManager) {
+                    const auto& config = Runtime::Engine::getInstance()->effect->shaderGraphManager->getConfig();
+                    const auto& systemConfigs = Runtime::Engine::getInstance()->host->systemManager->getConfigs();
 
                     for (const auto& sysName : config.bindedSystemNames) {
                         auto sysIt = systemConfigs.find(sysName);
@@ -497,19 +497,19 @@ namespace MQEngine {
                                     auto uniformSlots = bs->getUniformSlots();
                                     for(const auto& slot : uniformSlots) {
                                         if(ImGui::Selectable(("Uniform: " + std::string(slot.getName())).c_str())) {
-                                            g_engineGlobal.shaderGraphManager->createParameterNode(slot.getName(), "uniform", sysName);
+                                            Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.getName(), "uniform", sysName);
                                         }
                                     }
                                     auto samplerSlots = bs->getSamplerSlots();
                                     for(const auto& slot : samplerSlots) {
                                         if(ImGui::Selectable(("Sampler: " + std::string(slot.getName())).c_str())) {
-                                            g_engineGlobal.shaderGraphManager->createParameterNode(slot.getName(), "sampler", sysName);
+                                            Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.getName(), "sampler", sysName);
                                         }
                                     }
                                     auto textureSlots = bs->getTextureSlots();
                                     for(const auto& slot : textureSlots) {
                                         if(ImGui::Selectable(("Texture: " + std::string(slot.name)).c_str())) {
-                                            g_engineGlobal.shaderGraphManager->createParameterNode(slot.name, "texture", sysName);
+                                            Runtime::Engine::getInstance()->effect->shaderGraphManager->createParameterNode(slot.name, "texture", sysName);
                                         }
                                     }
                                 }
@@ -522,8 +522,8 @@ namespace MQEngine {
             }
             ImGui::Separator();
 
-            if (g_engineGlobal.shaderSnippetManager) {
-                const auto& snippets = g_engineGlobal.shaderSnippetManager->getSnippets();
+            if (Runtime::Engine::getInstance()->effect->shaderSnippetManager) {
+                const auto& snippets = Runtime::Engine::getInstance()->effect->shaderSnippetManager->getSnippets();
                 
                 ImGui::BeginChild("SnippetList", ImVec2(300, 200));
                 
@@ -551,9 +551,9 @@ namespace MQEngine {
     }
 
     void ShaderGraph::addNode(const Snippet* snippet, const ImVec2& pos) {
-        if (!g_engineGlobal.shaderGraphManager) return;
+        if (!Runtime::Engine::getInstance()->effect->shaderGraphManager) return;
         
-        ShaderGraphNode* node = g_engineGlobal.shaderGraphManager->createSnippetNode(snippet->uuid);
+        ShaderGraphNode* node = Runtime::Engine::getInstance()->effect->shaderGraphManager->createSnippetNode(snippet->uuid);
         if (!node) return;
         
         int nodeId = node->id;
@@ -603,9 +603,9 @@ namespace MQEngine {
     }
 
     void ShaderGraph::redirectionLink() {
-        if (!g_engineGlobal.shaderGraphManager) return;
-        const auto& nodes = g_engineGlobal.shaderGraphManager->getNodes();
-        const auto& links = g_engineGlobal.shaderGraphManager->getLinks();
+        if (!Runtime::Engine::getInstance()->effect->shaderGraphManager) return;
+        const auto& nodes = Runtime::Engine::getInstance()->effect->shaderGraphManager->getNodes();
+        const auto& links = Runtime::Engine::getInstance()->effect->shaderGraphManager->getLinks();
         
         std::vector<int> linksToRemove;
         
@@ -633,19 +633,19 @@ namespace MQEngine {
         }
         
         for(int id : linksToRemove) {
-            g_engineGlobal.shaderGraphManager->deleteLink(id);
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->deleteLink(id);
         }
     }
 
     void ShaderGraph::redirectionNode(const std::string& uuid) {
-        if (!g_engineGlobal.shaderSnippetManager || !g_engineGlobal.shaderGraphManager) return;
+        if (!Runtime::Engine::getInstance()->effect->shaderSnippetManager || !Runtime::Engine::getInstance()->effect->shaderGraphManager) return;
 
         spdlog::info("ShaderGraph::redirectionNode called for UUID: {}", uuid);
 
-        const Snippet* newSnippet = g_engineGlobal.shaderSnippetManager->getSnippetByUuid(uuid);
+        const Snippet* newSnippet = Runtime::Engine::getInstance()->effect->shaderSnippetManager->getSnippetByUuid(uuid);
         if (!newSnippet) return;
 
-        const auto& nodes = g_engineGlobal.shaderGraphManager->getNodes();
+        const auto& nodes = Runtime::Engine::getInstance()->effect->shaderGraphManager->getNodes();
         bool nodeFound = false;
 
         // 我们仔细迭代。
@@ -683,35 +683,35 @@ namespace MQEngine {
         }
 
         // 3. 序列化编辑器数据
-        std::string path = "Assets/shadergraph/" + name + ".sgedt";
-        if (g_engineGlobal.resourceLoader) {
-            g_engineGlobal.resourceLoader->ensureDir("Assets/shadergraph/");
+        std::string path = "Assets/ShaderGraph/" + name + ".sgedt";
+        if (Runtime::Engine::getInstance()->resource->resourceLoader) {
+            Runtime::Engine::getInstance()->resource->resourceLoader->ensureDir("Assets/ShaderGraph/");
             std::stringstream ss;
             boost::archive::text_oarchive oa(ss);
             oa << *this;
-            Status st = g_engineGlobal.resourceLoader->saveFile(path, ss.str());
+            Status st = Runtime::Engine::getInstance()->resource->resourceLoader->saveFile(path, ss.str());
             if (!st.ok()) spdlog::error("Failed to save editor data: {}", st.message());
         }
 
         // 4. 保存引擎数据
-        if (g_engineGlobal.shaderGraphManager) {
-            g_engineGlobal.shaderGraphManager->setName(name);
-            Status st = g_engineGlobal.shaderGraphManager->save(name);
+        if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->setName(name);
+            Status st = Runtime::Engine::getInstance()->effect->shaderGraphManager->save(name);
             if (!st.ok()) spdlog::error("Failed to save engine data: {}", st.message());
         }
     }
 
     void ShaderGraph::load(const std::string& name) {
         // 1. 加载引擎数据
-        if (g_engineGlobal.shaderGraphManager) {
-            Status st = g_engineGlobal.shaderGraphManager->load(name);
+        if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+            Status st = Runtime::Engine::getInstance()->effect->shaderGraphManager->load(name);
             if (!st.ok()) spdlog::warn("Failed to load engine data: {}", st.message());
         }
 
         // 2. 加载编辑器数据
-        std::string path = "Assets/shadergraph/" + name + ".sgedt";
-        if (g_engineGlobal.resourceLoader) {
-            auto contentStatus = g_engineGlobal.resourceLoader->loadFile(path);
+        std::string path = "Assets/ShaderGraph/" + name + ".sgedt";
+        if (Runtime::Engine::getInstance()->resource->resourceLoader) {
+            auto contentStatus = Runtime::Engine::getInstance()->resource->resourceLoader->loadFile(path);
             if (contentStatus.ok()) {
                 std::stringstream ss(contentStatus.value());
                 boost::archive::text_iarchive ia(ss);
@@ -741,16 +741,16 @@ namespace MQEngine {
         m_hoveredLinkId = -1;
         m_currentId = 10000;
         
-        if (g_engineGlobal.shaderGraphManager) {
-            g_engineGlobal.shaderGraphManager->clear();
+        if (Runtime::Engine::getInstance()->effect->shaderGraphManager) {
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->clear();
             
             // 重置为默认配置
             ShaderGraphConfig config;
             // 确保默认绑定系统仍然存在（为了方便）
             config.bindedSystemNames = {"CameraSystem", "LightingSystem", "TextureSamplerSystem"};
             
-            g_engineGlobal.shaderGraphManager->setConfig(config);
-            g_engineGlobal.shaderGraphManager->setName("NewShaderGraph");
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->setConfig(config);
+            Runtime::Engine::getInstance()->effect->shaderGraphManager->setName("NewShaderGraph");
         }
     }
 }

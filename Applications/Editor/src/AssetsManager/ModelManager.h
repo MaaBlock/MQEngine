@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Administrator on 2025/8/23.
 //
 
@@ -21,12 +21,12 @@ namespace MQEngine {
         std::string getName() const override { return "Models"; }
 
         std::string getModelUuid(const std::string& modelName);
-        void loadSelectedModelInfo(const std::filesystem::path& modelDir);
+        void loadSelectedModelInfo(const std::string& modelDir);
         void importModel(const std::string& modelPath);
-        void saveModelIndex(const std::filesystem::path& targetDir, const std::string& modelBaseName,
+        void saveModelIndex(const std::string& targetDir, const std::string& modelBaseName,
                             const std::string& originalPath);
-        void generateUuidFile(const std::filesystem::path& targetDir, const std::string& originalPath);
-        void saveModelTimestamp(const std::filesystem::path& targetDir, const std::string& modelPath);
+        void generateUuidFile(const std::string& targetDir, const std::string& originalPath);
+        void saveModelTimestamp(const std::string& targetDir, const std::string& modelPath);
     private:
         DataManager* m_dataManager;
         FCT::ModelLoader* m_modelLoader;

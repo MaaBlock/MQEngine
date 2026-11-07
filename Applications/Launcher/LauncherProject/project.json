@@ -2,7 +2,7 @@
   "projectName": "LauncherProject",
   "version": "1.0.0",
   "assetRoot": "Assets",
-  "pipelinePath": "Assets/pipelines/default_pipeline.json",
+  "pipelinePath": "Assets/Pipelines/default_pipeline.json",
   "plugins": [],
   "initialSceneUuid": "default-scene-0001-0000-000000000001",
   "settings": {

@@ -17,7 +17,7 @@ namespace MQEngine {
         ImGui::Begin(TEXT("场景实体查看器"));
 
         if (m_dataManager && m_dataManager->getCurrentScene()) {
-            Scene* scene = m_dataManager->getCurrentScene();
+            Scene::Scene* scene = m_dataManager->getCurrentScene();
             renderSceneEntityList(scene);
             m_inputPopup.render();
         } else {
@@ -29,7 +29,7 @@ namespace MQEngine {
         renderTextureTypeSelectionPopup();
     }
 
-    void SceneEntityViewer::renderSceneEntityList(Scene* scene) {
+    void SceneEntityViewer::renderSceneEntityList(Scene::Scene* scene) {
         ImGui::Text(TEXT("当前场景: %s"), scene->getName().c_str());
         ImGui::SameLine();
         if (ImGui::Button(TEXT("保存场景"))) {
@@ -55,7 +55,7 @@ namespace MQEngine {
         }
     }
 
-    void SceneEntityViewer::renderGlobalEntityList(Scene* scene) {
+    void SceneEntityViewer::renderGlobalEntityList(Scene::Scene* scene) {
         ImGui::BeginChild("GlobalEntitiesChild", ImVec2(0, 150), ImGuiChildFlags_Borders);
 
         if (ImGui::BeginPopupContextWindow("GlobalEntityContextMenu")) {
@@ -85,16 +85,17 @@ namespace MQEngine {
                 selectEntity(entity, "", true);
             }
 
-                            if (ImGui::BeginDragDropTarget()) {
-                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
-                                    std::string functionName = static_cast<const char*>(payload->Data);
-                                    addScriptComponent(entity, functionName, true, "");
-                                }
-                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_CLASS")) {
-                                    std::string className = static_cast<const char*>(payload->Data);
-                                    addScriptComponent(entity, className, true, "", true);
-                                }
-                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {                    std::string dragData = static_cast<const char*>(payload->Data);
+            if (ImGui::BeginDragDropTarget()) {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_FUNCTION")) {
+                    std::string functionName = static_cast<const char*>(payload->Data);
+                    addScriptComponent(entity, functionName, true, "");
+                }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCRIPT_CLASS")) {
+                    std::string className = static_cast<const char*>(payload->Data);
+                    addScriptComponent(entity, className, true, "", true);
+                }
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_MESH_FROM_MODEL")) {
+                    std::string dragData = static_cast<const char*>(payload->Data);
                     size_t separatorPos = dragData.find('|');
                     if (separatorPos != std::string::npos) {
                         std::string modelUuid = dragData.substr(0, separatorPos);
@@ -117,7 +118,7 @@ namespace MQEngine {
         ImGui::EndChild();
     }
 
-    void SceneEntityViewer::renderTrunkEntityList(Scene* scene, std::string trunkName) {
+    void SceneEntityViewer::renderTrunkEntityList(Scene::Scene* scene, std::string trunkName) {
         std::string childId = "TrunkChild_" + trunkName;
         ImGui::BeginChild(childId.c_str(), ImVec2(0, 150), ImGuiChildFlags_Borders);
 
@@ -205,7 +206,6 @@ namespace MQEngine {
         if (!m_showScriptTypePopup) return;
 
         ImGui::OpenPopup(TEXT("选择脚本类型"));
-        // Increase default size to accommodate two columns
         ImGui::SetNextWindowSize(ImVec2(400, 200), ImGuiCond_FirstUseEver); 
         if (ImGui::BeginPopupModal(TEXT("选择脚本类型"), &m_showScriptTypePopup, ImGuiWindowFlags_AlwaysAutoResize)) {
             
@@ -214,11 +214,10 @@ namespace MQEngine {
                 ImGui::Separator();
                 
                 if (ImGui::Button(TEXT("绑定类"), ImVec2(-1, 0))) {
-                    Scene* scene = m_dataManager->getCurrentScene();
+                    Scene::Scene* scene = m_dataManager->getCurrentScene();
                     if (scene) {
                         entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                         if (registry) {
-                             // Add ScriptFunctionTableComponent and set className
                              auto& component = registry->get_or_emplace<ScriptFunctionTableComponent>(m_targetEntity);
                              component.className = m_draggedFunctionName;
                         }
@@ -232,11 +231,10 @@ namespace MQEngine {
 
                 ImGui::Columns(2, nullptr, true);
 
-                // Left Column: Old Component Style
                 ImGui::Text("独立组件模式");
                 ImGui::Separator();
                 if (ImGui::Button(TEXT("Ticker (每帧执行)"), ImVec2(-1, 0))) {
-                    Scene* scene = m_dataManager->getCurrentScene();
+                    Scene::Scene* scene = m_dataManager->getCurrentScene();
                     if (scene) {
                         entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                         if (registry) {
@@ -247,7 +245,7 @@ namespace MQEngine {
                     ImGui::CloseCurrentPopup();
                 }
                 if (ImGui::Button(TEXT("OnStart (启动时执行)"), ImVec2(-1, 0))) {
-                    Scene* scene = m_dataManager->getCurrentScene();
+                    Scene::Scene* scene = m_dataManager->getCurrentScene();
                     if (scene) {
                         entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                         if (registry) {
@@ -260,11 +258,10 @@ namespace MQEngine {
 
                 ImGui::NextColumn();
 
-                // Right Column: New Function Table Style
                 ImGui::Text("函数表模式");
                 ImGui::Separator();
                 if (ImGui::Button(TEXT("添加到函数表"), ImVec2(-1, 0))) {
-                    Scene* scene = m_dataManager->getCurrentScene();
+                    Scene::Scene* scene = m_dataManager->getCurrentScene();
                     if (scene) {
                         entt::registry* registry = m_targetIsGlobal ? scene->getRegistry() : scene->getLoadedTrunk(m_targetTrunkName)->getRegistry();
                         if (registry) {
@@ -298,7 +295,7 @@ namespace MQEngine {
         }
     }
 
-    void SceneEntityViewer::createEntity(Scene* scene, const std::string& name, const std::string& trunkName, bool isGlobal) {
+    void SceneEntityViewer::createEntity(Scene::Scene* scene, const std::string& name, const std::string& trunkName, bool isGlobal) {
         entt::registry* registry = nullptr;
         if (isGlobal) {
             registry = scene->getRegistry();
@@ -316,7 +313,7 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::deleteEntity(entt::entity entity, const std::string& trunkName, bool isGlobal) {
-        Scene* scene = m_dataManager->getCurrentScene();
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
         if (!scene || entity == entt::null) return;
 
         entt::registry* registry = nullptr;
@@ -341,17 +338,25 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName) {
-        Scene* scene = m_dataManager->getCurrentScene();
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
         entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
         if (!registry) return;
 
         registry->emplace_or_replace<StaticMeshInstance>(entity, modelUuid, meshName);
+
+        if (auto* engine = Runtime::Engine::getInstance(); !registry->all_of<SkeletalAnimatorComponent>(entity) && engine && engine->animation->skeletalAnimationSystem) {
+            auto skeleton = engine->animation->skeletalAnimationSystem->getOrLoadSkeleton(modelUuid);
+            if (skeleton && (skeleton->hasSkeleton() || !skeleton->animations.empty())) {
+                std::string defaultClip = skeleton->animations.empty() ? "" : skeleton->animations[0].name;
+                registry->emplace<SkeletalAnimatorComponent>(entity, SkeletalAnimatorComponent{modelUuid, defaultClip});
+            }
+        }
     }
     
     void SceneEntityViewer::addDiffuseTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-        Scene* scene = m_dataManager->getCurrentScene();
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
         entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
@@ -393,16 +398,16 @@ namespace MQEngine {
                 m_showTextureTypePopup = false;
                 ImGui::CloseCurrentPopup();
             }
-			if (ImGui::Button(TEXT("Emissive (自发光)"), ImVec2(150, 0))) {
-				addEmissiveTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
-				m_showTextureTypePopup = false;
-				ImGui::CloseCurrentPopup();
-			}
-			if (ImGui::Button(TEXT("Orm (环境光遮蔽/粗糙度/金属)"), ImVec2(150, 0))) {
-				addOrmTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
-				m_showTextureTypePopup = false;
-				ImGui::CloseCurrentPopup();
-			}
+            if (ImGui::Button(TEXT("Emissive (自发光)"), ImVec2(150, 0))) {
+                addEmissiveTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                m_showTextureTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGui::Button(TEXT("Orm (环境光遮蔽/粗糙度/金属)"), ImVec2(150, 0))) {
+                addOrmTextureComponent(m_targetEntity, m_draggedModelUuid, m_draggedTexturePath, m_targetIsGlobal, m_targetTrunkName);
+                m_showTextureTypePopup = false;
+                ImGui::CloseCurrentPopup();
+            }
             ImGui::Separator();
             if (ImGui::Button(TEXT("取消"), ImVec2(120, 0))) {
                 m_showTextureTypePopup = false;
@@ -414,7 +419,7 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::addNormalTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-        Scene* scene = m_dataManager->getCurrentScene();
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
         entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
@@ -424,7 +429,7 @@ namespace MQEngine {
     }
 
     void SceneEntityViewer::addAlbedoTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-        Scene* scene = m_dataManager->getCurrentScene();
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
         if (!scene) return;
         
         entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
@@ -433,24 +438,24 @@ namespace MQEngine {
         registry->emplace_or_replace<AlbedoTextureComponent>(entity, modelUuid, texturePath);
     }
 
-	void SceneEntityViewer::addEmissiveTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-		Scene* scene = m_dataManager->getCurrentScene();
-		if (!scene) return;
+    void SceneEntityViewer::addEmissiveTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
 
-		entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
-		if (!registry) return;
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
+        if (!registry) return;
 
-		registry->emplace_or_replace<EmissiveTextureComponent>(entity, modelUuid, texturePath);
-	}
+        registry->emplace_or_replace<EmissiveTextureComponent>(entity, modelUuid, texturePath);
+    }
 
-	    void SceneEntityViewer::addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
-			Scene* scene = m_dataManager->getCurrentScene();
-			if (!scene) return;
-	
-			entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
-			if (!registry) return;
-	
-			registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);
-		}
-	
-	} // namespace MQEngine
+    void SceneEntityViewer::addOrmTextureComponent(entt::entity entity, const std::string& modelUuid, const std::string& texturePath, bool isGlobal, const std::string& trunkName) {
+        Scene::Scene* scene = m_dataManager->getCurrentScene();
+        if (!scene) return;
+
+        entt::registry* registry = isGlobal ? scene->getRegistry() : scene->getLoadedTrunk(trunkName)->getRegistry();
+        if (!registry) return;
+
+        registry->emplace_or_replace<OrmTextureComponent>(entity, modelUuid, texturePath);
+    }
+
+} // namespace MQEngine

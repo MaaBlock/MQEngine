@@ -1,16 +1,11 @@
 include("../../Config/set_utf8_compiler_encoding.cmake")
-file(GLOB CORE_MODULE_SOURCES
-        LIST_DIRECTORIES false
-        CONFIGURE_DEPENDS
-        "./src/core/*.cpp"
-)
+include("../../Config/copy_headers.cmake")
 
-set(MQENGINE_GAME_SOURCES
-        ${CORE_MODULE_SOURCES}
-)
+collect_module_files(GAME "./src")
 
 add_executable(Game
-        ${MQENGINE_GAME_SOURCES}
+        ${GAME_MODULE_SOURCES}
+        ${GAME_MODULE_HEADERS}
 )
 
 target_link_libraries(Game
@@ -20,4 +15,7 @@ target_link_fct_libraries(Game)
 target_link_fct_node_libraries(Game)
 target_link_engine(Game)
 target_link_imgui_plugin(Game)
+target_link_3dtiles_plugin(Game)
+target_link_homelbm_plugin(Game)
+target_link_user_code(Game)
 set_utf8_for_target(Game)

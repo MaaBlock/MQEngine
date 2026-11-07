@@ -2,7 +2,6 @@
 #define SHADERGRAPHBROWSER_H
 
 #include "../imgui/ContentBrowser.h"
-#include <filesystem>
 
 namespace MQEngine {
     class ShaderGraph;
@@ -22,7 +21,7 @@ namespace MQEngine {
         void loadGraph(const std::string& name);
         
         ShaderGraph* m_shaderGraph;
-        std::filesystem::path m_rootPath = "./Assets/shadergraph/";
+        std::string m_rootPath = "./Assets/ShaderGraph/";
         char m_newGraphName[128] = "NewGraph";
         std::string m_selectedGraph;
     };

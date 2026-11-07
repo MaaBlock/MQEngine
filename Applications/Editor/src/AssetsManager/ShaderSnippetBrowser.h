@@ -3,7 +3,6 @@
 
 #include "../thirdparty/thirdparty.h"
 #include "../imgui/ContentBrowser.h"
-#include <filesystem>
 
 namespace MQEngine {
     class ShaderSnippetBrowser : public IContentProvider {
@@ -16,7 +15,7 @@ namespace MQEngine {
         std::string getName() const override { return "着色器片段"; }
 
     private:
-        void openInVsCode(const std::filesystem::path& path);
+        void openInVsCode(const std::string& path);
         void createSnippet(const std::string& name);
         
         // m_snippetsDir is now handled by EngineGlobal.shaderSnippetManager

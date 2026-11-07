@@ -113,6 +113,48 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
+
+            if (ImGui::MenuItem("Skeletal Animator Component")) {
+                if (!registry->all_of<SkeletalAnimatorComponent>(selectedEntity.entity)) {
+                    std::string modelUuid;
+                    if (const auto* meshInst = registry->try_get<StaticMeshInstance>(selectedEntity.entity)) {
+                        modelUuid = meshInst->modelUuid;
+                    }
+                    registry->emplace<SkeletalAnimatorComponent>(selectedEntity.entity, SkeletalAnimatorComponent{modelUuid});
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("Skeletal Bone Socket")) {
+                if (!registry->all_of<SkeletalBoneSocketComponent>(selectedEntity.entity)) {
+                    registry->emplace<SkeletalBoneSocketComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("Network Identity Component")) {
+                if (!registry->all_of<NetworkIdentityComponent>(selectedEntity.entity)) {
+                    auto& netId = registry->emplace<NetworkIdentityComponent>(selectedEntity.entity);
+                    if (const auto* tag = registry->try_get<NameTag>(selectedEntity.entity)) {
+                        netId.networkGuid = tag->uuid;
+                    }
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("Network Transform Component")) {
+                if (!registry->all_of<NetworkTransformComponent>(selectedEntity.entity)) {
+                    registry->emplace<NetworkTransformComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("Network Replicated Component")) {
+                if (!registry->all_of<NetworkReplicatedComponent>(selectedEntity.entity)) {
+                    registry->emplace<NetworkReplicatedComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
             
             if (ImGui::MenuItem("Ticker Script Component")) {
                 if (!registry->all_of<TickerScriptComponent>(selectedEntity.entity)) {
@@ -131,6 +173,20 @@ namespace MQEngine {
             if (ImGui::MenuItem("Directional Light Component")) {
                 if (!registry->all_of<DirectionalLightComponent>(selectedEntity.entity)) {
                     registry->emplace<DirectionalLightComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("Point Light Component")) {
+                if (!registry->all_of<PointLightComponent>(selectedEntity.entity)) {
+                    registry->emplace<PointLightComponent>(selectedEntity.entity);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::MenuItem("PBR Material Component")) {
+                if (!registry->all_of<PBRMaterialComponent>(selectedEntity.entity)) {
+                    registry->emplace<PBRMaterialComponent>(selectedEntity.entity);
                 }
                 ImGui::CloseCurrentPopup();
             }
@@ -179,7 +235,7 @@ namespace MQEngine {
 
             if (ImGui::MenuItem("Skybox Component")) {
                 if (!registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
-                    m_inputPopup.open("设置 Skybox 路径", "Skybox 路径", "Assets/textures/skybox/",
+                    m_inputPopup.open("设置 Skybox 路径", "Skybox 路径", "Assets/Textures/skybox/",
                     [registry, selectedEntity](const std::string& path) {
                         if (registry->valid(selectedEntity.entity) && !registry->all_of<SkyboxComponent>(selectedEntity.entity)) {
                             registry->emplace<SkyboxComponent>(selectedEntity.entity, path);
@@ -188,6 +244,8 @@ namespace MQEngine {
                 }
                 ImGui::CloseCurrentPopup();
             }
+
+            renderDynamicComponentMenuItems(registry, selectedEntity.entity);
             
             ImGui::EndPopup();
         }
@@ -209,6 +267,162 @@ namespace MQEngine {
         return false;
     }
 
+    namespace {
+        bool IsBuiltinInspectorComponent(const std::string& compName) {
+            static const std::unordered_set<std::string> kBuiltins = {
+                "NameTag",
+                "PositionComponent",
+                "RotationComponent",
+                "ScaleComponent",
+                "CameraComponent",
+                "CacheRotationMatrix",
+                "CacheModelMatrix",
+                "StaticMeshInstance",
+                "SkeletalAnimatorComponent",
+                "SkeletalBoneSocketComponent",
+                "CacheSkeletalAnimation",
+                "NetworkIdentityComponent",
+                "NetworkTransformComponent",
+                "NetworkReplicatedComponent",
+                "CacheNetworkSyncComponent",
+                "HierarchyComponent",
+                "TickerScriptComponent",
+                "OnStartScriptComponent",
+                "DirectionalLightComponent",
+                "PointLightComponent",
+                "PBRMaterialComponent",
+                "DiffuseTextureComponent",
+                "ShininessComponent",
+                "AlbedoTextureComponent",
+                "NormalTextureComponent",
+                "EmissiveTextureComponent",
+                "OrmTextureComponent",
+                "ScriptFunctionTableComponent",
+                "CacheScriptComponent",
+                "SkyboxComponent",
+                "CacheSkyboxComponent"
+            };
+            return kBuiltins.count(compName) > 0;
+        }
+    } // namespace
+
+    void EntityInspector::renderDynamicComponentMenuItems(entt::registry* registry, entt::entity entity)
+    {
+        ComponentReflection* refl = (Runtime::Engine::getInstance() && Runtime::Engine::getInstance()->foundation) ? Runtime::Engine::getInstance()->foundation->getComponentReflection() : nullptr;
+        if (!refl || !registry || !registry->valid(entity)) {
+            return;
+        }
+
+        bool hasSeparator = false;
+        for (const auto& compName : refl->getRegisteredComponentNames()) {
+            if (IsBuiltinInspectorComponent(compName)) {
+                continue;
+            }
+            if (!hasSeparator) {
+                ImGui::Separator();
+                ImGui::TextDisabled("UserCode / Plugin 组件:");
+                hasSeparator = true;
+            }
+            if (ImGui::MenuItem(compName.c_str())) {
+                if (!refl->hasComponent(*registry, entity, compName)) {
+                    refl->addComponent(*registry, entity, compName);
+                }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+    }
+
+    bool EntityInspector::renderDynamicComponents(entt::registry* registry, entt::entity entity)
+    {
+        ComponentReflection* refl = (Runtime::Engine::getInstance() && Runtime::Engine::getInstance()->foundation) ? Runtime::Engine::getInstance()->foundation->getComponentReflection() : nullptr;
+        if (!refl || !registry || !registry->valid(entity)) {
+            return false;
+        }
+
+        bool renderedAny = false;
+        std::string compToRemove;
+
+        for (const auto& compName : refl->getRegisteredComponentNames()) {
+            if (IsBuiltinInspectorComponent(compName) || !refl->hasComponent(*registry, entity, compName)) {
+                continue;
+            }
+            renderedAny = true;
+
+            if (ImGui::CollapsingHeader(compName.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+                ImGui::Indent();
+                ImGui::PushID(compName.c_str());
+
+                for (const auto& fieldName : refl->getComponentFieldNames(compName)) {
+                    std::string fieldType = refl->getComponentFieldType(compName, fieldName);
+                    try {
+                        ComponentValue val = refl->getComponentField(*registry, entity, compName, fieldName);
+                        if (fieldType == "bool" && std::holds_alternative<bool>(val)) {
+                            bool bVal = std::get<bool>(val);
+                            if (ImGui::Checkbox(fieldName.c_str(), &bVal)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, bVal);
+                            }
+                        } else if (fieldType == "int" && std::holds_alternative<int>(val)) {
+                            int iVal = std::get<int>(val);
+                            if (ImGui::DragInt(fieldName.c_str(), &iVal)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, iVal);
+                            }
+                        } else if (fieldType == "float" && std::holds_alternative<float>(val)) {
+                            float fVal = std::get<float>(val);
+                            if (ImGui::DragFloat(fieldName.c_str(), &fVal, 0.1f)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, fVal);
+                            }
+                        } else if (fieldType == "double" && std::holds_alternative<double>(val)) {
+                            double dVal = std::get<double>(val);
+                            if (ImGui::InputDouble(fieldName.c_str(), &dVal, 0.0001, 0.01, "%.7f")) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, dVal);
+                            }
+                        } else if ((fieldType == "string" || fieldType == "std::string") && std::holds_alternative<std::string>(val)) {
+                            std::string sVal = std::get<std::string>(val);
+                            char buf[256] = {};
+                            std::snprintf(buf, sizeof(buf), "%s", sVal.c_str());
+                            if (ImGui::InputText(fieldName.c_str(), buf, sizeof(buf))) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, std::string(buf));
+                            }
+                        } else if (fieldType == "Vec2" && std::holds_alternative<FCT::Vec2>(val)) {
+                            FCT::Vec2 v = std::get<FCT::Vec2>(val);
+                            float arr[2] = { v.x, v.y };
+                            if (ImGui::DragFloat2(fieldName.c_str(), arr, 0.1f)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, FCT::Vec2(arr[0], arr[1]));
+                            }
+                        } else if (fieldType == "Vec3" && std::holds_alternative<FCT::Vec3<>>(val)) {
+                            FCT::Vec3<> v = std::get<FCT::Vec3<>>(val);
+                            float arr[3] = { v.x, v.y, v.z };
+                            if (ImGui::DragFloat3(fieldName.c_str(), arr, 0.1f)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, FCT::Vec3(arr[0], arr[1], arr[2]));
+                            }
+                        } else if (fieldType == "Vec4" && std::holds_alternative<FCT::Vec4>(val)) {
+                            FCT::Vec4 v = std::get<FCT::Vec4>(val);
+                            float arr[4] = { v.x, v.y, v.z, v.w };
+                            if (ImGui::DragFloat4(fieldName.c_str(), arr, 0.1f)) {
+                                refl->setComponentField(*registry, entity, compName, fieldName, FCT::Vec4(arr[0], arr[1], arr[2], arr[3]));
+                            }
+                        }
+                    } catch (...) {
+                    }
+                }
+
+                ImGui::Spacing();
+                if (ImGui::Button("删除组件")) {
+                    compToRemove = compName;
+                }
+
+                ImGui::PopID();
+                ImGui::Unindent();
+            }
+        }
+
+        if (!compToRemove.empty()) {
+            refl->removeComponent(*registry, entity, compToRemove);
+        }
+
+        return renderedAny;
+    }
+
     void EntityInspector::renderComponents(entt::registry* registry)
     {
         auto& selectedEntity = g_editorGlobal.selectedEntity;
@@ -222,9 +436,16 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<CacheRotationMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CacheModelMatrix>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<StaticMeshInstance>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<SkeletalAnimatorComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<SkeletalBoneSocketComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<NetworkIdentityComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<NetworkTransformComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<NetworkReplicatedComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<TickerScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<OnStartScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DirectionalLightComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<PointLightComponent>(registry, selectedEntity.entity);
+        hasComponents |= tryRenderComponent<PBRMaterialComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<DiffuseTextureComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<ShininessComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<AlbedoTextureComponent>(registry, selectedEntity.entity);
@@ -235,6 +456,7 @@ namespace MQEngine {
         hasComponents |= tryRenderComponent<CacheScriptComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<SkyboxComponent>(registry, selectedEntity.entity);
         hasComponents |= tryRenderComponent<CacheSkyboxComponent>(registry, selectedEntity.entity);
+        hasComponents |= renderDynamicComponents(registry, selectedEntity.entity);
 
         if (g_editorGlobal.componentToDelete != 0) {
             auto storage = registry->storage(g_editorGlobal.componentToDelete);

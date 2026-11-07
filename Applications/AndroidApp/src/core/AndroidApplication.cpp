@@ -52,10 +52,10 @@ namespace MQEngine
     std::string AndroidApplication::resolveInitialSceneUuid() const
     {
         std::string uuid = g_engineGlobal.dataManager->getInitialSceneUuid();
-        if (uuid.empty() && Engine::getInstance().getProjectManager() &&
-            Engine::getInstance().getProjectManager()->isProjectOpen())
+        if (uuid.empty() && Runtime::Engine::getInstance() &&
+            Runtime::Engine::getInstance()->foundation->isProjectOpen())
         {
-            uuid = Engine::getInstance().getProjectManager()->getCurrentProject().initialSceneUuid;
+            uuid = Runtime::Engine::getInstance()->foundation->getCurrentProject().initialSceneUuid;
         }
         return uuid;
     }

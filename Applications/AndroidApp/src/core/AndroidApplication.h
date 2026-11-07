@@ -5,14 +5,18 @@
 
 namespace MQEngine
 {
-    class AndroidApplication : public Application
+    class AndroidApplication : public Runtime::Application
     {
     public:
-        RenderConfig renderConfig() const override
+        void registerInfo() override
         {
-            return RenderConfig{
-                .target = RenderTarget::Window,
-                .windowTitle = "NexusEngine Android",
+            registerInfoImpl();
+            applicationRegisterInfo = ApplicationRegisterInfo{
+                .platformRequire = {
+                    .target = RenderTarget::Window,
+                    .windowTitle = "NexusEngine Android",
+                },
+                .tags = {"Runtime"},
             };
         }
 

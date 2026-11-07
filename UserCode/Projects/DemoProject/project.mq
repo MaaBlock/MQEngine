@@ -1,0 +1,11 @@
+# MQEngine 工程配置文件
+projectName = "DemoProject"
+version = "1.0.0"
+assetRoot = "Assets"
+pipelinePath = "Assets/Pipelines/default_pipeline.json"
+plugins = [ "McpPlugin", "GodotImporter" ]
+userCode = "UserCode"
+initialSceneUuid = "default-scene-0001-0000-000000000001"
+
+[settings]
+description = "MQEngine 默认示例工程 (Minimal Default Scene)"

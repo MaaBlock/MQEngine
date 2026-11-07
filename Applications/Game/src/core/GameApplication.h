@@ -1,26 +1,33 @@
-﻿#ifndef GAMEAPPLICATION_H
+#ifndef GAMEAPPLICATION_H
 #define GAMEAPPLICATION_H
+
 #include "../thirdparty/thirdparty.h"
 #include <Engine/headers.h>
+
 namespace MQEngine {
-    class GameApplication : public Application {
+
+    /**
+     * @brief 独立游戏发布宿主应用程序：极简信息与标签注入壳
+     */
+    class GameApplication : public Runtime::Application {
     public:
-        RenderConfig renderConfig() const override
+        void registerInfo() override
         {
-            return RenderConfig{
-                .target = RenderTarget::Window,
-                .windowTitle = "NexusEngine SandBox",
+            registerInfoImpl();
+            applicationRegisterInfo = ApplicationRegisterInfo{
+                .platformRequire = {
+                    .target = RenderTarget::Window,
+                    .windowTitle = "MQEngine Game",
+                },
+                .defaultProjectPath = "UserCode/Projects/DemoProject/project.mq",
+                .tags = {"Runtime", "Game"},
             };
         }
 
         void init() override;
         void logicTick() override;
-    private:
-        int m_frame = 0;
-        bool m_isFirstFrame = true;
-        entt::registry m_registry;
-        entt::entity m_tempCameraEntity = entt::null;
     };
-} // MQEngine
 
-#endif //GAMEAPPLICATION_H
+} // namespace MQEngine
+
+#endif // GAMEAPPLICATION_H

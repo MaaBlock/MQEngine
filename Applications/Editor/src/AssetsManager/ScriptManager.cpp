@@ -16,7 +16,9 @@ namespace MQEngine {
     }
     
     void ScriptManager::render() {
-        if (m_needRefresh || (g_engineGlobal.scriptSystem && m_scriptFunctions.empty())) {
+        auto* engine = Runtime::Engine::getInstance();
+        auto* scriptSys = engine ? engine->script->scriptSystem.get() : nullptr;
+        if (m_needRefresh || (scriptSys && m_scriptFunctions.empty())) {
             refreshScriptList();
         }
         
@@ -27,6 +29,9 @@ namespace MQEngine {
 
         if (ImGui::BeginMenuBar()) {
             if (ImGui::MenuItem(TEXT("刷新脚本"))) {
+                if (scriptSys) {
+                    scriptSys->reloadScripts();
+                }
                 refreshScriptList();
             }
             ImGui::EndMenuBar();
@@ -106,11 +111,13 @@ namespace MQEngine {
     void ScriptManager::loadFunctionNamesFromScriptSystem() {
         m_scriptFunctions.clear();
 
-        if (g_engineGlobal.scriptSystem) {
+        auto* engine = Runtime::Engine::getInstance();
+        auto* scriptSys = engine ? engine->script->scriptSystem.get() : nullptr;
+        if (scriptSys) {
             try {
-                g_engineGlobal.scriptSystem->loadScripts();
+                scriptSys->loadScripts();
                 
-                auto functionNames = g_engineGlobal.scriptSystem->getFunctionNames();
+                auto functionNames = scriptSys->getFunctionNames();
                 
                 for (const auto& funcName : functionNames) {
                     ScriptFunctionInfo info;
@@ -165,8 +172,9 @@ namespace MQEngine {
 
     void ScriptManager::loadClassNamesFromScriptSystem() {
         m_scriptClasses.clear();
-        if (g_engineGlobal.scriptSystem) {
-             m_scriptClasses = g_engineGlobal.scriptSystem->getClassNames();
+        auto* engine = Runtime::Engine::getInstance();
+        if (auto* scriptSys = engine ? engine->script->scriptSystem.get() : nullptr) {
+             m_scriptClasses = scriptSys->getClassNames();
              fout << TEXT("从ScriptSystem加载了 ") << m_scriptClasses.size() << TEXT(" 个脚本类") << std::endl;
         }
     }

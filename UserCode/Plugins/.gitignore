@@ -1,0 +1,6 @@
+# CMake generated headers directory
+*/include/
+build/
+.vs/
+.idea/
+*.user

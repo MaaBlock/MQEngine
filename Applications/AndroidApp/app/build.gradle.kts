@@ -3,19 +3,19 @@ plugins {
 }
 
 val syncEngineAssets by tasks.registering(Copy::class) {
-    from(file("../../../Res")) {
-        include("pipelines/**")
-        include("shaders/**")
-        include("snippets/**")
-        include("shadergraph/**")
-        include("scenes/**")
-        include("icons/**")
-        include("scripts/dist/**")
-        include("scripts/js/**")
+    from(file("../../../Assets")) {
+        include("Pipelines/**")
+        include("Shaders/**")
+        include("Snippets/**")
+        include("ShaderGraph/**")
+        include("Scenes/**")
+        include("Icons/**")
+        include("Scripts/dist/**")
+        include("Scripts/js/**")
         include("ball.mtl")
         include("ball.obj")
         include("mesh.png")
-        include("models/floor_1.glb")
+        include("Models/floor_1.glb")
     }
     into(layout.buildDirectory.dir("generated/assets/engineRes/res"))
 }

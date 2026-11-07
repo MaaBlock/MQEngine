@@ -5,8 +5,9 @@ ShaderOut main(ShaderIn sIn) {
     float3 skyboxColor = skyboxTexture.Sample(textureSampler, texCoord).rgb;
 
     sOut.target0 = float4(skyboxColor, 1.0);
-    sOut.target1 = float4(0, 0, 0, 0); 
-    sOut.target2 = float4(0, 0, 0, 0);
+    sOut.target1 = float4(0.0, 0.0, 0.0, 0.0);
+    sOut.target2 = float4(0.0, 0.0, 0.0, 0.0);
+    sOut.target3 = float4(skyboxColor, 2.0);
 
     return sOut;
 }

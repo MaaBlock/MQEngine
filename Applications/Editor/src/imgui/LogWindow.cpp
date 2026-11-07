@@ -175,7 +175,7 @@ namespace MQEngine
             if (std::find(sinks.begin(), sinks.end(), m_spdlogSink) == sinks.end())
                 sinks.push_back(m_spdlogSink);
         }
-        Engine::addLogSink(m_spdlogSink);
+        Base::Foundation::addLogSink(m_spdlogSink);
 
         m_origCoutBuf = std::cout.rdbuf();
         if (m_origCoutBuf)
@@ -191,7 +191,7 @@ namespace MQEngine
         if (m_spdlogSink)
         {
             static_cast<LockFreeEditorSink*>(m_spdlogSink.get())->detach();
-            Engine::removeLogSink(m_spdlogSink);
+            Base::Foundation::removeLogSink(m_spdlogSink);
             if (auto logger = spdlog::default_logger())
             {
                 auto& sinks = logger->sinks();

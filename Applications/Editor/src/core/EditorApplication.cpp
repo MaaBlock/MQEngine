@@ -1,10 +1,17 @@
-﻿#include "EditorApplication.h"
+#include "EditorApplication.h"
+#include "../command/UndoManager.h"
 
 using namespace FCT;
 namespace MQEngine {
     EditorGlobal g_editorGlobal;
 
-    static Application* CreateEditorApplication()
+    EditorApplication::EditorApplication() = default;
+
+    EditorApplication::~EditorApplication() {
+        g_editorGlobal.undoManager = nullptr;
+    }
+
+    static Runtime::Application* CreateEditorApplication()
     {
         return new EditorApplication();
     }
@@ -14,7 +21,7 @@ namespace MQEngine {
     public:
         ApplicationRegistrar()
         {
-            Engine::RegisterApplicationFactory(CreateEditorApplication);
+            Runtime::Runtime::RegisterApplicationFactory(CreateEditorApplication);
         }
     };
 

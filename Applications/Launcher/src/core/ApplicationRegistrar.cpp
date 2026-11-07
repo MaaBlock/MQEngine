@@ -9,7 +9,7 @@
 namespace MQEngine
 {
 
-    static Application* CreateLauncherApplication()
+    static Runtime::Application* CreateLauncherApplication()
     {
         return new LauncherApplication();
     }
@@ -19,7 +19,7 @@ namespace MQEngine
     public:
         LauncherApplicationRegistrar()
         {
-            Engine::RegisterApplicationFactory(CreateLauncherApplication);
+            Runtime::Runtime::RegisterApplicationFactory(CreateLauncherApplication);
         }
     };
     static LauncherApplicationRegistrar g_launcherRegistrar;

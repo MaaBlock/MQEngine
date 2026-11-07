@@ -3,76 +3,21 @@
 
 #include "../thirdparty/thirdparty.h"
 
-namespace MQEngine
-{
-    /**
-     * @brief 启动器应用程序，负责工程发现、创建以及启动运行态 (Game) 或编辑器 (Editor)
-     */
-    class LauncherApplication : public Application
-    {
-    public:
-        LauncherApplication() = default;
-        ~LauncherApplication() override = default;
+namespace MQEngine {
 
-        void init() override;
-        void logicTick() override;
-        RenderConfig renderConfig() const override;
+/**
+ * @brief 启动器宿主应用程序极简纯壳（具体业务与界面逻辑由 LauncherProject Native 模块承载）
+ */
+class LauncherApplication : public Runtime::Application {
+public:
+    LauncherApplication() = default;
+    ~LauncherApplication() override = default;
 
-    private:
-        void locateWorkspaceRoot();
-        std::string resolveWorkspacePath(const std::string& relativePath) const;
-        void setupRenderCallbacks();
-        void setupDefaultCamera();
-        void ensureDemoProjectInitialized();
-        Status initializeProjectDirectory(const std::string& projectDir,
-                                          const std::string& projectName,
-                                          const std::string& sceneUuid);
-        Status ensureSceneBootstrapFiles(const std::string& assetRoot,
-                                         const std::string& sceneName,
-                                         const std::string& sceneUuid);
-        void ensureDefaultDemoModels(const std::string& assetRoot);
-        void importBuiltinModel(const std::string& assetRoot,
-                                const std::string& modelDirName,
-                                const std::string& modelUuid,
-                                const std::string& sourceModelPath);
-        void populateDefaultSceneEntities(const std::string& sceneUuid);
+    void registerInfo() override;
+    void init() override {}
+    void logicTick() override {}
+};
 
-        void scanProjects();
-        void scanDirectoryForProjects(const std::string& rootDir);
-        bool addOrUpdateProjectEntry(const std::string& projectJsonPath);
-
-        void renderUi();
-        void renderHeaderBar();
-        void renderMainContent();
-        void renderProjectListPanel();
-        void renderProjectDetailPanel();
-        void renderActionButtons(const ProjectConfig& config);
-        void renderNewProjectPopup();
-
-        void browseAndOpenProject();
-        void createNewProject();
-        void launchProjectInApp(const std::string& appName, const ProjectConfig& config);
-        StatusOr<std::string> locateExecutable(const std::string& appName) const;
-        Status spawnProcess(const std::string& exePath,
-                            const std::string& projectFilePath,
-                            const std::string& workingDir);
-
-    private:
-        std::shared_ptr<ImguiPlugin> m_imguiPlugin;
-        FCT::ImguiContext* m_imguiCtx = nullptr;
-        entt::registry m_registry;
-        entt::entity m_cameraEntity = entt::null;
-
-        std::string m_workspaceRoot;
-        std::vector<ProjectConfig> m_projects;
-        int m_selectedProjectIndex = -1;
-        std::string m_statusMessage;
-        bool m_statusIsError = false;
-
-        bool m_openNewProjectPopup = false;
-        char m_newProjectNameBuf[128] = "NewProject";
-        char m_newProjectParentDirBuf[256] = "Example";
-    };
-}
+} // namespace MQEngine
 
 #endif // ENGINE_LAUNCHER_APPLICATION_H

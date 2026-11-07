@@ -23,10 +23,24 @@ namespace MQEngine
         g_editorGlobal.wnd->getCallBack()->addFileDropCallback([this](Window*,const std::vector<std::string>& files)
         {
             for (const auto& file : files) {
-                std::string extension = std::filesystem::path(file).extension().string();
-                fout << "加载了模型文件: " << file << std::endl;
-                if (m_supportedExtensions.count(extension))
-                {
+                std::string extension = SAI::Path::extension(file);
+                fout << "加载了文件: " << file << std::endl;
+                if (SAI::Path::hasAnyExtension(file, {".tscn", ".gd"})) {
+                    if (auto* engine = Runtime::Engine::getInstance(); engine && engine->script->scriptSystem) {
+                        (void)Runtime::Runtime::instance().loadPlugin("GodotImporter");
+                        if (auto* pyEnv = engine->script->scriptSystem->getPyEnvironment()) {
+                            try {
+                                if (SAI::Path::hasExtension(file, ".gd")) {
+                                    (void)pyEnv->callFunction<std::string>("importGdScriptFile", SAI::Path::normalize(file), std::string(""));
+                                } else {
+                                    (void)pyEnv->callFunction<int>("importGodotScene", SAI::Path::normalize(file), std::string(""));
+                                }
+                            } catch (const std::exception& e) {
+                                spdlog::error("拖拽导入 Godot 文件失败: {}", e.what());
+                            }
+                        }
+                    }
+                } else if (m_supportedExtensions.count(extension)) {
                     importModel(file);
                 }
             }
@@ -47,128 +61,86 @@ namespace MQEngine
 
     void ModelManager::importModel(const std::string& modelPath)
     {
-        std::filesystem::path modelFilePath(modelPath);
-        std::string modelBaseName = modelFilePath.stem().string();
-        std::string targetDirName = GetUniqueDirectoryName("./Assets/models",modelBaseName);
-        std::filesystem::path targetDir = std::filesystem::path("./Assets/models") / targetDirName;
-        std::filesystem::create_directories(targetDir);
+        std::string modelBaseName = SAI::Path::stem(modelPath);
+        std::string targetDirName = SAI::FileSystem::getUniqueDirectoryName("./Assets/Models", modelBaseName);
+        std::string targetDir = SAI::Path::join("./Assets/Models", targetDirName);
+        (void)SAI::FileSystem::createDirectories(targetDir);
 
         std::set<std::string> allModelPaths = m_modelLoader->resolveModePaths(modelPath);
-
-        std::filesystem::path sourceBaseDir = std::filesystem::path(modelPath).parent_path();
-
-        std::filesystem::path modelSubDir = targetDir / "source";
-        std::filesystem::create_directories(modelSubDir);
+        std::string sourceBaseDir = SAI::Path::parentPath(modelPath);
+        std::string modelSubDir = SAI::Path::join(targetDir, "source");
+        (void)SAI::FileSystem::createDirectories(modelSubDir);
 
         for (const auto& filePath : allModelPaths) {
-            if (std::filesystem::exists(filePath)) {
-                std::filesystem::path sourceFile(filePath);
-                std::filesystem::path targetFile;
-
-                try {
-                    std::filesystem::path relativePath = std::filesystem::relative(sourceFile, sourceBaseDir);
-                    targetFile = modelSubDir / relativePath;
-                } catch (const std::filesystem::filesystem_error&) {
-                    targetFile = modelSubDir / sourceFile.filename();
-                }
-
-                std::filesystem::create_directories(targetFile.parent_path());
-
-                std::filesystem::copy_file(sourceFile, targetFile,
-                    std::filesystem::copy_options::overwrite_existing);
+            if (SAI::FileSystem::exists(filePath)) {
+                (void)SAI::FileSystem::copyFilePreservingRelative(filePath, sourceBaseDir, modelSubDir);
             }
         }
         saveModelIndex(targetDir, modelBaseName, modelPath);
         saveModelTimestamp(targetDir, modelPath);
-
     }
 
-    void ModelManager::saveModelIndex(const std::filesystem::path& targetDir, const std::string& modelBaseName, const std::string& originalPath)
+    void ModelManager::saveModelIndex(const std::string& targetDir, const std::string& modelBaseName, const std::string& originalPath)
     {
-        std::filesystem::path indexFile = targetDir / "index.edit.dat";
-        std::ofstream indexOut(indexFile, std::ios::binary);
+        (void)modelBaseName;
+        std::string indexFile = SAI::Path::join(targetDir, "index.edit.dat");
 
-        if (indexOut.is_open()) {
-            try {
-                ModelInfo::SceneInfo sceneInfo = m_modelLoader->loadModelInfo(originalPath);
-
-                boost::archive::binary_oarchive archive(indexOut);
-                archive << sceneInfo;
-
+        try {
+            ModelInfo::SceneInfo sceneInfo = m_modelLoader->loadModelInfo(originalPath);
+            auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+            Status st = ModelAssetSerializer::saveModelIndex(loader, indexFile, sceneInfo);
+            if (st.ok()) {
                 fout << "模型索引保存成功: " << indexFile << std::endl;
                 fout << "场景名称: " << sceneInfo.name << std::endl;
                 fout << "网格数量: " << sceneInfo.meshInfos.size() << std::endl;
                 fout << "材质数量: " << sceneInfo.materialInfos.size() << std::endl;
                 fout << "纹理数量: " << sceneInfo.textureInfos.size() << std::endl;
-
-            } catch (const std::exception& e) {
-                fout << "保存模型索引失败: " << e.what() << std::endl;
+            } else {
+                fout << "保存模型索引失败: " << st.message() << std::endl;
             }
-        } else {
-            fout << "无法创建索引文件: " << indexFile << std::endl;
+        } catch (const std::exception& e) {
+            fout << "保存模型索引失败: " << e.what() << std::endl;
         }
         generateUuidFile(targetDir, originalPath);
     }
 
-    void ModelManager::generateUuidFile(const std::filesystem::path& targetDir, const std::string& originalPath)
+    void ModelManager::generateUuidFile(const std::string& targetDir, const std::string& originalPath)
     {
         try {
             static boost::uuids::random_generator uuidGen;
             boost::uuids::uuid modelUuid = uuidGen();
             std::string uuidString = boost::uuids::to_string(modelUuid);
 
-            std::filesystem::path originalFilePath(originalPath);
-            std::string originalFileName = originalFilePath.filename().string();
-
-            std::string modelRelativePath = "source/" + originalFileName;
+            std::string originalFileName = SAI::Path::fileName(originalPath);
+            std::string modelRelativePath = SAI::Path::join("source", originalFileName);
 
             MQEngine::ModelUuidFile modelUuidFile;
             modelUuidFile.uuid = uuidString;
             modelUuidFile.modelRelativePath = modelRelativePath;
 
-            std::filesystem::path uuidFile = targetDir / "model.uuid";
-            std::ofstream uuidOut(uuidFile, std::ios::binary);
-
-            if (uuidOut.is_open()) {
-                boost::archive::binary_oarchive archive(uuidOut);
-                archive << modelUuidFile;
-
+            std::string uuidFile = SAI::Path::join(targetDir, "model.uuid");
+            auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+            Status st = ModelAssetSerializer::saveModelUuid(loader, uuidFile, modelUuidFile);
+            if (st.ok()) {
                 fout << "模型 UUID 文件保存成功: " << uuidFile << std::endl;
                 fout << "模型 UUID: " << uuidString << std::endl;
                 fout << "模型相对路径: " << modelRelativePath << std::endl;
-
-                std::string modelDirName = targetDir.filename().string();
-                std::string dataManagerPath = "models/" + modelDirName;
-
             } else {
-                fout << "无法创建 UUID 文件: " << uuidFile << std::endl;
+                fout << "无法创建 UUID 文件: " << st.message() << std::endl;
             }
-
         } catch (const std::exception& e) {
             fout << "生成 UUID 文件失败: " << e.what() << std::endl;
         }
     }
-    void ModelManager::saveModelTimestamp(const std::filesystem::path& targetDir, const std::string& modelPath)
+
+    void ModelManager::saveModelTimestamp(const std::string& targetDir, const std::string& modelPath)
     {
-        std::filesystem::path timestampFile = targetDir / "timestamp.dat";
-        std::ofstream timestampOut(timestampFile, std::ios::binary);
-
-        if (timestampOut.is_open()) {
-            try {
-                auto fileTime = std::filesystem::last_write_time(modelPath);
-
-                auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
-                    fileTime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now()
-                );
-                auto timestamp = std::chrono::duration_cast<std::chrono::seconds>(sctp.time_since_epoch()).count();
-
-                boost::archive::binary_oarchive archive(timestampOut);
-                archive << timestamp;
-                archive << modelPath;
-
-            } catch (const std::exception& e) {
-                fout << "保存时间戳失败: " << e.what() << std::endl;
-            }
+        std::string timestampFile = SAI::Path::join(targetDir, "timestamp.dat");
+        int64_t timestamp = SAI::FileSystem::getLastWriteTimeSeconds(modelPath);
+        auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+        Status st = ModelAssetSerializer::saveModelTimestamp(loader, timestampFile, timestamp, modelPath);
+        if (!st.ok()) {
+            fout << "保存时间戳失败: " << st.message() << std::endl;
         }
     }
 
@@ -181,46 +153,45 @@ namespace MQEngine
 
         ImGui::BeginChild("模型列表", ImVec2(0, 0), true);
         {
-            std::filesystem::path modelsDir = "./Assets/models";
-            if (std::filesystem::exists(modelsDir) && std::filesystem::is_directory(modelsDir)) {
-                try {
-                    for (const auto& entry : std::filesystem::directory_iterator(modelsDir)) {
-                        if (entry.is_directory()) {
-                            std::string modelName = entry.path().filename().string();
-                            if (m_selectedModel.empty()) {
-                                m_selectedModel = modelName;
-                                loadSelectedModelInfo(entry.path());
-                            }
+            std::string modelsDir = "./Assets/Models";
+            for (const auto& modelDirPath : SAI::FileSystem::listSubDirectories(modelsDir)) {
+                std::string modelName = SAI::Path::fileName(modelDirPath);
+                if (m_selectedModel.empty()) {
+                    m_selectedModel = modelName;
+                    loadSelectedModelInfo(modelDirPath);
+                }
 
-                            if (ImGui::Selectable(modelName.c_str(), m_selectedModel == modelName)) {
-                                m_selectedModel = modelName;
-                                loadSelectedModelInfo(entry.path());
-                            }
+                if (ImGui::Selectable(modelName.c_str(), m_selectedModel == modelName)) {
+                    m_selectedModel = modelName;
+                    loadSelectedModelInfo(modelDirPath);
+                }
 
-                            if (ImGui::BeginPopupContextItem()) {
-                                if (ImGui::MenuItem("删除模型")) {
-                                    try {
-                                        std::filesystem::remove_all(entry.path());
-                                        if (m_selectedModel == modelName) {
-                                            m_selectedModel.clear();
-                                            m_selectedModelInfo = ModelInfo::SceneInfo();
-                                        }
-                                    } catch (const std::filesystem::filesystem_error& e) {
-                                        ShowErrorDialog("删除模型失败", e.what());
-                                    }
-                                }
-                                if (ImGui::MenuItem("在文件夹中显示")) {
-#ifdef _WIN32
-                                    std::string command = "explorer \"" + entry.path().string() + "\"";
-                                    system(command.c_str());
-#endif
-                                }
-                                ImGui::EndPopup();
+                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                    std::string modelUuid = getModelUuid(modelName);
+                    std::string dragData = modelUuid + "|" + modelName;
+                    ImGui::SetDragDropPayload("ASSET_MODEL", dragData.c_str(), dragData.size() + 1);
+                    ImGui::Text(TEXT("模型实例: %s"), modelName.c_str());
+                    ImGui::EndDragDropSource();
+                }
+
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("删除模型")) {
+                        if (SAI::FileSystem::removeAll(modelDirPath).ok()) {
+                            if (m_selectedModel == modelName) {
+                                m_selectedModel.clear();
+                                m_selectedModelInfo = ModelInfo::SceneInfo();
                             }
+                        } else {
+                            ShowErrorDialog("删除模型失败", modelDirPath);
                         }
                     }
-                } catch (const std::filesystem::filesystem_error& e) {
-                    ImGui::Text("Error reading models directory: %s", e.what());
+                    if (ImGui::MenuItem("在文件夹中显示")) {
+#ifdef _WIN32
+                        std::string command = "explorer \"" + modelDirPath + "\"";
+                        system(command.c_str());
+#endif
+                    }
+                    ImGui::EndPopup();
                 }
             }
         }
@@ -255,6 +226,13 @@ namespace MQEngine
                     int itemsPerRow = std::max(1, (int)(windowWidth / itemWidth));
 
                     // 网格部分
+                    if (m_selectedModelInfo.boneCount > 0 || !m_selectedModelInfo.animationNames.empty()) {
+                        ImGui::Text("骨骼数: %u | 动画片段数: %zu", m_selectedModelInfo.boneCount, m_selectedModelInfo.animationNames.size());
+                        for (size_t animIdx = 0; animIdx < m_selectedModelInfo.animationNames.size(); ++animIdx) {
+                            ImGui::BulletText("%s", m_selectedModelInfo.animationNames[animIdx].c_str());
+                        }
+                        ImGui::Separator();
+                    }
                     if (!m_selectedModelInfo.meshInfos.empty()) {
                         ImGui::Text("网格 (%zu)", m_selectedModelInfo.meshInfos.size());
                         ImGui::Separator();
@@ -311,6 +289,9 @@ namespace MQEngine
                                 ImGui::Text("网格: %s", meshInfo.name.c_str());
                                 ImGui::Text("顶点数: %u", meshInfo.vertexCount);
                                 ImGui::Text("三角形数: %u", meshInfo.triangleCount);
+                                if (meshInfo.hasBones) {
+                                    ImGui::Text("骨骼蒙皮: 是 (%u 根骨骼)", meshInfo.boneCount);
+                                }
                                 ImGui::EndTooltip();
                             }
                         }
@@ -343,12 +324,12 @@ namespace MQEngine
 
                                     ImGui::Image(ImTextureRef(textureIconID), ImVec2(32, 32));
                                     ImGui::SameLine();
-                                    ImGui::Text("%s", std::filesystem::path(textureInfo.path).filename().string().c_str());
+                                    ImGui::Text("%s", SAI::Path::fileName(textureInfo.path).c_str());
 
                                     ImGui::EndDragDropSource();
                                 }
 
-                                std::string fileName = std::filesystem::path(textureInfo.path).filename().string();
+                                std::string fileName = SAI::Path::fileName(textureInfo.path);
                                 if (fileName.length() > 10) {
                                     fileName = fileName.substr(0, 10) + "...";
                                 }
@@ -449,43 +430,26 @@ namespace MQEngine
         ImGui::Columns(1);
     }
     std::string ModelManager::getModelUuid(const std::string& modelName) {
-        std::filesystem::path modelDir = std::filesystem::path("./Assets/models") / modelName;
-        std::filesystem::path uuidFile = modelDir / "model.uuid";
-
-        if (std::filesystem::exists(uuidFile)) {
-            try {
-                std::ifstream uuidIn(uuidFile, std::ios::binary);
-                if (uuidIn.is_open()) {
-                    MQEngine::ModelUuidFile modelUuidFile;
-                    boost::archive::binary_iarchive archive(uuidIn);
-                    archive >> modelUuidFile;
-                    return modelUuidFile.uuid;
-                }
-            } catch (const std::exception& e) {
-                fout << "读取模型UUID失败: " << e.what() << std::endl;
-            }
+        std::string uuidFile = SAI::Path::join("./Assets/Models", modelName, "model.uuid");
+        auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+        auto uuidOr = ModelAssetSerializer::loadModelUuid(loader, uuidFile);
+        if (uuidOr.ok()) {
+            return uuidOr->uuid;
         }
+        fout << "读取模型UUID失败: " << uuidOr.status().message() << std::endl;
         return "";
     }
 
-    void ModelManager::loadSelectedModelInfo(const std::filesystem::path& modelDir)
+    void ModelManager::loadSelectedModelInfo(const std::string& modelDir)
     {
-        std::filesystem::path indexFile = modelDir / "index.edit.dat";
-
-        if (std::filesystem::exists(indexFile)) {
-            try {
-                std::ifstream indexIn(indexFile, std::ios::binary);
-                if (indexIn.is_open()) {
-                    boost::archive::binary_iarchive archive(indexIn);
-                    archive >> m_selectedModelInfo;
-                    fout << "成功加载模型信息: " << m_selectedModel << std::endl;
-                }
-            } catch (const std::exception& e) {
-                fout << "加载模型信息失败: " << e.what() << std::endl;
-                m_selectedModelInfo = ModelInfo::SceneInfo();
-            }
+        std::string indexFile = SAI::Path::join(modelDir, "index.edit.dat");
+        auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+        auto sceneInfoOr = ModelAssetSerializer::loadModelIndex(loader, indexFile);
+        if (sceneInfoOr.ok()) {
+            m_selectedModelInfo = std::move(sceneInfoOr.value());
+            fout << "成功加载模型信息: " << m_selectedModel << std::endl;
         } else {
-            fout << "模型索引文件不存在: " << indexFile << std::endl;
+            fout << "加载模型信息失败: " << sceneInfoOr.status().message() << std::endl;
             m_selectedModelInfo = ModelInfo::SceneInfo();
         }
     }

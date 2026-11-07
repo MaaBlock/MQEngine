@@ -2,7 +2,7 @@
 
 namespace MQEngine
 {
-    static Application* CreateAndroidApplication()
+    static Runtime::Application* CreateAndroidApplication()
     {
         return new AndroidApplication();
     }
@@ -12,7 +12,7 @@ namespace MQEngine
     public:
         AndroidApplicationRegistrar()
         {
-            Engine::RegisterApplicationFactory(CreateAndroidApplication);
+            Runtime::Runtime::RegisterApplicationFactory(CreateAndroidApplication);
         }
     };
 

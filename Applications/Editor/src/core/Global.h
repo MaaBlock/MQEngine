@@ -11,12 +11,13 @@ namespace MQEngine
     class EditorCameraManager;
     class Inspector;
     class ContentBrowser;
+    class UndoManager;
 }
 
 namespace MQEngine{
     struct SelectedEntityState
     {
-        Scene* scene = nullptr;
+        Scene::Scene* scene = nullptr;
         std::string trunkName;
         entt::entity entity = entt::null;
         bool isGlobal = false;
@@ -24,6 +25,7 @@ namespace MQEngine{
     
     struct EditorGlobal
     {
+        Runtime::Engine* engine = nullptr;
         FCT::Window* wnd;
         FCT::Context* ctx;
         FCT::ImguiModule* imguiModule;
@@ -36,6 +38,7 @@ namespace MQEngine{
         entt::id_type componentToDelete = 0;
         Inspector* inspector = nullptr;
         ContentBrowser* contentBrowser = nullptr;
+        UndoManager* undoManager = nullptr;
     };
     extern EditorGlobal g_editorGlobal;
 }

@@ -1,0 +1,12 @@
+# MQEngine Cesium 3D Tiles 工程配置文件
+projectName = "CesiumProject"
+version = "1.0.0"
+assetRoot = "Assets"
+pipelinePath = "Assets/Pipelines/default_pipeline.json"
+plugins = [ "3dTiles" ]
+userCode = "UserCode"
+initialSceneUuid = "cesium-scene-0001-0000-000000000001"
+
+[settings]
+description = "MQEngine Cesium 3D Tiles 与 SceneGraph TS/JS 摄像机控制示例工程"
+

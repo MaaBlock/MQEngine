@@ -5,7 +5,8 @@ ShaderOut main(ShaderIn sIn) {
     float3 viewPos = viewRot * sIn.position.xyz;
     float4 clipPos = projectionMatrix * float4(viewPos, 1.0);
 
-    sOut.position = clipPos.xyww;
+    float farZ = (projectionMatrix[2][2] <= 0.0) ? 0.0 : clipPos.w;
+    sOut.position = float4(clipPos.xy, farZ, clipPos.w);
 
     sOut.worldPos = float4(sIn.position.xyz, 1.0);
 

@@ -3,7 +3,7 @@
 
 #include "../thirdparty/thirdparty.h"
 #include "../SceneViewer/InspectorObject.h"
-#include "../../Engine/src/manager/ShaderGraphManager.h"
+#include <Engine/render/manager/ShaderGraphManager.h>
 #include <map>
 #include <string>
 

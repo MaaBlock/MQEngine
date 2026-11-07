@@ -28,7 +28,10 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_LINKER": "link.exe",
+        "CMAKE_AR": "lib.exe",
+        "CMAKE_CUDA_FLAGS": "-allow-unsupported-compiler"
       }
     },
     {
@@ -43,7 +46,9 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_LINKER": "link.exe",
+        "CMAKE_AR": "lib.exe"
       }
     },
     {

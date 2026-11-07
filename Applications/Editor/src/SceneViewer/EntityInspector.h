@@ -14,6 +14,8 @@ namespace MQEngine {
     private:
         void renderEntityDetails();
         void renderComponents(entt::registry* registry);
+        void renderDynamicComponentMenuItems(entt::registry* registry, entt::entity entity);
+        bool renderDynamicComponents(entt::registry* registry, entt::entity entity);
         
         template<typename ComponentType>
         bool tryRenderComponent(entt::registry* registry, entt::entity entity);

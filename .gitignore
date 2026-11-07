@@ -8,6 +8,12 @@
 /build-debug
 /build-release
 /Engine/include
+/Engine/Core/include
+/Output
+/CesiumCache
+/.agents
+/.gemini
+**/node_modules
 build.bat
 load.bat
 run.bat

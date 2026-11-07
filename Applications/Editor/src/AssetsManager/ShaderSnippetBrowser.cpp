@@ -1,15 +1,11 @@
 #include "ShaderSnippetBrowser.h"
-#include <imgui.h>
-#include <cstdlib>
-#include <fstream>
-#include <algorithm> // For std::sort, etc.
 
 namespace MQEngine {
 
     void ShaderSnippetBrowser::init() {
         // ShaderSnippetManager handles directory creation/management
-        if (g_engineGlobal.shaderSnippetManager) {
-            g_engineGlobal.shaderSnippetManager->loadSnippetFromResource(); // Initial load
+        if (auto* engine = Runtime::Engine::getInstance()) {
+            engine->effect->shaderSnippetManager->loadSnippetFromResource(); // Initial load
         }
     }
 
@@ -47,8 +43,8 @@ namespace MQEngine {
         ImGui::Text("类型"); ImGui::NextColumn();
         ImGui::Separator();
 
-        if (g_engineGlobal.shaderSnippetManager) {
-            const auto& snippets = g_engineGlobal.shaderSnippetManager->getSnippets();
+        if (auto* engine = Runtime::Engine::getInstance()) {
+            const auto& snippets = engine->effect->shaderSnippetManager->getSnippets();
             // Iterate boost::multi_index_container directly
             for (const auto& snippet : snippets) {
                 // Only display non-embedded snippets (file-backed ones)
@@ -74,24 +70,23 @@ namespace MQEngine {
     }
 
     void ShaderSnippetBrowser::createSnippet(const std::string& name) {
-        std::filesystem::path snippetsDir = "./Assets/snippets";
-        std::filesystem::path newPath = snippetsDir / (name + ".hlsl");
-        if (std::filesystem::exists(newPath)) {
-            // TODO: Show error in ImGui
+        std::string newPath = SAI::Path::join("./Assets/Snippets", name + ".hlsl");
+        if (SAI::FileSystem::exists(newPath)) {
             spdlog::warn("Shader snippet '{}' already exists.", name);
             return;
         }
 
-        std::ofstream outfile(newPath);
-        if (outfile.is_open()) {
-            outfile << "void main(in float3 pos, out float4 color) {\n"
-                    << "    color = float4(1.0, 1.0, 1.0, 1.0);\n"
-                    << "}\n";
-            outfile.close();
-            spdlog::info("Created new shader snippet file: '{}'", newPath.string());
+        static constexpr const char* kDefaultSnippetTemplate =
+            "void main(in float3 pos, out float4 color) {\n"
+            "    color = float4(1.0, 1.0, 1.0, 1.0);\n"
+            "}\n";
+
+        Status writeStatus = SAI::FileSystem::writeTextFile(newPath, kDefaultSnippetTemplate);
+        if (writeStatus.ok()) {
+            spdlog::info("Created new shader snippet file: '{}'", newPath);
             
-            if (g_engineGlobal.shaderSnippetManager) {
-                Status status = g_engineGlobal.shaderSnippetManager->loadSnippetFromResource(); // Force refresh engine's manager
+            if (auto* engine = Runtime::Engine::getInstance()) {
+                Status status = engine->effect->shaderSnippetManager->loadSnippetFromResource();
                 if (!status.ok()) {
                     spdlog::error("Failed to reload snippets after creation: {}", status.message());
                 } else {
@@ -99,20 +94,12 @@ namespace MQEngine {
                 }
             }
         } else {
-            spdlog::error("Failed to create shader snippet file: '{}'", newPath.string());
+            spdlog::error("Failed to create shader snippet file '{}': {}", newPath, writeStatus.message());
         }
     }
 
-    void ShaderSnippetBrowser::openInVsCode(const std::filesystem::path& path) {
-        // Try to open with code command
-        // Note: This relies on 'code' being in PATH
-        std::string cmd = "code \"" + path.string() + "\"";
-        // Use standard system call. On Windows this works if VSCode is installed and in PATH.
-        // The user explicitly asked for "open in vscode".
-        int ret = system(cmd.c_str());
-        if (ret != 0) {
-            // Fallback or error logging could go here
-            // spdlog::warn("Failed to open VSCode with command: {}", cmd);
-        }
+    void ShaderSnippetBrowser::openInVsCode(const std::string& path) {
+        std::string cmd = "code \"" + path + "\"";
+        (void)system(cmd.c_str());
     }
 }

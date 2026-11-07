@@ -21,35 +21,24 @@ namespace MQEngine {
 
     std::string SceneManager::getSceneUuid(const std::string& sceneName)
     {
-        std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
-        std::filesystem::path uuidFile = sceneFolder / "scene.uuid";
-
-        if (std::filesystem::exists(uuidFile)) {
-            try {
-                std::ifstream uuidIn(uuidFile, std::ios::binary);
-                if (uuidIn.is_open()) {
-                    SceneUuidFile sceneUuidData;
-                    boost::archive::binary_iarchive archive(uuidIn);
-                    archive >> sceneUuidData;
-                    return sceneUuidData.uuid;
-                }
-            } catch (const std::exception& e) {
-                fout << "读取场景UUID失败: " << e.what() << std::endl;
-            }
+        std::string uuidFile = SAI::Path::join("./Assets/Scenes", sceneName, "scene.uuid");
+        auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+        auto uuidOr = ModelAssetSerializer::loadSceneUuid(loader, uuidFile);
+        if (uuidOr.ok()) {
+            return uuidOr->uuid;
         }
+        fout << "读取场景UUID失败: " << uuidOr.status().message() << std::endl;
         return "";
     }
 
 
     void SceneManager::newScene(const std::string& sceneName)
     {
-        //创建一个文件夹
-        std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
+        std::string sceneFolder = SAI::Path::join("./Assets/Scenes", sceneName);
 
         try {
-            std::filesystem::create_directories(sceneFolder);
+            (void)SAI::FileSystem::createDirectories(sceneFolder);
 
-            //使用boost生成uuid
             static boost::uuids::random_generator uuidGen;
             boost::uuids::uuid sceneUuid = uuidGen();
             std::string uuidString = boost::uuids::to_string(sceneUuid);
@@ -57,19 +46,14 @@ namespace MQEngine {
             SceneUuidFile sceneUuidData;
             sceneUuidData.uuid = uuidString;
 
-            //然后在/Assets/scenes/场景名/底下生成一个uuid文件
-            std::filesystem::path uuidFile = sceneFolder / "scene.uuid";
-            std::ofstream uuidOut(uuidFile, std::ios::binary);
-
-            if (uuidOut.is_open()) {
-                boost::archive::binary_oarchive archive(uuidOut);
-                archive << sceneUuidData;
-                uuidOut.close();
-
+            std::string uuidFile = SAI::Path::join(sceneFolder, "scene.uuid");
+            auto* loader = Runtime::Engine::getInstance() ? Runtime::Engine::getInstance()->resource->getResourceLoader() : nullptr;
+            Status st = ModelAssetSerializer::saveSceneUuid(loader, uuidFile, sceneUuidData);
+            if (st.ok()) {
                 fout << "创建场景成功: " << sceneFolder << std::endl;
                 fout << "场景 UUID: " << uuidString << std::endl;
             } else {
-                fout << "无法创建 UUID 文件: " << uuidFile << std::endl;
+                fout << "无法创建 UUID 文件: " << st.message() << std::endl;
             }
 
         } catch (const std::exception& e) {
@@ -161,8 +145,8 @@ void SceneManager::render()
                         ImGui::Separator();
                         if (ImGui::MenuItem("在文件夹中显示")) {
 #ifdef _WIN32
-                            std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
-                            std::string command = "explorer "" + sceneFolder.string() + """;
+                            std::string sceneFolder = SAI::Path::join("./Assets/Scenes", sceneName);
+                            std::string command = "explorer \"" + sceneFolder + "\"";
                             system(command.c_str());
 #endif
                         }
@@ -216,29 +200,16 @@ void SceneManager::refreshSceneList()
     m_sceneList.clear();
     m_selectedSceneIndex = -1;
 
-    std::filesystem::path scenesDir = "./Assets/scenes";
-    if (!std::filesystem::exists(scenesDir)) {
-        std::filesystem::create_directories(scenesDir);
+    std::string scenesDir = "./Assets/Scenes";
+    if (!SAI::FileSystem::exists(scenesDir)) {
+        (void)SAI::FileSystem::createDirectories(scenesDir);
         return;
     }
 
-    try {
-        for (const auto& entry : std::filesystem::directory_iterator(scenesDir)) {
-            if (entry.is_directory()) {
-                // 检查是否包含场景UUID文件
-                std::filesystem::path uuidFile = entry.path() / "scene.uuid";
-                if (std::filesystem::exists(uuidFile)) {
-                    std::string sceneName = entry.path().filename().string();
-                    m_sceneList.push_back(sceneName);
-                }
-            }
+    for (const auto& sceneName : SAI::FileSystem::listSubDirectoryNames(scenesDir)) {
+        if (SAI::FileSystem::exists(SAI::Path::join(scenesDir, sceneName, "scene.uuid"))) {
+            m_sceneList.push_back(sceneName);
         }
-
-        // 按名字排序
-        std::sort(m_sceneList.begin(), m_sceneList.end());
-
-    } catch (const std::filesystem::filesystem_error& e) {
-        fout << "扫描场景目录失败: " << e.what() << std::endl;
     }
 }
 
@@ -262,9 +233,8 @@ void SceneManager::renderCreateSceneDialog()
 
         if (ImGui::Button("创建")) {
             if (strlen(sceneName) > 0) {
-                // 检查场景是否已存在
-                std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / sceneName;
-                if (std::filesystem::exists(sceneFolder)) {
+                std::string sceneFolder = SAI::Path::join("./Assets/Scenes", sceneName);
+                if (SAI::FileSystem::exists(sceneFolder)) {
                     m_errorMessage = "场景已存在: " + std::string(sceneName);
                 } else {
                     newScene(sceneName);
@@ -309,14 +279,12 @@ void SceneManager::renderDeleteSceneDialog()
             ImGui::Separator();
 
             if (ImGui::Button("删除")) {
-                // 删除场景文件夹
-                std::filesystem::path sceneFolder = std::filesystem::path("./Assets/scenes") / m_sceneList[m_deleteSceneIndex];
-                try {
-                    std::filesystem::remove_all(sceneFolder);
+                std::string sceneFolder = SAI::Path::join("./Assets/Scenes", m_sceneList[m_deleteSceneIndex]);
+                if (SAI::FileSystem::removeAll(sceneFolder).ok()) {
                     fout << "删除场景成功: " << sceneFolder << std::endl;
                     refreshSceneList();
-                } catch (const std::exception& e) {
-                    fout << "删除场景失败: " << e.what() << std::endl;
+                } else {
+                    fout << "删除场景失败: " << sceneFolder << std::endl;
                 }
 
                 m_deleteSceneIndex = -1;

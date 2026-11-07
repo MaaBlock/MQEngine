@@ -1,7 +1,3 @@
-﻿//
-// Created by Administrator on 2025/8/16.
-//
-
 #ifndef EDITORAPPLICATION_H
 #define EDITORAPPLICATION_H
 #include "../thirdparty/thirdparty.h"
@@ -11,17 +7,23 @@
 namespace MQEngine
 {
 
-    class EditorApplication : public Application
+    class UndoManager;
+
+    class EditorApplication : public Runtime::Application
     {
     public:
-        EditorApplication()
+        EditorApplication();
+        ~EditorApplication() override;
+        void registerInfo() override
         {
-        }
-        RenderConfig renderConfig() const override
-        {
-            return RenderConfig{
-                .target = RenderTarget::Texture,
-                .windowTitle = "NexusEngine Editor",
+            registerInfoImpl();
+            applicationRegisterInfo = ApplicationRegisterInfo{
+                .platformRequire = {
+                    .target = RenderTarget::Texture,
+                    .windowTitle = "NexusEngine Editor",
+                },
+                .defaultProjectPath = "UserCode/Projects/DemoProject/project.mq",
+                .tags = {"Runtime", "Editor", "ImGui"},
             };
         }
         void init() override;
@@ -34,6 +36,7 @@ namespace MQEngine
         FCT::ImguiModule imguiModule;
         UiManager uiManager;
         entt::registry* m_registry;
+        UniquePtr<UndoManager> m_undoManager;
     };
 }
 

@@ -1,0 +1,411 @@
+/* MQEngine Launcher RCSS 样式表 */
+
+body.launcher-body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #e0e6ed;
+    background-color: #12151a;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 顶部导航栏 */
+.header-bar {
+    display: block;
+    height: 52px;
+    background-color: #1a1e24;
+    border-bottom: 1px solid #2a313d;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+.header-title-group {
+    display: inline-block;
+    float: left;
+    margin-top: 4px;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4da6ff;
+}
+
+.header-subtitle {
+    font-size: 13px;
+    color: #8c9ba5;
+    margin-left: 10px;
+}
+
+.header-actions {
+    display: inline-block;
+    float: right;
+}
+
+/* 按钮通用规范 */
+.btn {
+    display: inline-block;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 8px;
+}
+
+.btn-primary {
+    background-color: #007acc;
+    color: #ffffff;
+    border-color: #0088e6;
+}
+
+.btn-primary:hover {
+    background-color: #008be6;
+}
+
+.btn-primary:active {
+    background-color: #006bb3;
+}
+
+.btn-secondary {
+    background-color: #262c36;
+    color: #c5d1de;
+    border-color: #3b4454;
+}
+
+.btn-secondary:hover {
+    background-color: #323a47;
+    color: #ffffff;
+}
+
+.btn-secondary:active {
+    background-color: #1f242c;
+}
+
+/* 主内容双栏布局 */
+.main-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 左侧栏：工程列表 */
+.sidebar {
+    display: block;
+    float: left;
+    width: 280px;
+    height: 100%;
+    background-color: #16191f;
+    border-right: 1px solid #252b36;
+    box-sizing: border-box;
+}
+
+.sidebar-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid #252b36;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #9cb0c3;
+}
+
+.project-list {
+    display: block;
+    overflow-y: auto;
+    height: 85%;
+    padding: 8px;
+}
+
+.project-item {
+    display: block;
+    padding: 10px 14px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    background-color: #1d222a;
+    border: 1px solid #272f3b;
+    cursor: pointer;
+}
+
+.project-item:hover {
+    background-color: #27303d;
+    border-color: #3d4b5c;
+}
+
+.project-item.selected {
+    background-color: #1e354d;
+    border-color: #266cad;
+}
+
+.project-item-name {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.project-item-path {
+    display: block;
+    font-size: 11px;
+    color: #7d8c9c;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 右侧详情主面板 */
+.content-panel {
+    display: block;
+    margin-left: 280px;
+    height: 100%;
+    padding: 24px 32px;
+    background-color: #12151a;
+    box-sizing: border-box;
+}
+
+.empty-hint {
+    margin-top: 120px;
+    text-align: center;
+    color: #6d7d8d;
+    font-size: 16px;
+}
+
+.detail-card {
+    display: block;
+    background-color: #181d24;
+    border: 1px solid #28313d;
+    border-radius: 6px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.detail-header {
+    display: block;
+    border-bottom: 1px solid #28313d;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.project-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #52c41a;
+    margin-right: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 10px;
+    background-color: #263342;
+    color: #7fb2e6;
+    border: 1px solid #33485e;
+}
+
+.detail-grid {
+    display: block;
+    margin-bottom: 28px;
+}
+
+.detail-row {
+    display: block;
+    margin-bottom: 12px;
+    line-height: 20px;
+}
+
+.detail-label {
+    display: inline-block;
+    width: 130px;
+    color: #8c9ba5;
+    font-weight: 500;
+}
+
+.detail-value {
+    display: inline-block;
+    color: #d1dbe5;
+    word-break: break-all;
+}
+
+.action-bar {
+    display: block;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #28313d;
+}
+
+.btn-launch {
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 16px;
+    margin-left: 0;
+}
+
+.btn-game {
+    background-color: #2ea043;
+    color: #ffffff;
+    border-color: #3fb950;
+}
+
+.btn-game:hover {
+    background-color: #3fb950;
+}
+
+.btn-game:active {
+    background-color: #238636;
+}
+
+.btn-editor {
+    background-color: #1f6feb;
+    color: #ffffff;
+    border-color: #388bfd;
+}
+
+.btn-editor:hover {
+    background-color: #388bfd;
+}
+
+.btn-editor:active {
+    background-color: #1a56b7;
+}
+
+/* 状态通知栏 */
+.status-bar {
+    display: block;
+    margin-top: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: #161a20;
+    border: 1px solid #242b36;
+}
+
+.status-text {
+    font-size: 12px;
+    color: #52c41a;
+}
+
+.status-text.error {
+    color: #ff4d4f;
+}
+
+/* 模态弹窗 */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: 1000;
+}
+
+.modal-dialog {
+    display: block;
+    width: 520px;
+    margin: 80px auto;
+    background-color: #1c2128;
+    border: 1px solid #323b47;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 16px 20px;
+    background-color: #222831;
+    border-bottom: 1px solid #323b47;
+}
+
+.modal-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.modal-close {
+    float: right;
+    background: none;
+    border: none;
+    color: #8c9ba5;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    color: #a0aec0;
+    margin-bottom: 6px;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #12151a;
+    border: 1px solid #2d3748;
+    border-radius: 4px;
+    color: #e2e8f0;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    border-color: #3182ce;
+}
+
+.form-group-options {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #2d3748;
+}
+
+.options-title {
+    display: block;
+    font-size: 12px;
+    color: #63b3ed;
+    margin-bottom: 10px;
+}
+
+.checkbox-row {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.checkbox-label {
+    margin-left: 6px;
+    font-size: 12px;
+    color: #cbd5e0;
+}
+
+.modal-footer {
+    padding: 14px 20px;
+    background-color: #222831;
+    border-top: 1px solid #323b47;
+    text-align: right;
+}

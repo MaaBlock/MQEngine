@@ -1,0 +1,132 @@
+<rml>
+<head>
+    <title>MQEngine Launcher</title>
+    <link type="text/rcss" href="launcher.rcss"/>
+</head>
+<body class="launcher-body">
+    <!-- 顶部导航栏 -->
+    <div class="header-bar">
+        <div class="header-title-group">
+            <span class="header-title">MQEngine Launcher</span>
+            <span class="header-subtitle">| 工程管理与启动器</span>
+        </div>
+        <div class="header-actions">
+            <button id="btn-browse-project" class="btn btn-secondary">打开现有工程...</button>
+            <button id="btn-new-project" class="btn btn-primary">新建工程...</button>
+            <button id="btn-refresh-projects" class="btn btn-secondary">刷新</button>
+        </div>
+    </div>
+
+    <!-- 主工作区：两栏布局 -->
+    <div class="main-container">
+        <!-- 左侧：工程列表栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span id="project-list-header" class="section-title">工程列表</span>
+            </div>
+            <div id="project-list-container" class="project-list">
+                <!-- 动态填充工程条目 -->
+            </div>
+        </div>
+
+        <!-- 右侧：工程详情与操作栏 -->
+        <div class="content-panel">
+            <div id="detail-empty-hint" class="empty-hint">
+                <p>请在左侧选择一个工程，或点击上方按钮打开/新建工程。</p>
+            </div>
+
+            <div id="detail-card" class="detail-card">
+                <div class="detail-header">
+                    <span id="detail-title" class="project-name">DemoProject</span>
+                    <span id="detail-version-badge" class="badge">v1.0.0</span>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-row">
+                        <span class="detail-label">配置文件:</span>
+                        <span id="detail-config-path" class="detail-value">project.mq</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">工程目录:</span>
+                        <span id="detail-project-dir" class="detail-value">Example/DemoProject</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">资源目录:</span>
+                        <span id="detail-asset-root" class="detail-value">Assets</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">渲染管线:</span>
+                        <span id="detail-pipeline" class="detail-value">默认管线</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">初始场景 UUID:</span>
+                        <span id="detail-scene-uuid" class="detail-value">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">脚本/语言:</span>
+                        <span id="detail-script-languages" class="detail-value">TypeScript, JavaScript</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">工程说明:</span>
+                        <span id="detail-description" class="detail-value">-</span>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button id="btn-launch-game" class="btn btn-launch btn-game">运行项目 (Game)</button>
+                    <button id="btn-launch-editor" class="btn btn-launch btn-editor">打开编辑器 (Editor)</button>
+                </div>
+            </div>
+
+            <!-- 底部状态栏通知 -->
+            <div id="status-bar" class="status-bar">
+                <span id="status-message" class="status-text">就绪</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新建工程模态弹窗 -->
+    <div id="new-project-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <span class="modal-title">新建工程</span>
+                <button id="btn-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">工程名称:</label>
+                    <input type="text" id="input-project-name" class="form-input" value="NewProject"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">存放父目录:</label>
+                    <input type="text" id="input-project-parent-dir" class="form-input" value="Example"/>
+                </div>
+
+                <div class="form-group-options">
+                    <span class="options-title">选择脚本与代码语言 (自动生成对应目录与初始化配置):</span>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="chk-lang-ts" checked/>
+                        <label for="chk-lang-ts" class="checkbox-label">TypeScript (Assets/Scripts/ts, tsconfig.json)</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="chk-lang-js"/>
+                        <label for="chk-lang-js" class="checkbox-label">JavaScript (Assets/Scripts/js, package.json)</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="chk-lang-py"/>
+                        <label for="chk-lang-py" class="checkbox-label">Python (Assets/Scripts/py, mqengine.pyi)</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="chk-lang-cpp"/>
+                        <label for="chk-lang-cpp" class="checkbox-label">C++ UserCode (UserCode/CMakeLists.txt, 模块模板)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-confirm-create-project" class="btn btn-primary">立即创建</button>
+                <button id="btn-cancel-create-project" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+</body>
+</rml>

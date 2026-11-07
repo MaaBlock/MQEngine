@@ -12,9 +12,9 @@ namespace MQEngine {
     class SceneEntityViewer {
     public:
         SceneEntityViewer();
-        void renderGlobalEntityList(Scene* scene);
-        void renderTrunkEntityList(Scene* scene, std::string trunkName);
-        void renderSceneEntityList(Scene* scene);
+        void renderGlobalEntityList(Scene::Scene* scene);
+        void renderTrunkEntityList(Scene::Scene* scene, std::string trunkName);
+        void renderSceneEntityList(Scene::Scene* scene);
         void render();
         void selectEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
     private:
@@ -26,7 +26,7 @@ namespace MQEngine {
         bool m_showContextMenu = false;
         std::string m_contextMenuTarget;
 
-        void createEntity(Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
+        void createEntity(Scene::Scene* scene, const std::string& name, const std::string& trunkName = "", bool isGlobal = true);
         void deleteEntity(entt::entity entity, const std::string& trunkName = "", bool isGlobal = false);
         void addStaticMeshComponent(entt::entity entity, const std::string& modelUuid, const std::string& meshName, bool isGlobal, const std::string& trunkName = "");
         void addScriptComponent(entt::entity entity, const std::string& functionName, bool isGlobal, const std::string& trunkName = "", bool isClass = false);

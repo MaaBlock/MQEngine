@@ -59,6 +59,15 @@
       "name": "vulkan-headers",
       "platform": "android"
     },
-    "ctre"
+    "ctre",
+    "uriparser",
+    "sqlite3",
+    "draco",
+    "glm",
+    "openssl",
+    "concurrentqueue",
+    "cpp-httplib",
+    "tomlplusplus",
+    "flatbuffers"
   ]
 }

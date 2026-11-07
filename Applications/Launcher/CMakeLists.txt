@@ -1,28 +1,15 @@
 include("../../Config/set_utf8_compiler_encoding.cmake")
-file(GLOB CORE_MODULE_SOURCES
-        LIST_DIRECTORIES false
-        CONFIGURE_DEPENDS
-        "./src/core/*.cpp"
-)
-file(GLOB CORE_MODULE_HEADERS
-        LIST_DIRECTORIES false
-        CONFIGURE_DEPENDS
-        "./src/core/*.h"
-        "./src/core/*.hpp"
-)
-file(GLOB THIRDPARTY_MODULE_HEADERS
-        LIST_DIRECTORIES false
-        CONFIGURE_DEPENDS
-        "./src/thirdparty/*.h"
-)
+include("../../Config/copy_headers.cmake")
+
+add_subdirectory(LauncherProject)
+
+collect_module_files(LAUNCHER "./src")
 
 set(MQENGINE_LAUNCHER_SOURCES
-        ${CORE_MODULE_SOURCES}
-        "${CMAKE_SOURCE_DIR}/ThirdParty/tinyfiledialogs/tinyfiledialogs.c"
+        ${LAUNCHER_MODULE_SOURCES}
 )
 set(MQENGINE_LAUNCHER_HEADERS
-        ${CORE_MODULE_HEADERS}
-        ${THIRDPARTY_MODULE_HEADERS}
+        ${LAUNCHER_MODULE_HEADERS}
 )
 
 add_executable(Launcher
@@ -30,17 +17,10 @@ add_executable(Launcher
         ${MQENGINE_LAUNCHER_HEADERS}
 )
 
-target_include_directories(Launcher PUBLIC
-        "${CMAKE_SOURCE_DIR}/ThirdParty/tinyfiledialogs"
-)
-
-target_link_libraries(Launcher
-        FCT_IMGUI
-)
 target_link_fct_libraries(Launcher)
 target_link_fct_node_libraries(Launcher)
 target_link_engine(Launcher)
-target_link_imgui_plugin(Launcher)
+target_link_launcher_native(Launcher)
 set_utf8_for_target(Launcher)
 
 if(TARGET Game)
