@@ -1,33 +1,28 @@
-#ifndef GAMEAPPLICATION_H
-#define GAMEAPPLICATION_H
+#ifndef MQENGINE_GAMEAPPLICATION_H
+#define MQENGINE_GAMEAPPLICATION_H
 
-#include "../thirdparty/thirdparty.h"
-#include <Engine/headers.h>
+#include <MQEngine/runtime/runtime.h>
 
-namespace MQEngine {
-
+namespace MQEngine
+{
     /**
-     * @brief 独立游戏发布宿主应用程序：极简信息与标签注入壳
+     * @brief Game 宿主应用纯壳：仅负责注入 Runtime 与 Game 标签，不包含业务逻辑
      */
-    class GameApplication : public Runtime::Application {
+    class GameApplication : public Runtime::Application
+    {
     public:
         void registerInfo() override
         {
             registerInfoImpl();
-            applicationRegisterInfo = ApplicationRegisterInfo{
-                .platformRequire = {
-                    .target = RenderTarget::Window,
-                    .windowTitle = "MQEngine Game",
-                },
-                .defaultProjectPath = "UserCode/Projects/DemoProject/project.mq",
-                .tags = {"Runtime", "Game"},
-            };
+            applicationRegisterInfo.platformRequire.target = RenderTarget::Window;
+            applicationRegisterInfo.platformRequire.windowTitle = "MQEngine Game";
+            applicationRegisterInfo.local = Local::zh_CN;
+            applicationRegisterInfo.tags = {"Runtime", "Game"};
         }
 
         void init() override;
         void logicTick() override;
     };
-
 } // namespace MQEngine
 
-#endif // GAMEAPPLICATION_H
+#endif // MQENGINE_GAMEAPPLICATION_H

@@ -1,0 +1,25 @@
+name = "CliEditor"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "渐进式披露引擎 CLI 与 AI 自动化编辑器插件包（让引擎与图形编辑器能干的一切操作，AI 与命令行均可通过 4 级渐进式协议对等执行）"
+license = "MIT"
+signature = ""
+dependencies = []
+tags = ["Runtime", "CliEditor"]
+
+[[composites]]
+name = "CliEditorComposite"
+description = "4 级渐进式 CLI 编辑器核心组件（Level 0 能力域发现 -> Level 1 域命令列表 -> Level 2 参数 Schema 与示例 -> Level 3 单条/流水线执行与 JSON 输出），涵盖插件自省、ECS 场景编辑、3D 角色生成（含内置参数化人形/机甲与 Tripo3D/本地 AI 接口）、RenderGraph 拓扑与抓帧截图、Shader 编译、地形雕刻、蓝图与 TS 互转、RmlUi DOM 编辑、ECS 回放时间轴、NTC 烘焙与独立游戏打包。"
+tags = ["Runtime", "CliEditor"]
+dependencies = []
+responsibilities = [
+    "提供 Level 0 ~ Level 3 四级渐进式披露 CLI 协议（--help / --domain / --schema / --exec / --script / --json / --out）",
+    "暴露与 GUI 编辑器 100% 对等的 13 大能力域（plugin / scene / character / render / shader / asset / terrain / blueprint / ui / replay / ntc / package / profile）",
+    "提供内置免费参数化 15 骨骼部位 3D 人形/机甲角色网格生成（character.generate_mannequin）及 Tripo3D / 开源 AI 3D 接口桥接",
+    "支持多命令分号流水线批处理与定帧 Vulkan GPU 画面抓取（render.capture），实现 AI『执行 -> 截图看画面 -> 再调整』闭环"
+]
+dock_windows = []
+non_goals = [
+    "不依赖也不创建任何 ImGui Dock 窗口（纯无头/命令行驱动，零 GUI 耦合）",
+    "不将业务逻辑塞入底层 Resource 层，严格位于顶层 Composite 插件层"
+]

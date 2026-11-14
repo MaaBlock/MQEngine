@@ -1,10 +1,8 @@
-/**
- *@file engineapi.h
- *@brief include all the headers for the engine inner
- */
 #ifndef ENGINEAPI_H
 #define ENGINEAPI_H
+#ifndef BUILD_ENGINE
 #define BUILD_ENGINE
-#include "headers.h"
+#endif
+#include <MQEngine/headers.h>
 using namespace FCT;
-#endif //ENGINEAPI_H
+#endif // ENGINEAPI_H

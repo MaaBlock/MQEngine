@@ -1,6 +1,0 @@
-#ifndef ENGINE_PIPELINEMANAGER_H
-#define ENGINE_PIPELINEMANAGER_H
-
-#include "PassManager.h"
-
-#endif // ENGINE_PIPELINEMANAGER_H

@@ -1,0 +1,140 @@
+<rml>
+<head>
+    <title>MQEngine ModelViewer HUD</title>
+    <link type="text/rcss" href="ViewerHUD.rcss"/>
+</head>
+<body class="viewer-body">
+    <!-- 顶部常驻快捷栏 -->
+    <div class="top-nav-bar">
+        <div class="nav-brand">
+            <span class="brand-title">MQEngine</span>
+            <span class="brand-subtitle">ModelViewer</span>
+        </div>
+        <div class="nav-stats">
+            <span id="lbl_fps" class="fps-badge">FPS: 60.0 (16.6ms)</span>
+        </div>
+        <div class="nav-actions">
+            <button id="btn_open_file" class="hud-btn hud-btn-primary">打开模型文件...</button>
+        </div>
+    </div>
+
+    <!-- 左上角：模型信息卡片 -->
+    <div id="panel_model_info" class="hud-card card-top-left">
+        <div class="card-header">
+            <span class="card-title">模型统计信息</span>
+            <span id="badge_status" class="status-badge badge-ready">READY</span>
+        </div>
+        <div class="card-content">
+            <div class="info-row">
+                <span class="info-label">模型标题:</span>
+                <span id="lbl_model_title" class="info-value">MQEngine 摄影棚检视台</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">文件路径:</span>
+                <span id="lbl_model_path" class="info-value path-value">未载入外部模型</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">网格面数:</span>
+                <span id="lbl_model_triangles" class="info-value">0 三角面</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">顶点总数:</span>
+                <span id="lbl_model_vertices" class="info-value">0 顶点</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">SubMesh 数量:</span>
+                <span id="lbl_model_submeshes" class="info-value">0 子网格</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">显存占用:</span>
+                <span id="lbl_model_vram" class="info-value">0.0 MB</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧：材质着色、光照与后处理检视面板 -->
+    <div id="panel_controls" class="hud-card card-top-right">
+        <div class="card-header">
+            <span class="card-title">渲染与后处理控制</span>
+        </div>
+        <div class="card-content">
+            <!-- PBR 着色模型选择 -->
+            <div class="control-section">
+                <span class="section-label">PBR 着色模型</span>
+                <select id="select_shading_model" class="hud-select">
+                    <option value="standard" selected>Standard Metallic-Roughness</option>
+                    <option value="clearcoat">ClearCoat (清漆/车漆)</option>
+                    <option value="subsurface">Subsurface (次表面散射/皮肤)</option>
+                    <option value="anisotropic">Anisotropic (各向异性/拉丝金属)</option>
+                    <option value="cloth">Cloth (织物/天鹅绒)</option>
+                </select>
+            </div>
+
+            <!-- 后处理开关与参数 -->
+            <div class="control-section">
+                <span class="section-label">特效后处理栈 (Post-Processing)</span>
+                
+                <div class="toggle-row">
+                    <input type="checkbox" id="chk_dlss" class="hud-checkbox" checked/>
+                    <label for="chk_dlss" class="toggle-label">DLSS 超分辨率重构</label>
+                </div>
+
+                <div class="toggle-row">
+                    <input type="checkbox" id="chk_dof" class="hud-checkbox" checked/>
+                    <label for="chk_dof" class="toggle-label">物理景深 (Depth of Field)</label>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-title">光圈值 (f-stop):</span>
+                    <input type="range" id="slider_dof_aperture" class="hud-slider" min="1.4" max="22.0" step="0.2" value="2.8"/>
+                    <span id="val_dof_aperture" class="slider-val">f/2.8</span>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-title">对焦距离 (m):</span>
+                    <input type="range" id="slider_dof_focus" class="hud-slider" min="0.5" max="25.0" step="0.2" value="4.0"/>
+                    <span id="val_dof_focus" class="slider-val">4.0m</span>
+                </div>
+
+                <div class="toggle-row">
+                    <input type="checkbox" id="chk_bloom" class="hud-checkbox" checked/>
+                    <label for="chk_bloom" class="toggle-label">Bloom 泛光</label>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-title">泛光强度:</span>
+                    <input type="range" id="slider_bloom_intensity" class="hud-slider" min="0.0" max="3.0" step="0.1" value="0.8"/>
+                    <span id="val_bloom_intensity" class="slider-val">0.8</span>
+                </div>
+            </div>
+
+            <!-- 光照与展示控制 -->
+            <div class="control-section">
+                <span class="section-label">展示与环境</span>
+                <div class="toggle-row">
+                    <input type="checkbox" id="chk_turntable" class="hud-checkbox"/>
+                    <label for="chk_turntable" class="toggle-label">自动转盘旋转 (Turntable)</label>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-title">曝光补偿:</span>
+                    <input type="range" id="slider_exposure" class="hud-slider" min="0.2" max="3.0" step="0.1" value="1.0"/>
+                    <span id="val_exposure" class="slider-val">1.0x</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部居中：视角控制栏 -->
+    <div id="panel_toolbar" class="hud-card card-bottom-center">
+        <button id="btn_view_fit" class="hud-btn hud-btn-secondary" title="快捷键: F">复位居中 [F]</button>
+        <button id="btn_view_front" class="hud-btn hud-btn-secondary">正视图</button>
+        <button id="btn_view_side" class="hud-btn hud-btn-secondary">侧视图</button>
+        <button id="btn_view_top" class="hud-btn hud-btn-secondary">顶视图</button>
+        <button id="btn_screenshot" class="hud-btn hud-btn-secondary">截图导出</button>
+    </div>
+
+    <!-- 未载入模型时的中心拖拽引导提示 -->
+    <div id="empty_prompt" class="empty-prompt-card">
+        <div class="prompt-icon">&#x25C9;</div>
+        <div class="prompt-title">拖入 3D 模型开始检视</div>
+        <div class="prompt-desc">支持直接拖拽外部 .fbx / .gltf / .glb / .obj 文件进入窗口，或点击右上角 [打开模型文件...]</div>
+    </div>
+</body>
+</rml>

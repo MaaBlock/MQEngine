@@ -5,8 +5,8 @@
 #ifndef RESOURCE_LOADER_H
 #define RESOURCE_LOADER_H
 
-#include "../../thirdparty/thirdparty.h"
-#include "../../EnginePCH.h"
+#include <MQEngine/thirdparty/thirdparty.h>
+#include <MQEngine/EnginePCH.h>
 #include <vector>
 #include <string>
 
@@ -136,6 +136,13 @@ public:
      */
     virtual bool exists(const std::string& path) const {
         return SAI::FileSystem::exists(path);
+    }
+
+    /**
+     * @brief 检查文件是否存在
+     */
+    virtual bool hasFile(const std::string& path) const {
+        return exists(path);
     }
 };
 

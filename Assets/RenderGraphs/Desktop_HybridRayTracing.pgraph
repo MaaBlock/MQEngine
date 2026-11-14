@@ -1,0 +1,107 @@
+# 纯数据帧图预设：桌面端混合光线追踪管线 (PRD 10 §3.1, FEAT-72)
+name = "Desktop_HybridRayTracing"
+version = "3.0"
+pass_tags = ["Shadow", "Geometry", "DeferredGBuffer", "Opaque", "RayTracing", "Lighting", "Skybox", "Translucent", "PostProcess", "ToneMap", "Bloom", "Overlay", "UI"]
+
+[[images]]
+name = "ShadowMap"
+format = "D32_SFLOAT"
+width = 2048
+height = 2048
+
+[[images]]
+name = "GBuffer0"
+format = "RGBA8_UNORM"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "GBuffer1"
+format = "RGBA8_UNORM"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "GBuffer2"
+format = "RGBA16_SFLOAT"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "SceneDepth"
+format = "D32_SFLOAT"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "RTShadow"
+format = "R16_SFLOAT"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "RTReflection"
+format = "RGBA16_SFLOAT"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "SceneHdrColor"
+format = "RGBA16_SFLOAT"
+scale = [1.0, 1.0]
+
+[[passes]]
+name = "ShadowMapPass"
+tags = ["Shadow"]
+clear_depth = 1.0
+depth_stencil = "ShadowMap"
+
+[[passes]]
+name = "DeferredGBufferPass"
+tags = ["Geometry", "DeferredGBuffer", "Opaque"]
+clear_color = [0.0, 0.0, 0.0, 0.0]
+clear_depth = 1.0
+targets = ["GBuffer0", "GBuffer1", "GBuffer2"]
+depth_stencil = "SceneDepth"
+
+[[passes]]
+name = "RayTracingPass"
+tags = ["RayTracing"]
+targets = ["RTShadow", "RTReflection"]
+textures = [
+    { slot = "SceneDepth", source = "SceneDepth", fallback = "@builtin/white_1x1" },
+    { slot = "GBuffer0", source = "GBuffer0", fallback = "@builtin/black_1x1" }
+]
+
+[[passes]]
+name = "DeferredLightingPass"
+tags = ["Lighting"]
+targets = ["SceneHdrColor"]
+textures = [
+    { slot = "GBuffer0", source = "GBuffer0", fallback = "@builtin/black_1x1" },
+    { slot = "GBuffer1", source = "GBuffer1", fallback = "@builtin/flat_normal_1x1" },
+    { slot = "GBuffer2", source = "GBuffer2", fallback = "@builtin/black_1x1" },
+    { slot = "Depth", source = "SceneDepth", fallback = "@builtin/white_1x1" },
+    { slot = "Shadow", source = "ShadowMap", fallback = "@builtin/white_1x1" },
+    { slot = "RTShadow", source = "RTShadow", fallback = "@builtin/white_1x1" },
+    { slot = "RTReflection", source = "RTReflection", fallback = "@builtin/black_1x1" }
+]
+
+[[passes]]
+name = "SkyboxPass"
+tags = ["Skybox"]
+targets = ["SceneHdrColor"]
+depth_stencil = "SceneDepth"
+
+[[passes]]
+name = "ForwardTransPass"
+tags = ["Geometry", "Translucent"]
+targets = ["SceneHdrColor"]
+depth_stencil = "SceneDepth"
+
+[[passes]]
+name = "PostProcessPass"
+tags = ["PostProcess", "ToneMap", "Bloom"]
+targets = ["Window"]
+textures = [
+    { slot = "SceneColor", source = "SceneHdrColor", fallback = "@builtin/black_1x1" }
+]
+
+[[passes]]
+name = "UiOverlayPass"
+tags = ["Overlay", "UI"]
+targets = ["Window"]

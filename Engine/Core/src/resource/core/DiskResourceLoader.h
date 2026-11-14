@@ -5,8 +5,7 @@
 #ifndef DISK_RESOURCE_LOADER_H
 #define DISK_RESOURCE_LOADER_H
 
-#include "ResourceLoader.h"
-#include "../../base/CoreEngineManager.h"
+#include <MQEngine/resource/core/ResourceLoader.h>
 #include <string>
 
 namespace MQEngine {

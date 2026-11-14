@@ -1,7 +1,7 @@
 #ifndef MQENGINE_ASIO_BACKEND_H
 #define MQENGINE_ASIO_BACKEND_H
 
-#include "./thirdparty.h"
+#include <MQEngine/thirdparty/thirdparty.h>
 
 #ifndef BOOST_ASIO_NO_DEPRECATED
 #define BOOST_ASIO_NO_DEPRECATED

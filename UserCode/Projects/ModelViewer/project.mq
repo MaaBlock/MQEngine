@@ -1,0 +1,31 @@
+# ==============================================================================
+# UserCode/Projects/ModelViewer/project.mq —— 用编辑器制作的 3D 模型查看器游戏工程
+# ==============================================================================
+name = "ModelViewer"
+version = "1.0.0"
+engineVersion = "2.0.0"
+author = "MQEngine Studio"
+description = "使用 MQEngine 编辑器制作的轻量级 3D 模型查看器"
+
+initialScene = "Scenes/ViewerStage.scene"
+
+[paths]
+assets = "Assets"
+scenes = "Scenes"
+plugins = "Plugins"
+native = "Native"
+config = "Config"
+
+# 启用插件：编辑器开发期自动激活全部工具；打包 ModelViewer.exe 时自动按 tags 仅提取 RmlUiComposite.dll 与 BlueprintRuntimeComposite.dll
+plugins = [
+    "EditorBase",
+    "MQEditor",
+    "GameHtmlUI",
+    "Blueprint"
+]
+
+[packaging]
+executableName = "ModelViewer"
+windowTitle = "MQEngine ModelViewer"
+defaultResolution = [1920, 1080]
+allowRuntimeExternalDropImport = true # 允许运行期直接加载磁盘任意位置的外部模型与贴图

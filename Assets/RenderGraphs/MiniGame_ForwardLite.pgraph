@@ -1,0 +1,18 @@
+# 纯数据帧图预设：小游戏零离屏颜色 RT 极速轻量管线 (PRD 02 §2, PRD 10 §3.1, FEAT-10, FEAT-72)
+name = "MiniGame_ForwardLite"
+version = "3.0"
+pass_tags = ["ForwardOpaque", "UI"]
+
+[[images]]
+name = "SceneDepth"
+format = "D16_UNORM"
+scale = [1.0, 1.0]
+
+[[passes]]
+name = "ForwardLitePass"
+tags = ["Geometry", "ForwardLite", "Opaque", "UI"]
+clear_color = [0.10, 0.12, 0.15, 1.0]
+clear_depth = 1.0
+discard_depth = true
+targets = ["Window"]
+depth_stencil = "SceneDepth"

@@ -1,0 +1,43 @@
+name = "Terrain"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "跨 Scene / Renderer / Effect / Physics / Editor 的大世界地形渲染、几何与雕刻插件包"
+license = "MIT"
+signature = ""
+dependencies = []
+tags = ["Runtime", "Game", "Editor", "ImGui"]
+
+# 运行时地形：向 ObjectPass 注册 TerrainClipmapPipeline，向 Physics 注册高度场碰撞
+[[composites]]
+name = "TerrainRuntimeComposite"
+description = "大世界地形 GPU Clipmap 同心环几何生成、高度场/法线双线性采样、物理碰撞同步与笔刷数据修改"
+tags = ["Runtime"]
+dependencies = []
+dock_windows = []
+responsibilities = [
+    "维护大世界高度场 (Heightfield)、4 层 Splatmap RGBA 材质权重与 4 级同心 GPU Clipmap 环几何缓冲",
+    "提供双线性插值高度采样 (getHeightAt)、中心差分法线计算 (getNormalAt) 与步进射线求交 (raycast)",
+    "向 RendererSubsystem 注册 TerrainClipmapPipeline 扩展 (SyncTerrainClipmap 与 ObjectPass 订阅) 并向 PhysicsSubsystem 同步高度场碰撞体",
+    "提供运行时高度场抬升/下压/平滑/压平、Splatmap 权重归一化涂抹与地形资产磁盘序列化接口"
+]
+non_goals = [
+    "严禁依赖 ImGui，不包含任何地形编辑器面板或交互式预览窗口",
+    "不负责通用静态网格资产管理或材质 Shader 图编辑"
+]
+
+# 编辑器地形工具：雕刻笔刷、Splatmap 多层权重绘制、植被刷（独立游戏打包时物理级不加载此 DLL）
+[[composites]]
+name = "TerrainEditorComposite"
+description = "大世界地形雕刻笔刷、Splatmap 多层权重绘制、程序化植被 ECS 散布与俯视高度场预览工坊"
+tags = ["Editor", "ImGui"]
+dependencies = ["TerrainRuntimeComposite", "EditorUiComposite"]
+dock_windows = ["大世界地形工坊 (Terrain Studio)"]
+responsibilities = [
+    "提供『大世界地形工坊 (Terrain Studio)』停靠面板，切换雕刻、材质涂抹与植被散布三大工具模式",
+    "驱动抬升/下压/平滑/压平笔刷、4 层 Splatmap 材质权重涂抹与俯视等高线交互式画布预览",
+    "基于海拔与坡度约束在场景中程序化生成与清理植被 ECS 实体 (Conifer/Shrub/Flora)"
+]
+non_goals = [
+    "不直接维护底层 GPU Clipmap 顶点缓冲或物理碰撞体（委托给 TerrainRuntimeComposite）",
+    "不替代 SceneViewerComposite 的通用 3D 视口渲染与 Gizmo 操控"
+]

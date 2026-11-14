@@ -1,8 +1,6 @@
-//
-// Created by MaaBlock on 2026/11/6.
-//
-#include "../core/Engine.h"
-#include "Application.h"
+#include <MQEngine/runtime/interface/Application.h>
+#include <MQEngine/runtime/core/Engine.h>
+
 namespace MQEngine
 {
     namespace Runtime
@@ -11,5 +9,5 @@ namespace MQEngine
         {
             m_engine = Engine::getInstance();
         }
-    }
-}
+    } // namespace Runtime
+} // namespace MQEngine

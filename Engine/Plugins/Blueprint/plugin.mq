@@ -1,0 +1,46 @@
+name = "Blueprint"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "可视化节点蓝图与 TypeScript (TS) 源码双向无损翻译插件包"
+license = "MIT"
+signature = ""
+dependencies = []
+tags = ["Runtime", "Game", "Editor", "ImGui"]
+
+# 蓝图运行时执行图与脚本桥接（纯游戏运行时加载）
+[[composites]]
+name = "BlueprintRuntimeComposite"
+description = "可视化蓝图运行时 DAG 求值引擎、全局/局部变量表与 TypeScript 声明生成"
+tags = ["Runtime"]
+dependencies = []
+dock_windows = []
+responsibilities = [
+    "维护已注册的蓝图执行图 (RuntimeGraph) 注册表与全局/图局部变量表",
+    "驱动 OnStart、OnUpdate、OnUIClick、OnUIInput 等事件分发与执行流推进",
+    "执行数学/逻辑算子节点、ECS 组件读写节点、HTML UI 交互节点与场景模型加载节点的拓扑求值",
+    "导出 MQEngine 强类型 TypeScript 声明文件 (.d.ts) 并记录 PIE 执行脉冲探针"
+]
+non_goals = [
+    "严禁依赖 ImGui 或 ImNodes，不提供任何编辑器节点画布 UI",
+    "不处理 HLSL/Slang 着色器图或 RenderGraph 渲染通道节点",
+    "不负责编辑器端 Undo/Redo 快照栈管理"
+]
+
+# 蓝图可视化节点编辑器（仅在编辑器模式加载）
+[[composites]]
+name = "BlueprintEditorComposite"
+description = "基于 ImNodes 的可视化逻辑蓝图画布与 TypeScript 源码双向无损 AST 翻译编辑器"
+tags = ["Editor", "ImGui"]
+dependencies = ["BlueprintRuntimeComposite", "EditorUiComposite"]
+dock_windows = ["蓝图可视化编辑器 (Blueprint Editor)"]
+responsibilities = [
+    "提供基于 ImNodes 的可视化游戏逻辑与 UI 事件节点连线画布、小地图及右键搜索菜单",
+    "实现蓝图节点图与 TypeScript (@bp-node/@bp-pin/@bp-link) 源码的双向无损 AST 翻译与自动布局",
+    "接收 HTML UI DOM 元素与资产浏览器项的拖拽投递以自动生成事件或资源节点",
+    "基于 EditorUiComposite CommandStack 提供蓝图拓扑修改的 Undo/Redo 快照恢复"
+]
+non_goals = [
+    "不负责运行时每帧 OnUpdate 驱动（由 BlueprintRuntimeComposite 执行）",
+    "不编辑材质/着色器节点（由 ShaderEditorComposite 负责）或 RenderGraph 管线拓扑（由 RenderGraphEditorComposite 负责）",
+    "不直接绘制 3D 场景视口或 HTML/CSS 盒模型画布"
+]

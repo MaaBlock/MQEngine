@@ -1,0 +1,6 @@
+#ifndef MQENGINE_RESOURCE_MEMORY_ARENA_H
+#define MQENGINE_RESOURCE_MEMORY_ARENA_H
+
+#include <MQEngine/resource/core/Arena.h>
+
+#endif // MQENGINE_RESOURCE_MEMORY_ARENA_H

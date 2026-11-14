@@ -1,46 +1,37 @@
-//
-// Created by Administrator on 2025/8/23.
-//
+#include <MQEngine/resource/core/FileDataLoader.h>
 
-#include "FileDataLoader.h"
-
-namespace MQEngine {
-    void FileDataLoader::ensureDirectory(const std::string& dir) const
+namespace MQEngine
+{
+    Status FileDataLoader::ensureDirectory(const std::string& dir) const
     {
-        Status st = SAI::FileSystem::ensureDirectory(dir);
-        if (!st.ok()) {
-            throw DataError(std::string(st.message()));
-        }
+        return SAI::FileSystem::ensureDirectory(dir);
     }
 
-    std::vector<std::string> FileDataLoader::getSubDirectories(const std::string& dir) const
+    Status FileDataLoader::createDirectory(const std::string& dir) const
+    {
+        if (SAI::FileSystem::exists(dir)) {
+            if (SAI::FileSystem::isDirectory(dir)) {
+                return AlreadyExistsError(StrCat("目录已存在: ", dir));
+            }
+            return InvalidArgumentError(StrCat("路径已存在但不是目录: ", dir));
+        }
+        return SAI::FileSystem::createDirectory(dir);
+    }
+
+    StatusOr<std::vector<std::string>> FileDataLoader::getSubDirectories(const std::string& dir) const
     {
         if (!SAI::FileSystem::isDirectory(dir)) {
-            throw DataError("目录不存在或不是有效目录: " + dir);
+            return NotFoundError(StrCat("目录不存在或不是有效目录: ", dir));
         }
         return SAI::FileSystem::listSubDirectories(dir);
     }
 
-    std::vector<std::string> FileDataLoader::getSubDirectoriesName(const std::string& dir) const
+    StatusOr<std::vector<std::string>> FileDataLoader::getSubDirectoriesName(const std::string& dir) const
     {
         if (!SAI::FileSystem::isDirectory(dir)) {
-            throw DataError("目录不存在或不是有效目录: " + dir);
+            return NotFoundError(StrCat("目录不存在或不是有效目录: ", dir));
         }
         return SAI::FileSystem::listSubDirectoryNames(dir);
-    }
-
-    void FileDataLoader::createDirectory(const std::string& dir) const
-    {
-        if (SAI::FileSystem::exists(dir)) {
-            if (SAI::FileSystem::isDirectory(dir)) {
-                throw DataError("目录已存在: " + dir);
-            }
-            throw DataError("路径已存在但不是目录: " + dir);
-        }
-        Status st = SAI::FileSystem::createDirectory(dir);
-        if (!st.ok()) {
-            throw DataError(std::string(st.message()));
-        }
     }
 
     bool FileDataLoader::fileExists(const std::string& filePath) const
@@ -48,36 +39,30 @@ namespace MQEngine {
         return SAI::FileSystem::exists(filePath);
     }
 
-    std::unique_ptr<std::ifstream> FileDataLoader::openBinaryInputStream(const std::string& filePath) const
+    bool FileDataLoader::directoryExists(const std::string& dirPath) const
     {
-        auto streamRes = SAI::FileSystem::openBinaryInputStream(filePath);
-        if (!streamRes.ok()) {
-            return nullptr;
-        }
-        return std::move(streamRes.value());
+        return SAI::FileSystem::isDirectory(dirPath);
     }
 
-    std::unique_ptr<std::ofstream> FileDataLoader::openBinaryOutputStream(const std::string& filePath) const
+    StatusOr<std::vector<uint8_t>> FileDataLoader::readBinaryFile(const std::string& filePath) const
     {
-        auto streamRes = SAI::FileSystem::openBinaryOutputStream(filePath, true);
-        if (!streamRes.ok()) {
-            throw DataError(std::string(streamRes.status().message()));
-        }
-        return std::move(streamRes.value());
+        return SAI::FileSystem::readBinaryFile(filePath);
     }
 
-    std::vector<std::string> FileDataLoader::getFileNamesWithExtension(const std::string& dir, const std::string& extension) const
+    Status FileDataLoader::writeBinaryFile(const std::string& filePath, const void* data, size_t size) const
+    {
+        return SAI::FileSystem::writeBinaryFile(filePath, data, size, true);
+    }
+
+    std::vector<std::string> FileDataLoader::getFileNamesWithExtension(
+        const std::string& dir, const std::string& extension) const
     {
         return SAI::FileSystem::listFileStems(dir, extension);
     }
 
-    std::vector<std::string> FileDataLoader::getFilePathsWithExtension(const std::string& dir, const std::string& extension) const
+    std::vector<std::string> FileDataLoader::getFilePathsWithExtension(
+        const std::string& dir, const std::string& extension) const
     {
         return SAI::FileSystem::listFiles(dir, extension);
     }
-
-    bool FileDataLoader::directoryExists(const std::string& string)
-    {
-        return SAI::FileSystem::isDirectory(string);
-    }
-} // MQEngine
+} // namespace MQEngine

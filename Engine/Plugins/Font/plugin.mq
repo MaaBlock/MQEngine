@@ -1,0 +1,24 @@
+name = "Font"
+version = "1.0.0"
+author = "MQEngine Official"
+description = "零拷贝多端统一字体子系统插件：提供离线烘焙 .mqfont 解析、多通道 MSDF 动态图集、GPU 场景文本合批与内存自救"
+license = "MIT"
+signature = ""
+dependencies = []
+tags = ["Runtime", "Game", "Editor", "CliEditor"]
+
+[[composites]]
+name = "FontRuntimeComposite"
+description = "全端统一字体运行时组件：托管 FontSystem、BakedFont、GlyphAtlasManager 与 InGameTextComponent 生命周期"
+tags = ["Runtime"]
+dependencies = []
+responsibilities = [
+    "统一托管 FontSystem 生命周期（onLoad/onInit/onTick/onUnload），按桌面 FreeType 与小游戏 Hybrid 后端分发渲染与烘焙能力",
+    "提供二进制 .mqfont 离线字体加载与系统字体回退能力，确保发布态严守 0KB 原始字库防线",
+    "管理 GlyphAtlasManager 多页货架图集并在内存告警时按 LRU 淘汰冷门字形页",
+    "基于 SIMD 指令提供 InGameTextComponent GPU Instancing 场景文本实例缓冲组装"
+]
+dock_windows = []
+non_goals = [
+    "严禁依赖任何 ImGui 或编辑器面板模块（保证独立游戏、编辑器与无头 CLI 均可轻量按需装载）"
+]

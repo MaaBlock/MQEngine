@@ -1,0 +1,76 @@
+# 桌面端键鼠增强输入映射上下文预设 (PRD 09 §3, FEAT-60~65)
+[context]
+name = "IMC_Desktop"
+priority = 0
+
+[[bindings]]
+action = "IA_Move"
+key = "W"
+modifiers = [
+    { type = "SwizzleAxis", order = "YXZ" }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Move"
+key = "S"
+modifiers = [
+    { type = "SwizzleAxis", order = "YXZ" },
+    { type = "Negate", x = false, y = true, z = false }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Move"
+key = "A"
+modifiers = [
+    { type = "Negate", x = true, y = false, z = false }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Move"
+key = "D"
+modifiers = [
+    { type = "Normalize2D" }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Look"
+key = "MouseDelta2D"
+modifiers = [
+    { type = "Scalar", x = 0.15, y = 0.15, z = 1.0 }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Jump"
+key = "Space"
+triggers = [
+    { type = "Pressed" }
+]
+
+[[bindings]]
+action = "IA_PrimarySkill"
+key = "MouseLeft"
+triggers = [
+    { type = "Tap", max_duration = 0.25 }
+]
+
+[[bindings]]
+action = "IA_HeavyCharge"
+key = "MouseLeft"
+triggers = [
+    { type = "Hold", hold_time = 0.45, one_shot = true }
+]

@@ -1,0 +1,16 @@
+# MQEngine 空白工程模板
+name = "Blank"
+version = "1.0.0"
+description = "空白单场景模板：仅包含空主场景，无任何预置演示实体，适合从零搭建场景与玩法。"
+startup_scene = "Scenes/Main.mqscene"
+assetRoot = "Assets"
+pipelinePath = ""
+userCode = "Native"
+plugins = []
+
+[paths]
+native = "Native"
+
+[packaging]
+executableName = "Blank"
+windowTitle = "MQEngine - Blank"

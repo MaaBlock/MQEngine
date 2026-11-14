@@ -1,0 +1,78 @@
+# 标准 PBR 跨管线材质技术描述 (PRD 10 §2, FEAT-67~73)
+name = "StandardPbr"
+tech_id = 1
+
+[[pipelines]]
+id = 101
+name = "StandardPbr_ShadowStatic"
+order = 0
+required_input_tags = ["Mesh", "Static", "CastShadow"]
+required_pass_tags = ["Shadow"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 0
+depth_write = true
+vertex_attributes = ["position"]
+
+[[pipelines]]
+id = 102
+name = "StandardPbr_ShadowSkinned"
+order = 0
+required_input_tags = ["Mesh", "Skinned", "CastShadow"]
+required_pass_tags = ["Shadow"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 0
+depth_write = true
+vertex_attributes = ["position", "boneIds", "boneWeights"]
+
+[[pipelines]]
+id = 103
+name = "StandardPbr_ForwardPlusStatic"
+order = 10
+required_input_tags = ["Mesh", "Static", "Opaque"]
+excluded_input_tags = ["Skinned"]
+required_pass_tags = ["Geometry", "ForwardPlus", "Opaque"]
+excluded_pass_tags = ["Shadow", "DeferredGBuffer"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = true
+vertex_attributes = ["position", "normal", "texCoord"]
+pin_samplers = [
+    { sampler = "u_ShadowAtlas", slot = "ShadowAtlas" }
+]
+
+[[pipelines]]
+id = 104
+name = "StandardPbr_ForwardLiteStatic"
+order = 10
+required_input_tags = ["Mesh", "Static", "Opaque"]
+required_pass_tags = ["Geometry", "ForwardLite", "Opaque"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = true
+vertex_attributes = ["position", "normal", "texCoord"]
+
+[[pipelines]]
+id = 105
+name = "StandardPbr_DeferredGBufferStatic"
+order = 10
+required_input_tags = ["Mesh", "Static", "Opaque"]
+required_pass_tags = ["Geometry", "DeferredGBuffer", "Opaque"]
+vertex_shader = "Assets/Shaders/PBR_Standard.hlsl"
+pixel_shader = "Assets/Shaders/PBR_Standard.hlsl"
+render_target_count = 3
+depth_write = true
+vertex_attributes = ["position", "normal", "tangent", "texCoord"]
+
+[[pipelines]]
+id = 106
+name = "StandardPbr_Translucent"
+order = 50
+required_input_tags = ["Mesh", "Translucent"]
+required_pass_tags = ["Geometry", "Translucent"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = false
+vertex_attributes = ["position", "normal", "texCoord"]

@@ -1,0 +1,18 @@
+# 双 Kawase 泛光后处理技术 (PRD 10 §2.4, §4.1, FEAT-70, FEAT-73)
+name = "DualKawaseBloom"
+tech_id = 4
+
+[[pipelines]]
+id = 401
+name = "DualKawaseBloom_DownsampleUpsample"
+order = 10
+global_match = true
+required_input_tags = ["Viewport", "Bloom"]
+required_pass_tags = ["PostProcess", "Bloom"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = false
+pin_samplers = [
+    { sampler = "u_SceneHdrColor", slot = "SceneColor" }
+]

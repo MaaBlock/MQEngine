@@ -1,0 +1,45 @@
+name = "EditorBase"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "编辑器排版与布局底座插件包（纯目录分组，内含独立的 ImGuiComposite.dll 与 EditorUiComposite.dll）"
+license = "MIT"
+signature = ""
+dependencies = []
+tags = ["Runtime", "Editor", "ImGui"]
+
+[[composites]]
+name = "ImGuiComposite"
+tags = ["Runtime", "ImGui"]
+dependencies = []
+description = "Vulkan ImGui 渲染管线底座、跨 DLL 上下文同步与字体/DPI/主题桥接组件"
+responsibilities = [
+    "管理 FCT::ImguiModule、FCT::ImguiContext 与 ImNodesContext 的完整生命周期",
+    "向 RendererSubsystem 注册 ImguiPass 渲染图通道及 syncImgui 双缓冲同步节点",
+    "提供跨 DLL 边界的 ImGuiContext、内存分配器与 ImNodesContext 同步接口",
+    "通过 ImGuiVulkanBridge 负责中文字体构建、DPI 缩放适配、现代深色主题样式与纹理描述符缓存"
+]
+dock_windows = []
+non_goals = [
+    "禁止实现任何具体业务编辑器面板（如场景视口、层级树、检视器、资产浏览器等）",
+    "禁止管理 DockSpace 停靠布局或顶部主菜单栏调度"
+]
+
+[[composites]]
+name = "EditorUiComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["ImGuiComposite"]
+description = "编辑器主 DockSpace 停靠框架、主菜单栏、全局命令栈、强类型信号总线与基础诊断面板组件"
+responsibilities = [
+    "构建全屏主 DockSpace 五分区停靠布局并管理工作区布局预设切换",
+    "提供动态停靠窗口 (DockWindow) 与顶栏分类菜单项 (MenuAction) 注册协议",
+    "承载 UiContext 强类型视图状态/信号中心与 CommandStack 全局撤销/重做栈",
+    "内置中英文多语言本地化字典、统一控制台日志窗口、偏好设置弹窗与右下角浮动 Toast 通知"
+]
+dock_windows = [
+    "控制台日志 (Console Log)"
+]
+non_goals = [
+    "禁止实现帧性能剖析器面板（由 MQEditor::TracyProfilerComposite 独立负责）",
+    "禁止实现 3D 场景视口、大纲树或反射属性检视器（由 MQEditor::SceneViewerComposite 独立负责）",
+    "禁止实现资产浏览器、着色器编辑器、渲染图编辑器、回放时间轴或打包工具"
+]

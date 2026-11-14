@@ -1,0 +1,19 @@
+# ACES 色调映射上屏后处理技术 (PRD 10 §2.4, FEAT-70)
+name = "ToneMapping"
+tech_id = 5
+
+[[pipelines]]
+id = 501
+name = "ToneMapping_AcesFilmic"
+order = 50
+global_match = true
+required_input_tags = ["Viewport", "ToneMap"]
+required_pass_tags = ["PostProcess", "ToneMap"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = false
+pin_samplers = [
+    { sampler = "u_SceneHdrColor", slot = "SceneColor" },
+    { sampler = "u_BloomColor", slot = "BloomColor" }
+]

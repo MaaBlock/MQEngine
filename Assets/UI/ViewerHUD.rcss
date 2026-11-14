@@ -1,0 +1,93 @@
+body {
+  font-family: LatoLatin;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+#hud_root {
+  position: absolute;
+  left: 24dp;
+  top: 24dp;
+  width: 360dp;
+  height: 380dp;
+  background-color: rgba(20, 24, 32, 0.85);
+  border-width: 1dp;
+  border-color: rgba(70, 85, 110, 1.0);
+  border-radius: 6dp;
+  padding: 16dp;
+}
+
+#title_banner {
+  font-size: 16px;
+  color: #7fd6ff;
+  margin-bottom: 12dp;
+}
+
+#player_badge {
+  background-color: rgba(30, 40, 55, 0.6);
+  border-radius: 4dp;
+  padding: 6dp 10dp;
+  margin-bottom: 10dp;
+}
+
+#lbl_player {
+  color: #38bdf8;
+  font-size: 13px;
+}
+
+.card {
+  background-color: rgba(15, 20, 28, 0.7);
+  border-radius: 4dp;
+  padding: 8dp 12dp;
+  margin-bottom: 8dp;
+}
+
+.label {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+#health_bar {
+  width: 320dp;
+  height: 24dp;
+  background-color: rgba(46, 204, 113, 0.85);
+  border-radius: 4dp;
+  margin-top: 4dp;
+}
+
+#ammo_counter {
+  color: #f1c40f;
+  font-size: 14px;
+}
+
+.row {
+  display: flex;
+  margin-top: 10dp;
+}
+
+.btn {
+  padding: 6dp 14dp;
+  border-radius: 4dp;
+  font-size: 13px;
+  color: #ffffff;
+  margin-right: 8dp;
+}
+
+.btn.primary {
+  background-color: rgba(41, 128, 185, 0.9);
+}
+
+.btn.warning {
+  background-color: rgba(231, 76, 60, 0.9);
+}
+
+.btn:hover {
+  background-color: rgba(52, 152, 219, 1.0);
+}
+
+.select-box {
+  background-color: rgba(30, 40, 55, 0.9);
+  color: #ffffff;
+  border-radius: 4dp;
+  padding: 4dp 8dp;
+}

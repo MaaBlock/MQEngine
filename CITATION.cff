@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "MQEngine: Data-Driven C++20 3D Game Engine with Microkernel Plugin Architecture"
+message: "If you use MQEngine in your projects, please cite this repository."
+type: software
+authors:
+  - name: "MaaBlock"
+    website: "https://github.com/MaaBlock"
+repository-code: "https://github.com/MaaBlock/MQEngine"
+abstract: >-
+  Cross-platform C++20 3D game and graphics engine featuring data-driven scene and GPU rendering
+  pipelines, a declarative TOML and two-way visual/code data configuration workflow, and an
+  on-demand microkernel plugin architecture with hot-reload.
+keywords:
+  - game-engine
+  - graphics-engine
+  - data-driven
+  - data-configuration-workflow
+  - microkernel
+  - plugin-architecture
+  - ecs
+  - cpp20
+  - vulkan
+  - directx-12
+  - render-graph
+  - bindless
+  - gpu-driven
+  - typescript
+  - blueprint
+  - 数据驱动
+  - 数据配置流程
+  - 微内核插件制

@@ -1,0 +1,15 @@
+# 天空盒渲染技术 (PRD 02 §2.2, FEAT-12)
+name = "Skybox"
+tech_id = 3
+
+[[pipelines]]
+id = 301
+name = "Skybox_ProceduralCubemap"
+order = 0
+global_match = true
+required_input_tags = ["Viewport"]
+required_pass_tags = ["Skybox"]
+vertex_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+pixel_shader = "Assets/Shaders/ForwardPlus_Standard.hlsl"
+render_target_count = 1
+depth_write = false

@@ -1,0 +1,16 @@
+# MQEngine 经典 PBR 展示工程模板
+name = "PBRShowcase"
+version = "1.0.0"
+description = "经典 PBR 展示模板：内置主相机、太阳方向光、点光源、金黄立方体、红色球体、青色柱体与网格地面。"
+startup_scene = "Scenes/PBRShowcase.mqscene"
+assetRoot = "Assets"
+pipelinePath = ""
+userCode = "Native"
+plugins = []
+
+[paths]
+native = "Native"
+
+[packaging]
+executableName = "PBRShowcase"
+windowTitle = "MQEngine - PBRShowcase"

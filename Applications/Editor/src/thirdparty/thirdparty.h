@@ -1,8 +1,3 @@
-/**
- * @file ThirdParty.h
- * @brief A header file containing third party libraries and macros for platform
- *
- */
 #ifndef ENGINE_EDITOR_THIRDPARTY_H
 #define ENGINE_EDITOR_THIRDPARTY_H
 #include <FCT_SAI.h>
@@ -11,9 +6,7 @@
 #include <FCT_IMGUI.h>
 #include <imgui_internal.h>
 #include <imnodes.h>
-#include <Engine/headers.h>
-#include <ImguiPlugin/ImguiPlugin.h>
-#include <EditorUiPlugin/EditorUiPlugin.h>
+#include <MQEngine/headers.h>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/string.hpp>
@@ -39,4 +32,4 @@
 #include <optional>
 #include <cstring>
 #include <cstdio>
-#endif //THIRDPARTY_H
+#endif // ENGINE_EDITOR_THIRDPARTY_H

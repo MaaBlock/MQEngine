@@ -1,4 +1,4 @@
-#include "DiskResourceLoader.h"
+#include <MQEngine/resource/core/DiskResourceLoader.h>
 
 namespace MQEngine {
 

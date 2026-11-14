@@ -1,0 +1,25 @@
+# 小游戏触控空闲区手势与虚拟输入映射上下文预设 (PRD 09 §3, §4, FEAT-64~66)
+[context]
+name = "IMC_MiniGameTouch"
+priority = 10
+
+[[bindings]]
+action = "IA_Look"
+key = "TouchSwipeDelta2D"
+modifiers = [
+    { type = "DeadZone", lower = 0.02, upper = 1.0 },
+    { type = "Scalar", x = 0.25, y = 0.25, z = 1.0 }
+]
+triggers = [
+    { type = "Down" }
+]
+
+[[bindings]]
+action = "IA_Zoom"
+key = "TouchPinchDelta1D"
+modifiers = [
+    { type = "Scalar", x = 1.5, y = 1.0, z = 1.0 }
+]
+triggers = [
+    { type = "Down" }
+]

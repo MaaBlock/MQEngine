@@ -1,16 +1,11 @@
 #ifndef MQENGINE_RUNTIME_H
 #define MQENGINE_RUNTIME_H
 
-#include "thirdparty/thirdparty.h"
-#include "classdef.h"
-#include "core/Host.h"
-#include "core/Runtime.h"
-#include "core/Engine.h"
-#include "interface/Application.h"
-#include "interface/Composite.h"
-#include "interface/Plugin.h"
-#include "interface/NativeCode.h"
-#include "manager/PluginManager.h"
-#include "manager/UserCodeManager.h"
+#include <MQEngine/runtime/classdef.h>
+#include <MQEngine/runtime/interface/Application.h>
+#include <MQEngine/runtime/core/CreateApplication.h>
+#include <MQEngine/runtime/core/Engine.h>
+#include <MQEngine/runtime/core/Runtime.h>
+#include <MQEngine/runtime/core/Entry.h>
 
 #endif // MQENGINE_RUNTIME_H

@@ -1,7 +1,3 @@
-﻿//
-// Created by Administrator on 2025/8/20.
-//
-
 #ifndef PCH_H
 #define PCH_H
 #ifdef _WIN32
@@ -13,4 +9,4 @@
 #else
     #define ENGINE_API
 #endif
-#endif //PCH_H
+#endif // PCH_H

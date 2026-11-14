@@ -1,0 +1,163 @@
+name = "MQEditor"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "编辑器核心业务插件包（纯目录分组，每个功能面板编译为独立的 Composite DLL）"
+license = "MIT"
+signature = ""
+dependencies = ["EditorBase"]
+tags = ["Editor", "ImGui"]
+
+[[composites]]
+name = "SceneViewerComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "3D 场景视口交互、场景层级大纲树、相机控制与基于 C++20 Boost.PFR/SchemaTable 的零宏通用 ECS 组件反射检视器组件"
+responsibilities = [
+    "采样并显示 RenderGraph 离屏 SceneColorTarget 视口画面，提供相机漫游、三维网格/朝向坐标轴与 W/E/R 3D Gizmo 操纵",
+    "支持基于 SpatialGraph BVH 射线求交的 3D 视口拾取，以及从 AssetBrowserComposite 拖拽资产到视口内落点自动实例化实体",
+    "提供场景层级大纲树 (Scene Hierarchy)、父子关系拖拽绑定与 SceneTrunk 子场景分块流式挂载/卸载",
+    "基于 C++20 Boost.PFR 编译期反射与 SchemaTable 运行时类型擦除描述符自动生成 ECS 组件检视器并接入 Undo/Redo 命令栈"
+]
+dock_windows = [
+    "3D 视口 (Scene Viewport)",
+    "层级大纲 (Scene Hierarchy)",
+    "实体检视器 (Inspector)",
+    "相机控制 (Camera Control)"
+]
+non_goals = [
+    "严禁包含或重复注册 ECS 回放时间轴面板（由 ReplayTimelineComposite 唯一权威负责）",
+    "禁止实现材质/着色器节点图编辑或渲染图拓扑编辑（分别由 ShaderEditorComposite 与 RenderGraphEditorComposite 独立负责）",
+    "禁止实现内容资产目录浏览器或帧性能剖析器"
+]
+
+[[composites]]
+name = "AssetBrowserComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "内容资产浏览器、OS 外部文件无锁拖拽导入管道、.mqmeta 伴生元数据管理与跨面板拖拽分发组件"
+responsibilities = [
+    "提供双栏式目录树快捷导航、前进/后退历史栈、关键词过滤与卡片网格/列表双视图切换",
+    "通过无锁环形队列接收 OS 资源管理器拖入文件，调用 Assimp 解析 3D 模型生成 .mqmeta 侧车并异步解码上传纹理",
+    "提供 MQ_ASSET_PAYLOAD 跨面板拖拽源（拖入 3D 视口或目录）与 MQ_ENTITY_PAYLOAD 实体逆向导出预制体能力",
+    "实时监控 GpuResourceTable 活跃句柄数、显存占用及当前激活的 Composite 执行拓扑"
+]
+dock_windows = [
+    "内容资产浏览器 (Content Browser)"
+]
+non_goals = [
+    "禁止实现 3D 场景视口、实体大纲树或 ECS 组件属性检视面板（由 SceneViewerComposite 独立负责）",
+    "禁止内嵌着色器节点图编辑、渲染图拓扑编辑或 NTC 神经纹理离线烘焙逻辑"
+]
+
+[[composites]]
+name = "ShaderEditorComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "可视化着色器节点图 (ShaderGraph)、DAG 转译 HLSL、Shaderc SPIR-V 实时编译热重载与 PBR 材质球预览组件"
+responsibilities = [
+    "基于 ImNodes 提供着色器节点图画布、引脚连接、系统 Uniform 插槽绑定、预设材质模板与节点属性检视器",
+    "执行 Kahn 拓扑排序与环路检测，将着色器 DAG 自动转译为 HLSL 6.0 像素着色器源码",
+    "对接 FCT ShaderGenerator 与 ShaderCompiler 执行 HLSL 到 SPIR-V 实时编译并热更新至 RendererSubsystem",
+    "提供 Cook-Torrance GGX 交互式 PBR 材质球预览以及 .mqshader / .sgedt TOML 节点图资产序列化"
+]
+dock_windows = [
+    "着色器与材质编辑器 (Shader & Material Editor)"
+]
+non_goals = [
+    "严禁包含 RenderGraph 渲染图拓扑编辑、Pass/Image 节点连线或离屏 RT 中间纹理检视（由 RenderGraphEditorComposite 唯一权威负责）",
+    "禁止实现通用文件资产浏览或 ECS 场景实体属性检视"
+]
+
+[[composites]]
+name = "RenderGraphEditorComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "管线编辑组件：包含 RenderGraph 节点编辑器、管线对象 (PSO) 编辑器、.pgraph/.pso 序列化、C++ 代码生成与中间纹理查看器"
+responsibilities = [
+    "基于 ImNodes 提供 RenderGraph PassNode 与 ImageNode 节点编辑、动态纹理输入引脚与自动布局",
+    "提供管线对象 (PSO) 编辑页签，支持光栅化状态、深度模板状态、颜色混合状态与关联 Pass 实时检视与同步",
+    "提供 .pgraph / .pso TOML 文件读写与声明式 C++ graph->addPass(...) 代码生成",
+    "内置 GraphViewInsight 中间渲染目标纹理实时预览（支持 RGBA 单通道过滤与曝光度调节）"
+]
+dock_windows = [
+    "管线编辑 (Pipeline Editor)"
+]
+non_goals = [
+    "严禁包含 PBR 材质节点图或 HLSL/GLSL 着色器源码编辑（由 ShaderEditorComposite 唯一权威负责）",
+    "禁止实现 3D 场景视口或 ECS 实体层级/组件检视"
+]
+
+[[composites]]
+name = "TracyProfilerComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "内嵌上游原生 tracy::Worker 与 tracy::View 的 CPU 多线程与 Vulkan GPU 全链路帧性能剖析组件"
+responsibilities = [
+    "内嵌原生 Tracy Server 与 Profiler UI 视图，直接挂载至编辑器底部 Dock 槽位",
+    "支持实时连接本机或远端客户端捕获 CPU Zone、锁竞争、内存分配、上下文切换与 Vulkan GPU 时间轴",
+    "支持暂停/停止采样、清空遥测数据以及 .tracy 性能追踪文件读写"
+]
+dock_windows = [
+    "Profiler"
+]
+non_goals = [
+    "禁止在 EditorUiComposite 或其他组件中编写重复的簡易柱状图/折线图性能面板",
+    "禁止承担 ECS 游戏逻辑状态回放职责（由 ReplayTimelineComposite 独立负责）"
+]
+
+[[composites]]
+name = "ReplayTimelineComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "ECS 内存数据库时间旅行回放、关键帧书签标记、实体状态差异检视与 .mqreplay 序列化组件（全引擎唯一 ECS 回放时间轴持有者）"
+responsibilities = [
+    "按帧录制 SceneSubsystem 中所有 ECS 实体的局部/世界变换快照，维护 3600 帧环形历史缓冲区与第 0 帧初始基底",
+    "提供录制、播放、暂停、停止并一键回滚第 0 帧、逐帧进退、倍速控制与时间轴滑块任意帧穿梭 (Scrubbing)",
+    "支持关键帧书签 (ReplayBookmark) 打点标记以及当前帧与第 0 帧的实体位移增量差异检视 (Entity State Diff)",
+    "支持通过 ResourceLoader 导出与加载 .mqreplay 回放序列文件"
+]
+dock_windows = [
+    "ECS 回放时间轴 (ECS Replay Timeline)"
+]
+non_goals = [
+    "严禁在 SceneViewerComposite 或其他组件中重复实现或注册 ECS 回放时间轴窗口",
+    "禁止承担硬件级 CPU/GPU 帧耗时剖析职责（由 TracyProfilerComposite 独立负责）"
+]
+
+[[composites]]
+name = "NtcBakerComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "神经纹理压缩 (Neural Texture Compression, NTC) 离线烘焙、MLP 潜特征网格编码与 PSNR 分屏对比预览组件"
+responsibilities = [
+    "管理 Albedo/Normal/ORM 多通道 PBR 纹理重采样输入与 MLP 网络层数、隐层维度、训练轮数配置",
+    "执行分块潜特征网格 (Latent Grid) 与多层感知机 Mini-batch 反向传播及 Adam 动量权重优化，并提供 BC7 块量化对比",
+    "实时计算 Loss、PSNR、SSIM 与显存压缩比，提供原图与 NTC 解压画面的交互式分屏对比与 5x 残差热力图",
+    "导出二进制 .ntc 神经材质包并自动注册至 Domain::Effect::NtcSubsystem"
+]
+dock_windows = [
+    "神经纹理烘焙 (NTC Baker)"
+]
+non_goals = [
+    "禁止管理通用内容资产目录浏览（由 AssetBrowserComposite 独立负责）",
+    "禁止管理着色器节点图或渲染图拓扑编辑"
+]
+
+[[composites]]
+name = "ProjectPackaging"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "独立游戏工程 4 阶段无损打包导出流水线、Editor DLL 物理裁剪、.mqpak 归档与独立发行目录校验组件"
+responsibilities = [
+    "挂载至主菜单 '文件 -> 打包工程 (Package Project...)' 并提供 4 阶段打包配置与实时构建日志面板",
+    "扫描 project.mq 与初始场景依赖，物理级剥离所有带 Editor/Test/Diagnostic 标签的动态库，仅保留纯 Runtime/Game 库",
+    "递归烘焙固化 Assets/ 与 Scenes/ 目录，可选归档生成 Content.mqpak 虚拟文件系统包",
+    "生成配置纯游戏直出 RenderGraph（零 ImGui 额外开销）的独立 project.mq 与 manifest.toml 并校验发行包完整性"
+]
+dock_windows = [
+    "工程独立发布与打包 (Package Project)"
+]
+non_goals = [
+    "禁止管理日常编辑器内资产浏览或外部文件拖拽导入（由 AssetBrowserComposite 独立负责）",
+    "禁止承担运行时场景编辑、着色器编辑或渲染图拓扑编辑职责"
+]

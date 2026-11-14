@@ -1,0 +1,15 @@
+# 游戏内高频战斗跳字离线烘焙合批技术 (PRD 08 §2.2, PRD 10 §2.5, FEAT-56, FEAT-71)
+name = "InGameText"
+tech_id = 2
+
+[[pipelines]]
+id = 201
+name = "InGameText_BakedQuadInstanced"
+order = 100
+global_match = true
+required_input_tags = ["InGameBaked", "Text"]
+required_pass_tags = ["UI"]
+vertex_shader = "Assets/Shaders/InGameText.hlsl"
+pixel_shader = "Assets/Shaders/InGameText.hlsl"
+render_target_count = 1
+depth_write = false

@@ -1,0 +1,4 @@
+# MQEngine Scene File
+scene_name = "Main"
+version = 1
+entities = []

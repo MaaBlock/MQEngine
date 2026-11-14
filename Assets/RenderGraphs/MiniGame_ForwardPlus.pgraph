@@ -1,0 +1,63 @@
+# 纯数据帧图预设：小游戏 3D Clustered Forward+ 标准管线 (PRD 02 §2, PRD 10 §3.1, FEAT-10, FEAT-72)
+name = "MiniGame_ForwardPlus"
+version = "3.0"
+pass_tags = ["ShadowCaster", "ForwardOpaque", "Skybox", "Translucent", "PostProcess", "UI"]
+
+[[images]]
+name = "ShadowMapAtlas"
+format = "D24_UNORM_S8_UINT"
+width = 2048
+height = 2048
+
+[[images]]
+name = "SceneHdrColor"
+format = "RGBA16_SFLOAT"
+scale = [1.0, 1.0]
+
+[[images]]
+name = "SceneDepth"
+format = "D24_UNORM_S8_UINT"
+scale = [1.0, 1.0]
+
+[[passes]]
+name = "ShadowMapPass"
+tags = ["Shadow"]
+clear_depth = 1.0
+depth_stencil = "ShadowMapAtlas"
+
+[[passes]]
+name = "ForwardOpaquePass"
+tags = ["Geometry", "ForwardPlus", "Opaque"]
+clear_color = [0.10, 0.12, 0.15, 1.0]
+clear_depth = 1.0
+targets = ["SceneHdrColor"]
+depth_stencil = "SceneDepth"
+textures = [
+    { slot = "ShadowAtlas", source = "ShadowMapAtlas", fallback = "@builtin/white_1x1" }
+]
+
+[[passes]]
+name = "SkyboxPass"
+tags = ["Skybox"]
+targets = ["SceneHdrColor"]
+depth_stencil = "SceneDepth"
+
+[[passes]]
+name = "ForwardTransPass"
+tags = ["Geometry", "Translucent"]
+targets = ["SceneHdrColor"]
+depth_stencil = "SceneDepth"
+discard_depth = true
+
+[[passes]]
+name = "PostProcessPass"
+tags = ["PostProcess", "ToneMap"]
+targets = ["Window"]
+textures = [
+    { slot = "SceneColor", source = "SceneHdrColor", fallback = "@builtin/black_1x1" }
+]
+
+[[passes]]
+name = "UiOverlayPass"
+tags = ["Overlay", "UI"]
+targets = ["Window"]

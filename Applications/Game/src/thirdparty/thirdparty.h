@@ -1,13 +1,13 @@
-﻿#ifndef ENGINE_GAME_THIRDPARTY_H
+#ifndef ENGINE_GAME_THIRDPARTY_H
 #define ENGINE_GAME_THIRDPARTY_H
 #include <FCT_Node.h>
 #include <FCT.h>
 #include <FCT_IMGUI.h>
 #include <imnodes.h>
-#include <Engine/headers.h>
+#include <MQEngine/headers.h>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/time_serialize.hpp>
-#endif //THIRDPARTY_H
+#endif // ENGINE_GAME_THIRDPARTY_H

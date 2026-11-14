@@ -1,7 +1,3 @@
-//
-// Created by MaaBlock on 2026/10/18.
-//
-
 #ifndef MQENGINE_FCTIMPORTER_H
 #define MQENGINE_FCTIMPORTER_H
 namespace MQEngine
@@ -11,6 +7,8 @@ namespace MQEngine
     using FCT::Locale;
     using FCT::SetLocal;
     using FCT::SetLocale;
+    using FCT::GetLocal;
+    using FCT::GetLocale;
     using FCT::SetupUtf8;
     using FCT::Context;
     using FCT::Window;
@@ -18,6 +16,7 @@ namespace MQEngine
     using FCT::ShaderRef;
     using FCT::UniquePtr;
     using FCT::makeUnique;
+    using FCT::Ptr;
     using FCT::ModelLoader;
     using FCT::Sampler;
     using PlatformRuntime = FCT::Runtime;
@@ -30,6 +29,8 @@ namespace MQEngine
     using FCT::Mat4;
     using FCT::Image;
     using FCT::RenderGraph;
+    using FCT::ResourceGroup;
+    using FCT::ResourceRequireDesc;
     using FCT::TokenGraph;
     using FCT::MemoryTag;
     using FCT::MemoryStatsSnapshot;

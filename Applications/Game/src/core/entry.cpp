@@ -1,11 +1,12 @@
 #include "GameApplication.h"
-#include "Engine/runtime/core/Runtime.h"
+#include <MQEngine/runtime/core/Runtime.h>
 
 namespace MQEngine
 {
     static Runtime::Application* CreateGameApplication()
     {
-        return new GameApplication();
+        BindModuleSharedMemoryTracker();
+        return FCT_NEW(GameApplication);
     }
 
     namespace
@@ -19,5 +20,5 @@ namespace MQEngine
             }
         };
         static GameApplicationRegistrar g_gameRegistrar;
-    }
-}
+    } // namespace
+} // namespace MQEngine

@@ -1,6 +1,0 @@
-{
-    "name": "GodotImporter",
-    "version": "1.0.0",
-    "main": "index.py",
-    "description": "Godot (.tscn / .gd) Scene, Model & GDScript-to-Python Importer Plugin powered by FCT_PyBri"
-}

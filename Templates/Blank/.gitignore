@@ -1,0 +1,16 @@
+# MQEngine Project GitIgnore
+/Saved/
+/Dist/
+/Output/
+/build*/
+/cmake-build*/
+/.vs/
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/usage.statistics.xml
+/.idea/dictionaries/
+/.idea/*.iml
+*.user
+*.suo
+*.pdb
+*.ilk

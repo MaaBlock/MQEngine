@@ -1,0 +1,32 @@
+<rml>
+  <head>
+    <title>Game Tactical HUD</title>
+    <link type="text/rcss" href="ViewerHUD.rcss"/>
+  </head>
+  <body>
+    <div id="hud_root" class="container">
+      <h1 id="title_banner" class="header-text">TACTICAL OPERATIONS // HUD</h1>
+      <div id="player_badge" class="badge">
+        <label id="lbl_player">OPERATOR // MQ-01</label>
+      </div>
+      <div id="health_container" class="card">
+        <span id="lbl_hp" class="label">ARMOR STATUS</span>
+        <progress id="health_bar" class="progress-bar" value="0.85" max="1.0">HP: 85 / 100</progress>
+      </div>
+      <div id="ammo_container" class="card">
+        <p id="ammo_counter" class="ammo-text">AMMO: 30 / 120</p>
+      </div>
+      <div id="action_row" class="row">
+        <button id="tactical_scan" class="btn primary">[Q] TACTICAL SCAN</button>
+        <button id="btn_pause" class="btn warning">[ESC] PAUSE GAME</button>
+      </div>
+      <div id="settings_row" class="row">
+        <label id="lbl_mode">MODE:</label>
+        <select id="select_shading_model" class="select-box">
+          <option value="pbr">PBR Shading</option>
+          <option value="wireframe">Wireframe</option>
+        </select>
+      </div>
+    </div>
+  </body>
+</rml>

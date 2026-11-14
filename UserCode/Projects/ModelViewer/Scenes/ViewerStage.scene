@@ -1,0 +1,146 @@
+{
+  "sceneName": "ViewerStage",
+  "version": "1.0.0",
+  "description": "ModelViewer 摄影棚空白场景：包含模型根锚点实体、轨道相机、后期处理栈与三点布光光源",
+  "entities": [
+    {
+      "name": "ModelAnchorEntity",
+      "uuid": "00000000-0000-0000-0000-000000000001",
+      "tag": "ModelRoot",
+      "active": true,
+      "components": {
+        "LocalTransform": {
+          "position": [0.0, 0.0, 0.0],
+          "rotation": [0.0, 0.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "WorldTransform": {
+          "position": [0.0, 0.0, 0.0],
+          "rotation": [0.0, 0.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "StaticMeshComponent": {
+          "primitiveType": -1,
+          "meshAssetPath": "",
+          "castShadows": true,
+          "visible": true
+        },
+        "PbrMaterialComponent": {
+          "baseColor": [0.85, 0.85, 0.88],
+          "metallic": 0.2,
+          "roughness": 0.35,
+          "ao": 1.0,
+          "emissiveColor": [0.0, 0.0, 0.0],
+          "emissiveIntensity": 0.0,
+          "shaderAssetPath": "Assets/Shaders/PBR_Standard.hlsl"
+        }
+      }
+    },
+    {
+      "name": "OrbitCameraEntity",
+      "uuid": "00000000-0000-0000-0000-000000000002",
+      "tag": "MainCamera",
+      "active": true,
+      "components": {
+        "LocalTransform": {
+          "position": [0.0, 1.2, 4.0],
+          "rotation": [-12.0, 0.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "WorldTransform": {
+          "position": [0.0, 1.2, 4.0],
+          "rotation": [-12.0, 0.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "CameraComponent": {
+          "fov": 45.0,
+          "nearPlane": 0.1,
+          "farPlane": 1000.0,
+          "isPrimary": true,
+          "reverseZ": false,
+          "clearColor": [0.08, 0.09, 0.12, 1.0]
+        },
+        "DlssComponent": {
+          "enabled": true,
+          "sharpness": 0.5,
+          "qualityMode": 1
+        },
+        "DepthOfFieldComponent": {
+          "enabled": true,
+          "focusDistance": 4.0,
+          "focalLength": 50.0,
+          "aperture": 2.8,
+          "maxBokehRadius": 8.0
+        },
+        "BloomComponent": {
+          "enabled": true,
+          "threshold": 1.0,
+          "intensity": 0.8,
+          "softKnee": 0.5,
+          "scatter": 0.7
+        },
+        "ToneMappingComponent": {
+          "operatorType": 1,
+          "gamma": 2.2,
+          "whitePoint": 1.0
+        }
+      }
+    },
+    {
+      "name": "KeyLightEntity",
+      "uuid": "00000000-0000-0000-0000-000000000003",
+      "tag": "KeyLight",
+      "active": true,
+      "components": {
+        "LocalTransform": {
+          "position": [4.0, 7.0, 4.0],
+          "rotation": [-45.0, 35.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "DirectionalLightComponent": {
+          "direction": [-0.55, -0.75, -0.35],
+          "color": [1.0, 0.96, 0.88],
+          "intensity": 3.5,
+          "castShadows": true
+        }
+      }
+    },
+    {
+      "name": "FillLightEntity",
+      "uuid": "00000000-0000-0000-0000-000000000004",
+      "tag": "FillLight",
+      "active": true,
+      "components": {
+        "LocalTransform": {
+          "position": [-3.5, 2.0, -2.0],
+          "rotation": [0.0, 0.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "PointLightComponent": {
+          "color": [0.4, 0.65, 1.0],
+          "intensity": 1.8,
+          "range": 25.0
+        }
+      }
+    },
+    {
+      "name": "RimLightEntity",
+      "uuid": "00000000-0000-0000-0000-000000000005",
+      "tag": "RimLight",
+      "active": true,
+      "components": {
+        "LocalTransform": {
+          "position": [0.0, 5.0, -5.0],
+          "rotation": [45.0, 180.0, 0.0],
+          "scale": [1.0, 1.0, 1.0]
+        },
+        "DirectionalLightComponent": {
+          "direction": [0.2, -0.65, 0.73],
+          "color": [0.85, 0.92, 1.0],
+          "intensity": 4.0,
+          "castShadows": false
+        }
+      }
+    }
+  ]
+}

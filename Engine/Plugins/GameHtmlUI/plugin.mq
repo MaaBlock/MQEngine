@@ -1,0 +1,44 @@
+name = "GameHtmlUI"
+version = "1.0.0"
+author = "MQEngine Team"
+description = "基于 RmlUi 的游戏运行时 HTML/CSS UI 插件包（内含运行时 RmlUiComposite.dll 与编辑器专属 HtmlUiEditorComposite.dll，按 tags 物理级按需加载）"
+license = "MIT"
+signature = ""
+dependencies = ["Font"]
+tags = ["Runtime", "Game", "Editor", "ImGui"]
+
+[[composites]]
+name = "RmlUiComposite"
+tags = ["Runtime", "Game"]
+dependencies = ["FontRuntimeComposite"]
+description = "基于 RmlUi 6.0 的游戏运行时 HTML/CSS 界面渲染、输入路由与 DOM 数据绑定组件"
+responsibilities = [
+    "封装 MQRmlSystemInterface、MQRmlFileInterface（对接 ResourceLoader）与 MQRmlRenderInterface",
+    "初始化 RmlUi 6.0 Context、加载/热更新 .rml 与 .rcss 文档并维护运行时 DOM 节点快照",
+    "向 LogicHost 注册 UI 逻辑更新 Ticker 并转发 HID 键鼠与滚轮事件",
+    "向 RendererSubsystem 注册 RmlUiPass 渲染图通道并导出 DOM 动态操作接口供蓝图/跨插件调用"
+]
+dock_windows = []
+non_goals = [
+    "禁止依赖任何 ImGui 或 EditorBase 模块（确保纯游戏打包物理级零编辑器依赖）",
+    "禁止实现所见即所得 UI 拖拽设计器面板（由 HtmlUiEditorComposite 独立负责）"
+]
+
+[[composites]]
+name = "HtmlUiEditorComposite"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite"]
+description = "GameHtmlUI 专属所见即所得 (WYSIWYG) 可视化拖拽设计器、DOM 层级树与 CSS 盒模型检视器组件"
+responsibilities = [
+    "提供 2D 所见即所得设计画布，支持鼠标直接点选拖拽 UI 元素位移、八向控制手柄缩放与智能对齐参考线",
+    "提供 UI 控件库拖拽生成、DOM 层级树拖拽重排（Reparenting）与 CSS 盒模型（Margin/Border/Padding）及 Flex/Grid 属性检视",
+    "实现 DOM 树与 .rml / .rcss 源码的实时双向解析与格式化回写，并完整接入 CommandStack 撤销/重做栈",
+    "支持一键将 HTML UI 控件事件绑定至 BlueprintEditorComposite 生成 OnUIClick / OnUIInput 蓝图节点"
+]
+dock_windows = [
+    "HTML UI 设计器 (RmlUi Visual Editor)"
+]
+non_goals = [
+    "禁止在纯游戏运行时（GameApplication）中加载",
+    "禁止替代 RmlUiComposite 的运行时 HUD 渲染管线"
+]

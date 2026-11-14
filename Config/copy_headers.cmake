@@ -1,88 +1,114 @@
-function(add_copy_target_headers_custom_src target_name headers_list src_dir)
-    set(copy_target_name "copy_${target_name}_headers")
-    get_filename_component(src_dir "${src_dir}" ABSOLUTE BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+# ------------------------------------------------------------------------------
+# 将模块的 src 目录直接映射（Windows NTFS 目录联接 Junction / Unix 符号链接）到 include/<INCLUDE_PREFIX>
+# 同时兼容源码开发模式与无源码 SDK 二进制分发模式：
+# 1. 源码开发模式：include/MQEngine 直接通过 NTFS Junction / Symlink 映射到 Core/src，无需 copy headers；
+# 2. 引擎内部与外部（Application / Native / Plugin / SDK）统一使用 #include <MQEngine/xxx/xxx.h>；
+# 3. SDK 导出安装：cmake --install 时将 src/*.h 按目录结构安装至 <SDK>/include/MQEngine/。
+# ------------------------------------------------------------------------------
+function(map_target_headers target_name src_dir)
+    set(options "")
+    set(oneValueArgs INCLUDE_PREFIX)
+    set(multiValueArgs EXTRA_PREFIXES)
+    cmake_parse_arguments(MAP "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    set(include_base_dir "${CMAKE_CURRENT_SOURCE_DIR}/include/${target_name}")
+    if(NOT MAP_INCLUDE_PREFIX)
+        set(MAP_INCLUDE_PREFIX "${target_name}")
+    endif()
 
-    # 自动清理 include/<target_name> 下因 src 目录重构/移动而残留的旧头文件
-    if(EXISTS "${include_base_dir}")
-        file(GLOB_RECURSE _existing_inc_hdrs
-            LIST_DIRECTORIES false
-            "${include_base_dir}/*.h"
-            "${include_base_dir}/*.hpp"
-            "${include_base_dir}/*.inl"
-        )
-        foreach(_inc_hdr ${_existing_inc_hdrs})
-            file(RELATIVE_PATH _inc_rel "${include_base_dir}" "${_inc_hdr}")
-            if(NOT EXISTS "${src_dir}/${_inc_rel}")
-                file(REMOVE "${_inc_hdr}")
+    get_filename_component(abs_src_dir "${src_dir}" ABSOLUTE BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
+    # 自动清理源码树下遗留的旧 include 目录与软链接/Junction，防止污染 CLion 源码索引与重命名
+    set(legacy_source_include_dir "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    if(EXISTS "${legacy_source_include_dir}")
+        file(GLOB _legacy_entries "${legacy_source_include_dir}/*")
+        foreach(_legacy_item ${_legacy_entries})
+            if(IS_DIRECTORY "${_legacy_item}" OR IS_SYMLINK "${_legacy_item}")
+                if(WIN32)
+                    file(TO_NATIVE_PATH "${_legacy_item}" _native_legacy_item)
+                    execute_process(
+                        COMMAND cmd /c rmdir "${_native_legacy_item}"
+                        OUTPUT_QUIET ERROR_QUIET
+                    )
+                endif()
+            endif()
+        endforeach()
+        file(REMOVE_RECURSE "${legacy_source_include_dir}")
+    endif()
+
+    # 将头文件软链接映射目录统一放入构建目录（CLion 默认 Excluded，不污染源码树）
+    set(include_root_dir "${CMAKE_BINARY_DIR}/generated-include")
+    file(MAKE_DIRECTORY "${include_root_dir}")
+
+    set(all_prefixes "${MAP_INCLUDE_PREFIX}" ${MAP_EXTRA_PREFIXES})
+    if(EXISTS "${abs_src_dir}")
+        foreach(prefix ${all_prefixes})
+            set(link_path "${include_root_dir}/${prefix}")
+
+            if(NOT EXISTS "${link_path}")
+                # 使用 CMake 原生 SYMBOLIC（即 mklink /D 真符号链接，clangd realpath 能识别指向 src/）
+                file(CREATE_LINK "${abs_src_dir}" "${link_path}" SYMBOLIC RESULT _link_res)
+                if(NOT "${_link_res}" STREQUAL "0" AND WIN32)
+                    file(TO_NATIVE_PATH "${link_path}" _native_link)
+                    file(TO_NATIVE_PATH "${abs_src_dir}" _native_src)
+                    execute_process(
+                        COMMAND cmd /c mklink /D "${_native_link}" "${_native_src}"
+                        RESULT_VARIABLE _mklink_d_res
+                        OUTPUT_QUIET ERROR_QUIET
+                    )
+                    if(NOT _mklink_d_res EQUAL 0)
+                        execute_process(
+                            COMMAND cmd /c mklink /J "${_native_link}" "${_native_src}"
+                            OUTPUT_QUIET ERROR_QUIET
+                        )
+                    endif()
+                endif()
+            endif()
+
+            set(umbrella_header "${include_root_dir}/${prefix}.h")
+            if(NOT EXISTS "${umbrella_header}")
+                if(EXISTS "${abs_src_dir}/headers.h")
+                    file(WRITE "${umbrella_header}" "#ifndef ${prefix}_UMBRELLA_H\n#define ${prefix}_UMBRELLA_H\n#include <${prefix}/headers.h>\n#endif\n")
+                elseif(EXISTS "${abs_src_dir}/${target_name}.h")
+                    file(WRITE "${umbrella_header}" "#ifndef ${prefix}_UMBRELLA_H\n#define ${prefix}_UMBRELLA_H\n#include <${prefix}/${target_name}.h>\n#endif\n")
+                endif()
             endif()
         endforeach()
     endif()
 
-    file(MAKE_DIRECTORY "${include_base_dir}")
-    file(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-    set(copied_headers "")
-
-    foreach(header_file ${headers_list})
-        get_filename_component(header_file "${header_file}" ABSOLUTE BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-
-        file(RELATIVE_PATH relative_path "${src_dir}" "${header_file}")
-        set(output_file "${include_base_dir}/${relative_path}")
-        get_filename_component(output_dir "${output_file}" DIRECTORY)
-
-        file(MAKE_DIRECTORY "${output_dir}")
-
-        add_custom_command(
-                OUTPUT "${output_file}"
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${header_file}"
-                "${output_file}"
-                DEPENDS "${header_file}"
-                COMMENT "Copying: ${relative_path}"
-        )
-
-        list(APPEND copied_headers "${output_file}")
-    endforeach()
-
-    set(main_header_file "${src_dir}/${target_name}.h")
-    if(EXISTS "${main_header_file}")
-        set(main_output_file "${CMAKE_CURRENT_SOURCE_DIR}/include/${target_name}.h")
-        add_custom_command(
-                OUTPUT "${main_output_file}"
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${main_header_file}"
-                "${main_output_file}"
-                DEPENDS "${main_header_file}"
-                COMMENT "Copying main header: ${target_name}.h"
-        )
-        list(APPEND copied_headers "${main_output_file}")
-    endif()
-
-    add_custom_target(${copy_target_name} ALL
-            DEPENDS ${copied_headers}
-            COMMENT "Headers for ${target_name} are up to date"
-    )
-
     if(TARGET ${target_name})
-        add_dependencies(${target_name} ${copy_target_name})
+        target_include_directories(${target_name}
+            PUBLIC
+                $<BUILD_INTERFACE:${include_root_dir}>
+                $<INSTALL_INTERFACE:include>
+        )
     endif()
 
-    message(STATUS "Added copy headers target for: ${target_name}")
+    # 支持无源码 SDK 打包安装：安装时将头文件归档至 include/<INCLUDE_PREFIX>
+    if(EXISTS "${abs_src_dir}")
+        install(DIRECTORY "${abs_src_dir}/"
+            DESTINATION "include/${MAP_INCLUDE_PREFIX}"
+            FILES_MATCHING
+            PATTERN "*.h"
+            PATTERN "*.hpp"
+            PATTERN "*.inl"
+        )
+    endif()
+
+    message(STATUS "Mapped headers for ${target_name}: <${MAP_INCLUDE_PREFIX}/...> -> ${abs_src_dir}")
+endfunction()
+
+function(add_copy_target_headers_custom_src target_name headers_list src_dir)
+    map_target_headers(${target_name} "${src_dir}" INCLUDE_PREFIX "${target_name}")
 endfunction()
 
 function(add_copy_target_headers target_name headers_list)
-    add_copy_target_headers_custom_src(${target_name} "${headers_list}" "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    if("${target_name}" STREQUAL "Engine")
+        map_target_headers(${target_name} "${CMAKE_CURRENT_SOURCE_DIR}/src" INCLUDE_PREFIX "MQEngine")
+    else()
+        map_target_headers(${target_name} "${CMAKE_CURRENT_SOURCE_DIR}/src" INCLUDE_PREFIX "${target_name}")
+    endif()
 endfunction()
 
-# ------------------------------------------------------------------------------
-# 递归收集单个模块目录（含所有子目录）的源文件 (.cpp/.c/.cc) 与头文件 (.h/.hpp/.inl)
-# 用法 1（生成 <PREFIX>_MODULE_SOURCES 与 <PREFIX>_MODULE_HEADERS 变量）：
-#   collect_module_files(RENDER "./src/render")
-# 用法 2（同时自动追加到总列表变量中）：
-#   collect_module_files(RENDER "./src/render" APPEND_SOURCES ENGINE_SOURCES APPEND_HEADERS ENGINE_HEADERS)
-# ------------------------------------------------------------------------------
 function(collect_module_files module_prefix module_dir)
     set(options "")
     set(oneValueArgs APPEND_SOURCES APPEND_HEADERS)
@@ -123,16 +149,6 @@ function(collect_module_files module_prefix module_dir)
     endif()
 endfunction()
 
-# ------------------------------------------------------------------------------
-# 批量递归收集多个子模块目录的源文件与头文件
-# 用法：
-#   collect_modules_recursive(ENGINE_SOURCES ENGINE_HEADERS
-#       "./src/core"
-#       "./src/data"
-#       "./src/render"
-#       ...
-#   )
-# ------------------------------------------------------------------------------
 function(collect_modules_recursive out_sources_var out_headers_var)
     set(_all_sources "${${out_sources_var}}")
     set(_all_headers "${${out_headers_var}}")

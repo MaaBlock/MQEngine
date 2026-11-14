@@ -1,44 +1,28 @@
-#ifndef EDITORAPPLICATION_H
-#define EDITORAPPLICATION_H
-#include "../thirdparty/thirdparty.h"
-#include <Engine/headers.h>
-#include "../imgui/UiManager.h"
-#include "./Global.h"
+#ifndef MQENGINE_EDITORAPPLICATION_H
+#define MQENGINE_EDITORAPPLICATION_H
+
+#include <MQEngine/runtime/runtime.h>
+
 namespace MQEngine
 {
-
-    class UndoManager;
-
+    /**
+     * @brief Editor 宿主应用纯壳：仅负责注入 Runtime、Editor、ImGui 标签，不包含具体编辑器业务逻辑
+     */
     class EditorApplication : public Runtime::Application
     {
     public:
-        EditorApplication();
-        ~EditorApplication() override;
         void registerInfo() override
         {
             registerInfoImpl();
-            applicationRegisterInfo = ApplicationRegisterInfo{
-                .platformRequire = {
-                    .target = RenderTarget::Texture,
-                    .windowTitle = "NexusEngine Editor",
-                },
-                .defaultProjectPath = "UserCode/Projects/DemoProject/project.mq",
-                .tags = {"Runtime", "Editor", "ImGui"},
-            };
+            applicationRegisterInfo.platformRequire.target = RenderTarget::Texture;
+            applicationRegisterInfo.platformRequire.windowTitle = "MQEngine Editor";
+            applicationRegisterInfo.local = Local::zh_CN;
+            applicationRegisterInfo.tags = {"Runtime", "Editor", "ImGui", "Cli", "Cook"};
         }
+
         void init() override;
-        void settingRenderCallBack();
         void logicTick() override;
-        void settingUpImgui();
-        void imguiLogicTick();
-    private:
-        FCT::ImguiContext* m_imguiCtx;
-        FCT::ImguiModule imguiModule;
-        UiManager uiManager;
-        entt::registry* m_registry;
-        UniquePtr<UndoManager> m_undoManager;
     };
-}
+} // namespace MQEngine
 
-
-#endif //EDITORAPPLICATION_H
+#endif // MQENGINE_EDITORAPPLICATION_H

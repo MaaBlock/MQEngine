@@ -1,0 +1,58 @@
+name = "DouyinMiniGame"
+version = "1.0.0"
+author = "MQEngine Official"
+description = "抖音小游戏（Douyin MiniGame）一键烘焙打包器与宿主生态运行时桥接套件"
+license = "MIT"
+signature = ""
+dependencies = ["Font"]
+tags = ["Editor", "Cli", "Runtime", "MiniGame", "Douyin"]
+
+# 1. 编辑器可视化打包面板（仅在桌面 Editor 进程加载，严禁进入发布包）
+[[composites]]
+name = "DouyinPackagerEditorComposite"
+description = "抖音小游戏构建配置面板、分包体积预算分析器与一键预览面板"
+tags = ["Editor", "ImGui"]
+dependencies = ["EditorUiComposite", "DouyinPackagerCliComposite"]
+responsibilities = [
+    "提供可视化抖音小游戏工程配置编辑与 Config/douyin_minigame.toml 双向持久化",
+    "驱动五步离线烘焙流水线并实时展示进度条与构建日志",
+    "支持一键拉起抖音开发者工具预览导出的 MainPackage"
+]
+dock_windows = [
+    "抖音小游戏发布中心 (Douyin MiniGame Packager)"
+]
+non_goals = [
+    "严禁进入小游戏或独立桌面游戏运行态发布包"
+]
+
+# 2. 无头离线烘焙与打包管线（供 CLI / CI 与编辑器后台进程调用）
+[[composites]]
+name = "DouyinPackagerCliComposite"
+description = "离线着色器裁剪转译、ASTC/字体/网格烘焙、Wasm 链接编排与双包导出流水线"
+tags = ["Cli", "Cook"]
+dependencies = ["FontRuntimeComposite"]
+responsibilities = [
+    "Step 1 基于目标 .pgraph 与 .mqtech 静态裁剪变体并经 SPIRV-Cross 转译 #version 300 es 着色器包",
+    "Step 2 离线烘焙 ASTC 压缩纹理、0KB 原始字库 .mqfont、.mqmesh 二进制网格与 SHA-256 三级寻址清单",
+    "Step 3-5 汇聚脚本、编译裁剪 engine.wasm 并导出符合 10MB/4MB 红线的 MainPackage 与 RemoteCDN"
+]
+dock_windows = []
+non_goals = [
+    "不依赖任何 ImGui 图形窗口，支持纯无头 CI / CLI (--douyin-cook) 自动化执行"
+]
+
+# 3. 抖音宿主运行时平台服务（仅在抖音小游戏运行态激活，桌面端零侵入）
+[[composites]]
+name = "DouyinPlatformRuntimeComposite"
+description = "抖音 tt.* 宿主 API 桥接：侧边栏复访、激励视频广告、游戏录屏分享、胶囊安全区、开放数据域与内存告警自救"
+tags = ["Runtime", "MiniGame", "Douyin"]
+dependencies = ["FontRuntimeComposite"]
+responsibilities = [
+    "通过 FCT_WebJS 隔离桥接 tt.* 宿主能力，确保 Engine/Core 零平台符号泄漏",
+    "提供侧边栏 021036 复访领奖、激励视频静音与完播校验、300s 环形录屏高光分享",
+    "注入右上角胶囊安全区 CSS 变量、按需同步开放数据域排行榜并联动 tt.onMemoryWarning 分级自救"
+]
+dock_windows = []
+non_goals = [
+    "不在普通桌面 Game 进程激活，不引入任何桌面编辑器或 FCT_Node 依赖"
+]
